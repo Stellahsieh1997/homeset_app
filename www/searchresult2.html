@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Things</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "微軟正黑體";
+        }
+
+        /* 透明的按鈕 */
+
+        .buttontype {
+            background-color: transparent;
+            border-color: transparent;
+            margin: 0px;
+        }
+
+        /* 上方名稱欄位 */
+        .texts {
+            height: 200px;
+            background-color: #254F6E;
+        }
+
+        .bordertype {
+            border-style: solid;
+            border-width: 3px;
+            border-color: white;
+            border-radius: 20px;
+            background-color: white;
+            padding: 10px;
+            margin: 10px;
+            height: 400px;
+        }
+
+        .imgtype {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .textform {
+            background-color: transparent;
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .box-wrap>div {
+            width: 31%;
+            padding-bottom: 0%;
+            margin: 1%;
+            border-radius: 10%;
+            float: left;
+            color:#254F6E;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 上方標題 -->
+
+    <div class="container-fluid">
+        <div class="row p-1 " style="background-color:#254F6E">
+            <div class="col-4">
+                <a href="searchresult.html"><button type="button" class="buttontype"><img
+                            src="static/back.png" style=width:40px;>
+                    </button></a>
+            </div>
+            <div class="col-4 title">
+            </div>
+            <div class="col-4 ">
+                <button type="button" class="btn btn-secondary float-right buttontype .btn-lg ">儲存 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 選擇物品照片及輸入名稱 -->
+
+    <div class="texts container-fluid">
+
+        <div class="row">
+            <div class="col-5" style="margin-top:20px">
+                <img src="static/test.jpg" style="height:150px">
+            </div>
+            <div class="col-7" style="margin-top:20px">
+                <form style="background-color:transparent">
+                    <div class="form-group">
+                        <input type="email" class="form-control textform" id="exampleFormControlInput1"
+                            placeholder="輸入名稱">
+                    </div>
+                    <div class="form-group">
+
+                        <textarea class="form-control textform" id="exampleFormControlTextarea1" placeholder="請描述您的物品"
+                            rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 選擇物品的屬性 -->
+
+    <div class="bordertype">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                data-toggle="modal" data-target="#exampleModal">類別
+                <span class="badge ">
+                    
+                <img src="static/right-arrow.png" style="height:20px;">
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente">所屬人
+                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">存放位置
+                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">數量
+                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">夾層
+                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                </span>
+            </li>
+            <div>
+                <button type="button" class="btn btn-light buttontype " style="margin-top:80px ;margin-left:270px"><img
+                        src="static/dustbin3.png" style="height:30px"></button>
+            </div>
+
+        </ul>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">選擇</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+                        <div class="box ">
+                            <button type="button" style="background-color: transparent;
+                             border-color: transparent;margin-top:10%;"><img src="static/plus.png" style=width:30px;>
+                            </button>
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                       border-color: transparent;"><img src="static/shirt.png" style=width:40px;>
+                            </button><br> 衣物
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                            border-color: transparent;"><img src="static/slippers.png"
+                                    style=width:40px;>
+                            </button><br> 鞋子
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/shopping.png" style=width:40px;>
+                            </button><br> 包包
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/robotic.png" style=width:40px;>
+                            </button><br> 玩具
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/tools.png" style=width:40px;>
+                            </button><br> 工具
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent; border-color: transparent;">
+                                <img src="static/book.png" style=width:40px;>
+                            </button><br> 書本
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/hat.png" style=width:40px;>
+                            </button><br> 帽子
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/slippers.png" style=width:40px;>
+                            </button><br> 衣物
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

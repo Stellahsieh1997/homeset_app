@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homeset</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <style type="text/css">
+        
+    .font {
+        font-family: Microsoft JhengHei;
+    }
+
+
+    
+    .flex {
+    flex: 1 auto;
+    display: flex;
+    height: 250px;
+    padding: 15px;
+    border: 8px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+    justify-content: center;
+
+    }
+    .bordertype {
+        border-radius: 10px;
+        border-color:white;
+        background-color: white;
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color:#254F6E;
+    }
+    
+    .buttontype {
+        background-color: transparent;
+        border-color: transparent;
+        margin: 0px;
+    }
+
+   .navtype{
+        margin-top:10px;
+        margin-bottom: 10px;
+        width:20px;
+    }
+
+    .imgtype{
+        width:150px;
+        margin:0px ;
+        background-color:white;
+        border-color: white;
+        padding-left:15px;
+        padding-right:15px;
+        margin-bottom: 5px ;
+        border-radius: 10px; 
+    }
+    .click{
+        background-color:white;
+        border-color: transparent;
+        padding:20px;
+        margin: 10px ;
+        border-radius: 10px;
+
+
+    }
+
+    </style>
+</head>
+
+
+
+<body class="font container-fluid " style="background-color: #f0f0f0">
+
+
+    <div class="row p-1 fixed-top title">
+        <div class="col-4">
+            <a href="home-2.html"><button type="button" class="float-left " style="background-color: transparent;
+                border-color: transparent;"><img src="static/back.png" style=width:40px;>
+                </button></a>
+        </div>
+        <div class="col-4 text-white font-weight-bold" style="display:flex;justify-content:center;align-items:center;">
+            <p style="margin:0px">一樓平面圖</p>
+        </div>
+        <div class="col-4 ">
+
+        </div>
+
+    </div>
+
+
+
+    <div class="rol">
+
+
+        <div style="text-align:center;margin-top:60px ;margin-bottom:50px; ">
+
+            <button
+                style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary " type="button">
+                <img src="static/square.png" style=width:80px;margin-left:10px;margin-right:10px;>
+
+            </button>
+            <button
+                style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary " type="button">
+                <img src="static/rectangle.png" style=width:80px;margin-left:10px;margin-right:10px;>
+
+            </button>
+            <button
+                style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary" type="button">
+                <img src="static/rectangle-2.png" style=width:80px;margin-left:10px;margin-right:10px;>
+
+            </button>
+            <button
+                style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                data-toggle="modal" data-target="#exampleModal"  class="btn btn-secondary " type="button">
+                <img src="static/triangle.png" style=width:80px;margin-left:10px;margin-right:10px;>
+
+            </button>
+
+        </div>
+
+
+
+    </div>
+
+    <div class=" modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style=color:black>新增空間</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form style="margin:10px">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">空間名稱</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="輸入名稱">
+                    </div>
+                </form>
+                <div class="modal-body">
+                    <form action="" method="POST">
+                       
+
+                    
+                        <button type="submit" class="btn btn-primary">送出
+                        </button>
+                      
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <div class="container-fluid  fixed-bottom" style="background-color: #ffffff">
+            <div class="row">
+                <div class="col offset-1">
+                    <a href="searches.html">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/search.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col ">
+                    <a href="home-1.html">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/home.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col">
+                    <a href="">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/article1.png" style="width:25px;margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col">
+                    <a href="">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/user.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+            </div>
+    
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+</body>
+
+
+
+</html>

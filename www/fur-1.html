@@ -115,7 +115,118 @@
 
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
+        //  新增
+        function processFormData() {
+
+            //getElementById --- from form
+            var form_element = document.getElementById('form');
+            var furniturename = form_element[0].value;
+
+            alert(furniturename);
+        }
+        // 相機
+        var pictureSource;   // picture source
+        var destinationType;
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+        //
+        function onDeviceReady() {
+            pictureSource = navigator.camera.PictureSourceType;
+            destinationType = navigator.camera.DestinationType;
+        }
+
+        // Called when a photo is successfully retrieved
+        //
+        function onPhotoDataSuccess(imageData) {
+            // Uncomment to view the base64-encoded image data
+            // console.log(imageData);
+
+            // Get image handle
+            //
+            var smallImage = document.getElementById('smallImage');
+
+            // Unhide image elements
+            //
+            smallImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        // Called when a photo is successfully retrieved
+        //
+        function onPhotoURISuccess(imageURI) {
+            // Uncomment to view the image file URI
+            // console.log(imageURI);
+
+            // Get image handle
+            //
+            var largeImage = document.getElementById('largeImage');
+
+            // Unhide image elements
+            //
+            largeImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            largeImage.src = imageURI;
+        }
+
+        // A button will call this function
+
+        function capturePhoto() {
+            // Take picture using device camera and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                quality: 50,
+                destinationType: destinationType.DATA_URL
+            });
+        }
+
+        // A button will call this function
+        //
+        function capturePhotoEdit() {
+            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                quality: 20, allowEdit: true,
+                destinationType: destinationType.DATA_URL
+            });
+        }
+
+        // A button will call this function
+        //
+        function getPhoto(source) {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+                quality: 50,
+                destinationType: destinationType.FILE_URI,
+                sourceType: source
+            });
+        }
+
+        // Called if something bad happens.
+        //
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
+
+    </script>
 
 </head>
 
@@ -123,7 +234,7 @@
     <div class="row p-1  " style="background-color:#254F6E">
         <div class="col-4">
             <a href="home-2.html"><button type="button" class="float-left buttontype"><img src="static/back.png"
-                        style=width:40px;>
+                        style="width:40px;">
                 </button></a>
         </div>
         <div class="col-4 title">
@@ -131,7 +242,7 @@
         </div>
         <div class="col-4 ">
             <button type="button" class="float-right buttontype" data-toggle="modal" data-target="#exampleModal">
-                <img src="static/add.png" style=width:40px;>
+                <img src="static/add.png" style="width:40px;">
             </button>
         </div>
     </div>
@@ -147,13 +258,21 @@
                 </div>
 
                 <div class="modal-body text-black">
-
-                    <form action="" method="POST" enctype="multipart/form-data">
-
-                        <button type="submit" class="btn btn-primary">送出
-                        </button>
+                    <form action="" method="POST" enctype="multipart/form-data" id='form'>
+                        <div style="margin-bottom:10px;">
+                            <label for="furniturename">家俱名稱</label>
+                            <input type="text" class="form-control" id="furniturename">
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label >照片</label><br>
+                            <button type=" button" class="btn btn-light" onclick="capturePhoto();">相機</button>
+                            <button type="button" class="btn btn-light"
+                                onclick="getPhoto(pictureSource.PHOTOLIBRARY);">從相簿中選擇</button><br>
+                          </div>      
+                            <button type="submit" class="btn btn-primary" onclick="processFormData()">送出
+                            </button> 
+                        
                     </form>
-
                 </div>
             </div>
         </div>
@@ -176,40 +295,6 @@
                 </li>
             </ul>
 
-            <ul class="nav">
-                <li class="nav-item">
-                    <div class="content">
-                        <img src="static/2.jpg" height="120" width="120" class="square">
-                        <a href="#">
-                            <div class="content"></div>
-                        </a>
-
-                    </div>
-                </li>
-            </ul>
-
-            <ul class="nav">
-                    <li class="nav-item">
-                        <div class="content">
-                            <img src="static/3.jpg" height="120" width="120" class="square">
-                            <a href="#">
-                                <div class="content"></div>
-                            </a>
-    
-                        </div>
-                    </li>
-                </ul>
-                <ul class="nav">
-                        <li class="nav-item">
-                            <div class="content">
-                                <img src="static/5.jpg" height="120" width="120" class="square">
-                                <a href="#">
-                                    <div class="content"></div>
-                                </a>
-        
-                            </div>
-                        </li>
-                    </ul>
         </div>
     </div>
 
@@ -220,30 +305,30 @@
     <div class="box-wrap" style="margin-top:10px;margin-bottom:40px;">
         <div class="box">
 
-            <img src="static/things/0777aae3-e30d-478d-a7b5-97780f1c39a8.jpg" style=width:100%;height:100%>
+            <img src="static/things/0777aae3-e30d-478d-a7b5-97780f1c39a8.jpg" style="width:100%;height:100%">
 
         </div>
         <div class="box">
-            <img src="static/things/0_36230a029d7bae1a353ec97e51beb3dd_583x585.jpg" style=width:100%;height:100%>
+            <img src="static/things/0_36230a029d7bae1a353ec97e51beb3dd_583x585.jpg" style="width:100%;height:100%">
         </div>
         <div class="box">
-            <img src="static/things/1.jpg" style=width:100%;height:100%>
+            <img src="static/things/1.jpg" style="width:100%;height:100%">
         </div>
         <div class="box">
             <img src="static/things/2pcs-cute-korean-stationery-fashion-Pencil-erasers-office-school-supplies-kawaii-rubber-eraser-losing-money-selling1_1024x1024.jpg"
-                style=width:100%;height:100%>
+                style="width:100%;height:100%">
         </div>
         <div class="box">
-           <a href="thing-1.html"> <img src="static/things/test.jpg" style=width:100%;height:100%></a>
+            <a href="thing-1.html"> <img src="static/things/test.jpg" style="width:100%;height:100%"></a>
         </div>
         <div class="box">
-            <img src="static/things/2.jpg" style=width:100%;height:100%;>
+            <img src="static/things/2.jpg" style="width:100%;height:100%">
         </div>
         <div class="box">
-            <img src="static/things/3.jpg" style=width:100%;height:100%;>
+            <img src="static/things/3.jpg" style="width:100%;height:100%">
         </div>
         <div class="box">
-            <img src="static/things/0777aae3-e30d-478d-a7b5-97780f1c39a8.jpg" style=width:100%;height:100%;>
+            <img src="static/things/0777aae3-e30d-478d-a7b5-97780f1c39a8.jpg" style="width:100%;height:100%">
         </div>
         <div class="box"></div>
         <div class="box"></div>
@@ -257,20 +342,12 @@
     <div class="fixed-bottom row plus">
         <a href="thing-1.html">
             <button class="buttontype">
-                <img src="static/add1.png" style=width:28px;margin-top:5px;>
+                <img src="static/add1.png" style="width:28px;margin-top:5px;"">
             </button> </a>
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
+   
 </body>
 
 </html>

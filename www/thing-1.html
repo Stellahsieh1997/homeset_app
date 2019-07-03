@@ -10,6 +10,89 @@
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>Things</title>
+
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    
+    <script src="js/mobileSelect.js"></script>
+    <script type="text/javascript">
+        function init() {
+
+
+            var mobileSelect1 = new MobileSelect({
+                trigger: '#badge5',
+                title: '夾層',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['0', '1', '2', '3', '4', '5', '6'] }
+                ],
+                position: [2] //初始化定位
+            });
+
+
+            var mobileSelect2 = new MobileSelect({
+                trigger: '#badge4',
+                title: '數量',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    {
+                        data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                            , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+                    }
+                ],
+                position: [2] //初始化定位
+            });
+
+            //         var mobileSelect3 = new MobileSelect({
+            //       trigger: '#badge3',
+            //       title: '存放位置',
+            //       wheels: [
+            //                   {data:[
+            //                       {
+            //                           id:'1',
+            //                           value:'客廳',
+            //                           childs:[
+            //                               {id:'1',value:''},
+            //                               {id:'2',value:''},
+            //                               {id:'3',value:''},
+            //                               {id:'4',value:''},
+            //                               {id:'5',value:''}
+            //                           ]
+            //                       },
+            //                       {id:'2',value:'廚房'},
+            //                       {id:'3',value:'廁所'},
+
+            //                   ]}
+            //               ],
+            //       position:[0,1],
+            //       callback:function(indexArr, data){
+            //           console.log(data); //返回選中的json數據
+            //       }
+            //   });
+
+
+            // var btn = document.getElementById("change-icon1");
+
+            // // btn.addEventListener("click", function () {
+            // //     // alert("0000");
+            // // });
+
+           
+
+        }
+    </script>
+
+
+
+
+
     <style>
         body {
             background-color: #f0f0f0;
@@ -65,20 +148,24 @@
             margin: 1%;
             border-radius: 10%;
             float: left;
-            color:#254F6E;
+            color: #254F6E;
         }
     </style>
 
+
+
 </head>
 
-<body>
+<body onload="init();">
     <!-- 上方標題 -->
+    
+        
 
     <div class="container-fluid">
         <div class="row p-1 " style="background-color:#254F6E">
             <div class="col-4">
-                <a href="fur-1.html"><button type="button" class="buttontype"><img
-                            src="static/back.png" style=width:40px;>
+                <a href="fur-1.html"><button type="button" class="buttontype"><img src="static/back.png"
+                            style=width:40px;>
                     </button></a>
             </div>
             <div class="col-4 title">
@@ -89,14 +176,15 @@
         </div>
     </div>
 
+   
     <!-- 選擇物品照片及輸入名稱 -->
 
     <div class="texts container-fluid">
 
         <div class="row">
-            <div class="col-5" style="margin-top:20px">
-                <img src="static/things/test.jpg" style="height:150px">
-            </div>
+            <div   id="openLabrary" class="col-5" style="margin-top:20px"><div class="app">
+                <img  id="myImage" src="static/things/test.jpg" style="height:150px">
+            </div></div>
             <div class="col-7" style="margin-top:20px">
                 <form style="background-color:transparent">
                     <div class="form-group">
@@ -120,31 +208,31 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                 data-toggle="modal" data-target="#exampleModal">類別
-                <span class="badge "><img src="static/right-arrow.png" style="height:20px;">
+                <span id="category" class="badge "><img src="static/right-arrow.png" style="height:20px;">
                 </span>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente">所屬人
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente"
+                data-toggle="modal" data-target="#exampleModal3">所屬人
                 <span class="badge "><img src="static/right-arrow.png" style="height:20px">
                 </span>
             </li>
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">存放位置
-                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                <span id="badge3" class="badge "><img src="static/right-arrow.png" style="height:20px">
                 </span>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">數量
-                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
-                </span>
+            <li   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">數量
+                <div id="badge4"><span  class="badge "><img src="static/right-arrow.png" style="height:20px">
+                </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">夾層
-                <span class="badge "><img src="static/right-arrow.png" style="height:20px">
-                </span>
+            <li  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">夾層
+                <div  id="badge5"><span  class="badge"><img src="static/right-arrow.png" style="height:20px">
+                </span></div>
             </li>
-            <div>
-                <button type="button" class="btn btn-light buttontype " style="margin-top:80px ;margin-left:200px"><img
-                        src="static/dustbin3.png" style="height:30px"></button>
-            </div>
+            <button type="button" class="btn btn-light buttontype " style="margin-top:30px ;margin-left:250px"><img
+                    src="static/dustbin3.png" style="height:30px"></button>
 
         </ul>
+
     </div>
 
 
@@ -162,12 +250,13 @@
                 <div class="modal-body">
                     <div class="box-wrap">
                         <div class="box ">
-                            <button type="button" style="background-color: transparent;
-                             border-color: transparent;margin-top:10%;"><img src="static/plus.png" style=width:30px;>
+                            <button type="button" style="background-color: transparent ;
+                             border-color: transparent;margin-top:10%;" data-toggle="modal"
+                                data-target="#exampleModal2"><img src="static/plus.png" style=width:30px;>
                             </button>
                         </div>
 
-                        <div class="box">
+                        <div class="box1">
                             <button type="button" style="background-color: transparent;
                                        border-color: transparent;"><img src="static/shirt.png" style=width:40px;>
                             </button><br> 衣物
@@ -213,11 +302,154 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="change-icon1" class="btn btn-primary">
+                        <span class="fa fa-check-circle-o"></span>
+                        確認
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">選擇類別</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+                        <div class="box1">
+                            <button type="button" style="background-color: transparent;
+                                   border-color: transparent;"><img src="static/001-scissors.png" style=width:40px;>
+                            </button><br> 文具
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                        border-color: transparent;"><img src="static/004-camera.png" style=width:40px;>
+                            </button><br> 相機
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/3d-glasses.png" style=width:40px;>
+                            </button><br> 眼鏡
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/007-stroller.png" style=width:40px;>
+                            </button><br> 嬰兒用品
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/008-beach-ball.png" style=width:40px;>
+                            </button><br> 球類
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent; border-color: transparent;">
+                                <img src="static/002-lipstick.png" style=width:40px;>
+                            </button><br> 化妝品
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/003-game-controller.png" style=width:40px;>
+                            </button><br> 電動
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/005-power-bank.png" style=width:40px;>
+                            </button><br> 3C用品
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="change-icon" class="btn btn-primary">
+                        <span class="fa fa-check-circle-o"></span>
+                        確認
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">選擇所屬人</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+                        <div class="box ">
+                            <button type="button" style="background-color: transparent ;
+                         border-color: transparent;margin-top:10%;"><img src="static/plus.png" style=width:30px;>
+                            </button>
+                        </div>
+
+                        <div class="box1">
+                            <button type="button" style="background-color: transparent;
+                                   border-color: transparent;"><img src="static/012-man.png" style=width:40px;>
+                            </button><br> 爸爸
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                        border-color: transparent;"><img src="static/009-woman.png" style=width:40px;>
+                            </button><br> 媽媽
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/016-boy.png" style=width:40px;>
+                            </button><br> 哥哥
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/011-woman-2.png" style=width:40px;>
+                            </button><br> 姊姊
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/019-boy-1.png" style=width:40px;>
+                            </button><br> 弟弟
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent; border-color: transparent;">
+                                <img src="static/018-woman-5.png" style=width:40px;>
+                            </button><br> 妹妹
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/014-man-1.png" style=width:40px;>
+                            </button><br> 爺爺
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/010-woman-1.png" style=width:40px;>
+                            </button><br> 奶奶
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="change-icon" class="btn btn-primary">
+                        <span class="fa fa-check-circle-o"></span>
+                        確認
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -229,6 +461,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+
+
+
+
+
+
 </body>
 
 </html>

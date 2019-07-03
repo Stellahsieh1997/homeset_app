@@ -26,10 +26,30 @@ var app = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
+    onDeviceReady: function() { alert("devicereadyi");
         this.receivedEvent('deviceready');
+        var db = window.sqlitePlugin.openDatabase({
+            name: 'my.db',
+            location: 'default',
+          });alert(db);
+
+
+        //   預設資料
+          db.sqlBatch([
+            'CREATE TABLE IF NOT EXISTS DemoTable (name, score)',
+            [ 'INSERT INTO DemoTable VALUES (?1,?2)', ['Alice', 101] ],
+            [ 'INSERT INTO DemoTable VALUES (?1,?2)', ['Betty', 202] ],
+          ], function() {
+            console.log('Populated database OK');
+          }, function(error) {
+            console.log('SQL batch ERROR: ' + error.message);
+          });
     },
 
+
+
+
+    
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);

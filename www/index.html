@@ -1,49 +1,243 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="en">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homeset</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+    <style>
+        .font {
+            font-family: Microsoft JhengHei;
+        }
+
+
+
+        .flex {
+            flex: 1 auto;
+            display: flex;
+            height: 250px;
+            padding: 15px;
+            border: 8px;
+            flex-wrap: wrap;
+            flex-direction: column;
+            overflow-x: auto;
+            overflow-y: hidden;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .bordertype {
+            border-radius: 10px;
+            border-color: white;
+            background-color: white;
+            padding: 5px;
+            margin: 10px;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #254F6E;
+        }
+
+        .buttontype {
+            background-color: transparent;
+            border-color: transparent;
+            margin: 0px;
+        }
+
+        .navtype {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 20px;
+        }
+
+        .imgtype {
+            width: 150px;
+            margin: 0px;
+            background-color: white;
+            border-color: white;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        .click {
+            background-color: white;
+            border-color: transparent;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+
+
+        }
+    </style>
+</head>
+
+
+
+
+<body class="font" style="background-color: #f0f0f0">
+    <div class=" container-fluid">
+        <div class="row fixed-top" style="margin-top:10px ">
+            <div class="col-5 "></div>
+            <div class="col-2">
+                <button type="button" style="background-color:transparent;border-color:transparent;margin:0px;">
+                    <img src="static/delete-button.png" style=width:30px;>
+                </button>
+            </div>
+            <div class="col-2 ">
+                <button  type="button"
+                    style="background-color:transparent;border-color:transparent;margin:0px;" data-toggle="modal"
+                    data-target="#exampleModal">
+                    <img src="static/add1.png" style=width:30px;>
+                </button>
+            </div>
+            <div class="col-3 title">
+                <button  type="button"
+                    style="background-color:transparent;border-color:transparent;margin:0px;" data-toggle="modal"
+                    data-target="#exampleModal">
+                    編輯
+                </button>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+    </div>
+    <div class=" modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style=color:black>新增平面圖</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form style="margin:10px">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">平面圖名稱</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="輸入名稱">
+                    </div>
+                </form>
+                <div class="modal-body">
+                    <form action="" method="POST">
+                        <button type="submit" class="btn btn-primary">確認
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="rol">
+        <div style="text-align:center;margin-top:50px;">
+            <div class="btn-group dropright ">
+                <a href="home-2.html">
+                    <button
+                        style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                        class="btn btn-secondary dropdown-toggle" type="button">
+                        <img src="static/square.png" style=width:100px;margin:0px;>
+                        <h5 style=color:black;margin:0px;>一樓</h5>
+                    </button>
+                </a>
+                <a href="">
+                <button
+                    style="background-color:white;border-color: transparent;padding:20px;margin: 10px ;border-radius: 10px;"
+                    class="btn btn-secondary dropdown-toggle" type="button">
+                    <img src="static/square.png" style=width:100px;margin:0px;>
+                    <h5 style=color:black;margin:0px;>二樓</h5>
+                </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="container-fluid">
+
+        <div class="rol" >
+
+
+            <div class="col-6" style="text-align:center;margin-top:80px;">
+
+            
+                <a href="home-2.html" role="button">
+                    <img src="static/square.png" style="width:150px;;background-color:white;
+                    border-color: white;padding-left:15px;padding-right:15px;margin-bottom: 10px ;
+                    border-radius: 10px; box-shadow:3px 3px 12px gray;"></a>
+                <h5 style=color:black;margin:0px;>一樓</h5>
+              
+            </div>
+
+            <div class="col-6" style="text-align:center;margin-top:80px;">
+                
+                <a href="home-2.html" role="button">
+                    <img src="static/square.png" style="width:150px;margin:0px ;background-color:white;
+                    border-color: white;padding-left:15px;padding-right:15px;margin-bottom: 10px ;
+                    border-radius: 10px; box-shadow:3px 3px 12px gray;"></a>
+
+                <h5 style=color:black;margin:0px;>二樓</h5>
+             
+            </div>
+
+        </div>
+
+
+    </div> -->
+
+
+
+    <div class="container-fluid  fixed-bottom" style="background-color: #ffffff">
+            <div class="row">
+                <div class="col offset-1">
+                    <a href="searches.html">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/search.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col ">
+                    <a href="home-1.html">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/home.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col">
+                    <a href="">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/article1.png" style="width:25px;margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+                <div class="col">
+                    <a href="">
+                        <button type="button" style="background-color: transparent;border-color: transparent;margin:0px;">
+                            <img src="static/user.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
+                        </button></a>
+                </div>
+            </div>
+    
+        </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+
+
+
+
+
 </html>

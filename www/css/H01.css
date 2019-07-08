@@ -1,0 +1,186 @@
+
+* {
+    /* border:solid 1px black; */
+    font-family: 微軟正黑體;
+    /* background-color: #F5F6F8; */
+}
+
+ion-icon{
+    width: 30px;
+    height: 25px;
+    }
+
+		/* html, body {
+			position: relative;
+			height: 100%;
+		} */
+        html, body
+        {
+            padding: 0;
+            margin: 0;
+        }
+        body
+        {
+            background-color: #F5F6F8;
+            font-family: Arial, Helvetica, Verdana;
+            font-size: 14px;
+            line-height: 22px;
+            color: #666;
+            position: relative;
+            -webkit-text-size-adjust: none;
+        }
+        body *
+        {
+            text-shadow: none;
+        }
+        h1, h2, h3, h4, h5, h6
+        {
+            line-height: 1;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        h1, h2, h3
+        {
+            font-size: 18px;
+        }
+        h4, h5, h6
+        {
+            font-size: 16px;
+        }
+        p
+        {
+            margin: 0 0 10px 0;
+        }
+        a, a:link, a:active, a:visited, a:hover
+        {
+            color: inherit;
+            text-decoration: underline;
+        }
+        
+
+        nav:not(.mm-menu)
+        {
+            display: none;
+        }
+        
+        .header,
+        .content,
+        .footer
+        {
+            text-align: center;
+        }
+        .header
+        {
+            background:#254F6E;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            line-height: 40px;
+        
+        
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;	
+            width: 100%;
+            height: 40px;
+            padding: 0 50px;
+        }
+        .triangle{
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width:13.0px 7.5px 0 7.5px;
+            border-color: #ffffff transparent transparent transparent;
+            position: absolute;
+            top:15px;
+            right: 15px;
+        }
+
+        .footer{
+            position: fixed;
+            bottom: 0;
+            background: #fff;
+            box-shadow:  2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+            
+        }
+        .row1{
+            width: 100%;
+            height: 40px;
+        }
+        .header.fixed
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .footer.fixed
+        {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+        .header a
+        {
+            background: center center no-repeat transparent;
+            background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
+            display: block;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            left: 10px;
+        }
+        .content
+        {
+            padding: 150px 50px 50px 50px;
+        }	
+        .icon{
+            display: flex;
+            justify-content:center;
+            align-content: center;
+            padding-top: 5px;
+        }
+        .icon1:hover{
+            color: #254F6E;
+        }
+        .circlefix{
+            width:40px;
+            height:40px;
+            /* background-image: url(../static/Home/_ionicons_svg_md-add.svg); */
+            background-color: #254F6E;
+            border-radius:50%;
+            border-color: transparent;
+            position: fixed;
+            right:20px;
+            bottom:60px;
+            box-shadow:0px 0px 35px rgba(0,0,0,0.3);
+            transition:0.5s;
+        }
+          .circlefix:hover{
+             box-shadow:5px 5px 60px rgba(0,0,0,0.4);
+            transform:translate(-5px,-5px)
+          }
+
+        .add{
+            display: flex;
+            justify-content:center;
+            align-content: center;
+            padding-top: 7px;
+        }
+        .icon1{
+            transition:0.3s;
+        }
+        .icon1:hover{
+           fill: #254F6E;
+           
+        }
+        .modal-body ul{
+            list-style:none;
+            padding-left:0;
+            font-size: 16px;
+          }
+        
+        /* .modal-title{
+            text-align: center;
+            align-content: center;
+            justify-content: center;
+        } */ 

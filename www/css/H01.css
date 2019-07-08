@@ -150,8 +150,8 @@ ion-icon{
             border-radius:50%;
             border-color: transparent;
             position: fixed;
-            right:40px;
-            bottom:50px;
+            right:20px;
+            bottom:60px;
             box-shadow:0px 0px 35px rgba(0,0,0,0.3);
             transition:0.5s;
         }
@@ -173,4 +173,14 @@ ion-icon{
            fill: #254F6E;
            
         }
+        .modal-body ul{
+            list-style:none;
+            padding-left:0;
+            font-size: 16px;
+          }
         
+        /* .modal-title{
+            text-align: center;
+            align-content: center;
+            justify-content: center;
+        } */ 

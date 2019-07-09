@@ -27,7 +27,7 @@
         <div class="header">
             <a href="#menu"><span></span></a>
             樓層
-        <div class="triangle"> </div>
+        <div class="triangle" data-toggle="modal" data-target="#exampleModalCenter"> </div>
         </div>
         <div class="content">
             <p><strong>This is a demo.</strong><br />
@@ -59,6 +59,32 @@
             </ul>
         </nav>
     </div>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">樓層</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">一樓</li>
+                <li class="list-group-item">二樓</li>
+                <li class="list-group-item">三樓</li>
+                <li class="list-group-item">新增</li>
+              </ul>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+
     <div class="circlefix add">
         <ion-icon name="md-add" color="light"></ion-icon>
     </div>
@@ -106,6 +132,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
     crossorigin="anonymous"></script>
-
-
 </html>

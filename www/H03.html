@@ -2,30 +2,24 @@
 <html lang="en">
 
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css" rel="stylesheet">
-    <!-- Import Ionic -->
-    <script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
-    <!-- Optional, import the Ionic icons -->
-    <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel=stylesheet type="text/css" href="../www/css/H03.css">
 
-    <title>H02</title>
-
-
-
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="css/ionicons.min.css">
+        <link rel=stylesheet type="text/css" href="../www/css/H03.css">
+        <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <title>H03</title>
+    </head>
 
 <body>
 
     <div id="page">
         <div class="header">
-            <a href="../www/H01.html"><img src="../www/static/Home/back.svg" alt=""> <span></span></a>
+            <a href="../www/index.html" class="icon ion-ios-arrow-back icon2"> <span></span></a>
             儲存的文章
 
         </div>
@@ -44,20 +38,20 @@
 </body>
 <div class="container-fluid  footer">
     <div class="row row1">
-        <div class="col icon">
+        <div class="col-4 icon">
             <a href="#">
-
-                <ion-icon class="icon1" name="search" color="dark"></ion-icon>
+                <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
             </a> </div>
-        <div class="col icon ">
+        <div class="col-4 icon ">
             <a href="#">
-                <ion-icon class="icon1" name="home" color="dark"></ion-icon>
+                <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
             </a> </div>
-        <div class="col icon">
+        <div class="col-4 icon">
             <a href="#">
-                <ion-icon class="icon1" name="bookmarks" color="dark"></ion-icon>
+                <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
             </a>
         </div>
+
 
     </div>
 
@@ -67,16 +61,20 @@
 <script src="../www/js/mmenu.js"></script>
 <script src="../www/js/mmenu.debugger.js"></script>
 <script>
-    new Mmenu(document.querySelector('#menu'));
 
-    document.addEventListener('click', (evnt) => {
-        let anchor = evnt.target.closest('a[href^="#/"]');
-        if (anchor) {
-            alert('Thank you for clicking, but that\'s a demo link.');
-            evnt.preventDefault();
+    var t = 1;
+    function test(x) {
+        // 這個是判斷第一次點選
+        if (x == 1 && t == 1) {
+            document.getElementById(x).style.color = "#254F6E";
         }
-    });
-
+        // 這個判斷是防止重複點選 
+        else if (x != t) {
+            document.getElementById(x).style.color = "#254F6E";
+            document.getElementById(t).style.color = "black";
+        }
+        t = x;
+    }
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

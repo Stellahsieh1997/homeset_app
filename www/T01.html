@@ -15,14 +15,16 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-
+    <!--匯入icon-->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!--匯入滾輪-->
     <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
 
 
-    <script src="js/mobileSelect.js"></script>
+    
 
     <script type="text/javascript" charset="utf-8">
 
@@ -255,8 +257,14 @@
             var numberValue = document.getElementById("number").innerHTML;
             var layerValue = document.getElementById("layer").innerHTML;
             var reminder = document.getElementById("reminder").value;
+            var remindertextValue = document.getElementById("remindertext").value;
+            var onoffcheckbox = document.getElementById("myonoffswitch2");
+            if (onoffcheckbox.checked == false) {
+                reminder = "";
+            }
 
-            var thingtext = name + "," + description + "," + categoryValue + "," + ownerValue + "," + placeValue + "," + numberValue + "," + layerValue + "," + reminder
+            var thingtext = name + "," + description + "," + categoryValue + "," + ownerValue + "," + placeValue 
+            + "," + numberValue + "," + layerValue + "," + reminder+","+remindertextValue
             thing = thingtext.split(",");
             alert(thing);
             console.log(thing)
@@ -274,6 +282,9 @@
             else {
                 reminderinput.style.display = "none";
                 remindertext.style.display = "none";
+                reminderinput.value = "";
+                remindertext.value="";
+
             }
         }
 
@@ -317,6 +328,16 @@
 
         }
 
+        .imgcol{
+            margin-top:20px; 
+            text-align: center;
+        }
+
+        /*icon旁文字*/
+        b{
+            margin-left: 15px;
+        }
+        
         /*日期div*/
         .reminddate {
             position:absolute;
@@ -344,9 +365,16 @@
          }
 
         .deletebtn {
-            margin-left: 80%;
             
+            margin-left: 80%;
+            margin-bottom: 20%;
+            background-color: transparent;
+            border: 0;          
+        }
 
+        .photobtn{
+            background-color: transparent;
+            border: 0; 
         }
 
         .textform {
@@ -368,6 +396,11 @@
             border-radius: 10%;
             float: left;
             color: #254F6E;
+        }
+        
+        .thingbtn{
+            text-align: right;
+            width: 150px;
         }
 
         /*toggleswitch屬性*/
@@ -393,7 +426,7 @@
             cursor: pointer;
             margin-bottom: 2px;
             margin-top: 2px;
-            border: 2px solid #FCF7F7;
+            border: 0;
             border-radius: 29px;
         }
 
@@ -429,8 +462,8 @@
         .onoffswitch-inner:after {
             content: "否";
             padding-right: 15px;
-            background-color: #8998A3;
-            color: #EBE2E2;
+            background-color: gray;
+            color:#FFFFFF;
             text-align: right;
         }
 
@@ -489,7 +522,7 @@
     <div class="texts container-fluid">
 
         <div class="row">
-            <div id="openLabrary" class="col-5" style="margin-top:20px">
+            <div id="openLabrary" class="col-5 imgcol" >
                 <div class="app" data-toggle="modal" data-target="#exampleModal4">
                     <img id="myImage" src="static/imageadd.png" style="height:135px">
                 </div>
@@ -515,28 +548,28 @@
 
     <div class="bordertype ">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">類別
-                <div id="category"><span class="badge "><img src="static/right-arrow.png" style="height:20px;">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-pricetags icon1" ><b>類別</b></span> 
+                <div  class="thingbtn" id="category"><span class="badge "><img src="static/right-arrow.png" style="height:20px;">
                     </span></div>
             </li>
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente"
-                data-toggle="modal" data-target="#exampleModal3">所屬人
-                <div id="owner"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
+                data-toggle="modal" data-target="#exampleModal3"><span class="icon ion-md-person icon1"><b>所屬人</b></span>
+                <div class="thingbtn"  id="owner"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
                     </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">存放位置
-                <div id="place"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-archive icon1"><b>存放位置</b></span>
+                <div class="thingbtn"  id="place"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
                     </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">數量
-                <div id="number"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-stats icon1"><b>數量</b></span>
+                <div class="thingbtn"  id="number"><span class="badge "><img src="static/right-arrow.png" style="height:20px">
                     </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">夾層
-                <div id="layer"><span class="badge"><img src="static/right-arrow.png" style="height:20px">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-browsers icon1"><b>夾層</b></span>
+                <div class="thingbtn"  id="layer" ><span class="badge"><img src="static/right-arrow.png" style="height:20px">
                     </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">是否拿出
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-alert icon1"><b>是否拿出</b></span>
                 <span>
                     <div class="onoffswitch ">
                         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
@@ -551,7 +584,7 @@
                 <div id="badge7"><span class="badge">
                     </span></div>
             </li>
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">提醒小幫手
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span class="icon ion-md-time icon1"><b>提醒小幫手</b></span>
 
                 <span>
                     <div class="onoffswitch ">
@@ -636,7 +669,7 @@
 
 
         </ul>
-        <button type="button" class="btn btn-light deletebtn " position="absolute" style=" ">
+        <button type="button" class="btn btn-light deletebtn " position="absolute" >
             <img src="static/dustbin3.png" style="height:30px"></button>
     </div>
 
@@ -665,12 +698,12 @@
 
 
                         <div class="box1">
-                            <button type=" button" class="btn btn-light" onclick="capturePhoto();"><img
+                            <button type=" button" class="btn btn-light photobtn" onclick="capturePhoto();"><img
                                     src="static/camera.png" style=width:40px><br> 相機</img></button><br>
                         </div>
 
                         <div class="box">
-                            <button type="button" class="btn btn-light"
+                            <button type="button" class="btn btn-light photobtn"
                                 onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><img src="static/photo-library.png"
                                     style=width:40px><br> 從相簿中選擇</img></button>
                         </div>

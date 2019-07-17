@@ -1,0 +1,131 @@
+.font {
+    font-family: Microsoft JhengHei;
+}
+
+/* 家具照片排列 */
+
+.flex {
+    flex: 1 auto;
+    display: flex;
+    height: 200px;
+    padding: 15px 10px;
+    border: 8px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+    justify-content: left;
+    height: 100%;
+
+}
+
+/* 照片下方文字 */
+
+.content {
+    display: block;
+    text-align: center;
+    color: white;
+    margin-right: 20px;
+    font-size: 20px
+}
+
+
+/* 圓形照片 */
+
+.square {
+
+    border-radius: 50%;
+    padding: 0px;
+    /* border: 5px solid ;
+    color: yellow; */
+    margin-right: 20px;
+}
+
+
+/* 透明的按鈕 */
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0px;
+    outline: none;
+}
+
+/* 最上方title */
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+}
+
+.bordertype {
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+
+.inner {
+    flex: 1 auto;
+    display: flex;
+    height: 300px;
+    padding: 15px;
+    border: 8px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.plus {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: white;
+    height: 38px;
+}
+
+.box-wrap {
+    text-align: center;
+    overflow: hidden;
+}
+
+.box-wrap>div {
+    width: 31%;
+    padding-bottom: 0%;
+    margin: 1%;
+    float: left;
+
+}
+
+.icon1 {
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+}
+
+.circlefix {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    border: 2px solid #f0f0f0;
+    background-color: #254F6E;
+    border-radius: 50%;
+    /* border-color: transparent; */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}

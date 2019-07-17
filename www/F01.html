@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Furnitures</title>
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel=stylesheet type="text/css" href="../www/css/F01.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="font container-fluid" style="background-color: #f0f0f0;">
+    <div class="row p-1 " style="background-color:#254F6E;">
+        <div class="col-4" style="display: flex;justify-content:right;align-content:center;">
+            <a href="home-2.html">
+                <i class="icon ion-ios-arrow-back icon1"></i>
+            </a>
+        </div>
+        <div class="col-4 title">
+            <p style="margin:0px;font-size:24px">客廳</p>
+        </div>
+        <div class="col-4 ">
+        </div>
+    </div>
+
+    <!-- 增加儲物櫃互動視窗 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 40%;border-radius: 5%;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">新增儲物櫃</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body text-black">
+                    <form action="" method="POST" enctype="multipart/form-data" id='form'>
+                        <div style="margin-bottom:10px;">
+                            <label for="furniturename">儲物櫃名稱</label>
+                            <input type="text" class="form-control" id="furniturename">
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label>照片</label><br>
+                            <button type=" button" class="btn btn-light" onclick="capturePhoto();">相機</button>
+                            <button type="button" class="btn btn-light"
+                                onclick="getPhoto(pictureSource.PHOTOLIBRARY);">從相簿中選擇</button><br>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="processFormData()">送出
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--櫃子的設定  -->
+    <div class="modal" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px;">
+            <div class="modal-content" style="border-radius: 0%;">
+                <div class="modal-body " style="background-color: #254F6E">
+                    <div class="row" style="width:100vw;text-align: center">
+                        <div class="col-4">
+                            <i class="icon ion-md-create"
+                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            <p style="color: #f0f0f0">編輯名稱</p>
+                        </div>
+                        <div class="col-4">
+                            <i class="icon ion-ios-trash"
+                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            <p style="color: #f0f0f0">刪除</p>
+                        </div>
+                        <div class="col-4">
+                            <i class="icon ion-ios-share"
+                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            <p style="color: #f0f0f0">共享</p>
+                        </div>
+                    </div>
+                    <div class="row" style="width:100vw;text-align: center">
+                        <div class="col-4">
+                            <i class="icon ion-ios-create"
+                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            <p style="color: #f0f0f0">編輯圖片</p>
+                        </div>
+                        <div class="col-4">
+                            
+                        </div>
+                        <div class="col-4">
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--櫃子-->
+    <div class="row" style="background-color:#254F6E">
+        <div class="flex">
+            <div>
+                <div class="circlefix">
+                    <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal"
+                        style="outline: none;">
+                        <i class="icon ion-md-add" style="font-size: 40px;color:rgb(255, 255, 255)"></i>
+                    </button>
+                </div>
+
+            </div>
+            <div style="position: relative">
+                <img src="static/1.jpg" height="80" width="80" class="square">
+                <button type="button" class="buttontype" style=" position: absolute;
+                right: 15px; top:-10px;outline: none;" data-toggle="modal" data-target="#exampleModal2">
+                    <i class="icon ion-md-more" style="font-size:20px;color:rgb(255, 255, 255);padding: 0px"></i>
+                </button>
+                <div class="content">櫃子</div>
+
+            </div>
+            <div style="position: relative">
+                <img src="static/1.jpg" height="80" width="80" class="square">
+                <button type="button" class="buttontype" style=" position: absolute;
+                right: 15px; top:-25px;outline: none;" data-toggle="modal" data-target="#exampleModal2">
+                    <i class="icon ion-md-more" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                </button>
+                <div class="content">櫃子</div>
+
+            </div>
+            <div style="position: relative">
+                <img src="static/1.jpg" height="80" width="80" class="square">
+                <button type="button" class="buttontype" style=" position: absolute;
+                right: 15px; top:-25px;outline: none;" data-toggle="modal" data-target="#exampleModal2">
+                    <i class="icon ion-md-more" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                </button>
+                <div class="content">櫃子</div>
+
+            </div>
+            <div style="position: relative">
+                <img src="static/1.jpg" height="80" width="80" class="square">
+                <button type="button" class="buttontype" style=" position: absolute;
+                right: 15px; top:-25px;outline: none;" data-toggle="modal" data-target="#exampleModal2">
+                    <i class="icon ion-md-more" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                </button>
+                <div class="content">櫃子</div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 放物品的地方 -->
+    <div class="box-wrap" style="margin-top:10px;margin-bottom:40px;">
+
+    </div>
+
+    <!-- 新增物品 -->
+    <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
+        <a href="thing-1.html">
+            <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
+        </a>
+    </div>
+
+    <script>
+        // $('#exampleModal2').width(screen.width);
+    </script>
+
+</body>
+
+</html>

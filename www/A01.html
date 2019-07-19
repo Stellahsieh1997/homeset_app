@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<html style="height: 100%;width: 100%">
 
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,17 @@
     <style>
         .font {
             font-family: Microsoft JhengHei;
+        }
+        body{
+            width:100%;
+        }
+
+        header{
+            width:100%;
+        }
+
+        content{
+            width:100%;
         }
 
         input[type=text] {
@@ -87,182 +98,43 @@
             transition:0.3s;
         }
         .icon1:hover{
-           fill: #254F6E;
-           
+            fill: #254F6E;
+
         }
     </style>
 
 </head>
 
-<body class="font" style="background-color: #f0f0f0">
-    <div class="container-fluid">
-
-        <div class="row " style="margin-top:30px;">
-            <div class="col">
-                <h1 style="color:rgb(90, 88, 88);font-weight:bold;font-size:40px">收納資訊</h1>
-                <hr>
-
-                <form class="form-inline my-4 my-lg-0">
-                    <input type="text" name="search" placeholder="                       Search something">
-                </form>
+<body class="font" style="background-color: #f0f0f0;">
+        <div class="container-fluid">
+                <div class="row " style="margin-top:30px;">
+                    <div class="col">
+                        <h1 style="color:rgb(90, 88, 88);font-weight:bold;font-size: 35px">收納資訊</h1>
+                        <hr>
+        
+                        <form class="form-inline my-4 my-lg-0">
+                            <input type="text" name="search" placeholder="                 Search something">
+                        </form>
+                    </div>
+                </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row my-4">
+                <div class="col-sm-3">
+                        <div class="btn btn-light" style="float:left;width:100px;margin-left:40px">客廳</div>
+                        <div class="btn btn-light" style="float:center;width:100px;margin-left:40px">廚房</div>
+                        <div class="btn btn-light" style="float:right;width:100px;margin-right:-70px">臥室</div>
+                </div>
+                <div class="col-sm-3">
+                        <div class="btn btn-light" style="float:left;width:100px;margin-left:40px;margin-top:25px">浴室</div>
+                        <div class="btn btn-light" style="float:center;width:100px;margin-left:40px;margin-top:25px">收納</div>
+                        <div class="btn btn-light" style="float:right;width:100px;margin-right:-70px;margin-top:25px">設計</div>
+                </div>
             </div>
         </div>
-
-    </div>
-
-    <div class="buttons">
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px">客廳</div>
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px">廚房</div>
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px">臥室</div>
-    </div>
-
-    <div class="buttons">
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px;margin-top:25px">浴室</div>
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px;margin-top:25px">收納</div>
-        <div class="btn btn-light" style="float:left;width:100px;margin-left:50px;margin-top:25px">設計</div>
-    </div>
-
-
-    <!-- <style>
-    //Center Content
-    .container {
-	max-width: 1100px;
-	margin: 0 auto;
-                }
-//Todo clean up some crappy code
-    .cards {
-	display: -webkit-flex;
-	display: flex;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	margin-top: 15px;
-	padding: 1.5%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-    }
-
-    .card {
-	@media (max-width: 700px) {
-		width: 100%;
-	}
-	position: relative;
-	margin-bottom: 20px; 
-	padding-bottom: 30px; 
-	background: #fefff9;
-	color: #363636; //the whole content of the card becomes linked, so this will give the text a "norma;" appearance
-	text-decoration: none;
-	@include box-shadow(rgba(black, 0.19) 0 0 8px 0);
-	@include border-radius(4px);
-	@include breakpoint(700px, $no-query: true) {
-	//switch to 2 columns
-		max-width: 320px;
-		margin-right: 20px;
-		margin-bottom: 20px;
-		&:nth-child(even) {
-			margin-right: 0;
-		}
-	}
-	@include breakpoint(980px, $no-query: true) {
-	//switch to 3 columns
-		&:nth-child(even) {
-			margin-right: 20px;
-		}
-		&:nth-child(3n) {
-			margin-right: 0;
-		}
-	}
-	span {
-		display: block;
-	}
-	.card-summary {
-		padding: 5% 5% 3% 5%;
-	}
-	.card-header {
-		position: relative;
-		height: 175px;
-		overflow: hidden;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
-		background-color: rgba(white,.15);
- 		background-blend-mode: overlay;
-		@include border-radius(4px 4px 0 0);
-		&:hover, &:focus {
-			background-color: rgba(white, 0);
-		}
-	}
-	.card-title {
-		background: rgba(157, 187, 63, .85);
-		padding: 3.5% 0 2.5% 0;
-		color: white;
-		font-family: 'Roboto Condensed', sans-serif;
-		text-transform: uppercase;
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-		h3 {
-			font-size: 1.2em;
-			line-height: 1.2;
-			padding: 0 3.5%;
-			margin: 0;
-		}
-	}
-	.card-meta {
-		max-height: 0;
-		overflow: hidden;
-		color: #666;
-		font-size: .78em;
-		text-transform: uppercase;
-		position: absolute;
-		bottom: 5%;
-		padding: 0 5%;
-		@include transition-property(max-height);
-		@include transition-duration(.4s);
-		@include transition-timing-function(ease-in-out);
-	}
-	&:hover, &:focus {
-		background: white;
-	    @include box-shadow(rgba(black, 0.45) 0px 0px 20px 0px);
-		.card-title {
-			background: rgba(157, 187, 63, .95);
-		}
-		.card-meta {
-			max-height: 1em;
-		}
-	}
-}
-
-img {
-	max-width: 100%; // stop images from breaking out of their bounding boxes.
-}
-
-//General styles for page to make it prettier ;P
-body {
-	background :#f0f0f0;
-	font-size: 17px; 
-	line-height: 1.4;
-	font-family: 'Jaldi', sans-serif;
-}
-
-* {
-    @include transition-property(
-    background-color,
-    border-color,
-    box-shadow,
-    color,
-    opacity,
-    text-shadow,
-    transform
-    );
-    @include transition-duration(0.2s);
-    @include transition-timing-function(linear);
-}
-    </style> -->
-
-    <div class="card" style="width: 30rem;margin-left:15px;height:18rem;margin-top:10rem">
+</body>
+<div class="container-fluid">
+    <div class="card" style="width:26rem;margin-left:15px;height:18rem;margin-top:2rem;margin-right: 30px">
         <img src="https://cp2.100.com.tw/service/active/2019/04/01/155411168105554804_1000.jpg?webp=0"
             class="card-img-top" style=height:12rem>
         <div class="card-body" style="background-color: darkgray;height:20rem">
@@ -271,7 +143,7 @@ body {
         </div>
     </div>
 
-    <div class="card" style="width: 30rem;margin-left:15px;height:18rem;margin-top:5rem">
+    <div class="card" style="width: 26rem;margin-left:15px;height:18rem;margin-top:5rem">
         <img src="http://www.meizhaikong.com/uploads/160526/160526/6-160526093301257.jpg" class="card-img-top"
             style=height:13rem>
         <div class="card-body" style="background-color: darkgray;height:20rem">
@@ -280,44 +152,16 @@ body {
         </div>
     </div>
 
-    <div class="card" style="width: 30rem;margin-left:15px;height:18rem;margin-top:5rem">
+    <div class="card" style="width: 26rem;margin-left:15px;height:18rem;margin-top:5rem">
         <img src="http://web.asia.edu.tw/ezfiles/0/1000/img/169/1513065314.jpg" class="card-img-top" style=height:13rem>
         <div class="card-body" style="background-color: darkgray;height:20rem">
             <h5 class="card-title" style="color:white">Finding Beauty in the badlands</h5>
             <h8 class="card-text" style="margin-top:-250px;color: dodgerblue">2 hours ago</h8>
         </div>
     </div>
+</div>
 
 
-    <!-- <div class="container-fluid  fixed-bottom" style="background-color: #ffffff">
-            <div class="row">
-                <div class="col offset-1">
-                    <a href="searches.html">
-                        <button type="button"
-                            style="background-color: transparent;border-color: transparent;margin:0px;">
-                            <img src="static/search.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
-                        </button></a>
-                </div>
-                <div class="col ">
-                    <a href="home-1.html">
-                        <button type="button"
-                            style="background-color: transparent;border-color: transparent;margin:0px;margin-left:10px">
-                            <img src="static/home.png" style="width:25px; margin-top:10px;margin-bottom: 10px">
-                        </button></a>
-                </div>
-                <div class="col">
-                    <a href="">
-                        <button type="button"
-                            style="background-color: transparent;border-color: transparent;margin:0px;margin-left:10px">
-                            <img src="static/article1.png" style="width:25px;margin-top:10px;margin-bottom: 10px">
-                        </button></a>
-                </div>
-
-            </div>
-
-        </div> -->
-
-</body>
 
 <div class="container-fluid  footer">
     <div class="row row1">
@@ -354,4 +198,5 @@ var t = 1;
     }
 </script>
 
+</html>
 </html>

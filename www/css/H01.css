@@ -1,14 +1,14 @@
 
-* {
-    /* border:solid 1px black; */
-    font-family: 微軟正黑體;
-    /* background-color: #F5F6F8; */
-}
+        * {
+            /* border:solid 1px black; */
+            font-family: 微軟正黑體;
+            /* background-color: #F5F6F8; */
+        }
 
-ion-icon{
-    width: 30px;
-    height: 25px;
-    }
+        ion-icon{
+            width: 30px;
+            height: 25px;
+            }
 
 		/* html, body {
 			position: relative;
@@ -49,7 +49,7 @@ ion-icon{
         }
         p
         {
-            margin: 0 0 10px 0;
+            margin: 0 0 0 0;
         }
         a, a:link, a:active, a:visited, a:hover
         {
@@ -147,6 +147,7 @@ ion-icon{
             color:black;
             font-size: 30px;
         }
+       
         .circlefix{
             width:40px;
             height:40px;
@@ -196,7 +197,27 @@ ion-icon{
             height: 100%;
         } */
 
-        i {
+        .add i,
+        .points i
+        {
             font-size: 30px;
             color:rgb(255, 255, 255);
+        }
+        
+        /* 以下都是H01-1 */
+
+        .exrect{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width: 100px;
+            height: 100px;
+            background-color:#254F6E;
+            border-color: black;
+            color: white;
+            text-align: center;
+        }
+        .points i{
+            margin-right: -30px;
+            margin-top: -30px;
         }

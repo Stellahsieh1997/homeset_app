@@ -94,7 +94,7 @@
 		    		i==_this.wheel.length-1 ? tempValue += _this.getInnerHtml(i) : tempValue += _this.getInnerHtml(i) + _this.connector;
 		    	}
 		    	if(_this.triggerDisplayData){
-		    		_this.trigger.innerHTML = tempValue;
+		    		_this.trigger.innerHTML = tempValue; //改變trigger為選到的值
 		    	}
 		    	_this.curIndexArr = _this.getIndexArr();
 		    	_this.curValue = _this.getCurValue();

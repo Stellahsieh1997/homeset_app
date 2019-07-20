@@ -7,7 +7,7 @@
 .flex {
     flex: 1 auto;
     display: flex;
-    height: 200px;
+    height: 150px;
     padding: 15px 10px;
     border: 8px;
     flex-wrap: nowrap;
@@ -16,7 +16,7 @@
     overflow-y: hidden;
     align-items: center;
     justify-content: left;
-    height: 100%;
+
 
 }
 
@@ -129,3 +129,17 @@
     justify-content: center;
 
 }
+
+.objcenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a, a:link, a:active, a:visited, a:hover
+        {
+            color: inherit;
+            color: #254F6E;
+            text-shadow: 0 0 0.2em rgb(0, 0, 0, 0.4);
+            text-decoration: none; /*變成沒底線*/
+            font-size: 18px
+        }

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel=stylesheet type="text/css" href="../www/css/H01.css">
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <title>H01-1</title>
+</head>
+
+<body>
+
+    <div id="page">
+        <div class="header">
+            <a href="#menu"><span></span></a>
+            樓層
+            <div class="triangle" data-toggle="modal" data-target="#exampleModalCenter"> </div>
+        </div>
+        <div class="content">
+           
+            <div class="exrect">
+                <p>一樓</p>
+                <div class="points">
+                    <a href="#">
+                        <!-- Trigger/Open The Modal -->
+                        <i id="myBtn" class=" ion-md-more" ></i>
+                    </a> 
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <nav id="menu">
+            <ul>
+                <li><a href="../www/H02.html">與我共用的項目</a></li>
+                <li><a href="../www/H03.html">儲存的文章</a></li>
+                <li><a href="../www/H04.html">物品提醒</a></li>
+                <li><a href="#">設定</a></li>
+                <li><a href="#">登出</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">樓層</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">一樓</li>
+                        <li class="list-group-item">二樓</li>
+                        <li class="list-group-item">三樓</li>
+                        <li class="list-group-item">新增</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- 修改平面圖的彈跳視窗-->
+<div id="myModal2" class="modal2">
+
+  <!-- Modal content -->
+  <div class="modal2-content">
+        <div class="row">
+                <div class="col-4 icon22">
+                    <a href="#">
+                        <i  class="ion-md-create icon2" ></i>
+                        <p>編輯名稱</p>
+                    </a> 
+                </div>
+                <div class="col-4 icon22 ">
+                    <a href="#">
+                        <i  class=" ion-md-trash icon2" ></i>
+                       <p>刪除</p>
+                    </a> </div>
+                <div class="col-4 icon22">
+                    <a href="#">
+                        <i  class=" ion-md-list icon2" ></i>
+                     <p>顏色</p>
+                    </a>
+                </div>
+        
+            </div>
+        
+  </div>
+
+</div>
+
+
+
+
+    <div class="circlefix add">
+        <i class="icon ion-md-add" ></i>
+    </div>
+</body>
+<div class="container-fluid  footer">
+    <div class="row row1 ">
+        <div class="col-4 icon">
+            <a href="#">
+                <i id="1" onclick="test(1)" class="icon ion-md-search icon1" ></i>
+                
+            </a> </div>
+        <div class="col-4 icon ">
+            <a href="#">
+                <i id="2" onclick="test(2)" class="icon ion-md-home icon1" ></i>
+               
+            </a> </div>
+        <div class="col-4 icon">
+            <a href="#">
+                <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1" ></i>
+             
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- mmenu scripts -->
+<script src="../www/js/mmenu.js"></script>
+<script src="../www/js/mmenu.debugger.js"></script>
+<script>
+    new Mmenu(document.querySelector('#menu'));
+
+    document.addEventListener('click', (evnt) => {
+        let anchor = evnt.target.closest('a[href^="#/"]');
+        if (anchor) {
+            alert('Thank you for clicking, but that\'s a demo link.');
+            evnt.preventDefault();
+        }
+    });
+// 按鈕點選變色，點另一个按紐顏色還原
+    var t = 1;
+    function test(x) {
+        // 這個是判斷第一次點選
+        if (x == 1 && t == 1) {
+            document.getElementById(x).style.color = "#254F6E";
+        }
+        // 這個判斷是防止重複點選 
+        else if (x != t) {
+            document.getElementById(x).style.color= "#254F6E";
+            document.getElementById(t).style.color = "black";
+        }
+        t = x;
+    }
+</script>
+
+    <script>
+        // Get the modal
+        var modal2 = document.getElementById("myModal2");
+        
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal2.style.display = "block";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal2.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+        }
+        </script>
+</html>
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+

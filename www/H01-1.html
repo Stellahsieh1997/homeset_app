@@ -31,7 +31,8 @@
                 <p>一樓</p>
                 <div class="points">
                     <a href="#">
-                        <i class=" ion-md-more" ></i>
+                        <!-- Trigger/Open The Modal -->
+                        <i id="myBtn" class=" ion-md-more" ></i>
                     </a> 
                 </div>
             </div>
@@ -73,6 +74,41 @@
             </div>
         </div>
     </div>
+
+
+
+
+<!-- 修改平面圖的彈跳視窗-->
+<div id="myModal2" class="modal2">
+
+  <!-- Modal content -->
+  <div class="modal2-content">
+        <div class="row">
+                <div class="col-4 icon22">
+                    <a href="#">
+                        <i  class="ion-md-create icon2" ></i>
+                        <p>編輯名稱</p>
+                    </a> 
+                </div>
+                <div class="col-4 icon22 ">
+                    <a href="#">
+                        <i  class=" ion-md-trash icon2" ></i>
+                       <p>刪除</p>
+                    </a> </div>
+                <div class="col-4 icon22">
+                    <a href="#">
+                        <i  class=" ion-md-list icon2" ></i>
+                     <p>顏色</p>
+                    </a>
+                </div>
+        
+            </div>
+        
+  </div>
+
+</div>
+
+
 
 
     <div class="circlefix add">
@@ -129,6 +165,44 @@
         }
         t = x;
     }
-    
 </script>
+
+    <script>
+        // Get the modal
+        var modal2 = document.getElementById("myModal2");
+        
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal2.style.display = "block";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal2.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+        }
+        </script>
 </html>
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+

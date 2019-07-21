@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel=stylesheet type="text/css" href="../www/css/H01.css">
+    <title>Search</title>
+    <style>
+        .font {
+            font-family: Microsoft JhengHei;
+        }
+
+        input[type=text] {
+            border-radius: 20px;
+            border-color: transparent;
+            background-color: white;
+            background-image: url('search1.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding-left: 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            width: 100%;
+        }
+
+        input[type=text] {
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .imgtype {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .box-wrap>div {
+            width: 31%;
+            padding-bottom: 0%;
+            margin: 1%;
+            border-radius: 10%;
+            float: left;
+            color: #254F6E;
+        }
+    </style>
+
+</head>
+
+<body class="font" style="background-color: #f0f0f0">
+    <div class="container-fluid">
+
+        <div class="row " style="margin-top:30px;">
+            <div class="col">
+                <h1 style="color:rgb(90, 88, 88);font-weight:bold;">Search</h1>
+                <hr>
+
+                <form class="form-inline my-4 my-lg-0">
+                    <input type="text" name="search" placeholder="                 Search something">
+                </form>
+            </div>
+        </div>
+        <div class="row my-1 ">
+            <div class="col-4">
+                <button type="button" class="btn btn-light " data-toggle="modal" data-target="#exampleModalCenter"> 類別
+                </button>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-light"> 所屬人 </button>
+            </div>
+        </div>
+
+        <p class="my-4">最近瀏覽</p>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">類別</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+                        
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                           border-color: transparent;"><img src="static/shirt.png" style=width:40px;>
+                            </button><br> 衣物
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;
+                                                border-color: transparent;"><img src="static/slippers.png"
+                                    style=width:40px;>
+                            </button><br> 鞋子
+                        </div>
+
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/shopping.png" style=width:40px;>
+                            </button><br> 包包
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/robotic.png" style=width:40px;>
+                            </button><br> 玩具
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/tools.png" style=width:40px;>
+                            </button><br> 工具
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent; border-color: transparent;">
+                                <img src="static/book.png" style=width:40px;>
+                            </button><br> 書本
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/hat.png" style=width:40px;>
+                            </button><br> 帽子
+                        </div>
+                        <div class="box">
+                            <button type="button" style="background-color: transparent;border-color: transparent;">
+                                <img src="static/slippers.png" style=width:40px;>
+                            </button><br> 衣物
+                        </div>
+                        <div class="box ">
+                                <!-- <button type="button" style="background-color: transparent;
+                                     border-color: transparent;margin-top:10%;"><img src="static/plus.png"
+                                        style=width:30px;>
+                                </button> -->
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <div class="container-fluid  footer">
+        <div class="row row1 ">
+            <div class="col-4 icon">
+                <a href="#">
+                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1" ></i>
+                    
+                </a> </div>
+            <div class="col-4 icon ">
+                <a href="#">
+                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1" ></i>
+                   
+                </a> </div>
+            <div class="col-4 icon">
+                <a href="#">
+                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1" ></i>
+                 
+                </a>
+            </div>
+    
+        </div>
+    
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+        <script>
+        // 按鈕點選變色，點另一个按紐顏色還原
+    var t = 1;
+    function test(x) {
+        // 這個是判斷第一次點選
+        if (x == 1 && t == 1) {
+            document.getElementById(x).style.color = "#254F6E";
+        }
+        // 這個判斷是防止重複點選 
+        else if (x != t) {
+            document.getElementById(x).style.color= "#254F6E";
+            document.getElementById(t).style.color = "black";
+        }
+        t = x;
+    }
+    
+        </script>
+
+
+</html>

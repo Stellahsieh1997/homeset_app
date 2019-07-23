@@ -30,10 +30,10 @@
 
         function init() {
             //alert("You are years old!");
-
-
-            //類別滾輪
-            var categorypicker = new MobileSelect({
+          
+             
+              //類別滾輪
+              var categorypicker = new MobileSelect({
                 trigger: '#category',
                 title: '類別',
                 cancelBtnColor: '#f0f0f0',
@@ -42,11 +42,13 @@
                 titleColor: '#f0f0f0',
                 ensureBtnText: '確認',
                 wheels: [
-                    { data: ['包包', '鞋子', '衣服', '文具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
+                    { data: ['包包', '鞋子', '衣服', '文具','工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
                 ],
                 position: [2] //初始化定位
 
             });
+            
+
             //所屬人滾輪
             var ownerpicker = new MobileSelect({
                 trigger: '#owner',
@@ -130,6 +132,8 @@
                 }
             });
 
+
+          
             /* 日期滾輪
             var mobileSelectDate = new MobileSelect({
                 trigger: '#datepicker',
@@ -151,7 +155,8 @@
             });
             */
 
-
+        
+        
 
 
 
@@ -246,6 +251,32 @@
                 alert('Failed because: ' + message);
             }
         }
+        
+
+            /*新增類別、所屬人*/
+            function addcategory() {
+            var addcategoryValue = document.getElementById("addcategory").value;
+            document.getElementById("category").innerHTML = addcategoryValue;
+            // var categorydata = categorypicker.wheels.data ;
+            // categorydata.splice(0,0,addcategoryValue);
+
+        }
+
+        function addowner() {
+            var addownerValue = document.getElementById("addowner").value;
+            document.getElementById("owner").innerHTML = addownerValue;
+            // var ownerdata = ownerpicker.wheels.data ;
+            // ownerdata.splice(0,0,addownerValue);
+        }
+        /*取消新增類別、所屬人*/
+        function clearcategoryvalue() {
+            document.getElementById("category").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
+        function clearownervalue() {
+            document.getElementById("owner").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
 
         //儲存按鈕
         function savevalue() {
@@ -270,24 +301,7 @@
             console.log(thing)
         }
 
-        /*新增類別、所屬人*/
-        function addcategory() {
-            var addcategoryValue = document.getElementById("addcategory").value;
-            document.getElementById("category").innerHTML = addcategoryValue;
-        }
-
-        function addowner() {
-            var addownerValue = document.getElementById("addowner").value;
-            document.getElementById("owner").innerHTML = addownerValue;
-        }
-        /*取消新增類別、所屬人*/
-        function clearcategoryvalue() {
-            document.getElementById("category").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
-        }
-
-        function clearownervalue() {
-            document.getElementById("owner").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
-        }
+        
 
 
         //提醒小幫手

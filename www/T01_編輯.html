@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Things</title>
+    <!--載入日期picker連結-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!--匯入icon-->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+
+
+
+
+    <script type="text/javascript" charset="utf-8">
+
+        function init() {
+            //alert("You are years old!");
+
+
+            //類別滾輪
+            var categorypicker = new MobileSelect({
+                trigger: '#category',
+                title: '類別',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['包包', '鞋子', '衣服', '文具','工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
+                ],
+                position: [2] //初始化定位
+
+            });
+            //所屬人滾輪
+            var ownerpicker = new MobileSelect({
+                trigger: '#owner',
+                title: '所屬人',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人'] }
+                ],
+                position: [2] //初始化定位
+            });
+            //夾層滾輪
+            var mobileSelect1 = new MobileSelect({
+                trigger: '#layer',
+                title: '夾層',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['0', '1', '2', '3', '4', '5', '6'] }
+                ],
+                position: [2] //初始化定位
+            });
+
+            //數量滾輪
+            var mobileSelect2 = new MobileSelect({
+                trigger: '#number',
+                title: '數量',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    {
+                        data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                            , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+                    }
+                ],
+                position: [2] //初始化定位
+            });
+
+
+            //位置滾輪
+            var mobileSelect3 = new MobileSelect({
+                trigger: '#place',
+                title: '存放位置',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    {
+                        data: [
+                            {
+                                id: '1',
+                                value: '客廳',
+                                childs: [
+                                    { id: '1', value: '三層櫃' },
+                                    { id: '2', value: '五斗櫃' },
+                                    { id: '3', value: '' },
+                                    { id: '4', value: '' },
+                                    { id: '5', value: '' }
+                                ]
+                            },
+                            { id: '2', value: '廚房' },
+                            { id: '3', value: '廁所' },
+
+                        ]
+                    }
+                ],
+                position: [0, 1],
+                callback: function (indexArr, data) {
+                    console.log(data); //返回選中的json數據
+                }
+            });
+
+            /* 日期滾輪
+            var mobileSelectDate = new MobileSelect({
+                trigger: '#datepicker',
+                title: '日期',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'] },
+                    { data: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'] }
+                ],
+                position: [1, 1], //初始化定位 两个轮子都选中在索引1的选项
+
+                callback: function (indexArr, data) {
+                    console.log(data); //返回选中的json数据
+                }
+            });
+            */
+
+
+
+
+
+
+            // 相機
+            var pictureSource;   // picture source
+            var destinationType;
+
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            // device APIs are available
+            //
+            function onDeviceReady() {
+                pictureSource = navigator.camera.PictureSourceType;
+                destinationType = navigator.camera.DestinationType;
+            }
+
+            // Called when a photo is successfully retrieved
+            //
+            function onPhotoDataSuccess(imageData) {
+                // Uncomment to view the base64-encoded image data
+                // console.log(imageData);
+
+                // Get image handle
+                //
+                var smallImage = document.getElementById('smallImage');
+
+                // Unhide image elements
+                //
+                smallImage.style.display = 'block';
+
+                // Show the captured photo
+                // The inline CSS rules are used to resize the image
+                //
+                smallImage.src = "data:image/jpeg;base64," + imageData;
+            }
+
+            // Called when a photo is successfully retrieved
+            //
+            function onPhotoURISuccess(imageURI) {
+                // Uncomment to view the image file URI
+                // console.log(imageURI);
+
+                // Get image handle
+                //
+                var largeImage = document.getElementById('largeImage');
+
+                // Unhide image elements
+                //
+                largeImage.style.display = 'block';
+
+                // Show the captured photo
+                // The inline CSS rules are used to resize the image
+                //
+                largeImage.src = imageURI;
+            }
+
+            // A button will call this function
+
+            function capturePhoto() {
+                // Take picture using device camera and retrieve image as base64-encoded string
+                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                    quality: 50,
+                    destinationType: destinationType.DATA_URL
+                });
+            }
+
+            // A button will call this function
+            //
+            function capturePhotoEdit() {
+                // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                    quality: 20, allowEdit: true,
+                    destinationType: destinationType.DATA_URL
+                });
+            }
+
+            // A button will call this function
+            //
+            function getPhoto(source) {
+                // Retrieve image file location from specified source
+                navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+                    quality: 50,
+                    destinationType: destinationType.FILE_URI,
+                    sourceType: source
+                });
+            }
+
+            // Called if something bad happens.
+            //
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
+
+        //儲存按鈕
+        function savevalue() {
+            var name = document.getElementById("exampleFormControlInput1").value;
+            var description = document.getElementById("exampleFormControlTextarea1").value;
+            var categoryValue = document.getElementById("category").innerHTML;
+            var ownerValue = document.getElementById("owner").innerHTML;
+            var placeValue = document.getElementById("place").innerHTML;
+            var numberValue = document.getElementById("number").innerHTML;
+            var layerValue = document.getElementById("layer").innerHTML;
+            var reminder = document.getElementById("reminder").value;
+            var remindertextValue = document.getElementById("remindertext").value;
+            var onoffcheckbox = document.getElementById("myonoffswitch2");
+            if (onoffcheckbox.checked == false) {
+                reminder = "";
+            }
+
+            var thingtext = name + "," + description + "," + categoryValue + "," + ownerValue + "," + placeValue
+                + "," + numberValue + "," + layerValue + "," + reminder + "," + remindertextValue
+            thing = thingtext.split(",");
+            alert(thing);
+            console.log(thing)
+        }
+
+        /*新增類別、所屬人*/
+        function addcategory() {
+            var addcategoryValue = document.getElementById("addcategory").value;
+            document.getElementById("category").innerHTML = addcategoryValue;
+        }
+
+        function addowner() {
+            var addownerValue = document.getElementById("addowner").value;
+            document.getElementById("owner").innerHTML = addownerValue;
+        }
+        /*取消新增類別、所屬人*/
+        function clearcategoryvalue() {
+            document.getElementById("category").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
+        function clearownervalue() {
+            document.getElementById("owner").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
+
+        //提醒小幫手
+        function datechecked() {
+            var reminderinput = document.getElementById("reminder");
+            var remindertext = document.getElementById("remindertext");
+            var onoffcheckbox = document.getElementById("myonoffswitch2");
+            if (onoffcheckbox.checked == true) {
+                reminderinput.style.display = "";
+                remindertext.style.display = "";
+            }
+            else {
+                reminderinput.style.display = "none";
+                remindertext.style.display = "none";
+                reminderinput.value = "";
+                remindertext.value = "";
+
+            }
+        }
+
+    </script>
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "微軟正黑體";
+        }
+
+
+        /* 透明的按鈕 */
+
+        .buttontype {
+            background-color: transparent;
+            border-color: transparent;
+            margin: 0px;
+        }
+
+        /* 上方名稱欄位 */
+        .texts {
+            height: 200px;
+            background-color: #254F6E;
+        }
+
+        .textform {
+            background-color: transparent;
+            color: white;
+            border: 2px solid transparent;
+            font-weight: bold;
+        }
+
+        .badge{
+            font-size: 12pt;
+        }
+
+        .bordertype {
+            border-style: solid;
+            border-width: 3px;
+            border-color: white;
+            border-radius: 20px;
+            background-color: white;
+            padding: 10px;
+            margin: 10px;
+            height: 550px;
+        }
+
+        .imgtype {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .imgcol {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /*icon旁文字*/
+        b {
+            margin-left: 15px;
+        }
+
+        /*日期div*/
+        .reminddate {
+            position: absolute;
+            flex: 5;
+
+        }
+
+        /*提醒內容div*/
+        .remindtext {
+            position: absolute;
+            flex: 5;
+            margin-top: 40px;
+
+        }
+
+        .remindblock {
+            display: flex;
+            position: relative;
+            justify-content: left;
+            flex-direction: row;
+            align-items: center;
+            height: 50px;
+            width: 314px;
+            padding-left: 30px;
+        }
+
+        /*互動視窗*/
+        .modal-header {
+            background-color: #254F6E;
+        }
+
+        .modal-title {
+            color: #FFFFFF
+        }
+
+        .close {
+            color: #FFFFFF
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .box-wrap>div {
+            width: 31%;
+            padding-bottom: 0%;
+            margin: 1%;
+            border-radius: 10%;
+            float: left;
+            color: #254F6E;
+        }
+
+        /*刪除按鈕*/
+        .deletebtn {
+
+            margin-left: 80%;
+            margin-bottom: 20%;
+            background-color: transparent;
+            border: 0;
+        }
+
+        /*物品圖片*/
+        .photobtn {
+            background-color: transparent;
+            border: 0;
+        }
+
+        /*物品箭頭按鈕*/
+        .thingbtn {
+            text-align: right;
+            width: 150px;
+        }
+
+        /*toggleswitch屬性*/
+        .onoffswitch {
+            position: relative;
+            width: 75px;
+            align-items: center;
+            justify-content: center;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 2px;
+            margin-top: 2px;
+            border: 0;
+            border-radius: 29px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before,
+        .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 20px;
+            padding: 0;
+            line-height: 20px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "是";
+            padding-left: 15px;
+            background-color: #254F6E;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "否";
+            padding-right: 15px;
+            background-color: gray;
+            color: #FFFFFF;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 14px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 50px;
+            border: 2px solid #FCF7F7;
+            border-radius: 29px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
+            right: 10px;
+        }
+    </style>
+
+
+
+</head>
+
+<body onload="init();">
+
+
+
+    <!-- 上方標題 -->
+    <div class="container-fluid">
+        <div class="row p-1 " style="background-color:#254F6E">
+            <div class="col-4">
+                <a href="F01.html"><button type="button" class="buttontype"><img src="static/back.png"
+                            style=width:40px;>
+                    </button></a>
+            </div>
+            <div class="col-4 title">
+            </div>
+            <div class="col-4 ">
+                <button type="button" id="save" class="btn btn-secondary float-right buttontype .btn-lg "
+                    onclick="savevalue()">儲存 </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 選擇物品照片及輸入名稱 -->
+
+    <div class="texts container-fluid">
+
+        <div class="row">
+            <div id="openLabrary" class="col-5 imgcol">
+                <div class="app" data-toggle="modal" data-target="#exampleModal4">
+                    <img id="myImage" src="static/things/1.jpg" style="height:135px">
+                </div>
+            </div>
+            <div class="col-7" style="margin-top:20px">
+                <form style="background-color:transparent">
+                    <div class="form-group">
+                        <input type="email" class="form-control textform" id="exampleFormControlInput1"
+                            placeholder="輸入名稱">
+                    </div>
+                    <div class="form-group">
+
+                        <textarea class="form-control textform" id="exampleFormControlTextarea1" placeholder="請描述您的物品"
+                            rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 選擇物品的屬性 -->
+
+    <div class="bordertype">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-pricetags icon1"><b>類別</b></span>
+                <div class="thingbtn" id="category"><span class="badge ">工具</span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente"><span
+                    class="icon ion-md-person icon1"><b>所屬人</b></span>
+                <div class="thingbtn" id="owner"><span class="badge ">自己
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-archive icon1"><b>存放位置</b></span>
+                <div class="thingbtn" id="place"><span class="badge ">客廳 矮櫃
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-stats icon1"><b>數量</b></span>
+                <div class="thingbtn" id="number"><span class="badge ">1
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-browsers icon1"><b>夾層</b></span>
+                <div class="thingbtn" id="layer"><span class="badge">1
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-alert icon1"><b>是否拿出</b></span>
+                <span>
+                    <div class="onoffswitch ">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div id="badge7"><span class="badge">
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-time icon1"><b>提醒小幫手</b></span>
+
+                <span>
+                    <div class="onoffswitch ">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2"
+                            onclick="datechecked()">
+                        <label class="onoffswitch-label" for="myonoffswitch2">
+                            <span class="onoffswitch-inner" id="switcher"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </span>
+            </li>
+            <div class="remindblock">
+                <div class="reminddate">
+                    <input type="text" name="reminder" id="reminder" style="display:none" />
+                </div>
+                <div class="remindtext">
+                    <input type="text" id="remindertext" style="display:none" placeholder="提醒內容" />
+                </div>
+            </div>
+
+
+            <script>
+
+                $('input[name="reminder"]').daterangepicker({
+
+                    "singleDatePicker": true,
+                    "showDropdowns": true,
+                    "timePicker": true,
+                    "timePicker24Hour": true,
+                    "minDate": moment(),
+                    "cancelButtonClasses": "btn btn-secondary",
+                    // ranges: {
+                    //     "今天": [moment()],
+                    //     "明天": [moment().subtract(-1, "days")],
+                    //     "後天": [moment().subtract(-2, "days")],
+                    //     "下個月": [moment().subtract(-1, "month").startOf("month")]
+                    // },
+                    "locale": {
+                        "direction": "ltr",
+                        "format": "YYYY/MM/DD/ HH:mm",
+                        "separator": " - ",
+                        "applyLabel": "確定",
+                        "cancelLabel": "取消",
+                        "fromLabel": "From",
+                        "toLabel": "To",
+                        "customRangeLabel": "",
+                        "daysOfWeek": [
+                            "日",
+                            "一",
+                            "二",
+                            "三",
+                            "四",
+                            "五",
+                            "六"
+                        ],
+                        "monthNames": [
+                            "1月",
+                            "2月",
+                            "3月",
+                            "4月",
+                            "5月",
+                            "6月",
+                            "7月",
+                            "8月",
+                            "9月",
+                            "10月",
+                            "11月",
+                            "12月"
+                        ],
+                        "firstDay": 1
+                    },
+                    "alwaysShowCalendars": true,
+                    "startDate": "2019/07/22",
+                    "endDate": "2019/07/13",
+                    "drops": "up"
+                }, function (start, end, label) {
+                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+                });
+
+            </script>
+
+
+        </ul>
+        <button type="button" class="btn btn-light deletebtn " position="absolute" data-toggle="modal"
+            data-target="#exampleModal3">
+            <img src="static/dustbin3.png" style="height:30px"></button>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>刪除物品</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="">確定要刪除嗎?</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>選擇相機或相簿</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+
+
+                        <div class="box1">
+                            <button type=" button" class="btn btn-light photobtn" onclick="capturePhoto();"><img
+                                    src="static/camera.png" style=width:40px><br> 相機</img></button><br>
+                        </div>
+
+                        <div class="box">
+                            <button type="button" class="btn btn-light photobtn"
+                                onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><img src="static/photo-library.png"
+                                    style=width:40px><br> 從相簿中選擇</img></button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增類別、所屬人 -->
+    <div class="modal " id="categorymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>新增類別</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="addcategory" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-sm" placeholder="輸入類別">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="clearcategoryvalue();">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="addcategory();">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal " id="ownermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>新增所屬人</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="addowner" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-sm" placeholder="輸入所屬人">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="clearownervalue();">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addowner();">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+
+
+
+
+
+</body>
+
+</html>

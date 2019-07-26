@@ -97,7 +97,13 @@
 		    		_this.trigger.innerHTML = tempValue; //改變trigger為選到的值
 		    	}
 		    	_this.curIndexArr = _this.getIndexArr();
-		    	_this.curValue = _this.getCurValue();
+				_this.curValue = _this.getCurValue();
+				if (_this.curValue == "新增類別"){
+					$('#categorymodal').modal('show');
+				}
+				if (_this.curValue == "新增所屬人"){
+					$('#ownermodal').modal('show');
+				}
 		    	_this.callback(_this.curIndexArr, _this.curValue);
 		    });
 

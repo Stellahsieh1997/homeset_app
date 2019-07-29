@@ -17,50 +17,57 @@
  * under the License.
  */
 var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+  // Application Constructor
+  initialize: function () {
+    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+  },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() { alert("devicereadyi");
-        this.receivedEvent('deviceready');
-        var db = window.sqlitePlugin.openDatabase({
-            name: 'my.db',
-            location: 'default',
-          });alert(db);
-
-
-        //   預設資料
-          db.sqlBatch([
-            'CREATE TABLE IF NOT EXISTS DemoTable (name, score)',
-            [ 'INSERT INTO DemoTable VALUES (?1,?2)', ['Alice', 101] ],
-            [ 'INSERT INTO DemoTable VALUES (?1,?2)', ['Betty', 202] ],
-          ], function() {
-            console.log('Populated database OK');
-          }, function(error) {
-            console.log('SQL batch ERROR: ' + error.message);
-          });
-    },
+  // deviceready Event Handler
+  //
+  // Bind any cordova events here. Common events are:
+  // 'pause', 'resume', etc.
+  onDeviceReady: function () {
+    alert("devicereadyi");
+    this.receivedEvent('deviceready');
+    var db = window.sqlitePlugin.openDatabase({
+      name: 'my.db',
+      location: 'default',
+    }); alert(db);
 
 
+    //   預設資料
+    db.sqlBatch([
+      'CREATE TABLE IF NOT EXISTS DemoTable (name, score)',
+      ['INSERT INTO DemoTable VALUES (?1,?2)', ['Alice', 101]],
+      ['INSERT INTO DemoTable VALUES (?1,?2)', ['Betty', 202]],
+    ], function () {
+      console.log('Populated database OK');
+    }, function (error) {
+      console.log('SQL batch ERROR: ' + error.message);
+    });
+  },
 
 
-    
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
-    }
+
+  // Update DOM on a Received Event
+  receivedEvent: function (id) {
+    var parentElement = document.getElementById(id);
+    var listeningElement = parentElement.querySelector('.listening');
+    var receivedElement = parentElement.querySelector('.received');
+
+    listeningElement.setAttribute('style', 'display:none;');
+    receivedElement.setAttribute('style', 'display:block;');
+
+    console.log('Received Event: ' + id);
+  }
+
+   
+ 
 };
 
 app.initialize();
+
+
+

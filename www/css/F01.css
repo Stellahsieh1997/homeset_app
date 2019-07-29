@@ -1,5 +1,6 @@
 .font {
     font-family: Microsoft JhengHei;
+    padding: 0px;
 }
 
 /* 家具照片排列 */
@@ -8,14 +9,15 @@
     flex: 1 auto;
     display: flex;
     height: 150px;
-    padding: 15px 10px;
-    border: 8px;
+    padding: 15px 25px;
+    border: 0px;
     flex-wrap: nowrap;
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
     align-items: center;
     justify-content: left;
+    margin-top: 0px;
 
 
 }
@@ -95,20 +97,27 @@
     text-align: center;
     background-color: white;
     height: 38px;
+    
 }
-
+.box{
+    position: relative;
+}
 .box-wrap {
     text-align: center;
     overflow: hidden;
+    margin-top:200px;
+    margin-bottom: 40px;
 }
 
 .box-wrap>div {
-    width: 31%;
+    width: 33%;
+    height: 33vw;
     padding-bottom: 0%;
-    margin: 1%;
+    margin: 0.16%;
     float: left;
 
 }
+
 
 .icon1 {
     color: rgb(255, 255, 255);
@@ -143,3 +152,10 @@ a, a:link, a:active, a:visited, a:hover
             text-decoration: none; /*變成沒底線*/
             font-size: 18px
         }
+.iwarn{
+    font-size:25px;
+    color:rgb(255, 0, 0);
+    position: absolute;
+    right:3px;
+    top:-5px;
+}

@@ -61,7 +61,18 @@
     justify-content: center;
     align-items: center;
     color: white;
+}
 
+.fedtitle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 18px;
+    color: white;
+}
+
+.fedtitle > p{
+    border: 3px solid white;
 }
 
 .bordertype {
@@ -115,9 +126,17 @@
     padding-bottom: 0%;
     margin: 0.16%;
     float: left;
-
 }
 
+.box-wrap>p {
+    color:gray;
+    display:flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin:0px;
+    padding: 10px 0px;
+}
 
 .icon1 {
     color: rgb(255, 255, 255);

@@ -76,8 +76,6 @@
             font-weight: bold;
             color: #fff;
             line-height: 40px;
-        
-        
             -moz-box-sizing: border-box;
             box-sizing: border-box;	
             width: 100%;
@@ -91,7 +89,7 @@
             border-width:13.0px 7.5px 0 7.5px;
             border-color: #ffffff transparent transparent transparent; */
             position: absolute;
-            right: 15px;
+            right: 150px;
             font-size: 30px;
             transition:0.5s;
             
@@ -318,3 +316,4 @@
         .title{
            text-align: center;
         }
+        

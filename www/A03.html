@@ -9,6 +9,11 @@
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <style>
+        * {
+            border:solid 1px black;
+            font-family: 微軟正黑體;
+            /* background-color: #F5F6F8; */
+        }
         .like {
             font-size: 30px;
             color: lightgray;
@@ -23,55 +28,12 @@
             background-color:white;
             font-family: "微軟正黑體";
         }
-
-        /* 透明的按鈕
-
-        .buttontype {
-            background-color: transparent;
-            border-color: transparent;
-            margin: 0px;
-        }
-
-
-        .bordertype {
-            border-style: solid;
-            border-width: 3px;
-            border-color: white;
-            border-radius: 20px;
-            background-color: white;
-            padding: 10px;
-            margin: 10px;
-            height: 400px;
-        }
-
-        .imgtype {
-            align-items: center;
-            justify-content: center;
-
-        }
-
-        .textform {
-            background-color: transparent;
-            color: white;
-            border: 2px solid transparent;
-        }
-
-        .box-wrap {
-            text-align: center;
-            background-color: white;
-            overflow: hidden;
-        }
-
-        .box-wrap>div {
-            width: 31%;
-            padding-bottom: 0%;
-            margin: 1%;
-            border-radius: 10%;
-            float: left;
-            color:#254F6E;
-        } */
     </style>
-
+    
+</head>
+<body>
+    
+<div class="container-fluid">   
     <div class="row p-1 fixed-top title">
         <div class="col-4">
             <a href="A01.html"><button type="button" class="float-left " style="background-color: transparent;
@@ -87,22 +49,7 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"aria-labelledby="exampleModalLabel" 
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">share this page</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                        <div class="modal-body">
-                    
-                        </div>
-            </div>
-        </div>
-    </div>
+ 
     
 
         <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
@@ -114,9 +61,9 @@
             })
         </script>
 
-        <div class="card" style="width: 32rem;height:22rem;margin-right: 0px;">
+        <div class="card " style="width: 32rem;height:22rem;margin-right: 0px;">
 
-            <img src="https://hotelcozzi.com/wp-content/uploads/2017/10/zx%E6%B5%B4%E5%AE%A4.jpg" class="card-img-top"
+            <img src="https://hotelcozzi.com/wp-content/uploads/2017/10/zx%E6%B5%B4%E5%AE%A4.jpg" class="img-fluid card-img-top"
                 style="width:32rem;margin-left: 0px;padding-right: 0px;height:300px;margin-top:-50px">
             <div class="card-body">
                 <p class="card-title" style="font-size: 23px;margin-left: 130px">翻新浴室的五大秘訣</p>
@@ -150,4 +97,6 @@
 
         </div>
 
-</head>
+    </div> 
+</body>
+</html>

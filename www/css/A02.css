@@ -1,0 +1,102 @@
+
+* {
+    /* border:solid 1px black; */
+    font-family: 微軟正黑體;
+    /* background-color: #F5F6F8; */
+}
+h4,h5{
+    background-color:  rgb(95, 95, 95);
+    color:white;
+    font-size: 14px;
+}
+h6{
+    background-color:  rgb(95, 95, 95);
+    color: #00A9DE;
+    font-size: 12px;
+}
+body{
+    background-color: #F5F6F8;
+}
+.content{
+    padding: 10px 10px 40px 10px;
+    justify-content:center;
+    align-items:center;
+}
+.header
+.content,
+.footer{
+     text-align: center;
+}
+
+.ctitle{
+    background:
+    linear-gradient(transparent 0%,black 100%);
+    /* width:100%; */
+    box-sizing:border-box;
+    padding: 20px -20px;
+    margin: -20px -75px;
+    
+}
+
+
+
+
+
+
+/* 文章的card */
+.card1{
+    overflow:hidden;
+    height: 120px;
+    margin: 20px 10px;
+  
+}
+.rounded-left img{
+    height: 120px;
+    width: 100%;
+}
+.left{
+    width: 50%;
+    background-size: cover;
+    float: left;
+    padding:0px;
+}
+.right{
+    width: 50%; 
+    padding:20px 10px;  
+    float:right;
+    background-color: rgb(95, 95, 95);
+}
+
+
+/* 導覽列 */
+.footer{
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    box-shadow:  2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+    
+}
+.row1{
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+}
+.footer.fixed
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.icon{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding-top: 2px;
+}
+.icon1:hover{
+    color: #254F6E;
+}
+.icon1 {
+    color:black;
+    font-size: 30px;
+}

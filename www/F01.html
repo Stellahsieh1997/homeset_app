@@ -169,7 +169,7 @@
     </div>
 
     <!-- 編輯儲物櫃名稱 -->
-    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+    <!-- <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- 刪除儲物櫃 -->
@@ -300,7 +300,7 @@
 
     <!-- 新增物品 -->
     <div class="addthings">
-    <!-- <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
+        <!-- <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
         <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3"
             style="outline: none;">
             <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
@@ -334,22 +334,22 @@
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
 
-                            $(".flex").append("<div id='fpress" + res.rows.item(i)['furnitureId'] + "' onclick='fidclick(" + res.rows.item(i)['furnitureId'] + ")'><img src='" + res.rows.item(i)['image'] + "' height='80' width='80' class='square' id='" + (i + 1) + "' onclick='fclick(" + (i + 1) + ")'><div class='content'>" + res.rows.item(i)['name'] + "</div></div>")
+                            $(".flex").append("<div id='fpress" + res.rows.item(i)['furnitureId'] + "' onclick='fidclick(" + res.rows.item(i)['furnitureId'] + ")'><img src='" + res.rows.item(i)['image'] + "' height='80' width='80' class='square' id='" + res.rows.item(i)['furnitureId'] + "' onclick='fclick(" + res.rows.item(i)['furnitureId'] + ")'><div class='content' id='fname"+res.rows.item(i)['furnitureId']+"'>" + res.rows.item(i)['name'] + "</div></div>")
 
                             var fed = '<div class="modal" id="fed' + res.rows.item(i)['furnitureId'] + '" tabindex="-1" role="dialog" aria-labelledby="fed' + res.rows.item(i)['furnitureId'] + '" aria-hidden="true">' +
                                 '<div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">' +
                                 '<div class="modal-content" style="border-radius: 0%;">' +
                                 '<div class="modal-body " style="background-color: #254F6E">' +
                                 '<div class="row" style="width:100vw;text-align: center">' +
-                                '<div class="col-4" onclick="fnclick('+res.rows.item(i)['furnitureId']+')">' +
+                                '<div class="col-4" onclick="fnclick(' + res.rows.item(i)['furnitureId'] + ',\'' + res.rows.item(i)['name'] + '\')">' +
                                 '<i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
                                 '<p style="color: #f0f0f0">編輯名稱</p>' +
                                 '</div>' +
-                                '<div class="col-4" onclick="fdclick('+res.rows.item(i)['furnitureId']+')">' +
+                                '<div class="col-4" onclick="fdclick(' + res.rows.item(i)['furnitureId'] + ')">' +
                                 '<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
                                 '<p style="color: #f0f0f0">刪除</p>' +
                                 '</div>' +
-                                '<div class="col-4" onclick="fsclick('+res.rows.item(i)['furnitureId']+')">' +
+                                '<div class="col-4" onclick="fsclick(' + res.rows.item(i)['furnitureId'] + ')">' +
                                 '<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
                                 '<p style="color: #f0f0f0">共享</p>' +
                                 '</div>' +
@@ -360,8 +360,8 @@
                                 '<p style="color: #f0f0f0">編輯圖片</p>' +
                                 '</div>' +
                                 '<div class="col-4"></div>' +
-                                '<div class="col-4 fedtitle">'+
-                                '<p style="color: #f0f0f0;">'+res.rows.item(i)['name']+'</p>' +
+                                '<div class="col-4 fedtitle">' +
+                                '<p style="color: #f0f0f0;" id="fpoint'+res.rows.item(i)['furnitureId']+'">' + res.rows.item(i)['name'] + '</p>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -370,14 +370,17 @@
                                 '</div>';
 
                             $("body").append(fed);
- 
-                            var feds =`<script>
-                            document.getElementById("fpress" + `+res.rows.item(i)['furnitureId']+` + "").addEventListener('long-press', function (e) {
-                                $("#fed"+ `+res.rows.item(i)['furnitureId']+` + "").modal('show');
+                            var feds = `<script>
+                            document.getElementById("fpress" + `+ res.rows.item(i)['furnitureId'] + ` + "").addEventListener('long-press', function (e) {
+                                $("#fed"+ `+ res.rows.item(i)['furnitureId'] + ` + "").modal('show');
                             });<\/script>`;
-                            
+
                             $("body").append(feds);
                         }
+
+                        fidclick(res.rows.item(0)['furnitureId'])
+                        fclick(res.rows.item(0)['furnitureId'])
+
                     }
                 });
             });
@@ -394,8 +397,9 @@
             }, function (error) {
                 alert(error);
             });
-            // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
         }
+
+       // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
         function fidclick(x) {
             // 新增物品
             $(".addthings").html("")
@@ -404,7 +408,7 @@
                             <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
                             </button>
                             </div>`;
-            $(".addthings").append(addthing);            
+            $(".addthings").append(addthing);
             //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
@@ -460,7 +464,7 @@
         var t = 1;
         function fclick(x) {
             // 這個是判斷第一次點選
-            if (x == 1 && t == 1) {
+            if (x == t ) {
                 document.getElementById(x).style.height = "100px";
                 document.getElementById(x).style.width = "100px";
                 document.getElementById(x).style.border = "3px solid yellow";
@@ -483,10 +487,27 @@
             $('#exampleModal3').modal('hide')
         })
 
-
-        function fncancel() {
-            $('#exampleModal4').modal('hide')
+        // fndc 為儲物櫃名稱編輯修改互動視窗的取消鍵
+        function fndc(id) {
+            $("#fned" + id + "").modal('hide')
         }
+        // fndv 為儲物櫃名稱編輯修改互動視窗的確認鍵,更新資料庫
+        function fndv(id) {
+            var name = $("#furniturename" + id + "").val();
+            db.transaction(function (tx) {
+                var query = "UPDATE furniture SET name = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [name, id], function (tx, res) {
+                    fidclick(id)
+                    fclick(id)
+                    $("#fpoint" + id + "").text(name)
+                    $("#fname" + id + "").text(name)
+                    $("#fned" + id + "").modal('hide')
+
+                });
+            });
+
+        }
+
 
         function fdcancel() {
             $('#exampleModal5').modal('hide')
@@ -495,19 +516,42 @@
         function fscancel() {
             $('#exampleModal6').modal('hide')
         }
-
-        function fnclick(x) {
-            $('#fed'+x).modal('hide')
-            $('#exampleModal4').modal('show')
+        //fnclick fned 為儲物櫃名稱編輯修改互動視窗
+        function fnclick(id, name) {
+            $('#fed' + id).modal('hide')
+            fned = `<div class="modal fade " id="fned` + id + `" tabindex="-1" role="dialog" aria-labelledby="fned` + id + `" aria-hidden="False">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                                <div class="modal-body text-black">
+                                    <form action="" method="POST" enctype="multipart/form-data" id='form'>
+                                        <div style="margin-bottom:10px;">
+                                            <label for="furniturename">儲物櫃名稱</label>
+                                            <input type="text" class="form-control" id="furniturename`+ id + `" value="` + name + `">
+                                        </div>
+                                        <div class="row" style="text-align: center">
+                                            <div class="col">
+                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc(`+ id + `)">取消</button>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv(`+ id + `)">確認</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            $("body").append(fned);
+            $('#fned' + id + '').modal('show')
         }
 
         function fdclick(x) {
-            $('#fed'+x).modal('hide')
+            $('#fed' + x).modal('hide')
             $('#exampleModal5').modal('show')
         }
 
         function fsclick(x) {
-            $('#fed'+x).modal('hide')
+            $('#fed' + x).modal('hide')
             $('#exampleModal6').modal('show')
         }
 

@@ -299,13 +299,14 @@
     </div>
 
     <!-- 新增物品 -->
-    <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
+    <div class="addthings">
+    <!-- <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
         <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3"
             style="outline: none;">
             <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
         </button>
+    </div> -->
     </div>
-
     <script>
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -396,6 +397,15 @@
             // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
         }
         function fidclick(x) {
+            // 新增物品
+            $(".addthings").html("")
+            var addthing = `<div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
+                            <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3" style="outline: none;">
+                            <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
+                            </button>
+                            </div>`;
+            $(".addthings").append(addthing);            
+            //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
                 tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer ASC', [x], function (tx, res) {
@@ -434,16 +444,6 @@
                 });
             });
         }
-
-
-
-
-
-
-
-
-
-
 
         // 長按觸發https://github.com/john-doherty/long-press-event
 

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel=stylesheet type="text/css" href="../www/css/H01.css">
+
+    <title>Search</title>
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        function init() {
+            // alert("You are years old!");
+
+
+            //類別滾輪
+            var categorySearchpicker = new MobileSelect({
+                trigger: '#categorysearch',
+                title: '類別搜尋',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡'] }
+                ],
+                position: [2] //初始化定位
+
+            });
+
+            //所屬人滾輪
+            var ownerSearchpicker = new MobileSelect({
+                trigger: '#ownersearch',
+                title: '所屬人搜尋',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事'] }
+                ],
+                position: [2] //初始化定位
+            });
+        }
+    </script>
+
+    <style>
+        .font {
+            font-family: Microsoft JhengHei;
+        }
+
+        input[type=text] {
+            border-radius: 20px;
+            background-color: white;
+            border: 0;
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding-left: 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            width: 100%;
+            height: 40px;
+        }
+
+        input[type=text] {
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+        
+
+        .imgtype {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        img {
+            width: 100%;
+            height: 100%
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: transparent;
+            overflow: hidden;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .box-wrap>div {
+            width: 31%;
+            margin: 1%;
+            float: left;
+            background-color: white;
+        }
+
+        .searchrow {
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .searchbtn {
+            margin-right: 30px;
+        }
+
+        .btn-outline {
+            border-radius: 8px;
+            border-color: #254F6E;
+            color: #254F6E;
+            font-family: "微軟正黑體";
+        }
+
+        .btn-outline:hover {
+            background-color: #254F6E;
+            color: #f0f0f0;
+        }
+
+        .categoryth {
+            text-align: center;
+            width: 30%;
+        }
+
+        .thingth {
+            text-align: center;
+            width: 70%;
+           
+        }
+
+        .category {
+            text-align: center;
+            position: relative;
+            transform: translateY(0%);
+            
+        }
+        tbody>tr{
+            border-top: 2px rgb(92, 137, 170) dashed;
+        }
+        thead>tr>th{
+            padding-bottom: 10px;
+        }
+
+        .searchcontent{
+            margin-bottom: 40px;
+        }
+
+        .searchtext{
+            font-size: 26px;
+            font-weight: bold;
+            
+        }
+        b{
+            color:rgb(90, 88, 88);
+            margin-left: 15px;
+           
+        }
+    </style>
+
+</head>
+
+<body onload="init();" class="font" style="background-color: #f0f0f0">
+    <div class="container-fluid searchcontent">
+
+        <div class="row searchrow">
+            <div class="col">
+                <span  class="icon ion-md-search searchtext"> <b>Search</b></span>
+                <hr>
+                <input type="text" class="light-table-filter " data-table="order-table" name="search"
+                    placeholder="    Search something">
+
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline " id="categorysearch" >類別</button> 
+            <button type="button" class="btn btn-outline" id="ownersearch"> 所屬人 </button>
+        </div> <br>
+
+        
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th class="categoryth">類別</th>
+                    <th class="thingth">物品</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="category">包包</td>
+                    <td>
+                        <div class="box-wrap  ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            <div class="box">
+                                <a href=""> <img src="static/things/5.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/6.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/9.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">鞋子</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">衣服</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">文具</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">工具</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">玩具</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">杯子</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">飾品</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">化妝品</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                           
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category">眼鏡</td>
+                    <td>
+                        <div class="box-wrap ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+    <div class="container-fluid  footer">
+        <div class="row row1 ">
+            <div class="col-4 icon">
+                <a href="S01.html">
+                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1" style="color: #254F6E"></i>
+
+                </a> </div>
+            <div class="col-4 icon ">
+                <a href="H01-1.html">
+                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
+
+                </a> </div>
+            <div class="col-4 icon">
+                <a href="A01.html">
+                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <script>
+        // 按鈕點選變色，點另一个按紐顏色還原
+        var t = 1;
+        function test(x) {
+            // 這個是判斷第一次點選
+            if (x == 1 && t == 1) {
+                document.getElementById(x).style.color = "#254F6E";
+            }
+            // 這個判斷是防止重複點選 
+            else if (x != t) {
+                document.getElementById(x).style.color = "#254F6E";
+                document.getElementById(t).style.color = "black";
+            }
+            t = x;
+        }
+
+        //搜尋測試
+        (function (document) {
+            'use strict';
+
+            // 建立 LightTableFilter
+            var LightTableFilter = (function (Arr) {
+
+                var _input;
+
+                // 資料輸入事件處理函數
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
+                    });
+                }
+
+                // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    // 初始化函數
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            // 網頁載入完成後，啟動 LightTableFilter
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
+
+        })(document);
+
+    </script>
+
+</body>
+
+</html>

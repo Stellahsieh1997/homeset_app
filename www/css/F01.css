@@ -1,5 +1,6 @@
 .font {
     font-family: Microsoft JhengHei;
+    padding: 0px;
 }
 
 /* 家具照片排列 */
@@ -7,16 +8,17 @@
 .flex {
     flex: 1 auto;
     display: flex;
-    height: 200px;
-    padding: 15px 10px;
-    border: 8px;
+    height: 150px;
+    padding: 15px 25px;
+    border: 0px;
     flex-wrap: nowrap;
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
     align-items: center;
     justify-content: left;
-    height: 100%;
+    margin-top: 0px;
+
 
 }
 
@@ -59,7 +61,18 @@
     justify-content: center;
     align-items: center;
     color: white;
+}
 
+.fedtitle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 18px;
+    color: white;
+}
+
+.fedtitle > p{
+    border: 3px solid white;
 }
 
 .bordertype {
@@ -95,19 +108,34 @@
     text-align: center;
     background-color: white;
     height: 38px;
+    
 }
-
+.box{
+    position: relative;
+}
 .box-wrap {
     text-align: center;
     overflow: hidden;
+    margin-top:200px;
+    margin-bottom: 40px;
 }
 
 .box-wrap>div {
-    width: 31%;
+    width: 33%;
+    height: 33vw;
     padding-bottom: 0%;
-    margin: 1%;
+    margin: 0.16%;
     float: left;
+}
 
+.box-wrap>p {
+    color:gray;
+    display:flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin:0px;
+    padding: 10px 0px;
 }
 
 .icon1 {
@@ -128,4 +156,25 @@
     align-items: center;
     justify-content: center;
 
+}
+
+.objcenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a, a:link, a:active, a:visited, a:hover
+        {
+            color: inherit;
+            color: #254F6E;
+            text-shadow: 0 0 0.2em rgb(0, 0, 0, 0.4);
+            text-decoration: none; /*變成沒底線*/
+            font-size: 18px
+        }
+.iwarn{
+    font-size:25px;
+    color:rgb(255, 0, 0);
+    position: absolute;
+    right:3px;
+    top:-5px;
 }

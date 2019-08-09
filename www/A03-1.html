@@ -5,8 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel=stylesheet type="text/css" href="../www/css/A03.css">
+    <title>收納資訊</title>
+</head>
 
     <style>
         .like {
@@ -24,45 +33,6 @@
             font-family: "微軟正黑體";
         }
 
-    
-
-        /* 透明的按鈕 */
-
-        .buttontype {
-            background-color: transparent;
-            border-color: transparent;
-            margin: 0px;
-        }
-
-        /* 上方名稱欄位 */
-        .texts {
-            height: 200px;
-            background-color: #254F6E;
-        }
-
-        .bordertype {
-            border-style: solid;
-            border-width: 3px;
-            border-color: white;
-            border-radius: 20px;
-            background-color: white;
-            padding: 10px;
-            margin: 10px;
-            height: 400px;
-        }
-
-        .imgtype {
-            align-items: center;
-            justify-content: center;
-
-        }
-
-        .textform {
-            background-color: transparent;
-            color: white;
-            border: 2px solid transparent;
-        }
-
         .box-wrap {
             text-align: center;
             background-color: white;
@@ -76,24 +46,27 @@
             border-radius: 10%;
             float:left;
             color: #254F6E;
-        }
+        } 
     </style>
+    
+<body>
 
     <div class="row p-1 fixed-top title">
         <div class="col-4">
-            <a href="A01.html"><button type="button" class="float-left " style="background-color: transparent;
-                        border-color: transparent;margin-left: 10px;margin-top:10px"><img src="static/cross.png"
-                        style=width:22px;>
-                </button></a>
+                <a href="A01.html"><button type="button" class="float-left buttontype " style="background-color: transparent;
+                            border-color: transparent;"><img src="static/cross.png"
+                            style=width:27px;></button></a>
+        </div> 
+        <div class="col-4 title">
+                <p style="margin:0px;color: transparent">傢俱</p>
         </div>
         <div class="col-4">
-            <button class="btn btn-primary" type="button"
-                style="background-color: transparent;border-color: transparent;margin-left:270px;margin-top:10px"
+            <button type="button" style="background-color: transparent;border-color: transparent;" class="float-right buttontype"
                 data-toggle="modal" data-target="#exampleModalCenter"><img src="static/share.png" style=width:30px>
             </button>
         </div>
-
     </div>
+
 
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -153,15 +126,16 @@
             $('#myInput').trigger('focus')
         })
     </script>
-</head>
 <body>
 
-
+        <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://generalplumbingsupply.net/images/content/KOHLER_SUITE.jpg" class="d-block w-100"
+                        alt="...">
+                </div>
+        </div>
 
 <div class="card" style="width: 32rem;height:22rem;margin-right: 0px">
-
-        <img src="https://hotelcozzi.com/wp-content/uploads/2017/10/zx%E6%B5%B4%E5%AE%A4.jpg" class="card-img-top"
-            style="width:32rem;margin-left: 0px;padding-right: 0px;height:300px;margin-top:-50px">
         <div class="card-body">
             <p class="card-title" style="font-size: 23px;margin-left: 130px">翻新浴室的五大秘訣</p>
             <p class="like" style="margin-left:400px;margin-top: -40px">&#10084;</p>

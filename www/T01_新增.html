@@ -715,12 +715,12 @@
 
 
                         <div class="box1">
-                            <button type=" button" class="btn btn-light photobtn" onclick="capturePhotoEdit();"><img
+                            <button type=" button" class="btn btn-light photobtn" id="opencamera"><img
                                     src="static/camera.png" style=width:40px><br> 相機</img></button><br>
                         </div>
 
                         <div class="box">
-                            <button type="button" class="btn btn-light photobtn" id="openLabrary"onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);"><img
+                            <button type="button" class="btn btn-light photobtn" id="openLabrary"><img
                                     src="static/photo-library.png" style=width:40px><br> 從相簿中選擇</img></button>
                         </div>
 
@@ -786,7 +786,7 @@
 
 
 
-    <script>
+    <!-- <script>
         // 相機
 
 
@@ -798,7 +798,7 @@
             destinationType = navigator.camera.DestinationType; //返回值的格式
         }
 
-        
+
 
         // A button will call this function
         //
@@ -827,7 +827,7 @@
         //返回圖片
         function onPhotoDataSuccess(imageData) {
             // Uncomment to view the base64-encoded image data
-             console.log(imageData);
+            console.log(imageData);
 
             // Get image handle
             //
@@ -864,7 +864,7 @@
         //返回圖片
         function onPhotoURISuccess(imageURI) {
             // Uncomment to view the image file URI
-             console.log(imageURI);
+            console.log(imageURI);
 
             // Get image handle
             //
@@ -886,7 +886,85 @@
             alert('Failed because: ' + message);
         }
 
+    </script> -->
+
+    <script>
+        var app = {
+            // Application Constructor
+            initialize: function () {
+                document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+            },
+            // deviceready Event Handler
+            onDeviceReady: function () {
+                this.receivedEvent();
+            },
+            $$: function (id) {
+                return document.getElementById(id);
+            },
+            receivedEvent: function () {
+                var _this = this;
+                var getDomLabrary = this.$$('openLabrary');
+                getDomLabrary.onclick = function () {
+                    // 打開圖片庫
+                    navigator.camera.getPicture(onSuccess, onFail, {
+                        quality: 50,                                       // 相片質量是50
+                        sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM, // 從圖片庫
+                        destinationType: Camera.DestinationType.DATA_URL       // 以base64返回
+                    });
+                    function onSuccess(imageData) {
+                        console.log(imageData)
+                        _this.$$('myImage').src = "data:image/jpeg;base64," + imageData;
+                    }
+                    function onFail(message) {
+                        alert('Failed because: ' + message);
+                    }
+                }
+            }
+        };
+
+        app.initialize();
+
     </script>
+    <script>
+
+        var app = {
+            initialize: function () {
+                document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+            },
+            onDeviceReady: function () {
+                this.receivedEvent();
+            },
+            $$: function (id) {
+                return document.getElementById(id);
+            },
+            receivedEvent: function () {
+                var getDomLabrary = this.$$('opencamera');
+                var _this = this;
+                getDomLabrary.onclick = function () {
+                   
+                    navigator.camera.getPicture(onSuccess, onFail, {
+                        quality: 50,                                            
+                        sourceType: Camera.PictureSourceType.Camera,            // 從相機
+                        destinationType: Camera.DestinationType.FILE_URI        
+                    });
+
+                    function onSuccess(imageURI) {
+                        console.log(imageURI)
+                        _this.$$('myImage').src = imageURI;
+                       
+                    }
+
+                    function onFail(message) {
+                        alert('Failed because: ' + message);
+                    }
+                }
+            }
+        };
+
+        app.initialize();
+
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

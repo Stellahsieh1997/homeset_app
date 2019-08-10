@@ -178,3 +178,36 @@ a, a:link, a:active, a:visited, a:hover
     right:3px;
     top:-5px;
 }
+.takephotobtn{
+    padding: 10px;
+     display:inline;
+     background-color:#f8f9fa;
+     border-color: #f8f9fa;
+     border-radius: 5%;
+}
+.takephotobtn:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+  }
+
+.fphotothumb{
+    width:120px;
+    height:120px;
+    margin-bottom:10px;
+    border-radius:10%;
+}
+.fephotothumb{
+    max-width: 80vw;
+    max-height: 100vw;
+    margin-bottom: 10px;
+}
+.modal-header {
+    background-color: #254F6E;
+}
+.modal-title {
+    color: #FFFFFF;
+    margin-left: 10px;
+}
+.close {
+    color: #FFFFFF;
+}

@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; 
+            style-src 'self' 'unsafe-inline'; 
+            media-src *; 
+            script-src 'self' 'unsafe-inline';
+            img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
     <title>Furnitures</title>
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -45,22 +52,7 @@
                     </div>
 
                 </div>
-                <!-- <div id="fpress1">
-                    <img src="static/1.jpg" height="80" width="80" class="square" id="1" onclick="fclick(1)">
-                    <div class="content">電視櫃</div>
-                </div>
-                <div id="fpress2">
-                    <img src="static/2.jpg" height="80" width="80" class="square" id="2" onclick="fclick(2)">
-                    <div class="content">矮櫃</div>
-                </div>
-                <div id="fpress3">
-                    <img src="static/3.jpg" height="80" width="80" class="square" id="3" onclick="fclick(3)">
-                    <div class="content">展示櫃</div>
-                </div>
-                <div id="fpress4">
-                    <img src="static/4.jpg" height="80" width="80" class="square" id="4" onclick="fclick(4)">
-                    <div class="content">三層櫃</div>
-                </div> -->
+
             </div>
         </div>
     </div>
@@ -68,28 +60,39 @@
     <!-- 增加儲物櫃互動視窗 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="margin-top: 40%;border-radius: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 5%;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">新增儲物櫃</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">新增儲物櫃</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <div class="modal-body text-black">
-                    <form action="" method="POST" enctype="multipart/form-data" id='form'>
+                <div class="modal-body">
+                    <form id="fform">
                         <div style="margin-bottom:10px;">
-                            <label for="furniturename">儲物櫃名稱</label>
-                            <input type="text" class="form-control" id="furniturename">
+                            <label for="furniturename">儲物櫃名稱 </label>
+                            <P id="fnwarn" style="display:inline-flex;color: red;"></P>
+                            <input type="text" class="form-control" id="insertfname" required>
                         </div>
                         <div style="margin-bottom:10px;">
                             <label>照片</label><br>
-                            <button type=" button" class="btn btn-light" onclick="capturePhoto();">相機</button>
-                            <button type="button" class="btn btn-light"
-                                onclick="getPhoto(pictureSource.PHOTOLIBRARY);">從相簿中選擇</button><br>
+                            <div id="fimg">
+                                <P id="fpwarn" style="display:inline-flex;color: red;"></P>
+                                <img src="" class="a" id="insertfphoto">
+                            </div>
+
+                            <div class="takephotobtn">
+                                <a href="#" onclick="takephoto()">相機</a>
+                            </div>
+                            <div style="display: inline-flex; margin-right:10px"></div>
+                            <div class="takephotobtn">
+                                <a href="#" onclick="imgget()">從相簿中選擇</a>
+                            </div>
+                            <br>
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="processFormData()">送出
+                        <button type="button" class="btn btn-primary" onclick="insertfurniture()">送出
                         </button>
 
                     </form>
@@ -98,48 +101,6 @@
         </div>
     </div>
 
-    <!--櫃子的設定  -->
-    <!-- <div class="modal" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document"
-            style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
-            <div class="modal-content" style="border-radius: 0%;">
-                <div class="modal-body " style="background-color: #254F6E">
-                    <div class="row" style="width:100vw;text-align: center">
-                        <div class="col-4" onclick="fnclick()">
-                            <i class="icon ion-md-create"
-                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                            <p style="color: #f0f0f0">編輯名稱</p>
-                        </div>
-                        <div class="col-4" onclick="fdclick()">
-                            <i class="icon ion-ios-trash"
-                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                            <p style="color: #f0f0f0">刪除</p>
-                        </div>
-                        <div class="col-4" onclick="fsclick()">
-                            <i class="icon ion-ios-share"
-                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                            <p style="color: #f0f0f0">共享</p>
-                        </div>
-                    </div>
-                    <div class="row" style="width:100vw;text-align: center">
-                        <div class="col-4">
-                            <i class="icon ion-ios-create"
-                                style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                            <p style="color: #f0f0f0">編輯圖片</p>
-                        </div>
-                        <div class="col-4">
-
-                        </div>
-                        <div class="col-4">
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <!--新增物品的設定  -->
     <div class="modal" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
@@ -157,7 +118,7 @@
                     </div>
                     <hr>
                     <div class="row objcenter">
-                        <a href="#">多筆建立</a>
+                        <a href="#" onclick="imgget()">多筆建立</a>
                     </div>
                     <hr>
                     <div class="row objcenter">
@@ -168,144 +129,17 @@
         </div>
     </div>
 
-    <!-- 編輯儲物櫃名稱 -->
-    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
-                <div class="modal-body text-black">
-                    <form action="" method="POST" enctype="multipart/form-data" id='form'>
-                        <div style="margin-bottom:10px;">
-                            <label for="furniturename">儲物櫃名稱</label>
-                            <input type="text" class="form-control" id="furniturename">
-                        </div>
-                        <div class="row" style="text-align: center">
-                            <div class="col">
-                                <button type="button" class="btn btn-outline-secondary" onclick="fncancel()">取消</button>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-outline-secondary"
-                                    onclick="processFormData()">確認</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- 刪除儲物櫃 -->
-    <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
-                <div class="modal-body text-black">
-                    <p>是否要刪除?</p>
-                    <div class="row" style="text-align: center">
-                        <div class="col">
-                            <button type="button" class="btn btn-outline-secondary" onclick="fdcancel()">取消</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-outline-secondary"
-                                onclick="processFormData()">確認</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 共用儲物櫃 -->
-    <div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
-                <div class="modal-body text-black">
-                    <label>與他人共享</label>
-                    <input type="text" class="form-control" placeholder="輸入使用者帳號(電子郵件地址)">
-
-                    <div class="row" style="text-align: center;margin-top: 5px">
-                        <div class="col">
-                            <button type="button" class="btn btn-outline-secondary" onclick="fscancel()">取消</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-outline-secondary"
-                                onclick="processFormData()">確認</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
     <!-- 放物品的地方 -->
     <div class="box-wrap">
-        <!-- <p style="color:gray">第一層</p>
-
-        <div class="box">
-            <i class="icon ion-md-information-circle iwarn"></i>
-            <a href="T01_編輯.html"><img src="static/things/1.jpg" style=width:100%;height:100%></a>
+        <div class="objcenter" style="height: 50vh;width: 100vw;">
+            <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
         </div>
-        <div class="box">
-            <img src="static/things/2.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/3.jpg" style=width:100%;height:100%>
-        </div>
-
-        
-        <p style="color:gray;display:flex;width: 100%;align-items: center;justify-content: center;">第二層</p>
-
-
-        <div class="box">
-            <img src="static/things/4.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/5.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/6.jpg" style=width:100%;height:100%;>
-
-        </div>
-        <div class="box">
-            <img src="static/things/4.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/5.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/6.jpg" style=width:100%;height:100%;>
-
-        </div>
-        <div class="box">
-            <img src="static/things/6.jpg" style=width:100%;height:100%;>
-
-        </div>
-        <div class="box">
-            <img src="static/things/4.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/5.jpg" style=width:100%;height:100%>
-        </div>
-        <div class="box">
-            <img src="static/things/6.jpg" style=width:100%;height:100%;>
-
-        </div> -->
     </div>
 
     <!-- 新增物品 -->
-    <div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
-        <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3"
-            style="outline: none;">
-            <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
-        </button>
-    </div>
+    <div class="addthings">
 
+    </div>
     <script>
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -317,85 +151,175 @@
             });
             //----------------------------------------------------------------------------------------------------
             //儲物櫃
-            db.sqlBatch([
-                'CREATE TABLE IF NOT EXISTS furniture (furnitureId integer primary key, name text, image text, spaceId integer, email text)',
-                ['INSERT INTO furniture (name, image) VALUES (?,?)', ['矮櫃', 'static/1.jpg']],
-                ['INSERT INTO furniture (name, image) VALUES (?,?)', ['三層櫃', 'static/2.jpg']],
-            ], function () {
-                // alert("sqlbatch");
-            }, function (error) {
-                alert(error);
+            // db.sqlBatch([
+            //     'CREATE TABLE IF NOT EXISTS furniture (furnitureId integer primary key, name text, image text, spaceId integer, email text)',
+            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['矮櫃', 'static/1.jpg']],
+            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['三層櫃', 'static/2.jpg']],
+            // ], function () {
+            //     // alert("sqlbatch");
+            // }, function (error) {
+            //     alert(error);
+            // });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId integer, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)');
             });
+
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM furniture', [], function (tx, res) {
                     var len = res.rows.length;
-                    // alert(len);
+                    alert(len);
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
+                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='80' width='80' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
 
-                            $(".flex").append("<div id='fpress" + res.rows.item(i)['furnitureId'] + "' onclick='fidclick(" + res.rows.item(i)['furnitureId'] + ")'><img src='" + res.rows.item(i)['image'] + "' height='80' width='80' class='square' id='" + (i + 1) + "' onclick='fclick(" + (i + 1) + ")'><div class='content'>" + res.rows.item(i)['name'] + "</div></div>")
-
-                            var fed = '<div class="modal" id="fed' + res.rows.item(i)['furnitureId'] + '" tabindex="-1" role="dialog" aria-labelledby="fed' + res.rows.item(i)['furnitureId'] + '" aria-hidden="true">' +
-                                '<div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">' +
-                                '<div class="modal-content" style="border-radius: 0%;">' +
-                                '<div class="modal-body " style="background-color: #254F6E">' +
-                                '<div class="row" style="width:100vw;text-align: center">' +
-                                '<div class="col-4" onclick="fnclick('+res.rows.item(i)['furnitureId']+')">' +
-                                '<i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
-                                '<p style="color: #f0f0f0">編輯名稱</p>' +
-                                '</div>' +
-                                '<div class="col-4" onclick="fdclick('+res.rows.item(i)['furnitureId']+')">' +
-                                '<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
-                                '<p style="color: #f0f0f0">刪除</p>' +
-                                '</div>' +
-                                '<div class="col-4" onclick="fsclick('+res.rows.item(i)['furnitureId']+')">' +
-                                '<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
-                                '<p style="color: #f0f0f0">共享</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="row" style="width:100vw;text-align: center">' +
-                                '<div class="col-4">' +
-                                '<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>' +
-                                '<p style="color: #f0f0f0">編輯圖片</p>' +
-                                '</div>' +
-                                '<div class="col-4"></div>' +
-                                '<div class="col-4 fedtitle">'+
-                                '<p style="color: #f0f0f0;">'+res.rows.item(i)['name']+'</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>';
+                            var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
+                                <div class="modal-content" style="border-radius: 0%;">
+                                <div class="modal-body " style="background-color: #254F6E">
+                                <div class="row" style="width:100vw;text-align: center">
+                                <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `')">
+                                <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                                <p style="color: #f0f0f0">編輯名稱</p>
+                                </div>
+                                <div class="col-4" onclick="fdclick('`+ res.rows.item(i)['furnitureId'] + `')">
+                                <i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                                <p style="color: #f0f0f0">刪除</p> 
+                                </div> 
+                                <div class="col-4" onclick="fsclick( '`+ res.rows.item(i)['furnitureId'] + `' )"> 
+                                <i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                                <p style="color: #f0f0f0">共享</p> 
+                                </div> 
+                                </div> 
+                                <div class="row" style="width:100vw;text-align: center"> 
+                                <div class="col-4" onclick="fpclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['image'] + `','` + res.rows.item(i)['name'] + `')"> 
+                                <i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                                <p style="color: #f0f0f0">編輯圖片</p> 
+                                </div> 
+                                <div class="col-4"></div> 
+                                <div class="col-4 fedtitle"> 
+                                <p style="color: #f0f0f0;" id="fpoint`+ res.rows.item(i)['furnitureId'] + `"> ` + res.rows.item(i)['name'] + `</p>
+                                </div> 
+                                </div> 
+                                </div> 
+                                </div> 
+                                </div> 
+                                </div>`;
 
                             $("body").append(fed);
- 
-                            var feds =`<script>
-                            document.getElementById("fpress" + `+res.rows.item(i)['furnitureId']+` + "").addEventListener('long-press', function (e) {
-                                $("#fed"+ `+res.rows.item(i)['furnitureId']+` + "").modal('show');
+                            var feds = `<script>
+                            document.getElementById("fpress`+ res.rows.item(i)['furnitureId'] + `").addEventListener('long-press', function (e) {
+                                $("#fed`+ res.rows.item(i)['furnitureId'] + `").modal('show');
                             });<\/script>`;
-                            
+
                             $("body").append(feds);
+
+                            fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                             <div class="modal-content" style="border-radius: 5%;">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"><b id="fpname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</b></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            <div class="modal-body text-black">
+                                                <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" style="text-align:center">
+                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                                                </div>
+                                                <div class="row" style="text-align: center">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')">換圖</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fpdv('`+ res.rows.item(i)['furnitureId'] + `')">儲存</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                            $("body").append(fped);
+
+                            fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                                            <div class="modal-body text-black">
+                                                <p>是否要刪除<spen id="fdname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</spen>?</p>
+                                                <div class="row" style="text-align: center">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fddc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="submit" class="btn btn-outline-secondary" onclick="fddv('`+ res.rows.item(i)['furnitureId'] + `')">確認</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       </div>
+                                     </div>
+                                    </div>`
+
+                            $("body").append(fdd);
+
+                            fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                                        <div class="modal-body text-black">
+                                            <label>與他人共享<spen id="fsname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</spen></label>
+                                            <input type="text" class="form-control" placeholder="輸入使用者帳號(電子郵件地址)">
+
+                                                <div class="row" style="text-align: center;margin-top: 5px">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fsdc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="submit" class="btn btn-outline-secondary"
+                                                            onclick="processFormData()">確認</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                            $("body").append(fsd);
                         }
+
+                        fidclick(res.rows.item(0)['furnitureId'])
+                        fclick(res.rows.item(0)['furnitureId'])
+
                     }
                 });
             });
 
             //----------------------------------------------------------------------------------------------------
             //物品
-            db.sqlBatch([
-                'CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId integer, number integer, layer integer, out integer)',
-                ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 1, 0, 1]],
-                ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 2, 1, 2]],
-                ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 3, 0, 3]],
-            ], function () {
-                // alert("sqlbatch");
-            }, function (error) {
-                alert(error);
-            });
-            // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
+            // db.sqlBatch([
+            //     'CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)',
+            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 1, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
+            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 2, 1, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
+            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 3, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
+            // ], function () {
+            //     alert("sqlbatch");
+            // }, function (error) {
+            //     alert(error);
+            // });
         }
+
+        // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
         function fidclick(x) {
+            // 新增物品
+            // alert(x)
+            $(".addthings").html("")
+            var addthing = `<div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
+                                    <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3" style="outline: none;">
+                                        <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
+                                    </button>
+                                </div>`;
+            $(".addthings").append(addthing);
+            //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
                 tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer ASC', [x], function (tx, res) {
@@ -435,16 +359,6 @@
             });
         }
 
-
-
-
-
-
-
-
-
-
-
         // 長按觸發https://github.com/john-doherty/long-press-event
 
         // for (var i = 1; i < 5; i++) {
@@ -457,20 +371,13 @@
         // };
 
         // 按鈕點選變色，點另一个按紐顏色還原
-        var t = 1;
+        var t = null;
         function fclick(x) {
             // 這個是判斷第一次點選
-            if (x == 1 && t == 1) {
-                document.getElementById(x).style.height = "100px";
-                document.getElementById(x).style.width = "100px";
-                document.getElementById(x).style.border = "3px solid yellow";
-
-            }
-            // 這個判斷是防止重複點選 
-            else if (x != t) {
-                document.getElementById(x).style.height = "100px";
-                document.getElementById(x).style.width = "100px";
-                document.getElementById(x).style.border = "3px solid yellow";
+            document.getElementById(x).style.height = "100px";
+            document.getElementById(x).style.width = "100px";
+            document.getElementById(x).style.border = "3px solid yellow";
+            if (t != null & x != t) {
                 document.getElementById(t).style.height = "80px";
                 document.getElementById(t).style.width = "80px";
                 document.getElementById(t).style.border = "0px ";
@@ -483,35 +390,242 @@
             $('#exampleModal3').modal('hide')
         })
 
-
-        function fncancel() {
-            $('#exampleModal4').modal('hide')
+        //fnclick fned 為儲物櫃名稱編輯修改互動視窗
+        function fnclick(id, name) {
+            $('#fed' + id).modal('hide')
+            fned = `<div class="modal fade " id="fned` + id + `" tabindex="-1" role="dialog" aria-labelledby="fned` + id + `" aria-hidden="False">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                                            <div class="modal-body text-black">
+                                                <form id='fnform'>
+                                                    <div style="margin-bottom:10px;">
+                                                        <label for="furniturename">儲物櫃名稱</label>
+                                                        <P id="fndwarn" style="display:inline-flex;color: red;"></P>
+                                                        <input type="text" class="form-control" id="furniturename`+ id + `" value="` + name + `" required>
+                                        </div>
+                                                        <div class="row" style="text-align: center">
+                                                            <div class="col">
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ id + `')">取消</button>
+                                                            </div>
+                                                            <div class="col">
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ id + `')">確認</button>
+                                                            </div>
+                                                        </div>
+                                    </form>
+                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+            $("body").append(fned);
+            $('#fned' + id + '').modal('show')
         }
 
-        function fdcancel() {
-            $('#exampleModal5').modal('hide')
+        // fndc 為儲物櫃名稱編輯修改互動視窗的取消鍵
+        function fndc(id) {
+            $("#fned" + id + "").modal('hide')
+        }
+        // fndv 為儲物櫃名稱編輯修改互動視窗的確認鍵,更新資料庫
+        function fndv(id) {
+            var name = $("#furniturename" + id + "").val();
+            if (!name) {
+                $('#fndwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#fndwarn').append("請輸入儲物櫃名稱");
+                $('#fnform').addClass("was-validated");
+                return
+            }
+            db.transaction(function (tx) {
+                var query = "UPDATE furniture SET name = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [name, id], function (tx, res) {
+                    fidclick(id);
+                    fclick(id);
+                    $("#fpoint" + id + "").text(name);
+                    $("#fname" + id + "").text(name);
+                    $("#fpname" + id + "").text(name);
+                    $("#fdname" + id + "").text(name);
+                    $("#fsname" + id + "").text(name);
+                    $("#fned" + id + "").modal('hide');
+
+                });
+            });
+
         }
 
-        function fscancel() {
-            $('#exampleModal6').modal('hide')
+        //fdclick fdd 為儲物櫃刪除互動視窗
+        function fdclick(id) {
+            $('#fed' + id).modal('hide')
+            $('#fdd' + id + '').modal('show')
+
         }
 
-        function fnclick(x) {
-            $('#fed'+x).modal('hide')
-            $('#exampleModal4').modal('show')
+        function fddc(id) {
+            $("#fdd" + id + "").modal('hide')
         }
 
-        function fdclick(x) {
-            $('#fed'+x).modal('hide')
-            $('#exampleModal5').modal('show')
+        function fddv(id) {
+            db.transaction(function (tx) {
+                var query = "DELETE FROM furniture where furnitureId = ?";
+                tx.executeSql(query, [id], function (tx, res) {
+                    location.reload()
+                });
+                var query2 = "DELETE FROM thing where furnitureId = ?";
+                tx.executeSql(query2, [id], function (tx, res) {
+                    location.reload()
+                });
+            });
+            $("#fdd" + id + "").modal('hide')
+
         }
 
-        function fsclick(x) {
-            $('#fed'+x).modal('hide')
-            $('#exampleModal6').modal('show')
+        //fpclick fped 為儲物櫃編輯照片互動視窗
+        function fpclick(id, image, name) {
+            $('#fed' + id).modal('hide')
+            $('#fped' + id + '').modal('show')
+        }
+
+        // fpdv 為儲物櫃圖片編輯互動視窗的儲存鍵,更新資料庫
+        function fpdv(id) {
+            var img = document.getElementById("fimagedit" + id + "").src;
+
+            db.transaction(function (tx) {
+                var query = "UPDATE furniture SET image = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [img, id], function (tx, res) {
+                    fidclick(id);
+                    fclick(id);
+                    var obj = document.getElementById(""+id+"");
+                    obj.src = img;
+                    $("#fped" + id + "").modal('hide');
+
+                });
+            });
+
+        }
+
+        function fpdc(id) {
+            $("#fped" + id + "").modal('hide')
+        }
+
+        //fpclick fsd 為儲物櫃共享互動視窗
+        function fsclick(id) {
+            $('#fed' + id).modal('hide')
+            $('#fsd' + id + '').modal('show')
+        }
+
+        function fsdc(id) {
+            $("#fsd" + id + "").modal('hide')
+        }
+
+        function insertfurniture() {
+            var name = $("#insertfname").val();
+            if (!name) {
+                $('#fnwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#fnwarn').append("請輸入儲物櫃名稱");
+                $('#fform').addClass("was-validated");
+                return
+            }
+            var a = $('#insertfphoto').hasClass('a');
+            if (a === true) {
+                $('#fpwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#fpwarn').append("請選擇儲物櫃照片");
+                return
+            }
+            var img = document.getElementById("insertfphoto").src;
+
+
+            // if (!img) {
+            //     alert("img is null");
+            // }
+
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var furnitureId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+
+                tx.executeSql('INSERT INTO furniture (furnitureId, name, image) VALUES (?,?,?)', [furnitureId, name, img],
+                    function (tx, res) {
+                        alert("成功匯入");
+                        location.reload()
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/4.jpg', 1, 0, furnitureId]);
+                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 2, 1, furnitureId]);
+                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 4, 0, furnitureId]);
+                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 3, 1, furnitureId]);
+            });
+
+        }
+
+        // ----------------------------照相---------------------------------------
+        function takephoto() {
+            let opts = {
+                quality: 100,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                mediaType: Camera.MediaType.PICTURE,
+                encodingType: Camera.EncodingType.JPEG,
+                cameraDirection: Camera.Direction.BACK
+            };
+            navigator.camera.getPicture(function cameraSuccess(imgURI) {
+                alert("data:" + imgURI);
+                myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                $("#fimg").text("");
+                $("#fimg").append(myimg);
+                // $('#exampleModal').modal('show')
+
+            }, function cameraError(error) {
+                alert("Unable to obtain picture: " + error, "app");
+            }, opts);
+        }
+
+
+    </script>
+    <script>
+        function imgget() {
+            ImagePicker.getPictures(function (result) {
+                alert(JSON.stringify(result));
+                alert(result['images'][0]['uri']);
+                var imgURI = result['images'][0]['uri']
+                var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                $("#fimg").text("");
+                $("#fimg").append(myimg);
+
+                // $('#exampleModal').modal('show')
+            }, function (err) {
+                alert(err);
+            }, {
+                    maximumImagesCount: 1,
+                    // width: 1920,
+                    // height: 1440,
+                    quality: 100
+                });
         }
 
     </script>
+
+    <script>
+        function fimgedit(id) {
+            ImagePicker.getPictures(function (result) {
+                alert(JSON.stringify(result));
+                alert(result['images'][0]['uri']);
+                var imgURI = result['images'][0]['uri']
+                var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+                $("#feimg" + id + "").text("");
+                $("#feimg" + id + "").append(myimg);
+
+                // $('#exampleModal').modal('show')
+            }, function (err) {
+                alert(err);
+            }, {
+                    maximumImagesCount: 1,
+                    // width: 1920,
+                    // height: 1440,
+                    quality: 100
+                });
+        }
+
+    </script>
+
 
 </body>
 

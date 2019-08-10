@@ -27,225 +27,53 @@
 
 
     <script type="text/javascript" charset="utf-8">
-
         function init() {
             //alert("You are years old!");
-
-
-            //類別滾輪
-            var categorypicker = new MobileSelect({
-                trigger: '#category',
-                title: '類別',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['包包', '鞋子', '衣服', '文具','工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
-                ],
-                position: [2] //初始化定位
-
-            });
-            //所屬人滾輪
-            var ownerpicker = new MobileSelect({
-                trigger: '#owner',
-                title: '所屬人',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人'] }
-                ],
-                position: [2] //初始化定位
-            });
-            //夾層滾輪
-            var mobileSelect1 = new MobileSelect({
-                trigger: '#layer',
-                title: '夾層',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['0', '1', '2', '3', '4', '5', '6'] }
-                ],
-                position: [2] //初始化定位
-            });
-
-            //數量滾輪
-            var mobileSelect2 = new MobileSelect({
-                trigger: '#number',
-                title: '數量',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    {
-                        data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-                            , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
-                    }
-                ],
-                position: [2] //初始化定位
-            });
-
-
-            //位置滾輪
-            var mobileSelect3 = new MobileSelect({
-                trigger: '#place',
-                title: '存放位置',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    {
-                        data: [
-                            {
-                                id: '1',
-                                value: '客廳',
-                                childs: [
-                                    { id: '1', value: '三層櫃' },
-                                    { id: '2', value: '五斗櫃' },
-                                    { id: '3', value: '' },
-                                    { id: '4', value: '' },
-                                    { id: '5', value: '' }
-                                ]
-                            },
-                            { id: '2', value: '廚房' },
-                            { id: '3', value: '廁所' },
-
-                        ]
-                    }
-                ],
-                position: [0, 1],
-                callback: function (indexArr, data) {
-                    console.log(data); //返回選中的json數據
-                }
-            });
-
-            /* 日期滾輪
-            var mobileSelectDate = new MobileSelect({
-                trigger: '#datepicker',
-                title: '日期',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'] },
-                    { data: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'] }
-                ],
-                position: [1, 1], //初始化定位 两个轮子都选中在索引1的选项
-
-                callback: function (indexArr, data) {
-                    console.log(data); //返回选中的json数据
-                }
-            });
-            */
-
-
-
-
-
-
-            // 相機
-            var pictureSource;   // picture source
-            var destinationType;
-
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-            // device APIs are available
-            //
-            function onDeviceReady() {
-                pictureSource = navigator.camera.PictureSourceType;
-                destinationType = navigator.camera.DestinationType;
-            }
-
-            // Called when a photo is successfully retrieved
-            //
-            function onPhotoDataSuccess(imageData) {
-                // Uncomment to view the base64-encoded image data
-                // console.log(imageData);
-
-                // Get image handle
-                //
-                var smallImage = document.getElementById('smallImage');
-
-                // Unhide image elements
-                //
-                smallImage.style.display = 'block';
-
-                // Show the captured photo
-                // The inline CSS rules are used to resize the image
-                //
-                smallImage.src = "data:image/jpeg;base64," + imageData;
-            }
-
-            // Called when a photo is successfully retrieved
-            //
-            function onPhotoURISuccess(imageURI) {
-                // Uncomment to view the image file URI
-                // console.log(imageURI);
-
-                // Get image handle
-                //
-                var largeImage = document.getElementById('largeImage');
-
-                // Unhide image elements
-                //
-                largeImage.style.display = 'block';
-
-                // Show the captured photo
-                // The inline CSS rules are used to resize the image
-                //
-                largeImage.src = imageURI;
-            }
-
-            // A button will call this function
-
-            function capturePhoto() {
-                // Take picture using device camera and retrieve image as base64-encoded string
-                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                    quality: 50,
-                    destinationType: destinationType.DATA_URL
-                });
-            }
-
-            // A button will call this function
-            //
-            function capturePhotoEdit() {
-                // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                    quality: 20, allowEdit: true,
-                    destinationType: destinationType.DATA_URL
-                });
-            }
-
-            // A button will call this function
-            //
-            function getPhoto(source) {
-                // Retrieve image file location from specified source
-                navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-                    quality: 50,
-                    destinationType: destinationType.FILE_URI,
-                    sourceType: source
-                });
-            }
-
-            // Called if something bad happens.
-            //
-            function onFail(message) {
-                alert('Failed because: ' + message);
-            }
         }
+
+        /*新增類別、所屬人*/
+        function addcategory() {
+            var addcategoryValue = document.getElementById("addcategory").value;
+            document.getElementById("category").innerHTML = addcategoryValue;
+            var c1 = '包包';
+            var c2 = '鞋子';
+            var c3 = '衣服';
+            var c4 = '文具';
+            var c5 = '工具';
+            var c6 = '玩具';
+            var c7 = '杯子';
+            var c8 = '飾品';
+            var c9 = '化妝品';
+            var c10 = '眼鏡';
+            var c11 = '新增類別';
+            // var categorytext =  c1+','+ c2+','+ c3+','+c4+','+c5+','+ c6+','+ c7+','+ c8+','+ c9+','+ c10+','+ c11
+            // categorytextA = categorytext.split(",");
+            categorypicker.updateWheel(0, [addcategoryValue, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]);
+            categorypicker.locatePosition(0, 0);
+
+            // var categorydata = categorypicker.wheels.data ;
+            // categorydata.splice(0,0,addcategoryValue);
+
+        }
+
+        function addowner() {
+            var addownerValue = document.getElementById("addowner").value;
+            document.getElementById("owner").innerHTML = addownerValue;
+            ownerpicker.updateWheel(0, [addownerValue, '自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']);
+            ownerpicker.locatePosition(0, 0);
+
+            // var ownerdata = ownerpicker.wheels.data ;
+            // ownerdata.splice(0,0,addownerValue);
+        }
+        /*取消新增類別、所屬人*/
+        function clearcategoryvalue() {
+            document.getElementById("category").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
+        function clearownervalue() {
+            document.getElementById("owner").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
+        }
+
 
         //儲存按鈕
         function savevalue() {
@@ -270,24 +98,7 @@
             console.log(thing)
         }
 
-        /*新增類別、所屬人*/
-        function addcategory() {
-            var addcategoryValue = document.getElementById("addcategory").value;
-            document.getElementById("category").innerHTML = addcategoryValue;
-        }
 
-        function addowner() {
-            var addownerValue = document.getElementById("addowner").value;
-            document.getElementById("owner").innerHTML = addownerValue;
-        }
-        /*取消新增類別、所屬人*/
-        function clearcategoryvalue() {
-            document.getElementById("category").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
-        }
-
-        function clearownervalue() {
-            document.getElementById("owner").innerHTML = '<span class="badge "><img src="static/right-arrow.png" style="height:20px">';
-        }
 
 
         //提醒小幫手
@@ -335,10 +146,10 @@
             background-color: transparent;
             color: white;
             border: 2px solid transparent;
-            
+
         }
 
-        .badge{
+        .badge {
             font-size: 11pt;
             font-weight: normal;
         }
@@ -365,11 +176,11 @@
             text-align: center;
         }
 
-        .icon2{
-            transition:0.3s;
-            color:white;
+        .icon2 {
+            transition: 0.3s;
+            color: white;
             font-size: 30px;
-            
+
         }
 
         /*icon旁文字*/
@@ -717,6 +528,107 @@
                     console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
                 });
 
+                //類別滾輪
+                var categorypicker = new MobileSelect({
+                    trigger: '#category',
+                    title: '類別',
+                    cancelBtnColor: '#f0f0f0',
+                    ensureBtnColor: '#f0f0f0',
+                    titleBgColor: '#254F6E',
+                    titleColor: '#f0f0f0',
+                    ensureBtnText: '確認',
+                    wheels: [
+                        { data: ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
+                    ],
+                    position: [2] //初始化定位        
+
+                });
+
+
+                //所屬人滾輪
+                var ownerpicker = new MobileSelect({
+                    trigger: '#owner',
+                    title: '所屬人',
+                    cancelBtnColor: '#f0f0f0',
+                    ensureBtnColor: '#f0f0f0',
+                    titleBgColor: '#254F6E',
+                    titleColor: '#f0f0f0',
+                    ensureBtnText: '確認',
+                    wheels: [
+                        { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人'] }
+                    ],
+                    position: [2] //初始化定位
+                });
+
+                //夾層滾輪
+                var mobileSelect1 = new MobileSelect({
+                    trigger: '#layer',
+                    title: '夾層',
+                    cancelBtnColor: '#f0f0f0',
+                    ensureBtnColor: '#f0f0f0',
+                    titleBgColor: '#254F6E',
+                    titleColor: '#f0f0f0',
+                    ensureBtnText: '確認',
+                    wheels: [
+                        { data: ['0', '1', '2', '3', '4', '5', '6'] }
+                    ],
+                    position: [2] //初始化定位
+                });
+
+                //數量滾輪
+                var mobileSelect2 = new MobileSelect({
+                    trigger: '#number',
+                    title: '數量',
+                    cancelBtnColor: '#f0f0f0',
+                    ensureBtnColor: '#f0f0f0',
+                    titleBgColor: '#254F6E',
+                    titleColor: '#f0f0f0',
+                    ensureBtnText: '確認',
+                    wheels: [
+                        {
+                            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                                , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+                        }
+                    ],
+                    position: [2] //初始化定位
+                });
+
+
+                //位置滾輪
+                var mobileSelect3 = new MobileSelect({
+                    trigger: '#place',
+                    title: '存放位置',
+                    cancelBtnColor: '#f0f0f0',
+                    ensureBtnColor: '#f0f0f0',
+                    titleBgColor: '#254F6E',
+                    titleColor: '#f0f0f0',
+                    ensureBtnText: '確認',
+                    wheels: [
+                        {
+                            data: [
+                                {
+                                    id: '1',
+                                    value: '客廳',
+                                    childs: [
+                                        { id: '1', value: '三層櫃' },
+                                        { id: '2', value: '五斗櫃' },
+                                        { id: '3', value: '' },
+                                        { id: '4', value: '' },
+                                        { id: '5', value: '' }
+                                    ]
+                                },
+                                { id: '2', value: '廚房' },
+                                { id: '3', value: '廁所' },
+
+                            ]
+                        }
+                    ],
+                    position: [0, 1],
+                    callback: function (indexArr, data) {
+                        console.log(data); //返回選中的json數據
+                    }
+                });
+
             </script>
 
 
@@ -772,14 +684,13 @@
 
 
                         <div class="box1">
-                            <button type=" button" class="btn btn-light photobtn" onclick="capturePhoto();"><img
+                            <button type=" button" class="btn btn-light photobtn" id="opencamera"><img
                                     src="static/camera.png" style=width:40px><br> 相機</img></button><br>
                         </div>
 
                         <div class="box">
-                            <button type="button" class="btn btn-light photobtn"
-                                onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><img src="static/photo-library.png"
-                                    style=width:40px><br> 從相簿中選擇</img></button>
+                            <button type="button" class="btn btn-light photobtn" id="openLabrary"><img
+                                    src="static/photo-library.png" style=width:40px><br> 從相簿中選擇</img></button>
                         </div>
 
 
@@ -841,6 +752,66 @@
             </div>
         </div>
     </div>
+    <script>
+        let app = {
+            init: function () {
+                document.getElementById('opencamera').addEventListener('click', app.takephoto);
+            },
+            takephoto: function () {
+                let opts = {
+                    quality: 80,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    mediaType: Camera.MediaType.PICTURE,
+                    encodingType: Camera.EncodingType.JPEG,
+                    cameraDirection: Camera.Direction.BACK,
+                    targetWidth: 300,
+                    targetHeight: 300
+                };
+
+                navigator.camera.getPicture(app.ftw, app.wtf, opts);
+            },
+            ftw: function (imgURI) {
+
+                document.getElementById('myImage').src = imgURI;
+
+            },
+
+        };
+
+        document.addEventListener('deviceready', app.init);
+    </script>
+    <script>
+        let app2 = {
+            init: function () {
+                document.getElementById('openLabrary').addEventListener('click', app2.takephoto);
+            },
+            takephoto: function () {
+                let opts = {
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    quality: 50,
+                    sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM, // 從圖片庫
+                    mediaType: Camera.MediaType.PICTURE,
+                    encodingType: Camera.EncodingType.JPEG,
+                    cameraDirection: Camera.Direction.BACK,
+                    targetWidth: 300,
+                    targetHeight: 300
+                };
+
+                navigator.camera.getPicture(app2.ftw, app2.wtf, opts);
+            },
+            ftw: function (imageData) {
+
+                document.getElementById('myImage').src = "data:image/jpeg;base64," + imageData;
+
+            },
+            wtf: function (msg) {
+                document.getElementById('msg').textContent = msg;
+            }
+        };
+
+        document.addEventListener('deviceready', app2.init);
+    </script>
 
 
 

@@ -103,7 +103,7 @@
 
 
     <!--新增物品的設定  -->
-    <div class="modal" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
+    <!-- <div class="modal" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document"
             style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 放物品的地方 -->
     <div class="box-wrap">
@@ -163,7 +163,7 @@
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId integer, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)');
             });
 
             db.transaction(function (tx) {
@@ -312,47 +312,99 @@
         function fidclick(x) {
             // 新增物品
             // alert(x)
+            //atd 為增加物品的互動視窗
+            var atd = `<div class="modal" id="atd` + x + `" tabindex="-1" role="dialog" aria-labelledby="atd` + x + `" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
+                            <div class="modal-content">
+                                <div class="modal-body " style="background-color: rgb(255, 255, 255);padding: 5px 0px 16px 0px;">
+                                    <div class="row objcenter">
+                                        <p style="margin:0px ;">新增物品從</p>
+                                    </div>
+                                    <hr style="margin: 5px 0px 16px 0px">
+                                    <div class="row objcenter">
+                                        <a href="T01_新增.html">單筆建立</a>
+                                    </div>
+                                    <hr>
+                                    <div class="row objcenter">
+                                        <a href="#" onclick="imgbatch('`+ x + `')">多筆建立</a>
+                                    </div>
+                                    <hr>
+                                    <div class="row objcenter">
+                                        <a href="#" onclick="tcancel('`+ x + `')">取消</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            $("body").append(atd);
             $(".addthings").html("")
             var addthing = `<div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
-                                    <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3" style="outline: none;">
+                                    <button type="button" class="buttontype" data-toggle="modal" data-target="#atd`+ x + `" style="outline: none;">
                                         <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
                                     </button>
                                 </div>`;
             $(".addthings").append(addthing);
+
             //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
                 tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer ASC', [x], function (tx, res) {
                     var len = res.rows.length;
-                    // alert("layer len:" + len);
 
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
                             var num = res.rows.item(i)['layer'];
-                            var tr = function (num) {
-                                tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
-                                    $(".box-wrap").append("<p style='color:gray'>第" + num + "層</p>")
-                                    var len = res.rows.length;
-                                    // alert("num:" + num)
-                                    // alert("WHERE layer len:" + len);
-                                    // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
-                                    // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
-                                    if (res.rows.length >= 1) {
-                                        var warn
-                                        for (var j = 0; j < len; j++) {
-                                            if (res.rows.item(j)['out'] == 1) {
-                                                warn = "<i class='icon ion-md-information-circle iwarn'></i>";
-                                            } else {
-                                                warn = "";
-                                            }
-                                            $(".box-wrap").append(`<div class="box">
+                            if (!num) {
+                                var tr = function (num) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furnitureId = ?', [x], function (tx, res) {
+                                        // $(".box-wrap").append("<p style='color:gray'>第" + num + "層</p>")
+                                        var len = res.rows.length;
+                                        // alert("num:" + num)
+                                        // alert("WHERE layer Null len:" + len);
+                                        // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
+                                        // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                        if (res.rows.length >= 1) {
+                                            var warn
+                                            for (var j = 0; j < len; j++) {
+                                                if (res.rows.item(j)['out'] == 1) {
+                                                    warn = "<i class='icon ion-md-information-circle iwarn'></i>";
+                                                } else {
+                                                    warn = "";
+                                                }
+                                                $(".box-wrap").append(`<div class="box">
                                                                 `+ warn + `
                                                                 <a href="T01_編輯.html"><img src="`+ res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+                                            }
                                         }
-                                    }
-                                });
-                            }(num)
+                                    });
+                                }(num)
+                            } else {
+                                var tr = function (num) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
+                                        $(".box-wrap").append("<p style='color:gray'>第" + num + "層</p>")
+                                        var len = res.rows.length;
+                                        // alert("num:" + num)
+                                        // alert("WHERE layer len:" + len);
+                                        // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
+                                        // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                        if (res.rows.length >= 1) {
+                                            var warn
+                                            for (var j = 0; j < len; j++) {
+                                                if (res.rows.item(j)['out'] == 1) {
+                                                    warn = "<i class='icon ion-md-information-circle iwarn'></i>";
+                                                } else {
+                                                    warn = "";
+                                                }
+                                                $(".box-wrap").append(`<div class="box">
+                                                                `+ warn + `
+                                                                <a href="T01_編輯.html"><img src="`+ res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                </div>`)
+                                            }
+                                        }
+                                    });
+                                }(num)
+                            }
                         }
                     }
                 });
@@ -386,9 +438,9 @@
         };
 
         // 新增物品的取消
-        $('#tcancel').click(function () {
-            $('#exampleModal3').modal('hide')
-        })
+        function tcancel(id) {
+            $('#atd' + id + '').modal('hide');
+        }
 
         //fnclick fned 為儲物櫃名稱編輯修改互動視窗
         function fnclick(id, name) {
@@ -464,9 +516,7 @@
         function fddv(id) {
             db.transaction(function (tx) {
                 var query = "DELETE FROM furniture where furnitureId = ?";
-                tx.executeSql(query, [id], function (tx, res) {
-                    location.reload()
-                });
+                tx.executeSql(query, [id]);
                 var query2 = "DELETE FROM thing where furnitureId = ?";
                 tx.executeSql(query2, [id], function (tx, res) {
                     location.reload()
@@ -491,7 +541,7 @@
                 tx.executeSql(query, [img, id], function (tx, res) {
                     fidclick(id);
                     fclick(id);
-                    var obj = document.getElementById(""+id+"");
+                    var obj = document.getElementById("" + id + "");
                     obj.src = img;
                     $("#fped" + id + "").modal('hide');
 
@@ -548,10 +598,10 @@
                     }, function (error) {
                         alert('Something went Wrong');
                     });
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/4.jpg', 1, 0, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 2, 1, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 4, 0, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 3, 1, furnitureId]);
+                // tx.executeSql('INSERT INTO thing (image, furnitureId) VALUES (?,?)', ['static/things/4.jpg', furnitureId]);
+                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 2, 1, furnitureId]);
+                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 4, 0, furnitureId]);
+                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 3, 1, furnitureId]);
             });
 
         }
@@ -582,50 +632,150 @@
     </script>
     <script>
         function imgget() {
-            ImagePicker.getPictures(function (result) {
-                alert(JSON.stringify(result));
-                alert(result['images'][0]['uri']);
-                var imgURI = result['images'][0]['uri']
-                var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
-                $("#fimg").text("");
-                $("#fimg").append(myimg);
+            var permissions = cordova.plugins.permissions;
+            permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
+                window.imagePicker.getPictures(
+                    function (results) {
+                        var imgURI = results[0]
+                        if (!imgURI) {
+                        } else {
+                            var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                            $("#fimg").text("");
+                            $("#fimg").append(myimg);
+                        }
+                    }, function (error) {
+                        console.log('Error: ' + error);
+                    }, {
+                        maximumImagesCount: 1,
+                        quality: 50
+                    }
+                );
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
 
-                // $('#exampleModal').modal('show')
-            }, function (err) {
-                alert(err);
-            }, {
-                    maximumImagesCount: 1,
-                    // width: 1920,
-                    // height: 1440,
-                    quality: 100
-                });
+            // ImagePicker.getPictures(function (result) {
+            //     alert(JSON.stringify(result));
+            //     alert(result['images'][0]['uri']);
+            //     var imgURI = result['images'][0]['uri']
+            //     var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+            //     $("#fimg").text("");
+            //     $("#fimg").append(myimg);
+
+            //     // $('#exampleModal').modal('show')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         // width: 1920,
+            //         // height: 1440,
+            //         quality: 100
+            //     });
         }
 
     </script>
 
     <script>
         function fimgedit(id) {
-            ImagePicker.getPictures(function (result) {
-                alert(JSON.stringify(result));
-                alert(result['images'][0]['uri']);
-                var imgURI = result['images'][0]['uri']
-                var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
-                $("#feimg" + id + "").text("");
-                $("#feimg" + id + "").append(myimg);
 
-                // $('#exampleModal').modal('show')
-            }, function (err) {
-                alert(err);
-            }, {
+            window.imagePicker.getPictures(
+                function (results) {
+                    var imgURI = results[0]
+                    if (!imgURI) {
+                    } else {
+                        var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+                        $("#feimg" + id + "").text("");
+                        $("#feimg" + id + "").append(myimg);
+                    }
+                }, function (error) {
+                    console.log('Error: ' + error);
+                }, {
                     maximumImagesCount: 1,
-                    // width: 1920,
-                    // height: 1440,
-                    quality: 100
-                });
+                    quality: 50
+                }
+            );
+
+            // ImagePicker.getPictures(function (result) {
+            //     alert(JSON.stringify(result));
+            //     alert(result['images'][0]['uri']);
+            //     var imgURI = result['images'][0]['uri']
+            //     var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+            //     $("#feimg" + id + "").text("");
+            //     $("#feimg" + id + "").append(myimg);
+
+            //     // $('#exampleModal').modal('show')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         // width: 1920,
+            //         // height: 1440,
+            //         quality: 100
+            //     });
         }
 
     </script>
 
+    <script>
+        function imgbatch(id) {
+
+            var permissions = cordova.plugins.permissions;
+            permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
+                window.imagePicker.getPictures(
+                    function (results) {
+                        var len = results.length;
+                        for (var i = 0; i < len; i++) {
+                            var uri = results[i];
+                            var timestamp = (new Date()).valueOf();
+                            var thingId = btoa('ben32388@gmail.com') + timestamp + "" + i + "";
+                            var tran = function (uri, thingId) {
+                                db.transaction(function (tx) {
+                                    tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
+                                });
+                            }(uri, thingId);
+                        }
+
+                        fidclick(id);
+                        fclick(id);
+                        $("#atd" + id + "").modal('hide')
+                    }, function (error) {
+                        console.log('Error: ' + error);
+                    }, {
+                        maximumImagesCount: 10,
+                        quality: 50
+                    }
+                );
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
+
+            // ImagePicker.getPictures(function (result) {
+            //     // alert(JSON.stringify(result));
+            //     // alert(result['images'].length);
+            //     var len = result['images'].length;
+            //     for (var i = 0; i < len; i++) {
+            //         var uri = result['images'][i]['uri'];
+            //         var timestamp = (new Date()).valueOf();
+            //         var thingId = btoa('ben32388@gmail.com') + timestamp + "" + i + "";
+            //         var tran = function (uri, thingId) {
+            //             db.transaction(function (tx) {
+            //                 tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
+            //             });
+            //         }(uri, thingId);
+            //     }
+
+            //     fidclick(id);
+            //     fclick(id);
+            //     $("#atd" + id + "").modal('hide')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         quality: 100
+            //     });
+        }
+
+    </script>
 
 </body>
 

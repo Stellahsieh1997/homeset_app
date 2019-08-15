@@ -2,7 +2,7 @@
         * {
             /* border:solid 1px black; */
             font-family: 微軟正黑體;
-            /* background-color: #F5F6F8; */
+            
         }
 
         ion-icon{
@@ -18,6 +18,7 @@
         {
             padding: 0;
             margin: 0;
+            
         }
         body
         {
@@ -33,7 +34,7 @@
         {
             text-shadow: none;
         }
-        h1, h2, h3, h4, h5, h6
+        h1, h2, h3, h4, h6
         {
             line-height: 1;
             font-weight: bold;
@@ -56,8 +57,13 @@
             color: inherit;
             text-decoration: none;
         }
-        
-
+        /* 設定樓層置中 */
+        .outer{
+            text-align: center;
+        }
+        .outer ul{
+            display: inline-block;
+        }
         nav:not(.mm-menu)
         {
             display: none;
@@ -82,6 +88,7 @@
             height: 40px;
             padding: 0 50px;
         }
+        
         .triangle{
             /* width: 0;
             height: 0;
@@ -98,7 +105,10 @@
         .triangle:hover{
             font-size: 35px;
         }
-        
+
+        /* li:hover{
+            background-color: rgb(230, 225, 225);
+        } */
         .footer{
             position: fixed;
             bottom: 0;
@@ -123,7 +133,7 @@
             bottom: 0;
             left: 0;
         }
-        .header a
+        .two a
         {
             background: center center no-repeat transparent;
             background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
@@ -131,12 +141,13 @@
             width: 40px;
             height: 40px;
             position: absolute;
-            top: 0;
+            top:0px;
             left: 10px;
         }
         .content
         {
-            padding: 150px 80px 80px 80px;
+            padding: 30px 30px 30px 30px;
+            
         }	
         .icon{
             display: flex;
@@ -204,21 +215,24 @@
             padding-left:0;
             font-size: 16px;
           }
-        .add i,
-        .points i
+        .add i
         {
             font-size: 30px;
             color:rgb(255, 255, 255);
         }
         
+        .points{
+            font-size: 30px;
+            padding-top:20px; 
+        }
         /* 以下都是H01-1 */
 
         .exrect{
             display:flex;
             align-items:center;
             justify-content:center;
-            width: 100px;
-            height: 100px;
+            width: 20vh;
+            height: 20vh;
             background-color:#254F6E;
             border-color: black;
             color: white;
@@ -232,8 +246,19 @@
             top:25px;
         }
 
+        .exrect1{
+            width: 20vh;
+            height: 20vh;
+            display: flex;
+        }
+        .left{
+            width:80%;
+        }
+        .right{
+            padding-top:60px;
+            width:20%;
 
-
+        }
         /* The Modal (background) 彈跳視窗 */
         .modal2 {
             display: none; /* Hidden by default */
@@ -316,4 +341,57 @@
         .title{
            text-align: center;
         }
-        
+
+        /*互動視窗*/
+        .modal-header {
+            background-color: #254F6E;
+           
+        }
+
+        .modal-title {
+            color: #FFFFFF;
+            
+        }
+
+        .close {
+            color: #FFFFFF
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .box-wrap>div {
+            width: 31%;
+            padding-bottom: 0%;
+            margin: 1%;
+            border-radius: 10%;
+            float: left;
+            color: #254F6E;
+        }
+
+        /* 透明的按鈕 */
+
+        .buttontype {
+            background-color: transparent;
+            border-color: transparent;
+            margin: 0px;
+            color: white;
+        }
+
+       .four{
+        padding: 5px;
+        }
+
+        .btn-primary{
+            background-color: #254F6E;
+            color: white;
+            border:none;
+        }
+
+        .btn-primary:hover{
+            border: none;
+            background-color: none;
+        }

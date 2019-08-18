@@ -32,40 +32,6 @@
             //alert("You are years old!");
         }
 
-        /*新增類別、所屬人*/
-        // function addcategory() {
-        //     var addcategoryValue = document.getElementById("addcategory").value;
-        //     document.getElementById("category").innerHTML = addcategoryValue;
-        //     var c1 = '包包';
-        //     var c2 = '鞋子';
-        //     var c3 = '衣服';
-        //     var c4 = '文具';
-        //     var c5 = '工具';
-        //     var c6 = '玩具';
-        //     var c7 = '杯子';
-        //     var c8 = '飾品';
-        //     var c9 = '化妝品';
-        //     var c10 = '眼鏡';
-        //     var c11 = '新增類別';
-        //     // var categorytext =  c1+','+ c2+','+ c3+','+c4+','+c5+','+ c6+','+ c7+','+ c8+','+ c9+','+ c10+','+ c11
-        //     // categorytextA = categorytext.split(",");
-        //     categorypicker.updateWheel(0, [addcategoryValue, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]);
-        //     categorypicker.locatePosition(0, 0);
-
-        //     // var categorydata = categorypicker.wheels.data ;
-        //     // categorydata.splice(0,0,addcategoryValue);
-
-        // }
-
-        // function addowner() {
-        //     var addownerValue = document.getElementById("addowner").value;
-        //     document.getElementById("owner").innerHTML = addownerValue;
-        //     ownerpicker.updateWheel(0, [addownerValue, '自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']);
-        //     ownerpicker.locatePosition(0, 0);
-
-        //     // var ownerdata = ownerpicker.wheels.data ;
-        //     // ownerdata.splice(0,0,addownerValue);
-        // }
         /*取消新增類別、所屬人*/
         function clearcategoryvalue() {
             document.getElementById("category").innerHTML = '<img src="static/right-arrow.png" style="height:20px">';
@@ -855,45 +821,6 @@
         }, function (start, end, label) {
             console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
         });
-
-        //類別滾輪
-        // var categorypicker = new MobileSelect({
-        //     trigger: '#category',
-        //     title: '類別',
-        //     cancelBtnColor: '#f0f0f0',
-        //     ensureBtnColor: '#f0f0f0',
-        //     titleBgColor: '#254F6E',
-        //     titleColor: '#f0f0f0',
-        //     ensureBtnText: '確認',
-        //     wheels: [
-        //         { data: ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別'] }
-        //     ],
-        //     position: [0],
-        //     callback: function (indexArr, data) {
-        //         $('#categorywarn').text("");
-
-        //     } //初始化定位        
-
-        // });
-
-
-        // //所屬人滾輪
-        // var ownerpicker = new MobileSelect({
-        //     trigger: '#owner',
-        //     title: '所屬人',
-        //     cancelBtnColor: '#f0f0f0',
-        //     ensureBtnColor: '#f0f0f0',
-        //     titleBgColor: '#254F6E',
-        //     titleColor: '#f0f0f0',
-        //     ensureBtnText: '確認',
-        //     wheels: [
-        //         { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人'] }
-        //     ],
-        //     position: [2], //初始化定位
-        //     callback: function (indexArr, data) {
-        //         $('#ownerwarn').text("");
-        //     }
-        // });
 
         //夾層滾輪
         var mobileSelect1 = new MobileSelect({

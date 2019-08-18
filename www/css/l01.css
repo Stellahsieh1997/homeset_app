@@ -1,0 +1,48 @@
+*{
+    /* border:solid 1px black; */
+}
+
+.font {
+   
+    font-family: Microsoft JhengHei;
+}
+
+.flex {
+    flex: 1 auto;
+    display: flex;
+    height: 250px;
+    padding: 15px;
+    border: 8px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #254F6E;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.contentstyle {
+    background-color: white
+}
+
+.title {
+    align-items: center;
+    justify-content: center;
+}
+
+.bordertype {
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+    margin-top:10px;
+
+    height: 400px;
+}
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+}

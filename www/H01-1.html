@@ -19,26 +19,45 @@
 
 <body>
 
-    <div id="page">
-        <div class="header">
-            <a href="#menu"><span></span></a>
-            一樓
-            <i class="triangle ion-md-arrow-dropdown" data-toggle="modal" data-target="#exampleModalCenter"></i>
-        </div>
-        <div class="content">
-<!-- 測試 -->
-            <a href="F01.html?space=test">
-                <div class="exrect">
-                    <p>客廳</p>
-                    <div class="points">
-                        <a href="#">
-                            <!-- Trigger/Open The Modal -->
-                            <i id="myBtn" class=" ion-md-more"></i>
-                        </a>
-                    </div>
+    <div id="page" class="outer">
+        <!-- <div class="header">
+            <div class="col two">
+                <a href="#menu"><span></span></a>
+            </div>
+            <div class="col">
+                    <div class="dropdown ">
+                            <a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">樓層</a>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">一樓</a>
+                              <a class="dropdown-item" href="#">二樓</a>
+                              <a class="dropdown-item" href="#">三樓</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">新增</a>
+                            </div>
+                        </div>
+            </div>
+            <div class="col"> 
+            </div>
+
+            
+        </div> -->
+        <!-- 導覽列 -->
+        <ul class="nav header">
+            <li class="nav-item two">
+                <a class="nav-link active" href="#menu"></a>
+            </li>
+            <li class="dropdown nav-fill">
+                <a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">二樓</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="index.html">一樓</a>
+                    <a class="dropdown-item" href="H01-1.html">二樓</a>
+                    <a class="dropdown-item" href="H01-1 copy.html">三樓</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
                 </div>
-            </a>
-        </div>
+            </li>
+        </ul>
         <nav id="menu">
             <ul>
                 <li><a href="../www/H02.html">與我共用的項目</a></li>
@@ -50,31 +69,70 @@
         </nav>
     </div>
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <div class="row content">
+
+        <!-- <a href="F01.html" class="four">
+            <div class="exrect">
+                <p>客廳</p>
+                <div class="points">
+                   
+                    <i id="myBtn" class=" ion-md-more"></i>
+                </div>
+            </div>
+        </a>
+
+
+
+        <a href="F01.html" class="four">
+            <div class="exrect">
+                <p>房間</p>
+                <div class="points">
+                   
+                    <i id="myBtn" class=" ion-md-more"></i>
+                </div>
+            </div>
+        </a> -->
+
+
+        <div class="btn-group exrect1">
+            <button onclick="location.href='F01.html'" type="button" class="btn btn-primary left">客廳</button>
+            <button id="myBtn" type="button" class="btn btn-primary right" >
+                <i class="ion-md-more points" ></i>
+            </button>
+        </div>
+
+
+
+    </div>
+
+
+    <!-- 新增樓層的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">樓層</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增樓層</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body ">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">一樓</li>
-                        <li class="list-group-item">二樓</li>
-                        <li class="list-group-item">三樓</li>
-                        <li class="list-group-item">新增</li>
-                    </ul>
-                </div>
 
+                <div class="modal-body ">
+                    <label for="exampleInputPassword1">名稱</label>
+                    <input  class="form-control"  placeholder="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">確認</button>
+                </div>
             </div>
+
         </div>
     </div>
 
-
-
+    </div>
 
     <!-- 修改平面圖的彈跳視窗-->
     <div id="myModal2" class="modal2">
@@ -83,21 +141,22 @@
         <div class="modal2-content">
             <div class="row" style="text-align: center">
                 <div class="col-4 icon22">
-                    <a href="#">
+                    <button class="buttontype" data-toggle="modal" data-target="#exampleModal1">
                         <i class="ion-md-create icon2"></i>
                         <p>編輯名稱</p>
-                    </a>
+                    </button>
                 </div>
                 <div class="col-4 icon22 ">
-                    <a href="#">
+                    <button class="buttontype">
                         <i class=" ion-md-trash icon2"></i>
                         <p>刪除</p>
-                    </a> </div>
+                    </button>
+                </div>
                 <div class="col-4 icon22">
-                    <a href="#">
+                    <button class="buttontype">
                         <i class=" ion-md-list icon2"></i>
                         <p>顏色</p>
-                    </a>
+                    </button>
                 </div>
 
             </div>
@@ -106,11 +165,58 @@
 
     </div>
 
+    <!-- 編輯的彈跳視窗 -->
+    <div class="modal fade" id="#exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>編輯</b></div>
+                    </h5>
 
+                </div>
+                <div class="modal-body">
+                    <div class="">確定要刪除嗎?</div>
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+                </div>
 
-    <div class="circlefix add">
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增格局的彈跳按鈕 -->
+    <div class="circlefix add" data-toggle="modal" data-target="#exampleModalCenter2">
         <i class="icon ion-md-add"></i>
+    </div>
+    <!-- 新增格局的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter2" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增格局</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <label for="exampleInputPassword1">名稱</label>
+                    <input  class="form-control"  placeholder="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </body>
 <div class="container-fluid  footer">
@@ -198,4 +304,5 @@
 </head>
 
 <body>
+
 </html>

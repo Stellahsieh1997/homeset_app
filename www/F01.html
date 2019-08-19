@@ -84,11 +84,11 @@
                             </div>
 
                             <div class="takephotobtn">
-                                <a href="#" onclick="takephoto()">相機</a>
+                                <a href="javascript:;" onclick="takephoto()">相機</a>
                             </div>
                             <div style="display: inline-flex; margin-right:10px"></div>
                             <div class="takephotobtn">
-                                <a href="#" onclick="imgget()">從相簿中選擇</a>
+                                <a href="javascript:;" onclick="imgget()">從相簿中選擇</a>
                             </div>
                             <br>
                         </div>
@@ -102,33 +102,6 @@
     </div>
 
 
-    <!--新增物品的設定  -->
-    <!-- <div class="modal" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document"
-            style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
-            <div class="modal-content">
-                <div class="modal-body " style="background-color: rgb(255, 255, 255);padding: 5px 0px 16px 0px;">
-                    <div class="row objcenter">
-                        <p style="margin:0px ;">新增物品從</p>
-                    </div>
-                    <hr style="margin: 5px 0px 16px 0px">
-                    <div class="row objcenter">
-                        <a href="T01_新增.html">單筆建立</a>
-                    </div>
-                    <hr>
-                    <div class="row objcenter">
-                        <a href="#" onclick="imgget()">多筆建立</a>
-                    </div>
-                    <hr>
-                    <div class="row objcenter">
-                        <a href="#" id="tcancel">取消</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- 放物品的地方 -->
     <div class="box-wrap">
         <div class="objcenter" style="height: 50vh;width: 100vw;">
@@ -141,6 +114,8 @@
 
     </div>
     <script>
+
+
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
@@ -162,17 +137,17 @@
             // });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId integer, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
             });
 
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM furniture', [], function (tx, res) {
                     var len = res.rows.length;
-                    alert(len);
+                    // alert(len);
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
-                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='80' width='80' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
+                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
 
                             var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
@@ -287,8 +262,17 @@
                             $("body").append(fsd);
                         }
 
-                        fidclick(res.rows.item(0)['furnitureId'])
-                        fclick(res.rows.item(0)['furnitureId'])
+                        
+
+                        let urlParams = new URLSearchParams(window.location.search);
+                        var furnitureId = urlParams.get('furniture');
+                        if(!furnitureId){
+                            fidclick(res.rows.item(0)['furnitureId'])
+                            fclick(res.rows.item(0)['furnitureId'])
+                        }else{
+                            fidclick(furnitureId)
+                            fclick(furnitureId)
+                        }
 
                     }
                 });
@@ -322,15 +306,15 @@
                                     </div>
                                     <hr style="margin: 5px 0px 16px 0px">
                                     <div class="row objcenter">
-                                        <a href="T01_新增.html">單筆建立</a>
+                                        <a href="T01_insert.html?furniture=`+x+`">單筆建立</a>
                                     </div>
                                     <hr>
                                     <div class="row objcenter">
-                                        <a href="#" onclick="imgbatch('`+ x + `')">多筆建立</a>
+                                        <a href="javascript:;" onclick="imgbatch('`+ x + `')">多筆建立</a>
                                     </div>
                                     <hr>
                                     <div class="row objcenter">
-                                        <a href="#" onclick="tcancel('`+ x + `')">取消</a>
+                                        <a href="javascript:;" onclick="tcancel('`+ x + `')">取消</a>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +341,7 @@
                             if (!num) {
                                 var tr = function (num) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furnitureId = ?', [x], function (tx, res) {
-                                        // $(".box-wrap").append("<p style='color:gray'>第" + num + "層</p>")
+                                        $(".box-wrap").append("<p style='color:gray'>尚未編輯完成</p>")
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer Null len:" + len);
@@ -373,7 +357,7 @@
                                                 }
                                                 $(".box-wrap").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_編輯.html"><img src="`+ res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
                                             }
                                         }
@@ -386,7 +370,7 @@
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer len:" + len);
-                                        // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
+                                        // alert("res.rows.item(0)['thingId']:" + res.rows.item(0)["thingId"]);
                                         // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
                                         if (res.rows.length >= 1) {
                                             var warn
@@ -398,7 +382,7 @@
                                                 }
                                                 $(".box-wrap").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_編輯.html"><img src="`+ res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
                                             }
                                         }
@@ -406,6 +390,10 @@
                                 }(num)
                             }
                         }
+                    } else {
+                        $(".box-wrap").append(`<div class="objcenter" style="height: 50vh;width: 100vw;">
+                                            <p style="color:gray; font-size:18px;">請點選下方的加鍵，以新增物品。</p>
+                                                </div>`)
                     }
                 });
             });
@@ -426,12 +414,12 @@
         var t = null;
         function fclick(x) {
             // 這個是判斷第一次點選
-            document.getElementById(x).style.height = "100px";
-            document.getElementById(x).style.width = "100px";
+            document.getElementById(x).style.height = "110px";
+            document.getElementById(x).style.width = "110px";
             document.getElementById(x).style.border = "3px solid yellow";
             if (t != null & x != t) {
-                document.getElementById(t).style.height = "80px";
-                document.getElementById(t).style.width = "80px";
+                document.getElementById(t).style.height = "90px";
+                document.getElementById(t).style.width = "90px";
                 document.getElementById(t).style.border = "0px ";
             }
             t = x;
@@ -452,7 +440,7 @@
                                                 <form id='fnform'>
                                                     <div style="margin-bottom:10px;">
                                                         <label for="furniturename">儲物櫃名稱</label>
-                                                        <P id="fndwarn" style="display:inline-flex;color: red;"></P>
+                                                        <P id="fndwarn" style="display:inline-flex;color: red;margin:0px;"></P>
                                                         <input type="text" class="form-control" id="furniturename`+ id + `" value="` + name + `" required>
                                         </div>
                                                         <div class="row" style="text-align: center">
@@ -579,11 +567,10 @@
                 return
             }
             var img = document.getElementById("insertfphoto").src;
-
-
-            // if (!img) {
-            //     alert("img is null");
-            // }
+            //測試
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            alert(spaceId);
 
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
@@ -591,9 +578,9 @@
                 var furnitureId = btoa('ben32388@gmail.com') + timestamp;
                 // alert("furnitureId"+furnitureId);
 
-                tx.executeSql('INSERT INTO furniture (furnitureId, name, image) VALUES (?,?,?)', [furnitureId, name, img],
+                tx.executeSql('INSERT INTO furniture (furnitureId, name, image, spaceId) VALUES (?,?,?,?)', [furnitureId, name, img, spaceId],
                     function (tx, res) {
-                        alert("成功匯入");
+                        // alert("成功匯入");
                         location.reload()
                     }, function (error) {
                         alert('Something went Wrong');
@@ -637,6 +624,7 @@
                 window.imagePicker.getPictures(
                     function (results) {
                         var imgURI = results[0]
+                        alert(imgURI);
                         if (!imgURI) {
                         } else {
                             var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;

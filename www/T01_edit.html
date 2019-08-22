@@ -561,7 +561,7 @@
                 remindertextValue = null
             }
 
-            alert(img + name + description + categoryValue + ownerValue + numberValue + layerValue + out + remind + reminder + remindertextValue)
+            // alert(img + name + description + categoryValue + ownerValue + numberValue + layerValue + out + remind + reminder + remindertextValue)
             let urlParams = new URLSearchParams(window.location.search);
             var thingId = urlParams.get('thing');
 
@@ -686,14 +686,14 @@
                         tx.executeSql('SELECT * FROM category', [],
                             function (tx, res) {
                                 var len = res.rows.length;
-                                alert(len)
+                                // alert(len)
                                 if (res.rows.length >= 1) {
                                     for (var i = 0; i < len; i++) {
                                         categoryselect.push(res.rows.item(i)['name'])
                                     }
                                 }
                                 var categoryselect3 = categoryselect.concat(categoryselect2)
-                                alert(typeof categoryselect3)
+                                // alert(typeof categoryselect3)
                                 categorypicker.updateWheel(0, categoryselect3);
                                 categorypicker.locatePosition(0, 0);
                                 $('#addcategory').val("");
@@ -735,7 +735,7 @@
                         tx.executeSql('SELECT * FROM owner', [],
                             function (tx, res) {
                                 var len = res.rows.length;
-                                alert(len)
+                                // alert(len)
                                 if (res.rows.length >= 1) {
                                     for (var i = 0; i < len; i++) {
                                         ownerselect.push(res.rows.item(i)['name'])

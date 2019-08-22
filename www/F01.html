@@ -25,6 +25,7 @@
 
 </head>
 
+<!-- 最上面標題列 -->
 <body class="font container-fluid" style="background-color: #f0f0f0;padding: 0px;">
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row  " style="background-color:#254F6E;">
@@ -262,14 +263,14 @@
                             $("body").append(fsd);
                         }
 
-                        
+
 
                         let urlParams = new URLSearchParams(window.location.search);
                         var furnitureId = urlParams.get('furniture');
-                        if(!furnitureId){
+                        if (!furnitureId) {
                             fidclick(res.rows.item(0)['furnitureId'])
                             fclick(res.rows.item(0)['furnitureId'])
-                        }else{
+                        } else {
                             fidclick(furnitureId)
                             fclick(furnitureId)
                         }
@@ -306,7 +307,7 @@
                                     </div>
                                     <hr style="margin: 5px 0px 16px 0px">
                                     <div class="row objcenter">
-                                        <a href="T01_insert.html?furniture=`+x+`">單筆建立</a>
+                                        <a href="T01_insert.html?furniture=`+ x + `">單筆建立</a>
                                     </div>
                                     <hr>
                                     <div class="row objcenter">
@@ -507,7 +508,9 @@
                 tx.executeSql(query, [id]);
                 var query2 = "DELETE FROM thing where furnitureId = ?";
                 tx.executeSql(query2, [id], function (tx, res) {
-                    location.reload()
+                    let urlParams = new URLSearchParams(window.location.search);
+                    var spaceId = urlParams.get('space');
+                    location.href = "F01.html?space=" + spaceId
                 });
             });
             $("#fdd" + id + "").modal('hide')

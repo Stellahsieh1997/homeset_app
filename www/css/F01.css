@@ -120,7 +120,7 @@
     margin-bottom: 40px;
 }
 
-.box-wrap>div {
+.shrink>div {
     width: 33%;
     height: 33vw;
     padding-bottom: 0%;
@@ -213,4 +213,9 @@ a, a:link, a:active, a:visited, a:hover
 }
 .a img[src=""] {
     display: none;
+}
+ul{
+    border: 1px solid black;
+    margin: 0px;
+    padding: 0px;
 }

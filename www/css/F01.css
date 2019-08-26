@@ -134,10 +134,16 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin:0px;
+    margin-left:15px;
+    margin-bottom: 0px;
     padding: 10px 0px;
-}
 
+}
+.box-wrap p>i {
+    color:rgb(0, 0, 0);
+    font-size: 18px;
+    padding: 0px 10px;
+}
 .icon1 {
     color: rgb(255, 255, 255);
     font-size: 30px;

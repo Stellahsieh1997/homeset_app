@@ -16,7 +16,9 @@
     <!--匯入滾輪-->
     <link rel="stylesheet" href="css/mobileSelect.css">
     <script src="js/mobileSelect.js"></script>
+    <script src="cordova.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
+    
 
         function init() {
             // alert("You are years old!");
@@ -78,7 +80,7 @@
             transition: width 0.4s ease-in-out;
         }
 
-        
+
 
         .imgtype {
             align-items: center;
@@ -135,35 +137,38 @@
         .thingth {
             text-align: center;
             width: 70%;
-           
+
         }
 
         .category {
             text-align: center;
             position: relative;
             transform: translateY(0%);
-            
+
         }
-        tbody>tr{
+
+        tbody>tr {
             border-top: 2px rgb(92, 137, 170) dashed;
         }
-        thead>tr>th{
+
+        thead>tr>th {
             padding-bottom: 10px;
         }
 
-        .searchcontent{
+        .searchcontent {
             margin-bottom: 40px;
         }
 
-        .searchtext{
+        .searchtext {
             font-size: 26px;
             font-weight: bold;
-            
+
         }
-        b{
-            color:rgb(90, 88, 88);
+
+        b {
+            color: rgb(90, 88, 88);
             margin-left: 15px;
-           
+
         }
     </style>
 
@@ -174,7 +179,7 @@
 
         <div class="row searchrow">
             <div class="col">
-                <span  class="icon ion-md-search searchtext"> <b>Search</b></span>
+                <span class="icon ion-md-search searchtext"> <b>Search</b></span>
                 <hr>
                 <input type="text" class="light-table-filter " data-table="order-table" name="search"
                     placeholder="    Search something">
@@ -182,11 +187,12 @@
             </div>
         </div>
         <div>
-            <button type="button" class="btn btn-outline " id="categorysearch" >類別</button> 
+            <button type="button" class="btn btn-outline " id="categorysearch">類別</button>
             <button type="button" class="btn btn-outline" id="ownersearch"> 所屬人 </button>
+            <button type="button" class="btn btn-outline" id="thingon"> 未放回物品 </button>
         </div> <br>
 
-        
+
         <table class="order-table">
             <thead>
                 <tr>
@@ -195,9 +201,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="category">包包</td>
-                    <td>
+                <tr class="searchresult">
+                    <!-- <td class="category">包包</td>
+                    <td class="thingimg">
                         <div class="box-wrap  ">
                             <div class="box">
                                 <a href=""> <img src="static/things/4.jpg"> </a>
@@ -217,165 +223,11 @@
                             <div class="box">
                                 <img src="static/things/9.jpg">
                             </div>
-                            
+
                         </div>
-                    </td>
+                    </td> -->
                 </tr>
-                <tr>
-                    <td class="category">鞋子</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">衣服</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">文具</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">工具</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">玩具</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">杯子</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">飾品</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">化妝品</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                           
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="category">眼鏡</td>
-                    <td>
-                        <div class="box-wrap ">
-                            <div class="box">
-                                <a href=""> <img src="static/things/4.jpg"> </a>
-                            </div>
-                            <div class="box">
-                                <img src="static/things/2.jpg">
-                            </div>
-                            <div class="box">
-                                <img src="static/things/7.jpg">
-                            </div>
-                            
-                        </div>
-                    </td>
-                </tr>
+
             </tbody>
         </table>
 
@@ -479,6 +331,143 @@
             });
 
         })(document);
+
+
+
+        //資料庫
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        var categorypicker
+        var ownerpicker
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
+            });
+
+
+
+            //類別滾輪
+            var categoryselect = []
+            var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡']
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM category', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                categoryselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var categoryselect3 = categoryselect.concat(categoryselect2)
+                        categorypicker = new MobileSelect({
+                            trigger: '#categorysearch',
+                            title: '類別',
+                            cancelBtnColor: '#f0f0f0',
+                            ensureBtnColor: '#f0f0f0',
+                            titleBgColor: '#254F6E',
+                            titleColor: '#f0f0f0',
+                            ensureBtnText: '確認',
+                            wheels: [
+                                { data: categoryselect3 }
+                            ],
+                            position: [0],
+                            callback: function (indexArr, data) {
+                              
+
+                            } //初始化定位        
+
+                        });
+
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+
+            //所屬人滾輪
+            var ownerselect = []
+            var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事']
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM owner', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                ownerselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var ownerselect3 = ownerselect.concat(ownerselect2)
+
+                        ownerpicker = new MobileSelect({
+                            trigger: '#ownersearch',
+                            title: '所屬人',
+                            cancelBtnColor: '#f0f0f0',
+                            ensureBtnColor: '#f0f0f0',
+                            titleBgColor: '#254F6E',
+                            titleColor: '#f0f0f0',
+                            ensureBtnText: '確認',
+                            wheels: [
+                                { data: ownerselect3 }
+                            ],
+                            position: [0], //初始化定位
+                            callback: function (indexArr, data) {
+                               
+                            }
+                        });
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+        }
+
+        //呈現每個類別物品
+        db.transaction(function (tx) {
+            $(".searchresult").html("")
+            tx.executeSql('SELECT DISTINCT category FROM thing ', [], function (tx, res) {
+                var len = res.rows.length;
+
+                if (res.rows.length >= 1) {
+                    for (var i = 0; i < len; i++) {
+                        var num = res.rows.item(i)['category'];
+                        // alert(num)
+                        $(".searchresult").append(`<td  class="category">` + num + `</td>`)
+                        var tr = function (num, i) {
+                            tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                                $(".searchresult").append(`<td  class="thingimg"></td>`)
+                                $(".thingimg").append(`<div class="box-wrap"></div>`)
+                                var len = res.rows.length;
+                                // alert("num:" + num)
+                                // alert("WHERE layer Null len:" + len);
+                                // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
+                                // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                if (res.rows.length >= 1) {
+
+                                   
+                                    for (var j = 0; j < len; j++) {
+                                        if (res.rows.item(j)['category'] == num) {
+                                            $(".box-wrap").append(`<div class="box">
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                </div>`)
+                                        }
+
+                                    }
+                                  
+                                }
+                            });
+                        }(num, i)
+
+                    }
+                }
+            });
+        });
+
 
     </script>
 

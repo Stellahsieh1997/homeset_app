@@ -360,7 +360,7 @@
             $("body").append(atd);
             $(".addthings").html("")
 
-//右下角功能鍵
+            //右下角功能鍵
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [x],
                     function (tx, res) {
@@ -541,7 +541,7 @@
             t = x;
         };
 
-        function thingaddclick(id){
+        function thingaddclick(id) {
             $('#atd' + id + '').modal('show');
         }
 

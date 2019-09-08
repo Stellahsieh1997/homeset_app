@@ -693,7 +693,7 @@
             //測試
             let urlParams = new URLSearchParams(window.location.search);
             var spaceId = urlParams.get('space');
-            alert(spaceId);
+            // alert(spaceId);
 
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
@@ -726,7 +726,7 @@
                 cameraDirection: Camera.Direction.BACK
             };
             navigator.camera.getPicture(function cameraSuccess(imgURI) {
-                alert("data:" + imgURI);
+                // alert("data:" + imgURI);
                 myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
                 $("#fimg").text("");
                 $("#fimg").append(myimg);
@@ -746,7 +746,7 @@
                 window.imagePicker.getPictures(
                     function (results) {
                         var imgURI = results[0]
-                        alert(imgURI);
+                        // alert(imgURI);
                         if (!imgURI) {
                         } else {
                             var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;

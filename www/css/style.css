@@ -155,6 +155,8 @@ Stretchy Nav style - common to:
 .cd-stretchy-nav.nav-is-visible ul li a span{
   display:block;
 }
+
+/* 白色遮罩 */
 .cd-stretchy-nav.nav-is-visible div{
   position: absolute;
   bottom: -80px;

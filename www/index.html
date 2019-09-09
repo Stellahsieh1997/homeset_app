@@ -122,6 +122,11 @@
     </div>
 
     <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            $("left").addClass("upcon1")
+        }
+     
         function openCity(evt, cityName) {
             var i, x, tablinks;
             x = document.getElementsByClassName("city");

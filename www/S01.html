@@ -17,45 +17,7 @@
     <link rel="stylesheet" href="css/mobileSelect.css">
     <script src="js/mobileSelect.js"></script>
     <script src="cordova.js" type="text/javascript"></script>
-    <script type="text/javascript" charset="utf-8">
-    
-
-        function init() {
-            // alert("You are years old!");
-
-
-            //類別滾輪
-            var categorySearchpicker = new MobileSelect({
-                trigger: '#categorysearch',
-                title: '類別搜尋',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡'] }
-                ],
-                position: [2] //初始化定位
-
-            });
-
-            //所屬人滾輪
-            var ownerSearchpicker = new MobileSelect({
-                trigger: '#ownersearch',
-                title: '所屬人搜尋',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    { data: ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事'] }
-                ],
-                position: [2] //初始化定位
-            });
-        }
-    </script>
+    <script type="text/javascript" charset="utf-8"></script>
 
     <style>
         .font {
@@ -192,8 +154,28 @@
             <button type="button" class="btn btn-outline" id="thingon"> 未放回物品 </button>
         </div> <br>
 
+        <div class="box-wrap  ">
+            <div class="box">
+                <a href=""> <img src="static/things/4.jpg"> </a>
+            </div>
+            <div class="box">
+                <img src="static/things/2.jpg">
+            </div>
+            <div class="box">
+                <img src="static/things/7.jpg">
+            </div>
+            <div class="box">
+                <a href=""> <img src="static/things/5.jpg"> </a>
+            </div>
+            <div class="box">
+                <img src="static/things/6.jpg">
+            </div>
+            <div class="box">
+                <img src="static/things/9.jpg">
+            </div>
 
-        <table class="order-table">
+        </div>
+        <!-- <table class="order-table">
             <thead>
                 <tr>
                     <th class="categoryth">類別</th>
@@ -202,7 +184,7 @@
             </thead>
             <tbody>
                 <tr class="searchresult">
-                    <!-- <td class="category">包包</td>
+                    <td class="category">包包</td>
                     <td class="thingimg">
                         <div class="box-wrap  ">
                             <div class="box">
@@ -225,11 +207,11 @@
                             </div>
 
                         </div>
-                    </td> -->
+                    </td> 
                 </tr>
 
             </tbody>
-        </table>
+        </table> -->
 
 
     </div>
@@ -379,7 +361,7 @@
                             ],
                             position: [0],
                             callback: function (indexArr, data) {
-                              
+
 
                             } //初始化定位        
 
@@ -418,57 +400,35 @@
                             ],
                             position: [0], //初始化定位
                             callback: function (indexArr, data) {
-                               
+
                             }
                         });
                     }, function (error) {
                         alert('Something went Wrong');
                     });
             });
-        }
 
-        //呈現每個類別物品
-        db.transaction(function (tx) {
-            $(".searchresult").html("")
-            tx.executeSql('SELECT DISTINCT category FROM thing ', [], function (tx, res) {
-                var len = res.rows.length;
 
-                if (res.rows.length >= 1) {
-                    for (var i = 0; i < len; i++) {
-                        var num = res.rows.item(i)['category'];
-                        // alert(num)
-                        $(".searchresult").append(`<td  class="category">` + num + `</td>`)
-                        var tr = function (num, i) {
-                            tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
-                                $(".searchresult").append(`<td  class="thingimg"></td>`)
-                                $(".thingimg").append(`<div class="box-wrap"></div>`)
-                                var len = res.rows.length;
-                                // alert("num:" + num)
-                                // alert("WHERE layer Null len:" + len);
-                                // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
-                                // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
-                                if (res.rows.length >= 1) {
-
-                                   
-                                    for (var j = 0; j < len; j++) {
-                                        if (res.rows.item(j)['category'] == num) {
-                                            $(".box-wrap").append(`<div class="box">
+            //呈現每個類別物品
+            db.transaction(function (tx) {
+                $(".box-wrap").html("")
+                var cateValue = document.getElementById("categorysearch").value;
+                tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                    if (res.rows.length >= 1) {
+                        for (var j = 0; j < len; j++) {
+                            if (res.rows.item(j)['category'] == cateValue) {
+                                $(".box-wrap").append(`<div class="box">
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
-                                        }
+                            }
 
-                                    }
-                                  
-                                }
-                            });
-                        }(num, i)
+                        }
 
                     }
-                }
+                });
             });
-        });
 
-
+        }
     </script>
 
 </body>

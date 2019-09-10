@@ -64,10 +64,11 @@
         }
 
         .box-wrap>div {
-            width: 31%;
-            margin: 1%;
+            width: 33%;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin: 0.16%;
             float: left;
-            background-color: white;
         }
 
         .searchrow {
@@ -151,11 +152,11 @@
         <div>
             <button type="button" class="btn btn-outline " id="categorysearch">類別</button>
             <button type="button" class="btn btn-outline" id="ownersearch"> 所屬人 </button>
-            <button type="button" class="btn btn-outline" id="thingon"> 未放回物品 </button>
+            <button type="button" class="btn btn-outline" id="thingon" onclick="outgood();"> 未放回物品 </button>
         </div> <br>
 
-        <div class="box-wrap  ">
-            <div class="box">
+        <div class="box-wrap">
+            <!-- <div class="box">
                 <a href=""> <img src="static/things/4.jpg"> </a>
             </div>
             <div class="box">
@@ -172,7 +173,7 @@
             </div>
             <div class="box">
                 <img src="static/things/9.jpg">
-            </div>
+            </div> -->
 
         </div>
         <!-- <table class="order-table">
@@ -328,7 +329,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
@@ -361,7 +362,7 @@
                             ],
                             position: [0],
                             callback: function (indexArr, data) {
-
+                                searchcate();
 
                             } //初始化定位        
 
@@ -400,7 +401,7 @@
                             ],
                             position: [0], //初始化定位
                             callback: function (indexArr, data) {
-
+                                searchown();
                             }
                         });
                     }, function (error) {
@@ -409,17 +410,70 @@
             });
 
 
+
+        }
+
+        function searchcate() {
+
             //呈現每個類別物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
-                var cateValue = document.getElementById("categorysearch").value;
+                var cateValue = $("#categorysearch").text();
+
                 tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+
                     if (res.rows.length >= 1) {
-                        for (var j = 0; j < len; j++) {
+                        for (var j = 0; j < res.rows.length; j++) {
+
                             if (res.rows.item(j)['category'] == cateValue) {
                                 $(".box-wrap").append(`<div class="box">
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+                            }
+
+                        }
+
+                    }
+                });
+            });
+
+        }
+
+        function searchown() {
+
+            //呈現每個所屬人物品
+            db.transaction(function (tx) {
+                $(".box-wrap").html("")
+                var ownerValue = $("#ownersearch").text();
+                tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                    if (res.rows.length >= 1) {
+                        for (var j = 0; j < res.rows.length; j++) {
+                            if (res.rows.item(j)['owner'] == ownerValue) {
+                                $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                            }
+
+                        }
+
+                    }
+                });
+            });
+
+        }
+
+        function outgood() {
+
+            //呈現未放回物品
+            db.transaction(function (tx) {
+                $(".box-wrap").html("")
+                tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                    if (res.rows.length >= 1) {
+                        for (var j = 0; j < res.rows.length; j++) {
+                            if (res.rows.item(j)['out'] == 1) {
+                                $(".box-wrap").append(`<div class="box">
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                  </div>`)
                             }
 
                         }

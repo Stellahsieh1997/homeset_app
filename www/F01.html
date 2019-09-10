@@ -25,6 +25,9 @@
     <script src="js/modernizr.js"></script> <!-- Modernizr -->
     <script src="js/main.js"></script><!-- Modernizr -->
     <script src="cordova.js" type="text/javascript"></script>
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
 
 
 </head>
@@ -78,6 +81,12 @@
 
                 <div class="modal-body">
                     <form id="fform">
+                        <div style="margin-bottom:10px;">
+                            <label for="furniturename">儲物櫃名稱 </label>
+                            <P id="fnwarn" style="display:inline-flex;color: red;"></P>
+                            <input type="text" class="form-control" id="insertfname" required>
+                        </div>
+                        <!-- 未完 -->
                         <div style="margin-bottom:10px;">
                             <label for="furniturename">儲物櫃名稱 </label>
                             <P id="fnwarn" style="display:inline-flex;color: red;"></P>
@@ -167,7 +176,7 @@
             // });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
             });
 

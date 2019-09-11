@@ -229,3 +229,7 @@ b {
 .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
     right: 10px;
 }
+
+.hide{
+    display:none;  
+  }

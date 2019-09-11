@@ -86,16 +86,14 @@
                             <P id="fnwarn" style="display:inline-flex;color: red;"></P>
                             <input type="text" class="form-control" id="insertfname" required>
                         </div>
-                        <!-- 未完 -->
                         <div style="margin-bottom:10px;">
-                            <label for="furniturename">儲物櫃名稱 </label>
-                            <P id="fnwarn" style="display:inline-flex;color: red;"></P>
-                            <input type="text" class="form-control" id="insertfname" required>
+                            <label for="furniturename">夾層數量</label>
+                            <button type="button" class="btn btn-outline " id="insertflayer">無夾層</button>
                         </div>
                         <div style="margin-bottom:10px;">
                             <label>照片</label><br>
-                            <div id="fimg">
-                                <P id="fpwarn" style="display:inline-flex;color: red;"></P>
+                            <div id="fimg" style="display:none;">
+                                <P id="fpwarn" style="display:inline-flex;color: red;"><i class="icon ion-md-information-circle"></i>請選擇儲物櫃照片</P>
                                 <img src="" class="a" id="insertfphoto">
                             </div>
 
@@ -193,7 +191,7 @@
                                 <div class="modal-content" style="border-radius: 0%;">
                                 <div class="modal-body " style="background-color: #254F6E">
                                 <div class="row" style="width:100vw;text-align: center">
-                                <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `')">
+                                <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `','` + res.rows.item(0)['layer'] + `')">
                                 <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
                                 <p style="color: #f0f0f0">編輯名稱</p>
                                 </div>
@@ -317,6 +315,7 @@
                 });
             });
 
+
             //----------------------------------------------------------------------------------------------------
             //物品
             // db.sqlBatch([
@@ -380,7 +379,7 @@
                             </a>
                             <ul>
                                 <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
-                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `')"><span>修改儲物櫃名稱<i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
+                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>修改儲物櫃名稱<i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fpclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['image'] + `','` + res.rows.item(0)['name'] + `')"><span>修改儲物櫃圖片<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 19px"></i></span></a></li>
                                 <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['furnitureId'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                                 <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
@@ -561,7 +560,7 @@
         }
 
         //fnclick fned 為儲物櫃名稱編輯修改互動視窗
-        function fnclick(id, name) {
+        function fnclick(id, name, layer) {
             $('#fed' + id).modal('hide')
             fned = `<div class="modal fade " id="fned` + id + `" tabindex="-1" role="dialog" aria-labelledby="fned` + id + `" aria-hidden="False">
                                     <div class="modal-dialog" role="document">
@@ -572,7 +571,11 @@
                                                         <label for="furniturename">儲物櫃名稱</label>
                                                         <P id="fndwarn" style="display:inline-flex;color: red;margin:0px;"></P>
                                                         <input type="text" class="form-control" id="furniturename`+ id + `" value="` + name + `" required>
-                                        </div>
+                                                    </div>
+                                                    <div style="margin-bottom:10px;">
+                                                    <label for="furniturename">夾層數量</label>
+                                                    <button type="button" class="btn btn-outline " id="updateflayer`+ id + `">`+ layer + `</button>
+                                                    </div>
                                                         <div class="row" style="text-align: center">
                                                             <div class="col">
                                                                 <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ id + `')">取消</button>
@@ -588,6 +591,23 @@
                                     </div>`
             $("body").append(fned);
             $('#fned' + id + '').modal('show')
+            
+            var mobileSelect2 = new MobileSelect({
+            trigger: '#updateflayer'+ id + '',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+            ],
+            position: [2], //初始化定位
+            callback: function (indexArr, data) {
+
+            }
+        });
         }
 
         // fndc 為儲物櫃名稱編輯修改互動視窗的取消鍵
@@ -603,9 +623,10 @@
                 $('#fnform').addClass("was-validated");
                 return
             }
+            var updateflayer = $("#updateflayer" + id + "").text();
             db.transaction(function (tx) {
-                var query = "UPDATE furniture SET name = ? WHERE furnitureId = ?";
-                tx.executeSql(query, [name, id], function (tx, res) {
+                var query = "UPDATE furniture SET name = ?,layer = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [name, updateflayer, id], function (tx, res) {
                     fidclick(id);
                     fclick(id);
                     $("#fpoint" + id + "").text(name);
@@ -694,10 +715,10 @@
             }
             var a = $('#insertfphoto').hasClass('a');
             if (a === true) {
-                $('#fpwarn').html('<i class="icon ion-md-information-circle"></i>');
-                $('#fpwarn').append("請選擇儲物櫃照片");
+                $("#fimg").css('display','block'); 
                 return
             }
+            var layervalue = $("#insertflayer").text();
             var img = document.getElementById("insertfphoto").src;
             //測試
             let urlParams = new URLSearchParams(window.location.search);
@@ -710,7 +731,7 @@
                 var furnitureId = btoa('ben32388@gmail.com') + timestamp;
                 // alert("furnitureId"+furnitureId);
 
-                tx.executeSql('INSERT INTO furniture (furnitureId, name, image, spaceId) VALUES (?,?,?,?)', [furnitureId, name, img, spaceId],
+                tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
                     function (tx, res) {
                         location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
                     }, function (error) {
@@ -737,6 +758,7 @@
             navigator.camera.getPicture(function cameraSuccess(imgURI) {
                 // alert("data:" + imgURI);
                 myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                $("#fimg").css('display','block'); 
                 $("#fimg").text("");
                 $("#fimg").append(myimg);
                 // $('#exampleModal').modal('show')
@@ -759,6 +781,7 @@
                         if (!imgURI) {
                         } else {
                             var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                            $("#fimg").css('display','block'); 
                             $("#fimg").text("");
                             $("#fimg").append(myimg);
                         }
@@ -896,6 +919,41 @@
 
     </script>
 
+    <script>
+            var mobileSelect1 = new MobileSelect({
+            trigger: '#insertflayer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+            ],
+            position: [2], //初始化定位
+            callback: function (indexArr, data) {
+
+            }
+        });
+
+        var mobileSelect2 = new MobileSelect({
+            trigger: '#updateflayer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+            ],
+            position: [2], //初始化定位
+            callback: function (indexArr, data) {
+
+            }
+        });
+    </script>
 </body>
 
 </html>

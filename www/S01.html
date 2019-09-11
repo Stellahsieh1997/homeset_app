@@ -414,51 +414,94 @@
         }
 
         function searchcate() {
+            var ownerValue = $("#ownersearch").text();
+            var cateValue = $("#categorysearch").text();
+            if (ownerValue != "所屬人") {
+                //呈現所屬人與類別物品
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+                    var ownerValue = $("#ownersearch").text();
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
 
-            //呈現每個類別物品
-            db.transaction(function (tx) {
-                $(".box-wrap").html("")
-                var cateValue = $("#categorysearch").text();
-
-                tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
-
-                    if (res.rows.length >= 1) {
-                        for (var j = 0; j < res.rows.length; j++) {
-
-                            if (res.rows.item(j)['category'] == cateValue) {
-                                $(".box-wrap").append(`<div class="box">
-                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
-                                                                </div>`)
                             }
 
                         }
-
-                    }
+                    });
                 });
-            });
+            }else{ //單一類別搜尋
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+                    var cateValue = $("#categorysearch").text();
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['category'] == cateValue ) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
 
         }
 
-        function searchown() {
 
-            //呈現每個所屬人物品
-            db.transaction(function (tx) {
-                $(".box-wrap").html("")
-                var ownerValue = $("#ownersearch").text();
-                tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
-                    if (res.rows.length >= 1) {
-                        for (var j = 0; j < res.rows.length; j++) {
-                            if (res.rows.item(j)['owner'] == ownerValue) {
-                                $(".box-wrap").append(`<div class="box">
+
+
+
+        function searchown() {
+            var ownerValue = $("#ownersearch").text();
+            var cateValue = $("#categorysearch").text();
+            if (cateValue != "類別") {
+                //呈現所屬人與類別物品
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+                    var ownerValue = $("#ownersearch").text();
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
                                                               <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
+                                }
+
                             }
 
                         }
-
-                    }
+                    });
                 });
-            });
+            }else{ //單一所屬人搜尋
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+                    var ownerValue = $("#ownersearch").text();
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue ) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
 
         }
 

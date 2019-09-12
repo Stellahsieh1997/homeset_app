@@ -657,14 +657,13 @@
                                     if (!layernum) {
                                     } else {
                                         db.transaction(function (tx) {
-                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId], function (tx, res) {
-                                                fidclick(id);
-                                                fclick(id);
-                                            });
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
                                         });
                                     }
                                 }(layernum, thingId);
                             }
+                            fidclick(id);
+                            fclick(id);
                         }
                     });
 
@@ -679,15 +678,21 @@
                                 var tran = function (layernum, thingId) {
                                     if (layernum == "無夾層") {
                                         db.transaction(function (tx) {
-                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [1, thingId], function (tx, res) {
-                                                fidclick(id);
-                                                fclick(id);
-                                            });
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [1, thingId]);
                                         });
                                     }
+
+
+                                    if (layernum > updateflayer) {
+                                        db.transaction(function (tx) {
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                        });
+                                    }
+
                                 }(layernum, thingId);
                             }
-
+                            fidclick(id);
+                            fclick(id);
                         }
                     });
                 }

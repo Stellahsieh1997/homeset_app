@@ -151,7 +151,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-outline " id="categorysearch">類別</button>
-            <button type="button" class="btn btn-outline" id="ownersearch"> 所屬人 </button>
+            <button type="button" class="btn btn-outline" id="ownersearch">所屬人</button>
             <button type="button" class="btn btn-outline" id="thingon" onclick="outgood();"> 未放回物品 </button>
         </div> <br>
 
@@ -416,60 +416,11 @@
         function searchcate() {
             var ownerValue = $("#ownersearch").text();
             var cateValue = $("#categorysearch").text();
-            //單一類別搜尋
-                db.transaction(function (tx) {
-                    $(".box-wrap").html("")
-                    var cateValue = $("#categorysearch").text();
-                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
-                        if (res.rows.length >= 1) {
-                            for (var j = 0; j < res.rows.length; j++) {
-                                if (res.rows.item(j)['category'] == cateValue ) {
-                                    $(".box-wrap").append(`<div class="box">
-                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
-                                                              </div>`)
-                                }
-
-                            }
-
-                        }
-                    });
-                });
-                
-             
-             //else{ //呈現所屬人與類別物品
-            //     db.transaction(function (tx) {
-            //         $(".box-wrap").html("")
-            //         var cateValue = $("#categorysearch").text();
-            //         tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
-            //             if (res.rows.length >= 1) {
-            //                 for (var j = 0; j < res.rows.length; j++) {
-            //                     if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
-            //                         $(".box-wrap").append(`<div class="box">
-            //                                                   <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
-            //                                                   </div>`)
-            //                     }
-
-            //                 }
-
-            //             }
-            //         });
-            //     });
-            // }
-
-        }
-
-
-
-
-
-        function searchown() {
-            var ownerValue = $("#ownersearch").text();
-            var cateValue = $("#categorysearch").text();
-            if (cateValue != "類別") {
+            if (ownerValue != "所屬人") {
                 //呈現所屬人與類別物品
                 db.transaction(function (tx) {
                     $(".box-wrap").html("")
-                    var ownerValue = $("#ownersearch").text();
+
                     tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
                         if (res.rows.length >= 1) {
                             for (var j = 0; j < res.rows.length; j++) {
@@ -484,14 +435,64 @@
                         }
                     });
                 });
-            }else{ //單一所屬人搜尋
+            } else {
+                               
+                
                 db.transaction(function (tx) {
                     $(".box-wrap").html("")
-                    var ownerValue = $("#ownersearch").text();
+
                     tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
                         if (res.rows.length >= 1) {
                             for (var j = 0; j < res.rows.length; j++) {
-                                if (res.rows.item(j)['owner'] == ownerValue ) {
+                                if (res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
+        }
+
+
+
+
+
+        function searchown() {
+            var ownerValue = $("#ownersearch").text();
+            var cateValue = $("#categorysearch").text();
+            if (cateValue != "類別") {
+                //呈現所屬人與類別物品
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            } else { //單一所屬人搜尋  
+                
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue) {
                                     $(".box-wrap").append(`<div class="box">
                                                               <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)

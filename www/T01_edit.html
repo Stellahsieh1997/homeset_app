@@ -513,7 +513,7 @@
             // 夾層
             let urlParams = new URLSearchParams(window.location.search);
             var thingId = urlParams.get('thing');
-            var layerselect = []
+            var layers = []
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM thing WHERE thingId = ?', [thingId],
                     function (tx, res) {
@@ -528,22 +528,10 @@
                                         $('#layertest').removeClass('hide');
                                         $('#layertest').addClass('d-flex');
                                         for (var i = 1; i <= res.rows.item(0)['layer']; i++) {
-                                            layerselect.push(i)
+                                            layers.push(i)
                                         }
-                                        //夾層滾輪
-                                        var mobileSelect1 = new MobileSelect({
-                                            trigger: '#layer',
-                                            title: '夾層',
-                                            cancelBtnColor: '#f0f0f0',
-                                            ensureBtnColor: '#f0f0f0',
-                                            titleBgColor: '#254F6E',
-                                            titleColor: '#f0f0f0',
-                                            ensureBtnText: '確認',
-                                            wheels: [
-                                                { data: layerselect }
-                                            ],
-                                            position: [0] //初始化定位
-                                        });
+                                        layerselect.updateWheel(0, layers);
+                                        layerselect.locatePosition(0, 0);
                                     } else {
                                         $('#layertest').removeClass('d-flex');
                                         $('#layertest').addClass('hide');
@@ -900,7 +888,20 @@
             position: [2] //初始化定位
         });
 
-
+        //夾層滾輪
+        var layerselect = new MobileSelect({
+            trigger: '#layer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['1'] }
+            ],
+            position: [0] //初始化定位
+        });
 
         //位置滾輪
 
@@ -927,6 +928,7 @@
                         tx.executeSql(query, [data[1]["id"], thingId]);
                     });
                     layertest();
+                    $("#layer").text("1");
                     // alert(data[0]["id"] + data[1]["id"]); //返回選中的json數據
                 }
             });

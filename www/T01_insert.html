@@ -300,6 +300,30 @@
         </div>
     </div>
 
+<!-- 是否繼續新增物品互動視窗 -->
+    <div class="modal fade" id="addingthing" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel5" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                <div class="modal-body text-black">
+                    <p>是否要繼續新增物品?</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="addthingc()">否</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-secondary"
+                                onclick="addthingv()">是</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script>
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -470,7 +494,7 @@
 
         function layertest() {
             // 夾層
-            var layerselect = []
+            var layers = []
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
                     function (tx, res) {
@@ -480,23 +504,11 @@
                                 $('#layertest').removeClass('hide');
                                 $('#layertest').addClass('d-flex');
                                 for (var i = 1; i <= res.rows.item(0)['layer']; i++) {
-                                    layerselect.push(i)
+                                    layers.push(i)
                                 }
-
-                                var mobileSelect1 = new MobileSelect({
-                                    trigger: '#layer',
-                                    title: '夾層',
-                                    cancelBtnColor: '#f0f0f0',
-                                    ensureBtnColor: '#f0f0f0',
-                                    titleBgColor: '#254F6E',
-                                    titleColor: '#f0f0f0',
-                                    ensureBtnText: '確認',
-                                    wheels: [
-                                        { data: layerselect }
-                                    ],
-                                    position: [0] //初始化定位
-                                });
-                            }else{
+                                layerselect.updateWheel(0, layers);
+                                layerselect.locatePosition(0, 0);
+                            } else {
                                 $('#layertest').removeClass('d-flex');
                                 $('#layertest').addClass('hide');
                             }
@@ -578,10 +590,33 @@
                 tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
                     function (tx, res) {
                         tx.executeSql('INSERT INTO thing (thingId, name, description, image, category, owner, furnitureId, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [thingId, name, description, img, categoryValue, ownerValue, furnitureIdedit, numberValue, layerValue, out, remind, reminder, remindertextValue]);
+                        $('#addingthing').modal('show')
+                        // location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+
+        // 是否繼續新增物品互動視窗
+        
+        function addthingc(){
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
                         location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
                     });
             });
         }
+
+        function addthingv(){
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        location.href = "T01_insert.html?furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+        
+
 
         //刪除物品
         // function tddv() {
@@ -834,7 +869,20 @@
             position: [2] //初始化定位
         });
 
-
+        //夾層滾輪
+        var layerselect = new MobileSelect({
+            trigger: '#layer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['1'] }
+            ],
+            position: [0] //初始化定位
+        });
 
         //位置滾輪
 
@@ -856,6 +904,7 @@
                 callback: function (indexArr, data) {
                     furnitureIdedit = data[1]["id"]
                     layertest()
+                    $("#layer").text("1");
                 }
             });
         }

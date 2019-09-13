@@ -542,11 +542,11 @@
 
                         if (res.rows.length >= 1) {
                             for (var j = 0; j < res.rows.length; j++) {
-                                if (res.rows.item(j)['out'] == 1) {
+                                
                                     $(".box-wrap").append(`<div class="box">
                                                   <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                   </div>`)
-                                }
+                                
 
                             }
 

@@ -137,12 +137,16 @@
         {
             background: center center no-repeat transparent;
             background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
-            display: block;
+            display: inline-block;
             width: 40px;
             height: 40px;
             position: absolute;
             top:0px;
             left: 10px;
+        }
+
+        .three{
+            float: right;
         }
         .content
         {
@@ -200,7 +204,12 @@
             margin-left:0;
             margin-right:0 ;
         }
-        
+        .icon3{
+            color:#254F6E;
+            font-size: 30px;
+            margin-left:0;
+            margin-right:0 ;
+        }
         .icon22{
             display: flex;
             justify-content:center;

@@ -48,15 +48,22 @@
             </li>
             <li class="dropdown nav-fill">
                 <a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">一樓</a>
+                    aria-expanded="false"></a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="H01.html">一樓</a>
-                    <a class="dropdown-item" href="H01-1.html">二樓</a>
-                    <a class="dropdown-item" href="H01-1 copy.html">三樓</a>
+                    <a class="dropdown-item"></a>
+                    <!-- <a class="dropdown-item">二樓</a>
+                    <a class="dropdown-item">三樓</a> -->
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4">編輯</a>
                 </div>
+            
+                     
+                
+               
+            
             </li>
+            
         </ul>
         <nav id="menu">
             <ul>
@@ -96,8 +103,8 @@
 
         <div class="btn-group exrect1">
             <button onclick="location.href='F01.html?space=test'" type="button" class="btn btn-primary left">客廳</button>
-            <button id="myBtn" type="button" class="btn btn-primary right" >
-                <i class="ion-md-more points" ></i>
+            <button id="myBtn" type="button" class="btn btn-primary right">
+                <i class="ion-md-more points"></i>
             </button>
         </div>
 
@@ -121,17 +128,42 @@
 
                 <div class="modal-body ">
                     <label for="exampleInputPassword1">名稱</label>
-                    <input  class="form-control"  placeholder="">
+                    <input id="insertpname" class="form-control" placeholder="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">確認</button>
+                    <button type="button" onclick="insertplanargraph()" class="btn btn-primary">確認</button>
                 </div>
             </div>
 
         </div>
     </div>
+   <!-- 編輯樓層的彈跳視窗 -->
 
+   <div class="modal fade bd-example-modal-sm" id="exampleModalCenter4" tabindex="-1" role="dialog"
+   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalCenterTitle">編輯樓層</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+
+           <div class="modal-body ">
+               <label for="exampleInputPassword1">名稱</label>
+               <input id="insertpname" class="form-control" placeholder="">
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn " data-dismiss="modal"> <i class="ion-md-trash icon3"></i></button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               <button type="button" onclick="insertplanargraph()" class="btn btn-primary">確認</button>
+           </div>
+       </div>
+
+   </div>
+</div>
     </div>
 
     <!-- 修改平面圖的彈跳視窗-->
@@ -141,9 +173,9 @@
         <div class="modal2-content">
             <div class="row" style="text-align: center">
                 <div class="col-4 icon22">
-                    <button class="buttontype" data-toggle="modal" data-target="#exampleModal1">
+                    <button onclick="prclick()" class="buttontype" data-toggle="modal" data-target="#exampleModal1">
                         <i class="ion-md-create icon2"></i>
-                        <p>編輯名稱</p>
+                        <p>編輯</p>
                     </button>
                 </div>
                 <div class="col-4 icon22 ">
@@ -166,7 +198,7 @@
     </div>
 
     <!-- 編輯的彈跳視窗 -->
-    <div class="modal fade" id="#exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div id="ped" class="modal fade" id="#exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -269,6 +301,67 @@
         }
         t = x;
     }
+
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    var db;
+    function onDeviceReady() {
+        db = window.sqlitePlugin.openDatabase({
+            name: 'my.db',
+            location: 'default',
+        });
+
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, ');
+        });
+
+
+
+        
+
+
+    }
+
+
+
+ // 新增平面圖(預設一樓))
+    function insertplanargraph() {
+        db.transaction(function (tx) {
+            var timestamp = (new Date()).valueOf();
+            // alert("timestamp"+timestamp);
+            var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+            // alert("furnitureId"+furnitureId);
+
+            var name = $("#insertpname").val();
+
+            tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ava@gmail.com"],
+                function (tx, res) {
+                    $('#ownermodal').modal('hide')
+        //             db.transaction(function (tx) {
+        //                 tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
+        //                     var len = res.rows.length;
+        //                     // alert(len);
+        //                     // if (res.rows.length >= 1) {
+        //                     //     for (var i = 0; i < len; i++) {
+        //                     //         alert(res.rows.item(i)['name'])
+        //                     //     }
+        //                     // }
+        //                 });
+        // });
+
+                location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                }, function (error) {
+                    alert('Something went Wrong');
+                });
+        });
+
+
+    }
+
+
+
+
 </script>
 
 <script>
@@ -297,6 +390,13 @@
             modal2.style.display = "none";
         }
     }
+
+
+    function prclick(id) {
+            $('#ped' + id).modal('hide')
+            $('#ped' + id + '').modal('show')
+
+        }
 </script>
 
 

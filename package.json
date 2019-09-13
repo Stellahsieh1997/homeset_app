@@ -13,6 +13,7 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
+    "async": "^3.1.0",
     "cordova-android": "^8.0.0",
     "cordova-login": "^2.0.0",
     "cordova-plugin-android-permissions": "^1.0.0",
@@ -35,8 +36,6 @@
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-simplelogin": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }

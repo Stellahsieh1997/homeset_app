@@ -64,10 +64,11 @@
         }
 
         .box-wrap>div {
-            width: 31%;
-            margin: 1%;
+            width: 33%;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin: 0.16%;
             float: left;
-            background-color: white;
         }
 
         .searchrow {
@@ -143,19 +144,18 @@
             <div class="col">
                 <span class="icon ion-md-search searchtext"> <b>Search</b></span>
                 <hr>
-                <input type="text" class="light-table-filter " data-table="order-table" name="search"
-                    placeholder="    Search something">
+                <input type="text" id="searchinput" placeholder="    Search something" oninput="filtersearch();">
 
             </div>
         </div>
         <div>
             <button type="button" class="btn btn-outline " id="categorysearch">類別</button>
-            <button type="button" class="btn btn-outline" id="ownersearch"> 所屬人 </button>
-            <button type="button" class="btn btn-outline" id="thingon"> 未放回物品 </button>
+            <button type="button" class="btn btn-outline" id="ownersearch">所屬人</button>
+            <button type="button" class="btn btn-outline" id="thingon" onclick="outgood();"> 未放回物品 </button>
         </div> <br>
 
-        <div class="box-wrap  ">
-            <div class="box">
+        <div class="box-wrap">
+            <!-- <div class="box">
                 <a href=""> <img src="static/things/4.jpg"> </a>
             </div>
             <div class="box">
@@ -172,7 +172,7 @@
             </div>
             <div class="box">
                 <img src="static/things/9.jpg">
-            </div>
+            </div> -->
 
         </div>
         <!-- <table class="order-table">
@@ -252,7 +252,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
-    <script>
+    <script type="text/javascript" charset="UTF-8">
         // 按鈕點選變色，點另一个按紐顏色還原
         var t = 1;
         function test(x) {
@@ -268,51 +268,53 @@
             t = x;
         }
 
-        //搜尋測試
-        (function (document) {
-            'use strict';
+        // //搜尋測試
+        // (function (document) {
+        //     'use strict';
 
-            // 建立 LightTableFilter
-            var LightTableFilter = (function (Arr) {
+        //     // 建立 LightTableFilter
+        //     var LightTableFilter = (function (Arr) {
 
-                var _input;
+        //         var _input;
 
-                // 資料輸入事件處理函數
-                function _onInputEvent(e) {
-                    _input = e.target;
-                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                    Arr.forEach.call(tables, function (table) {
-                        Arr.forEach.call(table.tBodies, function (tbody) {
-                            Arr.forEach.call(tbody.rows, _filter);
-                        });
-                    });
-                }
+        //         // 資料輸入事件處理函數
+        //         function _onInputEvent(e) {
+        //             _input = e.target;
+        //             var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+        //             Arr.forEach.call(tables, function (table) {
+        //                 Arr.forEach.call(table.tBodies, function (tbody) {
+        //                     Arr.forEach.call(tbody.rows, _filter);
+        //                 });
+        //             });
+        //         }
 
-                // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
-                function _filter(row) {
-                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-                }
+        //         // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+        //         function _filter(row) {
+        //             var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+        //             row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        //         }
 
-                return {
-                    // 初始化函數
-                    init: function () {
-                        var inputs = document.getElementsByClassName('light-table-filter');
-                        Arr.forEach.call(inputs, function (input) {
-                            input.oninput = _onInputEvent;
-                        });
-                    }
-                };
-            })(Array.prototype);
+        //         return {
+        //             // 初始化函數
+        //             init: function () {
+        //                 var inputs = document.getElementsByClassName('light-table-filter');
+        //                 Arr.forEach.call(inputs, function (input) {
+        //                     input.oninput = _onInputEvent;
+        //                 });
+        //             }
+        //         };
+        //     })(Array.prototype);
 
-            // 網頁載入完成後，啟動 LightTableFilter
-            document.addEventListener('readystatechange', function () {
-                if (document.readyState === 'complete') {
-                    LightTableFilter.init();
-                }
-            });
+        //     // 網頁載入完成後，啟動 LightTableFilter
+        //     document.addEventListener('readystatechange', function () {
+        //         if (document.readyState === 'complete') {
+        //             LightTableFilter.init();
+        //         }
+        //     });
 
-        })(document);
+        // })(document);
+
+
 
 
 
@@ -328,7 +330,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
@@ -361,7 +363,7 @@
                             ],
                             position: [0],
                             callback: function (indexArr, data) {
-
+                                searchcate();
 
                             } //初始化定位        
 
@@ -400,7 +402,7 @@
                             ],
                             position: [0], //初始化定位
                             callback: function (indexArr, data) {
-
+                                searchown();
                             }
                         });
                     }, function (error) {
@@ -409,17 +411,115 @@
             });
 
 
-            //呈現每個類別物品
+
+        }
+
+        function searchcate() {
+            var ownerValue = $("#ownersearch").text();
+            var cateValue = $("#categorysearch").text();
+            if (ownerValue != "所屬人") {
+                //呈現所屬人與類別物品
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            } else {
+
+
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
+        }
+
+
+
+
+
+        function searchown() {
+            var ownerValue = $("#ownersearch").text();
+            var cateValue = $("#categorysearch").text();
+            if (cateValue != "類別") {
+                //呈現所屬人與類別物品
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            } else { //單一所屬人搜尋  
+
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+
+                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                if (res.rows.item(j)['owner'] == ownerValue) {
+                                    $(".box-wrap").append(`<div class="box">
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              </div>`)
+                                }
+
+                            }
+
+                        }
+                    });
+                });
+            }
+
+        }
+
+        function outgood() {
+
+            //呈現未放回物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
-                var cateValue = document.getElementById("categorysearch").value;
                 tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
                     if (res.rows.length >= 1) {
-                        for (var j = 0; j < len; j++) {
-                            if (res.rows.item(j)['category'] == cateValue) {
+                        for (var j = 0; j < res.rows.length; j++) {
+                            if (res.rows.item(j)['out'] == 1) {
                                 $(".box-wrap").append(`<div class="box">
-                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
-                                                                </div>`)
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                  </div>`)
                             }
 
                         }
@@ -427,6 +527,33 @@
                     }
                 });
             });
+
+        }
+
+        function filtersearch() {
+            var inputValue = $("#searchinput").val();     
+            var inputevalue2 = String(inputValue)
+            if (inputValue == "") {
+                $(".box-wrap").html("")
+            } else {
+                db.transaction(function (tx) {
+                    $(".box-wrap").html("")
+                    tx.executeSql('SELECT * FROM thing WHERE name LIKE? ', ['%' + inputevalue2 + '%'], function (tx, res) {
+
+                        if (res.rows.length >= 1) {
+                            for (var j = 0; j < res.rows.length; j++) {
+                                
+                                    $(".box-wrap").append(`<div class="box">
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                  </div>`)
+                                
+
+                            }
+
+                        }
+                    });
+                });
+            }
 
         }
     </script>

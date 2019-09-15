@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel=stylesheet type="text/css" href="../www/css/H01.css">
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <!-- mmenu scripts -->
+    <script src="../www/js/mmenu.js"></script>
+    <script src="../www/js/mmenu.debugger.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <title>H01-1</title>
+</head>
+
+<body>
+
+    <div id="page" class="outer">
+        <!-- <div class="header">
+            <div class="col two">
+                <a href="#menu"><span></span></a>
+            </div>
+            <div class="col">
+                    <div class="dropdown ">
+                            <a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">樓層</a>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">一樓</a>
+                              <a class="dropdown-item" href="#">二樓</a>
+                              <a class="dropdown-item" href="#">三樓</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">新增</a>
+                            </div>
+                        </div>
+            </div>
+            <div class="col"> 
+            </div>
+
+            
+        </div> -->
+        <!-- 導覽列 -->
+        <ul class="nav header">
+            <li class="nav-item two">
+                <a class="nav-link active" href="#menu"></a>
+            </li>
+            <li class="dropdown nav-fill">
+                <a class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false"></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item"></a>
+                    <!-- <a class="dropdown-item">二樓</a>
+                    <a class="dropdown-item">三樓</a> -->
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4">編輯</a>
+                </div>
+
+
+
+
+
+            </li>
+
+        </ul>
+        <nav id="menu">
+            <ul>
+                <li><a href="../www/H02.html">與我共用的項目</a></li>
+                <li><a href="../www/H03.html">儲存的文章</a></li>
+                <li><a href="../www/H04.html">物品提醒</a></li>
+                <li><a href="#">設定</a></li>
+                <li><a href="#">登出</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+
+        <!-- <a href="F01.html" class="four">
+            <div class="exrect">
+                <p>客廳</p>
+                <div class="points">
+                   
+                    <i id="myBtn" class=" ion-md-more"></i>
+                </div>
+            </div>
+        </a>
+
+
+
+        <a href="F01.html" class="four">
+            <div class="exrect">
+                <p>房間</p>
+                <div class="points">
+                   
+                    <i id="myBtn" class=" ion-md-more"></i>
+                </div>
+            </div>
+        </a> -->
+
+
+        <div class="btn-group exrect1">
+            <button onclick="location.href='F01.html?space=test'" type="button" class="btn btn-primary left">客廳</button>
+            <button id="myBtn" type="button" class="btn btn-primary right">
+                <i class="ion-md-more points"></i>
+            </button>
+        </div>
+
+
+
+    </div>
+
+
+    <!-- 新增樓層的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增樓層</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <label for="exampleInputPassword1">名稱</label>
+                    <input id="insertpname" class="form-control" placeholder="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="insertplanargraph()">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 編輯樓層的彈跳視窗 -->
+
+    <!-- <div class="modal fade bd-example-modal-sm" id="exampleModalCenter4" tabindex="-1" role="dialog"
+   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalCenterTitle">編輯樓層</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+
+           <div class="modal-body ">
+               <label for="exampleInputPassword1">名稱</label>
+               <input id="insertpname" class="form-control" placeholder="">
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn " data-dismiss="modal"> <i class="ion-md-trash icon3"></i></button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               <button type="button" onclick="insertplanargraph()" class="btn btn-primary">確認</button>
+           </div>
+       </div>
+
+   </div>
+</div> -->
+
+
+    <!-- 修改平面圖的彈跳視窗-->
+    <div id="myModal2" class="modal2">
+
+        <!-- Modal content -->
+        <div class="modal2-content">
+            <div class="row" style="text-align: center">
+                <div class="col-4 icon22">
+                    <button onclick="prclick()" class="buttontype" data-toggle="modal" data-target="#exampleModal1">
+                        <i class="ion-md-create icon2"></i>
+                        <p>編輯</p>
+                    </button>
+                </div>
+                <div class="col-4 icon22 ">
+                    <button class="buttontype">
+                        <i class=" ion-md-trash icon2"></i>
+                        <p>刪除</p>
+                    </button>
+                </div>
+                <div class="col-4 icon22">
+                    <button class="buttontype">
+                        <i class=" ion-md-list icon2"></i>
+                        <p>顏色</p>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 編輯的彈跳視窗 -->
+    <div id="ped" class="modal fade" id="#exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>編輯</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="">確定要刪除嗎?</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增格局的彈跳按鈕 -->
+    <div class="circlefix add" data-toggle="modal" data-target="#exampleModalCenter2">
+        <i class="icon ion-md-add"></i>
+    </div>
+    <!-- 新增格局的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter2" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增格局</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <label for="exampleInputPassword1">名稱</label>
+                    <input class="form-control" placeholder="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<div class="container-fluid  footer">
+    <div class="row row1 ">
+        <div class="col-4 icon">
+            <a href="S01.html">
+                <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
+
+            </a> </div>
+        <div class="col-4 icon ">
+            <a href="H01-1.html">
+                <i id="2" onclick="test(2)" class="icon ion-md-home icon1" style="color: #254F6E"></i>
+
+            </a> </div>
+        <div class="col-4 icon">
+            <a href="A01.html">
+                <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    new Mmenu(document.querySelector('#menu'));
+
+    document.addEventListener('click', (evnt) => {
+        let anchor = evnt.target.closest('a[href^="#/"]');
+        if (anchor) {
+            alert('Thank you for clicking, but that\'s a demo link.');
+            evnt.preventDefault();
+        }
+    });
+    // 按鈕點選變色，點另一个按紐顏色還原
+    var t = 1;
+    function test(x) {
+        // 這個是判斷第一次點選
+        if (x == 1 && t == 1) {
+            document.getElementById(x).style.color = "#254F6E";
+        }
+        // 這個判斷是防止重複點選 
+        else if (x != t) {
+            document.getElementById(x).style.color = "#254F6E";
+            document.getElementById(t).style.color = "black";
+        }
+        t = x;
+    }
+
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    var db;
+    function onDeviceReady() {
+        db = window.sqlitePlugin.openDatabase({
+            name: 'my.db',
+            location: 'default',
+        });
+
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+        });
+
+
+
+
+
+
+    }
+
+
+
+    // 新增平面圖(預設一樓))
+    function insertplanargraph() {
+
+        db.transaction(function (tx) {
+            var timestamp = (new Date()).valueOf();
+            // alert("timestamp"+timestamp);
+            var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+            // alert("furnitureId"+furnitureId);
+
+            var name = $("#insertpname").val();
+
+            tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ava@gmail.com"],
+                function (tx, res) {
+                    $('#exampleModalCenter3').modal('hide')
+                    tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
+                        var len = res.rows.length;
+                        alert(len);
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                alert(res.rows.item(i)['name'])
+                            }
+                        }
+                    });
+                    // location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                }, function (error) {
+                    alert('Something went Wrong');
+                });
+
+
+        });
+
+
+    }
+
+
+
+
+</script>
+
+<script>
+    // Get the modal
+    var modal2 = document.getElementById("myModal2");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal2.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal2.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+    }
+
+
+    function prclick(id) {
+        $('#ped' + id).modal('hide')
+        $('#ped' + id + '').modal('show')
+
+    }
+</script>
+
+
+<body>
+
+</html>

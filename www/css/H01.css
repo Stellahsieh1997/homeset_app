@@ -256,12 +256,14 @@
         }
 
         .exrect1{
-            width: 20vh;
-            height: 20vh;
+            width: 20vw;
+            height: 20vw;
             display: flex;
+            margin:10px;
         }
         .left{
             width:80%;
+            
         }
         .right{
             padding-top:60px;

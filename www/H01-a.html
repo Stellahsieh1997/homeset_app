@@ -14,10 +14,6 @@
     <script src="js/bootstrap.min.js"></script>
     <link rel=stylesheet type="text/css" href="../www/css/H01.css">
     <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
-    <!-- mmenu scripts -->
-    <script src="../www/js/mmenu.js"></script>
-    <script src="../www/js/mmenu.debugger.js"></script>
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <title>H01-1</title>
 </head>
 
@@ -61,13 +57,13 @@
                     <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
                     <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4">編輯</a>
                 </div>
-
-
-
-
-
+            
+                     
+                
+               
+            
             </li>
-
+            
         </ul>
         <nav id="menu">
             <ul>
@@ -136,15 +132,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="insertplanargraph()">確認</button>
+                    <button type="button" onclick="insertplanargraph()" class="btn btn-primary">確認</button>
                 </div>
             </div>
 
         </div>
     </div>
-    <!-- 編輯樓層的彈跳視窗 -->
+   <!-- 編輯樓層的彈跳視窗 -->
 
-    <!-- <div class="modal fade bd-example-modal-sm" id="exampleModalCenter4" tabindex="-1" role="dialog"
+   <div class="modal fade bd-example-modal-sm" id="exampleModalCenter4" tabindex="-1" role="dialog"
    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
        <div class="modal-content">
@@ -167,8 +163,8 @@
        </div>
 
    </div>
-</div> -->
-
+</div>
+    </div>
 
     <!-- 修改平面圖的彈跳視窗-->
     <div id="myModal2" class="modal2">
@@ -278,7 +274,9 @@
 
 </div>
 
-
+<!-- mmenu scripts -->
+<script src="../www/js/mmenu.js"></script>
+<script src="../www/js/mmenu.debugger.js"></script>
 <script>
     new Mmenu(document.querySelector('#menu'));
 
@@ -315,21 +313,20 @@
 
         db.transaction(function (tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, ');
         });
 
 
 
-
+        
 
 
     }
 
 
 
-    // 新增平面圖(預設一樓))
+ // 新增平面圖(預設一樓))
     function insertplanargraph() {
-
         db.transaction(function (tx) {
             var timestamp = (new Date()).valueOf();
             // alert("timestamp"+timestamp);
@@ -340,22 +337,23 @@
 
             tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ava@gmail.com"],
                 function (tx, res) {
-                    $('#exampleModalCenter3').modal('hide')
-                    tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
-                        var len = res.rows.length;
-                        alert(len);
-                        if (res.rows.length >= 1) {
-                            for (var i = 0; i < len; i++) {
-                                alert(res.rows.item(i)['name'])
-                            }
-                        }
-                    });
-                    // location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                    $('#ownermodal').modal('hide')
+        //             db.transaction(function (tx) {
+        //                 tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
+        //                     var len = res.rows.length;
+        //                     // alert(len);
+        //                     // if (res.rows.length >= 1) {
+        //                     //     for (var i = 0; i < len; i++) {
+        //                     //         alert(res.rows.item(i)['name'])
+        //                     //     }
+        //                     // }
+        //                 });
+        // });
+
+                location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
                 }, function (error) {
                     alert('Something went Wrong');
                 });
-
-
         });
 
 
@@ -395,12 +393,15 @@
 
 
     function prclick(id) {
-        $('#ped' + id).modal('hide')
-        $('#ped' + id + '').modal('show')
+            $('#ped' + id).modal('hide')
+            $('#ped' + id + '').modal('show')
 
-    }
+        }
 </script>
 
+
+</style>
+</head>
 
 <body>
 

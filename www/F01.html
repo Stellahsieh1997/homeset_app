@@ -38,7 +38,7 @@
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row  " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
-                <a href="H01-1.html">
+                <a href="javascript:history.back()">
                     <i class="icon ion-ios-arrow-back icon1"></i>
                 </a>
             </div>
@@ -393,6 +393,7 @@
 
 
                         let urlParams = new URLSearchParams(window.location.search);
+                        // alert(urlParams)
                         var furnitureId = urlParams.get('furniture');
                         if (!furnitureId) {
                             fidclick(res.rows.item(0)['furnitureId'])
@@ -432,7 +433,9 @@
         function fidclick(x) {
             // 新增物品
             // alert(x)
-
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            // location.href = "F01.html?space=" + spaceId + "&furniture=" + x + "";
 
             $(".addthings").html("")
 
@@ -541,7 +544,8 @@
                             } else {
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
-                                        $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></p>`)
+                                        $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                        $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></p>`)
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer len:" + len);
@@ -549,7 +553,7 @@
                                         // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
                                         if (res.rows.length >= 1) {
                                             var warn
-                                            $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
+
                                             for (var j = 0; j < len; j++) {
                                                 if (res.rows.item(j)['out'] == 1) {
                                                     warn = "<i class='icon ion-md-information-circle iwarn'></i>";
@@ -566,6 +570,7 @@
                                     });
                                 }(num, i)
                             }
+                            // alert("ok")
                         }
                     } else {
                         // $(".box-wrap").append(`<div class="objcenter" style="height: 50vh;width: 100vw;">

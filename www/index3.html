@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="cordova.js" type="text/javascript"></script>
+    <link rel=stylesheet type="text/css" href="css/l01.css">
+    <title>Login</title>
+
+</head>
+
+<body class="font" style="background-color: #f0f0f0">
+    <div class="container-fluid">
+
+        <div class="row flex ">
+
+            <svg class="w3-animate-fading" id="圖層_1" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 595.28 595.28">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #254f6e;
+                        }
+
+                        .cls-2,
+                        .cls-3 {
+                            fill: #fff;
+                        }
+
+                        .cls-3 {
+                            font-size: 60px;
+                            font-family: sans-serif;
+                            font-weight: 300;
+                        }
+                    </style>
+                </defs>
+                <title>專題logo藍底白字</title>
+                <rect class="cls-1" width="595.28" height="595.28" />
+                <path class="cls-2"
+                    d="M363.53,81.34l-31.68-.78a8.73,8.73,0,0,0-7.53,4l-41.17,63.78a8.7,8.7,0,0,1-8.07,4l-14.14-1.23a6.68,6.68,0,0,1-4.95-10.4l33.42-49.2a8.72,8.72,0,0,0-6.89-13.6L205.75,75a8.7,8.7,0,0,0-7.48,3.76L119.61,192.68a8.75,8.75,0,0,0-1.54,4.95V349.92a8.72,8.72,0,0,0,6.24,8.36L191,377.92a8.7,8.7,0,0,0,11.17-8.3l.42-75.91a8.72,8.72,0,0,1,10.36-8.51L232.6,289a8.72,8.72,0,0,1,7.06,8.65l-.92,85.28a8.7,8.7,0,0,0,6.8,8.6L314,406.88a8.71,8.71,0,0,0,10.61-8.26l4.49-162.28a8.7,8.7,0,0,1,1.61-4.82L399.55,135a8.71,8.71,0,0,1,13.13-1.22l44.05,42.45a8.72,8.72,0,0,1,2.67,6.3l-.33,115.66a8.72,8.72,0,0,1-4.1,7.36l-4.73,3A8.71,8.71,0,0,1,436.91,301l.39-48.46a8.7,8.7,0,0,0-3.39-7l-27.23-21a8.71,8.71,0,0,0-12.32,1.71l-34.48,46.57a8.78,8.78,0,0,0-1.71,5.13l-.49,78.2a8.7,8.7,0,0,1-3.9,7.21l-12.26,8.13a8.71,8.71,0,0,0-3.9,7l-.34,13.33a8.72,8.72,0,0,0,13.41,7.56L381.09,380a8.7,8.7,0,0,0,4-7.34V285.79a4.86,4.86,0,0,1,.84-2.74l14.26-21.2a8.72,8.72,0,0,1,12-2.41h0a8.73,8.73,0,0,1,3.91,7.29L416,340.29a8.71,8.71,0,0,0,13.15,7.52l50.26-29.76a8.73,8.73,0,0,0,4.27-7.5V167a8.7,8.7,0,0,0-2.86-6.45L403.26,90.17a8.7,8.7,0,0,0-13,1.51L300.69,221.76a8.7,8.7,0,0,0-1.54,4.94v140a8.71,8.71,0,0,1-10.5,8.53l-16.57-3.5a8.69,8.69,0,0,1-6.91-8.62l1.05-89.2a8.72,8.72,0,0,0-7.18-8.68l-70-12.5a8.71,8.71,0,0,0-10.24,8.48L178,335a8.71,8.71,0,0,1-11.09,8.28l-15.58-4.42a8.72,8.72,0,0,1-6.33-8.34l-.5-125.86a8.66,8.66,0,0,1,1.55-5L215.43,99.33a8.74,8.74,0,0,1,7.66-3.74l15.43.89a8.71,8.71,0,0,1,6.84,13.4L213.9,158.93a8.72,8.72,0,0,0,6.34,13.36l64.83,7.48a8.72,8.72,0,0,0,8.24-3.81L340,106.18a8.71,8.71,0,0,1,7.24-3.87H361a8.73,8.73,0,0,0,7.31-4l2.31-3.56A8.71,8.71,0,0,0,363.53,81.34Z" />
+                <text class="cls-3" transform="translate(163.24 481.32) scale(1.1 1)">Homeset</text>
+            </svg>
+
+        </div>
+    </div>
+
+
+    <div class="bordertype col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+
+        <div class="container px-lg-5 " style="margin-top:10px;">
+            <div class="row mx-lg-n5">
+                <div class="col ">
+                    <button class="buttontype btn-block tablink left upcon1" onclick="openCity(event,'register')">
+                        註冊</button>
+                </div>
+                <div class="col ">
+                    <button class="buttontype btn-block tablink right " onclick="openCity(event,'login')"> 登入</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="register" class="w3-container  city">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+
+                    <P id="emailwarn0" style="display:inline-flex;color: red;margin: 0px 5px;"></P>
+
+                    <input type="email" class="form-control" id="registeremail" placeholder="輸入的Email將成為您的 Homeset 帳號">
+
+                </div>
+                <button type="button" onclick="register()" id="loading" class="btn btn-block logcon">確定</button>
+            </form>
+        </div>
+
+        <div id="login" class="w3-container city" style="display:none">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">帳號</label>
+                    <P id="emailwarn1" style="display:inline-flex;color: red;margin: 0px 5px;"></P>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="ex:abc@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">密碼</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="輸入密碼">
+                    <a href="#" onclick="reset()"><small id="passwordHelpBlock2" class="form-text text-muted">
+                            忘記密碼?
+                        </small></a>
+                </div>
+
+                <button type="button" onclick="login()" id="loading2" class="btn btn-block logcon">確定</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 註冊成功互動視窗registervd -->
+    <div class="modal fade " id="registervd" tabindex="-1" role="dialog" aria-labelledby="registervd"
+        aria-hidden="False">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 5%;">
+                <div class="modal-body text-black objcenter">
+                    <button type="button" class="close" style="color:black" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <img src="static/logo.jpg" width="100" height="100" style="border-radius: 50%;">
+                    <p style="margin: 20px 0 3px 0">已傳送一封開通郵件至您的郵件帳號，</p>
+                    <p id="emailkeep" style="margin: 3px"></p>
+                    <p style="margin: 3px">請於24小時內請點選郵件中的啟用帳號，</p>
+                    <p style="margin: 3px 0 30px 0">完成開通流程。</p>
+                    <button type="button" onclick="resendEmail()" id="loading4" class="btn btn-block logcon">重新發送開通郵件</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 忘記密碼互動視窗 -->
+    <div class="modal fade " id="forgetpassword" tabindex="-1" role="dialog" aria-labelledby="registervd"
+        aria-hidden="False">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 5%;">
+                <div class="modal-header">
+                    <h5 class="modal-title">忘記密碼</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-black" id="resetText">
+                    <div style="margin-bottom:20px;">
+                        <label>請輸入您的 Homeset 帳號</label>
+                        <P id="emailwarn2" style="display:inline-flex;color: red;margin: 0px 5px;"></P>
+                        <input type="text" id="resetEmail" class="form-control" placeholder="作為Homeset帳號的電子郵件">
+                    </div>
+                    <button type="button" onclick="resetText()" id="loading3" class="btn btn-block logcon">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // document.addEventListener("deviceready", onDeviceReady, false);
+        // function onDeviceReady() {
+        //     $(".left").addClass("upcon1")
+
+        // }
+
+        function openCity(evt, cityName) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("city");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace("upcon1", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += "upcon1";
+        }
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE IF EXISTS user');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key)');
+            });
+
+        }
+
+        function adduser(email) {
+
+            db.transaction(function (tx) {
+                tx.executeSql('INSERT INTO user (email) VALUES (?)', [email],
+                    function (tx, res) {
+                        alert('ok');
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+
+        }
+
+        function register() {
+            $("#loading").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>`);
+            let emailvalue = $("#registeremail").val();
+            if (!emailvalue) {
+                $('#emailwarn0').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn0').append("請填寫您要註冊的電子郵件");
+                $("#loading").html("確定")
+                return
+            }
+            if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailvalue))) {
+                $('#emailwarn0').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn0').append("請在電子郵件地址中包含( @ 和 . )");
+                $("#loading").html("確定")
+                return
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.43.187:8000/users",
+                data: {
+                    "username": emailvalue,
+                    "email": emailvalue,
+                    "is_active": true,
+                },
+                error: function (err) {
+                    if (err.status == 400) {
+                        $('#emailwarn0').html('<i class="icon ion-md-information-circle"></i>');
+                        $('#emailwarn0').append("此電子郵件已經註冊過");
+                        $("#loading").html("確定")
+                    }
+                },
+                success: function (res) {
+                    $('#emailwarn0').html("")
+                    $("#registervd").modal('show');
+                    $("#emailkeep").text(emailvalue);
+                    $("#loading").html("確定")
+                    // alert(JSON.stringify(res))
+
+                }
+            })
+        }
+
+        function login() {
+            $("#loading2").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>`);
+            let emailvalue = $("#loginEmail").val();
+            let passwordvalue = $("#loginPassword").val();
+            if (!emailvalue) {
+                $('#emailwarn1').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn1').append("請填寫您註冊的電子郵件");
+                $("#loading2").html("確定")
+                return
+            }
+            if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailvalue))) {
+                $('#emailwarn1').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn1').append("電子郵件地址中包含( @ 和 . )");
+                $("#loading2").html("確定")
+                return
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.43.187:8000/users/login",
+                data: {
+                    "username": emailvalue,
+                    "password": passwordvalue
+                },
+                error: function (err) {
+                    $('#emailwarn1').html('<i class="icon ion-md-information-circle"></i>');
+                    $('#emailwarn1').append("帳號或密碼有誤");
+                    $("#loading2").html("確定")
+                    $("#loginEmail").val("")
+                    $("#loginPassword").val("")
+                    
+                    // alert(JSON.stringify(err))
+                },
+                success: function (res) {
+                    // alert(JSON.stringify(res))
+                    // alert(res.user.email)
+                    $("#loading2").html("確定")
+                    adduser(res.user.email)
+                    location.href = 'H01.html'
+
+                }
+            })
+        }
+
+        // 主畫面的忘記密碼文字連結
+        function reset() {
+            $("#forgetpassword").modal('show')
+        }
+        // 忘記密碼互動視窗的送出
+        function resetText() {
+            $("#loading3").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>`);
+            let emailvalue = $("#resetEmail").val();
+            if (!emailvalue) {
+                $('#emailwarn2').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn2').append("請填寫您註冊的電子郵件");
+                $("#loading3").html("確定")
+                return
+            }
+            if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailvalue))) {
+                $('#emailwarn2').html('<i class="icon ion-md-information-circle"></i>');
+                $('#emailwarn2').append("會員帳號格式錯誤");
+                $("#loading3").html("確定")
+                return
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.43.187:8000/users/password_reset",
+                data: {
+                    "email": emailvalue
+                },
+                error: function (err) {
+                    $('#emailwarn2').html('<i class="icon ion-md-information-circle"></i>');
+                    $('#emailwarn2').append("此電子郵件不存在");
+                    $("#loading3").html("確定")
+                },
+                success: function (res) {
+                    $("#resetText").html(`<p style="font-size:18px;"><b>變更密碼確認信已送出</b></p>
+                                 <p>為了確保會員切身的權益，我們已經寄發確認信到 <span style="font-size:18px;"> `+ emailvalue + `</span>。</p>
+                                 <p>請在24小時內至該信箱收取確認信，並重新設定密碼。</p>`)
+                    $("#loading3").html("確定")
+                }
+            })
+
+
+        }
+
+        // 重新發送開通郵件互動視窗
+        function resendEmail() {
+            $("#loading4").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>`);
+            var emailvalue = $("#emailkeep").text();
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.43.187:8000/users/password_resend",
+                data: {
+                    "email": emailvalue
+                },
+                error: function (err) {
+                    $("#loading4").html("重新發送開通郵件")
+                },
+                success: function (res) {
+                    $("#loading4").html("重新發送開通郵件")
+                }
+            })
+
+
+        }
+
+
+
+    </script>
+</body>
+
+</html>

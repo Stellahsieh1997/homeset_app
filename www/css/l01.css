@@ -103,3 +103,16 @@ white */
 button:focus{
     outline:none;
 }
+.objcenter {
+    text-align: center;
+}
+.modal-header {
+    background-color: #254F6E;
+}
+.modal-title {
+    color: #FFFFFF;
+    margin-left: 10px;
+}
+.close {
+    color: #FFFFFF;
+}

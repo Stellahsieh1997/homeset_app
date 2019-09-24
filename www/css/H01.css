@@ -151,6 +151,7 @@
         .content
         {
             padding: 30px 30px 30px 30px;
+            color:white;
             
         }	
         .icon{
@@ -232,7 +233,7 @@
         
         .points{
             font-size: 30px;
-            padding-top:20px; 
+            /* padding-top:20px;  */
         }
         /* 以下都是H01-1 */
 
@@ -248,18 +249,26 @@
             text-align: center;
         }
         .points i{
-            position: relative;
+            position: absolute;
+            top: 10px;
+            right: 0;
             /* margin-right: -30px;
             padding-top: -30px; */
-            left:20px;
-            top:25px;
+           
+            color:white;
         }
 
         .exrect1{
             width: 20vw;
             height: 20vw;
-            display: flex;
             margin:10px;
+            background-color: #254F6E;
+            position: relative;
+            text-align: center;
+        }
+        .text{
+            color:white;
+            display: inline-block;
         }
         .left{
             width:80%;

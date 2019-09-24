@@ -177,9 +177,24 @@
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key)');
             });
 
             db.transaction(function (tx) {
+
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                alert(res.rows.item(i)['email'])
+                            }
+                        }
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+
                 tx.executeSql('SELECT * FROM furniture', [], function (tx, res) {
                     var len = res.rows.length;
                     // alert(len);

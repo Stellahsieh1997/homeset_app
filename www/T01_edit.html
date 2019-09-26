@@ -48,12 +48,15 @@
             if (onoffcheckbox.checked == true) {
                 reminderinput.style.display = "";
                 remindertext.style.display = "";
-            }
-            else {
-                reminderinput.style.display = "none";
-                remindertext.style.display = "none";
                 reminderinput.value = "";
                 remindertext.value = "";
+            }
+            else {
+                reminderinput.value = "";
+                remindertext.value = "";
+                reminderinput.style.display = "none";
+                remindertext.style.display = "none";
+
 
             }
         }
@@ -68,8 +71,8 @@
         <div class="title container-fluid">
             <div class="row p-1 " style="background-color:#254F6E;">
                 <div class="col-4">
-                <!-- 待修onclick="reload()"-->
-                    <a href="javascript:history.back()" class="icon ion-ios-arrow-back icon2" ></a>
+                    <!-- 待修onclick="reload()"-->
+                    <a href="javascript:history.back()" class="icon ion-ios-arrow-back icon2"></a>
                 </div>
                 <div class="col-4 title">
                 </div>
@@ -169,7 +172,7 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate">
-                    <input type="text" name="reminder" id="reminder" style="display:none" placeholder="時間設定" />
+                    <input type="text" value="" name="reminder" id="reminder" style="display:none" placeholder="時間設定" />
                 </div>
                 <div class="remindtext">
                     <input type="text" id="remindertext" style="display:none" placeholder="提醒內容" />
@@ -820,6 +823,8 @@
             "showDropdowns": true,
             "timePicker": true,
             "timePicker24Hour": true,
+            "autoUpdateInput": false,
+            "startDate": "1990/01/01 00:00",
             "minDate": moment(),
             "cancelButtonClasses": "btn btn-secondary",
             // ranges: {
@@ -862,12 +867,19 @@
                 ],
                 "firstDay": 1
             },
-            "alwaysShowCalendars": true,
-            "startDate": "2019/07/22",
-            "endDate": "2019/07/13",
+            // "alwaysShowCalendars": true,
+            // "startDate": "2019/07/22",
+            // "endDate": "2019/07/13",
             "drops": "up"
         }, function (start, end, label) {
-            console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+            // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        });
+        $('input[name="reminder"]').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('YYYY/MM/DD/ HH:mm'));
+        });
+
+        $('input[name="reminder"]').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
         });
 
 
@@ -934,6 +946,118 @@
                 }
             });
         }
+
+
+    </script>
+    <script>
+
+
+        let app = {
+            init: function () {
+                document.addEventListener("deviceready", app.ready);
+            },
+            ready: function () {
+                app.addListeners();
+            },
+            addListeners: function () {
+                document.querySelector("#save").addEventListener("click", app.addNote);
+                cordova.plugins.notification.local.on("click", function (notification) {
+                    //navigator.notification.alert("clicked: " + notification.id);
+                    //user has clicked on the popped up notification
+                    console.log(notification.data);
+                });
+                cordova.plugins.notification.local.on("trigger", function (notification) {
+                    //added to the notification center on the date to trigger it.
+                    //navigator.notification.alert("triggered: " + notification.id);
+                });
+                // cordova.plugins.notification.local.on("update", function (notification) {
+                //   //added to the notification center on the date to trigger it.
+
+                // });
+            },
+            addNote: function (ev) {
+                let props = cordova.plugins.notification.local.getDefaults();
+                //console.log(props);
+                /**
+                 * Notification Object Properties - use it as a reference later on
+                 * id
+                 * text
+                 * title
+                 * every
+                 * at
+                 * data
+                 * sound
+                 * badge
+                 */
+                // let inOneMin = new Date();
+                // inOneMin.setMinutes(inOneMin.getMinutes() + 1);
+                let id = new Date().getMilliseconds();
+
+                var date1 = $("#reminder").val()
+                let timer = new Date(date1);
+
+                let noteOptions = {
+                    id: id,
+                    title: "物品提醒",
+                    text: $("#remindertext").val(),
+                    at: timer,
+                    badge: 1,
+                    led: { color: '#FF00FF', on: 500, off: 500 },
+                    vibrate: true,
+                    data: {
+                        prop: "prop value",
+                        num: 42
+                    },
+                    actions: [{
+                        id: 'reply',
+                        type: 'alert',
+                        title: "物品提醒",
+                        text: $("#remindertext").val()
+                    }
+                    ]
+                };
+
+
+
+
+                // if(props.led){
+                //   noteOptions.led = '#33CC00'
+                // }
+                // if(props.actions){
+                //   noteOptions.actions = [{ id: "yes", title: "Do it" }, { id: "no", title: "Nah" }]
+                // }
+
+
+                cordova.plugins.notification.local.schedule(noteOptions, function (note) {
+                    //this is the callback function for the schedule method
+                    //this runs AFTER the notification has been scheduled.
+
+                });
+
+
+
+                //navigator.notification.alert("Added notification id " + id);
+
+                cordova.plugins.notification.local.cancel(id, function () {
+                    // will get rid of notification id 1 if it has NOT been triggered or added to the notification center
+                    // cancelAll() will get rid of all of them
+                });
+                cordova.plugins.notification.local.clear(id, function () {
+                    // will dismiss a notification that has been triggered or added to notification center
+                });
+                cordova.plugins.notification.local.isPresent(id, function (present) {
+                    //   navigator.notification.alert($("#remindertext").val(),'物品提醒',);
+                    //   navigator.vibrate(2000); 
+                    // navigator.notification.beep(2);
+
+                    // can also call isTriggered() or isScheduled()
+                    // getAllIds(), getScheduledIds() and getTriggeredIds() will give you an array of ids
+                    // get(), getAll(), getScheduled() and getTriggered() will get the notification based on an id
+                });
+
+            }
+        };
+        app.init();
     </script>
 </body>
 

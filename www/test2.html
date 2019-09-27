@@ -15,7 +15,7 @@
     <title>Furnitures</title>
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-   
+
     <link rel="stylesheet" href="../www/css/reset.css"> <!-- CSS reset -->
     <link rel="stylesheet" href="../www/css/style.css"> <!-- Resource style -->
     <script src="js/jquery-3.4.1.min.js"></script>
@@ -30,20 +30,21 @@
     <script src="js/mobileSelect.js"></script>
 
     <style>
-        /* *{
-            border:solid 1px black;
-        } */
         .box {
-            position: relative; 
-                   
+            position: relative;
+            background-color: rgb(4, 126, 126);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .shrink>div {
             width: 33vw;
             height: 33vw;
             padding-bottom: 0%;
-            margin:0.16%;
-            
+            margin-left: 11%;
+            margin-top: 11%;
+            float: left;
         }
 
         .iwarn {
@@ -53,16 +54,27 @@
             right: 10px;
             bottom: 5px;
         }
+
+        a,
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+            color: white;
+            text-decoration: none;
+            /*變成沒底線*/
+            font-size: 18px
+        }
     </style>
 </head>
 
 <!-- 最上面標題列 -->
 
 <body class="font container-fluid" style="background-color: #f0f0f0;padding: 0px;">
-    <div class="shrink" >
+    <div class="shrink">
         <div class="box">
             <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
-            <a href="T01_edit.html">客廳</a>
+            <a href="T01_edit.html" class="acol">客廳</a>
         </div>
         <div class="box">
             <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>

@@ -38,7 +38,7 @@
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row  " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
-                <a href="javascript:history.back()">
+                <a href="index.html">
                     <i class="icon ion-ios-arrow-back icon1"></i>
                 </a>
             </div>
@@ -243,32 +243,32 @@
 
                             $("body").append(feds);
                             //fpclick fped 為儲物櫃編輯照片互動視窗
-                            var fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                             <div class="modal-content" style="border-radius: 5%;">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"><b id="fpname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</b></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            <div class="modal-body text-black">
-                                                <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" style="text-align:center">
-                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
-                                                </div>
-                                                <div class="row" style="text-align: center">
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')">換圖</button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fpdv('`+ res.rows.item(i)['furnitureId'] + `')">儲存</button>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
-                            $("body").append(fped);
+                            // var fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
+                            //             <div class="modal-dialog modal-dialog-centered" role="document">
+                            //                  <div class="modal-content" style="border-radius: 5%;">
+                            //                     <div class="modal-header">
+                            //                         <h5 class="modal-title"><b id="fpname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</b></h5>
+                            //                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            //                         <span aria-hidden="true">&times;</span>
+                            //                         </button>
+                            //                     </div>
+                            //                 <div class="modal-body text-black">
+                            //                     <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" style="text-align:center">
+                            //                     <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                            //                     </div>
+                            //                     <div class="row" style="text-align: center">
+                            //                         <div class="col">
+                            //                             <button type="button" class="btn btn-outline-secondary" onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')">換圖</button>
+                            //                         </div>
+                            //                         <div class="col">
+                            //                             <button type="button" class="btn btn-outline-secondary" onclick="fpdv('`+ res.rows.item(i)['furnitureId'] + `')">儲存</button>
+                            //                         </div>
+                            //                 </div>
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            // </div>`
+                            // $("body").append(fped);
                             //fdclick fdd 為儲物櫃刪除互動視窗
                             var fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -340,8 +340,8 @@
                             $("body").append(atd);
                             //fnclick fned 為儲物櫃名稱編輯修改互動視窗
                             var fned = `<div class="modal fade " id="fned` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fned` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" style="border-radius: 5%;">
                                             <div class="modal-body text-black">
                                                 <form id='fnform'>
                                                     <div style="margin-bottom:10px;">
@@ -353,10 +353,22 @@
                                                     <label for="furniturename">夾層數量</label>
                                                     <button type="button" class="btn btn-outline " id="updateflayer`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['layer'] + `</button>
                                                     </div>
+                                                    <label>照片</label>
+                                                    <div style="margin-bottom: 10px;">
+                                                        <div style="position: relative;" class="fit">
+                                                            <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" class="fit">
+                                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                                                            </div>
+                                                            <div class='camera' >
+                                                                <i class='icon ion-ios-camera' onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                         <div class="row" style="text-align: center">
                                                             <div class="col">
                                                                 <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
                                                             </div>
+
                                                             <div class="col">
                                                                 <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ res.rows.item(i)['furnitureId'] + `')">確認</button>
                                                             </div>
@@ -430,13 +442,16 @@
             // alert(x);
         }
 
+        // alert(location.href)
+
         function fidclick(x) {
             // 新增物品
             // alert(x)
             let urlParams = new URLSearchParams(window.location.search);
             var spaceId = urlParams.get('space');
+            window.history.pushState({}, 0, "F01.html?space=" + spaceId + "&furniture=" + x + "")
             // location.href = "F01.html?space=" + spaceId + "&furniture=" + x + "";
-
+            // alert(location.href)
             $(".addthings").html("")
 
             //右下角功能鍵
@@ -450,8 +465,7 @@
                             </a>
                             <ul>
                                 <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
-                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>修改儲物櫃名稱<i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
-                                <li><a href="#0" onclick="fpclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['image'] + `','` + res.rows.item(0)['name'] + `')"><span>修改儲物櫃圖片<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 19px"></i></span></a></li>
+                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['furnitureId'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                                 <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                             </ul> 
@@ -653,11 +667,17 @@
                 return
             }
             var updateflayer = $("#updateflayer" + id + "").text();
+
+
+            var img = document.getElementById("fimagedit" + id + "").src;
+
             db.transaction(function (tx) {
-                var query = "UPDATE furniture SET name = ?,layer = ? WHERE furnitureId = ?";
-                tx.executeSql(query, [name, updateflayer, id], function (tx, res) {
+                var query = "UPDATE furniture SET name = ?,layer = ?,image = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [name, updateflayer, img, id], function (tx, res) {
                     // fidclick(id);
                     // fclick(id);
+                    var obj = document.getElementById("" + id + "");
+                    obj.src = img;
                     $("#fpoint" + id + "").text(name);
                     $("#fname" + id + "").text(name);
                     $("#fpname" + id + "").text(name);
@@ -755,22 +775,22 @@
         }
 
         // fpdv 為儲物櫃圖片編輯互動視窗的儲存鍵,更新資料庫
-        function fpdv(id) {
-            var img = document.getElementById("fimagedit" + id + "").src;
+        // function fpdv(id) {
+        //     var img = document.getElementById("fimagedit" + id + "").src;
 
-            db.transaction(function (tx) {
-                var query = "UPDATE furniture SET image = ? WHERE furnitureId = ?";
-                tx.executeSql(query, [img, id], function (tx, res) {
-                    fidclick(id);
-                    fclick(id);
-                    var obj = document.getElementById("" + id + "");
-                    obj.src = img;
-                    $("#fped" + id + "").modal('hide');
+        //     db.transaction(function (tx) {
+        //         var query = "UPDATE furniture SET image = ? WHERE furnitureId = ?";
+        //         tx.executeSql(query, [img, id], function (tx, res) {
+        //             fidclick(id);
+        //             fclick(id);
+        //             var obj = document.getElementById("" + id + "");
+        //             obj.src = img;
+        //             $("#fped" + id + "").modal('hide');
 
-                });
-            });
+        //         });
+        //     });
 
-        }
+        // }
 
         function fpdc(id) {
             $("#fped" + id + "").modal('hide')

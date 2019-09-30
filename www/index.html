@@ -82,9 +82,9 @@
         </nav>
     </div>
 
-    <div class="content">
 
-        <!-- <a href="F01.html" class="four">
+
+    <!-- <a href="F01.html" class="four">
             <div class="exrect">
                 <p>客廳</p>
                 <div class="points">
@@ -107,33 +107,44 @@
         </a> -->
 
 
-        <div class="btn-group exrect1">
-            
-                <button onclick="location.href='F01.html?space=test'" type="button"
-                    class="btn btn-primary left">客廳</button>
-                <button id="myBtn" type="button" class="btn btn-primary right">
-                    <i class="ion-md-more points"></i>
-                </button>
-            
-        </div>
-        <div class="btn-group exrect1">
-            
-            <button onclick="location.href='F01.html?space=test'" type="button"
-                class="btn btn-primary left">客廳</button>
+    <!-- <div class="btn-group exrect1">
+
+            <button onclick="location.href='F01.html?space=test'" type="button" class="btn btn-primary left">客廳</button>
             <button id="myBtn" type="button" class="btn btn-primary right">
                 <i class="ion-md-more points"></i>
             </button>
-        
+
+        </div>
+        <div class="btn-group exrect1">
+
+            <button onclick="location.href='F01.html?space=test'" type="button" class="btn btn-primary left">客廳</button>
+            <button id="myBtn" type="button" class="btn btn-primary right">
+                <i class="ion-md-more points"></i>
+            </button>
+
+        </div>
+
+        <div class="exrect1">
+            <div class="text">客廳</div>
+            <i class="ion-md-more points"></i>
+        </div> -->
+
+
+    <div class="shrink container-fluid">
+        <!-- <div class="box">
+                    <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+                    <a href="T01_edit.html" class="acol">客廳</a>
+                </div>
+                <div class="box">
+                    <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+                    <a href="T01_edit.html"></a>
+                </div>
+                <div class="box">
+                    <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+                    <a href="T01_edit.html"></a>
+                </div> -->
     </div>
 
-    <div class="exrect1">
-        <div class="text">客廳</div>
-        <i class="ion-md-more points"></i>
-    </div>
-
-
-
-    </div>
 
 
     <!-- 新增樓層的彈跳視窗 -->
@@ -286,7 +297,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="insertspace">確認</button>
+                    <button onclick="insertspace(planargraphId)" type="button" class="btn btn-primary"
+                        id="insertspace">確認</button>
                 </div>
             </div>
 
@@ -372,6 +384,22 @@
                 }
             });
         });
+        //格局內容
+        db.transaction(function (tx) {
+            tx.executeSql('SELECT * FROM space', [], function (tx, res) {
+                var len = res.rows.length;
+
+                if (res.rows.length >= 1) {
+                    $("#pnid").text(res.rows.item(0)['name'])
+                    $("#tpname").val(res.rows.item(0)['name'])
+                    $('#insertspace').attr('onclick', 'insertspace("' + res.rows.item(0)['planargraphId'] + '")');
+                    $('#delname1').attr('onclick', 'delplan("' + res.rows.item(0)['planargraphId'] + '")');
+                    for (var i = 0; i < len; i++) {
+                        $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['name'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+                    }
+                }
+            });
+        });
     }
 
     // 更改點擊選單中的平面圖
@@ -401,6 +429,7 @@
                     db.transaction(function (tx) {
                         tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
                             var len = res.rows.length;
+                            $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['name'] + `')">` + res.rows.item(i)['name'] + `</a>`)
 
                             if (res.rows.length >= 1) {
                                 $("#pnid").text(res.rows.item(len - 1)['name'])
@@ -442,19 +471,23 @@
                     db.transaction(function (tx) {
                         tx.executeSql('SELECT * FROM space', [], function (tx, res) {
                             var len = res.rows.length;
+                            alert("success")
+                            $(".shrink").append(`<div class="box">
+                    <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
+                    <a href="T01_edit.html" class="acol">` + res.rows.item(len-1)['name'] + `</a>
+                </div>`)
 
-                            if (res.rows.length >= 1) {
-                                // $("#pnid").text(res.rows.item(len - 1)['name'])
-                                alert("success")
-                                for (var i = 0; i < len; i++) {
-                                    $(".exrect1").prepend(`<div class="exrect1"><button onclick="location.href='F01.html?space=test'" type="button" class="btn btn-primary left">` + res.rows.item(i)['name'] + `</button>
-            <button id="myBtn" type="button" class="btn btn-primary right">
-                <i class="ion-md-more points"></i>
-            </button></div>`
-                                    )
+                //             if (res.rows.length >= 1) {
+                //                 alert("success")
+                //                 for (var i = 0; i < len; i++) {
+                //                     $(".shrink").append(`<div class="box">
+                //     <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
+                //     <a href="T01_edit.html" class="acol">` + res.rows.item(i)['name'] + `</a>
+                // </div>`)
 
-                                }
-                            }
+
+                //                 }
+                //             }
                         });
                     });
 

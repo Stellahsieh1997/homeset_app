@@ -301,7 +301,7 @@
         .modal2-content {
             position: fixed;
             bottom: 0;
-            background-color: #254F6E;;
+            background-color: #254F6E;
             width: 100%;
             -webkit-animation-name: slideIn;
             -webkit-animation-duration: 0.4s;
@@ -414,4 +414,40 @@
         .btn-primary:hover{
             border: none;
             background-color: none;
+        }
+        /* 格局 */
+        .box {
+            position: relative;
+            background-color: #254F6E;;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shrink>div {
+            width: 33vw;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin-left: 11%;
+            margin-top: 11%;
+            float: left;
+        }
+
+        .iwarn {
+            font-size: 25px;
+            color: white;
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+        }
+
+        a,
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+            color: white;
+            text-decoration: none;
+            /*變成沒底線*/
+            font-size: 18px
         }

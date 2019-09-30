@@ -452,56 +452,59 @@
 
 
     }
-    // 新增格局
+    // 新增格局(寫好了先註解掉，目前可以正常新增，但是好像不會存到資料庫)
 
-    function insertspace(planargraphId) {
+    // function insertspace(planargraphId) {
 
-        db.transaction(function (tx) {
-            var timestamp = (new Date()).valueOf();
-            // alert("timestamp"+timestamp);
-            var spaceId = btoa('ben32388@gmail.com') + timestamp;
-            // alert("furnitureId"+furnitureId);
+    //     db.transaction(function (tx) {
+    //         var timestamp = (new Date()).valueOf();
+    //         // alert("timestamp"+timestamp);
+    //         var spaceId = btoa('ben32388@gmail.com') + timestamp;
+    //         // alert("furnitureId"+furnitureId);
 
-            var name = $("#insertsname").val();
+    //         var name = $("#insertsname").val();
 
-            tx.executeSql('INSERT INTO space (spaceId, name, planargraphId) VALUES (?,?,?)', [spaceId, name, planargraphId],
-                function (tx, res) {
-                    $('#exampleModalCenter2').modal('hide')
-                    $("#insertsname").val("");
-                    db.transaction(function (tx) {
-                        tx.executeSql('SELECT * FROM space', [], function (tx, res) {
-                            var len = res.rows.length;
-                            alert("success")
-                            $(".shrink").append(`<div class="box">
-                    <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
-                    <a href="T01_edit.html" class="acol">` + res.rows.item(len-1)['name'] + `</a>
-                </div>`)
+    //         tx.executeSql('INSERT INTO space (spaceId, name, planargraphId) VALUES (?,?,?)', [spaceId, name, planargraphId],
+    //             function (tx, res) {
+    //                 $('#exampleModalCenter2').modal('hide')
+    //                 $("#insertsname").val("");
+    //                 db.transaction(function (tx) {
+    //                     tx.executeSql('SELECT * FROM space', [], function (tx, res) {
+    //                         var len = res.rows.length;
+    //                         alert("success")
+    //                         $(".shrink").append(`<div class="box">
+    //                 <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
+    //                 <a href="T01_edit.html" class="acol">` + res.rows.item(len-1)['name'] + `</a>
+    //             </div>`)
 
-                //             if (res.rows.length >= 1) {
-                //                 alert("success")
-                //                 for (var i = 0; i < len; i++) {
-                //                     $(".shrink").append(`<div class="box">
-                //     <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
-                //     <a href="T01_edit.html" class="acol">` + res.rows.item(i)['name'] + `</a>
-                // </div>`)
-
-
-                //                 }
-                //             }
-                        });
-                    });
+    //             //             if (res.rows.length >= 1) {
+    //             //                 alert("success")
+    //             //                 for (var i = 0; i < len; i++) {
+    //             //                     $(".shrink").append(`<div class="box">
+    //             //     <i onclick="location.href='F01.html?space=test'" class='icon ion-md-more iwarn'></i>
+    //             //     <a href="T01_edit.html" class="acol">` + res.rows.item(i)['name'] + `</a>
+    //             // </div>`)
 
 
-                    // location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
-                }, function (error) {
-                    alert('Something went Wrong');
-                });
+    //             //                 }
+    //             //             }
+    //                     });
+    //                 });
 
 
-        });
+    //                 // location.href = "H01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+    //             }, function (error) {
+    //                 alert('Something went Wrong');
+    //             });
 
 
-    }
+    //     });
+
+
+    // }
+
+
+
     // 刪除平面圖
     function delplan(id) {
 
@@ -514,7 +517,9 @@
         db.transaction(function (tx) {
             var query = "DELETE FROM planargraph where planargraphId = ?";
             tx.executeSql(query, [id], function (tx, res) {
-                location.href = "H01.html"
+                let urlParams = new URLSearchParams(window.location.search);
+                var planargraphId = urlParams.get('planargraph');
+                location.href = "index.html"
             });
         });
         // $("#fdd" + id + "").modal('hide')

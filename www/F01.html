@@ -38,12 +38,10 @@
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row  " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
-                <a href="index.html">
-                    <i class="icon ion-ios-arrow-back icon1"></i>
-                </a>
+                    <i onclick="back()" class="icon ion-ios-arrow-back icon1"></i>
             </div>
             <div class="col-4 title">
-                <p style="margin:0px;font-size:24px">客廳</p>
+                <p id="stitle" style="margin:0px;font-size:24px"></p>
             </div>
             <div class="col-4 ">
 
@@ -162,23 +160,16 @@
                 name: 'my.db',
                 location: 'default',
             });
-            //----------------------------------------------------------------------------------------------------
-            //儲物櫃
-            // db.sqlBatch([
-            //     'CREATE TABLE IF NOT EXISTS furniture (furnitureId integer primary key, name text, image text, spaceId integer, email text)',
-            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['矮櫃', 'static/1.jpg']],
-            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['三層櫃', 'static/2.jpg']],
-            // ], function () {
-            //     // alert("sqlbatch");
-            // }, function (error) {
-            //     alert(error);
-            // });
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
             });
+
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
 
             db.transaction(function (tx) {
 
@@ -194,8 +185,18 @@
                         alert('Something went Wrong');
                     });
 
+                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [spaceId],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            $("#stitle").html(res.rows.item(0)['name'])
+                        }
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
 
-                tx.executeSql('SELECT * FROM furniture', [], function (tx, res) {
+
+                tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
                     var len = res.rows.length;
                     // alert(len);
                     if (res.rows.length >= 1) {
@@ -419,19 +420,6 @@
                 });
             });
 
-
-            //----------------------------------------------------------------------------------------------------
-            //物品
-            // db.sqlBatch([
-            //     'CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)',
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 1, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 2, 1, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 3, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            // ], function () {
-            //     alert("sqlbatch");
-            // }, function (error) {
-            //     alert(error);
-            // });
         }
 
         // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
@@ -821,7 +809,7 @@
             }
             var layervalue = $("#insertflayer").text();
             var img = document.getElementById("insertfphoto").src;
-            //測試
+
             let urlParams = new URLSearchParams(window.location.search);
             var spaceId = urlParams.get('space');
             // alert(spaceId);
@@ -845,6 +833,20 @@
             });
 
         }
+
+        function back() {
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE spaceId=?', [spaceId], function (tx, res) {
+                    var len = res.rows.length;
+                    if (res.rows.length >= 1) {
+                        location.href = "index.html?planargraph=" + res.rows.item(0)['planargraphId'] + "";
+                    }
+                });
+            });
+        }
+
 
         // ----------------------------照相---------------------------------------
         function takephoto() {

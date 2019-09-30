@@ -24,7 +24,7 @@ Stretchy Nav style - common to:
   /* this is the stretching navigation background */
   position: absolute;
   z-index: 1;
-  top: 300px;
+  top: 250px;
   right: 0;
   width: 60px;
   height: 60px;
@@ -47,7 +47,7 @@ Stretchy Nav style - common to:
 .cd-nav-trigger {
   position: absolute;
   z-index: 3;
-  top: 300px;
+  top: 250px;
   right: 0;
   height: 60px;
   width: 60px;

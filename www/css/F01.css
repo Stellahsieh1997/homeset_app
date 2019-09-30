@@ -205,7 +205,8 @@ a, a:link, a:active, a:visited, a:hover
 .fephotothumb{
     max-width: 80vw;
     max-height: 100vw;
-    margin-bottom: 10px;
+    margin: 0px;
+    /* margin-bottom: 10px; */
 }
 .modal-header {
     background-color: #254F6E;
@@ -237,4 +238,25 @@ ul{
 .btn-outline:hover {
     background-color: #254F6E;
     color: #f0f0f0;
+}
+
+.camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius:50%;
+    border: #FFFFFF solid 1px;
+    background-color:rgb(139, 191, 228);
+    width: 40px;
+    height: 40px;
+    color: rgb(255, 255, 255);
+}
+.fit{
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
 }

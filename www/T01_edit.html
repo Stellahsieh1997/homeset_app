@@ -621,7 +621,8 @@
                             function (tx, res) {
                                 var query = "UPDATE thing SET name = ?,description = ?,image = ?,category = ?,owner = ?,number = ?,layer = ?,out = ?,remind = ?,time = ?,content = ? WHERE thingId = ?";
                                 tx.executeSql(query, [name, description, img, categoryValue, ownerValue, numberValue, layerValue, out, remind, reminder, remindertextValue, thingId]);
-                                location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                                history.back()
+                                // location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
 
                             });
                     }, function (error) {

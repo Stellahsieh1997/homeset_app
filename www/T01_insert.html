@@ -168,7 +168,7 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate">
-                    <input type="text"  value="" name="reminder" id="reminder" style="display:none"  placeholder="時間設定" />
+                    <input type="text"  value="" name="reminder" id="reminder"  style="color: transparent; text-shadow:0 0 0 #000;display:none"  placeholder="時間設定" />
                 </div>
                 <div class="remindtext">
                     <input type="text" id="remindertext" style="display:none" placeholder="提醒內容" />
@@ -857,7 +857,7 @@
         });
 
         $('input[name="reminder"]').on('cancel.daterangepicker', function (ev, picker) {
-            $(this).val('');
+            // $(this).val('');
         });
 
         //數量滾輪
@@ -946,7 +946,8 @@
         cordova.plugins.notification.local.on("trigger", function (notification) {
           //added to the notification center on the date to trigger it.
          // navigator.notification.alert("triggered: " + notification.id);
-        });
+         
+        }
         // cordova.plugins.notification.local.on("update", function (notification) {
         //   //added to the notification center on the date to trigger it.
           

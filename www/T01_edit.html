@@ -172,7 +172,9 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate">
-                    <input type="text" value="" name="reminder" id="reminder" style="display:none" placeholder="時間設定" />
+                    <input type="button" value="時間設定" style="background-color: transparent;
+                    display:none" width="40px";
+                        name="reminder" id="reminder" placeholder="時間設定" />
                 </div>
                 <div class="remindtext">
                     <input type="text" id="remindertext" style="display:none" placeholder="提醒內容" />
@@ -324,6 +326,22 @@
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
 
+            // var date1 = $("#reminder").val();
+            // alert(date1)
+            // var timer = new Date(date1);
+            // alert(timer);
+            // var curdate = new Date();
+            // alert(curdate);
+            // if (timer < curdate) {
+            //     let urlParams = new URLSearchParams(window.location.search);
+            //     var thingId = urlParams.get('thing');
+            //     db.transaction(function (tx) {
+            //         var query = "UPDATE thing SET remind=? WHERE thingId = ?";
+            //         tx.executeSql(query, [0,thingId]);
+            //         alert("ok");
+            //     });
+            // }
+
             //測試
             // db.transaction(function (tx) {
             //     var timestamp = (new Date()).valueOf();
@@ -361,7 +379,7 @@
                                                 fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
                                             }
                                             storage.push({ id: spaceId, value: spacename, childs: fstorage });
-                                            
+
                                             // alert(JSON.stringify(storage));
                                             fstorage = []
                                             placeselect.updateWheels(storage);
@@ -435,6 +453,32 @@
                         alert('Something went Wrong');
                     });
             });
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM thing WHERE thingId = ?', [thingId], function (tx, res) {
+                    var date1 = res.rows.item(0)['time']
+                    
+                    var timer = new Date(date1);
+                    
+                    var curdate = new Date();
+                    
+                    if (timer < curdate) {
+                        let urlParams = new URLSearchParams(window.location.search);
+                        var thingId = urlParams.get('thing');
+                        
+                        db.transaction(function (tx) {
+                            var query = "UPDATE thing SET remind=? WHERE thingId = ?";
+                            tx.executeSql(query, [0, thingId]);
+                            alert("ok");
+                            var onoffcheckbox2 = document.getElementById("myonoffswitch2");
+                            onoffcheckbox2.checked = false;
+                            datechecked()
+                        });
+                    }
+                });
+            });
+
+
 
             //類別滾輪
             var categoryselect = []
@@ -625,7 +669,10 @@
                             function (tx, res) {
                                 var query = "UPDATE thing SET name = ?,description = ?,image = ?,category = ?,owner = ?,number = ?,layer = ?,out = ?,remind = ?,time = ?,content = ? WHERE thingId = ?";
                                 tx.executeSql(query, [name, description, img, categoryValue, ownerValue, numberValue, layerValue, out, remind, reminder, remindertextValue, thingId]);
+                                
+
                                 history.back()
+
                                 // location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
 
                             });
@@ -881,7 +928,7 @@
         });
 
         $('input[name="reminder"]').on('cancel.daterangepicker', function (ev, picker) {
-            $(this).val('');
+            // $(this).val('');
         });
 
 
@@ -933,10 +980,10 @@
                 {
                     data: [
                         {
-                            id:'1',
-                            value:'',
-                            childs:[
-                                {id:'A1',value:''},
+                            id: '1',
+                            value: '',
+                            childs: [
+                                { id: 'A1', value: '' },
                             ]
                         }
                     ]
@@ -979,6 +1026,9 @@
                 cordova.plugins.notification.local.on("trigger", function (notification) {
                     //added to the notification center on the date to trigger it.
                     //navigator.notification.alert("triggered: " + notification.id);
+
+
+
                 });
                 // cordova.plugins.notification.local.on("update", function (notification) {
                 //   //added to the notification center on the date to trigger it.

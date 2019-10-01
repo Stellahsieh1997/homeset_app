@@ -48,6 +48,7 @@
             if (onoffcheckbox.checked == true) {
                 reminderinput.style.display = "";
                 remindertext.style.display = "";
+                reminderinput.value = "時間設定";
             }
             else {
                 reminderinput.style.display = "none";
@@ -168,10 +169,12 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate">
-                    <input type="text"  value="" name="reminder" id="reminder"  style="color: transparent; text-shadow:0 0 0 #000;display:none"  placeholder="時間設定" />
+                        <input type="button" value="時間設定" style="
+                        display:none;color:rgb(90, 90, 90);background-position: 3px;background:url(./static/calender.png)no-repeat;background-color: #fff; cursor: pointer; ; border: 0.7px solid #ccc; width: 180px;"
+                            name="reminder" id="reminder" />
                 </div>
                 <div class="remindtext">
-                    <input type="text" id="remindertext" style="display:none" placeholder="提醒內容" />
+                    <input type="text" id="remindertext" style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px;" placeholder="提醒內容" />
                 </div>
             </div>
         </ul>

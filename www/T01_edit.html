@@ -325,20 +325,20 @@
             });
 
             //測試
-            db.transaction(function (tx) {
-                var timestamp = (new Date()).valueOf();
-                // alert("timestamp"+timestamp);
-                var spaceId = btoa('ben32388@gmail.com') + timestamp;
-                // alert("furnitureId"+furnitureId);
-                tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test1", "臥室"]);
-                tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test", "客廳"],
-                    function (tx, res) {
-                        // alert("成功匯入");
-                    }, function (error) {
-                        alert('Something went Wrong');
-                    });
+            // db.transaction(function (tx) {
+            //     var timestamp = (new Date()).valueOf();
+            //     // alert("timestamp"+timestamp);
+            //     var spaceId = btoa('ben32388@gmail.com') + timestamp;
+            //     // alert("furnitureId"+furnitureId);
+            //     tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test1", "臥室"]);
+            //     tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test", "客廳"],
+            //         function (tx, res) {
+            //             // alert("成功匯入");
+            //         }, function (error) {
+            //             alert('Something went Wrong');
+            //         });
 
-            });
+            // });
 
             //可選擇位置滾輪資料庫
             var storage = []
@@ -360,10 +360,11 @@
                                             for (var j = 0; j < len; j++) {
                                                 fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
                                             }
-                                            // alert(fstorage);
                                             storage.push({ id: spaceId, value: spacename, childs: fstorage });
-                                            // alert(storage);
-                                            place(storage);
+                                            
+                                            // alert(JSON.stringify(storage));
+                                            fstorage = []
+                                            placeselect.updateWheels(storage);
                                         }
                                     });
                                 }(spaceId, spacename)
@@ -919,34 +920,42 @@
 
         //位置滾輪
 
-        function place(storage) {
-            var mobileSelect3 = new MobileSelect({
-                trigger: '#place',
-                title: '存放位置',
-                cancelBtnColor: '#f0f0f0',
-                ensureBtnColor: '#f0f0f0',
-                titleBgColor: '#254F6E',
-                titleColor: '#f0f0f0',
-                ensureBtnText: '確認',
-                wheels: [
-                    {
-                        data: storage
-                    }
-                ],
-                position: [0, 0],
-                callback: function (indexArr, data) {
-                    let urlParams = new URLSearchParams(window.location.search);
-                    var thingId = urlParams.get('thing');
-                    db.transaction(function (tx) {
-                        var query = "UPDATE thing SET furnitureId = ? WHERE thingId = ?";
-                        tx.executeSql(query, [data[1]["id"], thingId]);
-                    });
-                    layertest();
-                    $("#layer").text("1");
-                    // alert(data[0]["id"] + data[1]["id"]); //返回選中的json數據
+
+        var placeselect = new MobileSelect({
+            trigger: '#place',
+            title: '存放位置',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                {
+                    data: [
+                        {
+                            id:'1',
+                            value:'',
+                            childs:[
+                                {id:'A1',value:''},
+                            ]
+                        }
+                    ]
                 }
-            });
-        }
+            ],
+            position: [0, 0],
+            callback: function (indexArr, data) {
+                let urlParams = new URLSearchParams(window.location.search);
+                var thingId = urlParams.get('thing');
+                db.transaction(function (tx) {
+                    var query = "UPDATE thing SET furnitureId = ? WHERE thingId = ?";
+                    tx.executeSql(query, [data[1]["id"], thingId]);
+                });
+                layertest();
+                $("#layer").text("1");
+                // alert(data[0]["id"] + data[1]["id"]); //返回選中的json數據
+            }
+        });
+
 
 
     </script>

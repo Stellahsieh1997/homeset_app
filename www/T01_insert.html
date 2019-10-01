@@ -386,7 +386,8 @@
                                             // alert(fstorage);
                                             storage.push({ id: spaceId, value: spacename, childs: fstorage });
                                             // alert(storage);
-                                            place(storage);
+                                            fstorage = []
+                                            placeselect.updateWheels(storage);
                                         }
                                     });
                                 }(spaceId, spacename)
@@ -894,8 +895,8 @@
 
         //位置滾輪
 
-        function place(storage) {
-            var mobileSelect3 = new MobileSelect({
+ 
+        var placeselect = new MobileSelect({
                 trigger: '#place',
                 title: '存放位置',
                 cancelBtnColor: '#f0f0f0',
@@ -905,7 +906,15 @@
                 ensureBtnText: '確認',
                 wheels: [
                     {
-                        data: storage
+                        data: [
+                        {
+                            id:'1',
+                            value:'',
+                            childs:[
+                                {id:'A1',value:''},
+                            ]
+                        }
+                    ]
                     }
                 ],
                 position: [0, 0],
@@ -915,7 +924,7 @@
                     $("#layer").text("1");
                 }
             });
-        }
+
 
         
     </script>

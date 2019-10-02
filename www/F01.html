@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; 
-            style-src 'self' 'unsafe-inline'; 
-            media-src *; 
-            script-src 'self' 'unsafe-inline';
-            img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+    img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+    style-src  'self' 'unsafe-inline' *">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <title>Furnitures</title>
@@ -38,7 +36,7 @@
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row  " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
-                    <i onclick="back()" class="icon ion-ios-arrow-back icon1"></i>
+                <i onclick="back()" class="icon ion-ios-arrow-back icon1"></i>
             </div>
             <div class="col-4 title">
                 <p id="stitle" style="margin:0px;font-size:24px"></p>
@@ -117,9 +115,10 @@
 
     <!-- 放物品的地方 -->
     <div class="box-wrap">
-        <div class="objcenter" style="height: 50vh;width: 100vw;">
-            <!-- <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p> -->
-        </div>
+        <!-- <div class="objcenter" style="height: 50vh;width: 100vw;">
+            <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
+        </div> -->
+
     </div>
 
     <!-- <nav class="cd-stretchy-nav">

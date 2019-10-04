@@ -40,7 +40,7 @@ ion-icon{
         .header
         {
             background:#254F6E;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: #fff;
             line-height: 40px;
@@ -91,6 +91,8 @@ ion-icon{
         .content
         {
             color: black;
+            margin-bottom: 50px;
+            overflow: scroll;
             /* padding: 150px 50px 50px 50px; */
         }	
         .icon{
@@ -116,7 +118,7 @@ ion-icon{
         .rect{
             width: 100%;
             margin: 5px auto;
-            height: 80px;
+            height: 140px;
             position: relative;
             
         }
@@ -126,8 +128,8 @@ ion-icon{
            
             margin-right: 10px;
             /* height:60px; */
-            width: auto;
-            height: auto;
+            width: 33vw;
+            height: 33vw;
             max-width: 100%;
             max-height: 100%;
 
@@ -139,6 +141,7 @@ ion-icon{
             line-height: 25px;
             padding-left: 50px;
             font-size: 16px;
+            color: #254F6E;
         }
         li{
             transition:0.3s;
@@ -155,3 +158,4 @@ ion-icon{
             
         }
        
+     

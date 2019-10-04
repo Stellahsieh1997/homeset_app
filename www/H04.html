@@ -10,23 +10,83 @@
         <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="cordova.js" type="text/javascript"></script>
+        <script type="text/javascript" charset="utf-8"></script>
         <title>H04</title>
     </head>
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        background: #fff;
+        box-shadow: 2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+
+    }
+
+    .row1 {
+        width: 100%;
+        height: 40px;
+        margin: 0px;
+    }
+
+    .icon {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding-top: 2px;
+    }
+
+    .icon1:hover {
+        color: #254F6E;
+    }
+
+    .icon1 {
+        color: black;
+        font-size: 30px;
+    }
+
+    ion-icon {
+        width: 30px;
+        height: 25px;
+    }
+    .down,
+    .down:link,
+    .down:active,
+    .down:visited,
+    .down:hover {
+        color: inherit;
+        text-decoration: none;
+        font-size: 18px
+    }
+
+    a,
+    a:link,
+    a:active,
+    a:visited,
+    a:hover {
+        color: inherit;
+        text-decoration: none;
+        
+    }
+
+  
+   
+    </style>
 
 <body>
 
-    <div id="page">
+    <div>
         <div class="header">
-            <a href="index.html" class="icon ion-ios-arrow-back icon2"> <span></span></a>
+            <a href="../www/index.html" class="icon ion-ios-arrow-back icon2"> <span></span></a>
          
             物品提醒
 
         </div>
-        <div class="content">
+        <div class="content ">
             <ul class="list-group list-group-flush">
+                <!-- <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>物品名稱</p><p>提醒日:2019.07.02</p></div></li>
                 <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>物品名稱</p><p>提醒日:2019.07.02</p></div></li>
-                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>物品名稱</p><p>提醒日:2019.07.02</p></div></li>
-                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>物品名稱</p><p>提醒日:2019.07.02</p></div></li>
+                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>物品名稱</p><p>提醒日:2019.07.02</p></div></li> -->
                
             </ul>
         </div>
@@ -34,46 +94,89 @@
     </div>
 
 
-</body>
-<div class="container-fluid  footer">
-    <div class="row row1">
-        <div class="col-4 icon">
-            <a href="S01.html">
-                <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
-            </a> </div>
-        <div class="col-4 icon ">
-            <a href="index.html">
-                <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
-            </a> </div>
-        <div class="col-4 icon">
-            <a href="A01.html">
-                <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
-            </a>
+
+    <div class="container-fluid  footer">
+        <div class="row row1 ">
+            <div class="col-4 icon">
+                <a class="down" href="S01.html">
+                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1" ></i>
+
+                </a> </div>
+            <div class="col-4 icon ">
+                <a class="down" href="index.html">
+                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
+
+                </a> </div>
+            <div class="col-4 icon">
+                <a class="down" href="A01.html">
+                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+
+                </a>
+            </div>
+
         </div>
 
-
     </div>
-
-</div>
 
 <!-- mmenu scripts -->
 <script src="../www/js/mmenu.js"></script>
 <script src="../www/js/mmenu.debugger.js"></script>
 <script>
   
-    var t = 1;
-    function test(x) {
-        // 這個是判斷第一次點選
-        if (x == 1 && t == 1) {
-            document.getElementById(x).style.color = "#254F6E";
+  var t = 1;
+        function test(x) {
+            // 這個是判斷第一次點選
+            if (x == 1 && t == 1) {
+                document.getElementById(x).style.color = "#254F6E";
+            }
+            // 這個判斷是防止重複點選 
+            else if (x != t) {
+                document.getElementById(x).style.color = "#254F6E";
+                document.getElementById(t).style.color = "black";
+            }
+            t = x;
         }
-        // 這個判斷是防止重複點選 
-        else if (x != t) {
-            document.getElementById(x).style.color = "#254F6E";
-            document.getElementById(t).style.color = "black";
+
+     //資料庫
+     document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        var categorypicker
+        var ownerpicker
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
+            });
+
+            
+            //呈現提醒
+            db.transaction(function (tx) {
+                $(".list-group-flush").html("")
+                tx.executeSql('SELECT * FROM thing ', [], function (tx, res) { 
+                    if (res.rows.length >= 1) {
+                        for (var j = 0; j < res.rows.length; j++) {
+                            if (res.rows.item(j)['remind'] == 1) { 
+                                $(".list-group-flush").append(`<li class="list-group-item">
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><div class="rect"><img src="` + res.rows.item(j)['image'] + `" ><p>`+ res.rows.item(j)['name'] + `</p><p>提醒日:`+ res.rows.item(j)['time'] + `</p><p>提醒內容:`+ res.rows.item(j)['content'] + `</p></div></a></li>`)
+                            
+                            }
+                        }
+
+                    }
+                });
+            });
+
+            
+
+
         }
-        t = x;
-    }
+
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -84,5 +187,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
     crossorigin="anonymous"></script>
+
+</body>
 
 </html>

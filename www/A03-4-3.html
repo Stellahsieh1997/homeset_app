@@ -16,6 +16,19 @@
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- <link rel=stylesheet type="text/css" href="../www/css/A03.css"> -->
     <title>收納資訊</title>
+    <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $(".like").click(function () {
+                $(this).toggleClass('cs');
+            })
+        })
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
+
 </head>
 
     <style>
@@ -60,22 +73,6 @@
                             style=width:27px;></button></a>
         </div> 
     </div> 
-
-    <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-    <script>
-        $(function () {
-            $(".like").click(function () {
-                $(this).toggleClass('cs');
-            })
-        })
-
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script>
-
-    
-
 
     <div class="card" style="margin-right:0px;padding-right:-200px;width:100%;">
         <img src="static/receive/21.jpg" class="img-fluid card-img-top"

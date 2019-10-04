@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<html style="height: 100%;width: 100%">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel=stylesheet type="text/css" href="../www/css/A02.css">
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <title>收納資訊</title>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row p-1 fixed-top title">
+        <div class="col-4">
+                <a href="A01.html"><button type="button" class="float-left buttontype " style="background-color: transparent;
+                        border-color: transparent;margin-left:-10px"><img src="static/arrowhead.png" width="38" height="38"></button></a>
+        </div> 
+    </div> 
+
+    <div class="header">
+        <p style="font-size:30px;margin-left:50px;margin-top:10px">我的收納文章</p>
+    </div>
+    <form>
+    <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:50px">
+    <label for="exampleFormControlInput1">文章標題</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1">
+    </div>
+    <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:260px">
+    <label for="exampleFormControlSelect1">類別選擇</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+        <option>客廳</option>
+        <option>廚房</option>
+        <option>臥室</option>
+        <option>浴室</option>
+        <option>收納</option>
+        <option>設計</option>
+    </select>
+    </div>
+    <P style="font-size:18px;margin-left:20px">上傳圖片<P>
+    <div style="margin-left:20px">
+    <input type="file" name="file" onchange="showImg(this)" />
+    <img id="showimg" src="" style="display:none" /></div>
+    <div class="form-group" style="font-size:18px;padding-left:18px;padding-right:20px;margin-top:10px">
+    <label for="exampleFormControlTextarea1">文章內容</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="13"></textarea>
+    </div>
+    </form>
+    <div class="row">
+                <a class="btn btn-light col bpadding"  role="button">取消</a>
+                <a class="btn btn-light col bpadding"  role="button">發送</a>
+            </div>
+</div>
+</body>

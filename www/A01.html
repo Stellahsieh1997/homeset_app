@@ -17,6 +17,18 @@
     <link rel=stylesheet type="text/css" href="../www/css/A01.css">
     <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
     <title>收納資訊</title>
+    <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+            <script>
+                    $(function () {
+                        $(".like").click(function () {
+                            $(this).toggleClass('cs');
+                        })
+                    })
+            
+                    $('#myModal').on('shown.bs.modal', function () {
+                        $('#myInput').trigger('focus')
+                    })
+            </script>
 </head>
 
 <style>
@@ -31,41 +43,36 @@
         }
 </style>
 
-<body>
-
-
+<body class="font container-fluid">
     <div class="header">
         <p>收納資訊</p>
     </div>
-    <div class="search"><input type="text" placeholder="Search"></div>
+    <div class="row p-1 fixed-top title;">
+        <div class="col-4">
+            <a href="A04.html">
+                <button type="button" class="float-right buttontype" style="background-color: transparent;border-color:transparent;margin-right:-400px;margin-top:10px">
+                    <img src="static/writing.png"style=width:35px;>
+                </button>
+            </a> 
+        </div> 
+    </div> 
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <a class="btn btn-light col bpadding" href="#" role="button">客廳</a>
-                <a class="btn btn-light col bpadding" href="#" role="button">廚房</a>
+                <a class="btn btn-light col bpadding" href="A02-3.html" role="button">客廳</a>
+                <a class="btn btn-light col bpadding" href="A02-4.html" role="button">廚房</a>
                 <a class="btn btn-light col bpadding" href="A02-1.html" role="button">臥室</a>
             </div>
             <div class="row">
-                <a class="btn btn-light col bpadding" href="A02.html" role="button">浴室</a>
-                <a class="btn btn-light col bpadding" href="#" role="button">收納</a>
-                <a class="btn btn-light col bpadding" href="#" role="button">設計</a>
+                <a class="btn btn-light col bpadding" href="A02-2.html" role="button">浴室</a>
+                <a class="btn btn-light col bpadding" href="A02-5.html" role="button">收納</a>
+                <a class="btn btn-light col bpadding" href="A02-6.html" role="button">設計</a>
             </div>
             <div class="body" style="margin-top: 10px;font-size: 20px;color:gray;margin-left: 20px">
                 <P>典藏文章</P>
             </div>
 
-            <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-            <script>
-                    $(function () {
-                        $(".like").click(function () {
-                            $(this).toggleClass('cs');
-                        })
-                    })
             
-                    $('#myModal').on('shown.bs.modal', function () {
-                        $('#myInput').trigger('focus')
-                    })
-            </script>
 
             <div class="row card1 border rounded ">
                 <div class="col left rounded-left ">
@@ -100,7 +107,7 @@
                             <p class="like" style="margin-top: -90px;text-align:right;margin-right: -2px">&#10084;</p>
                         </div>
                     </div>
-                     <div class="row card1 border rounded">
+                    <div class="row card1 border rounded">
                 <div class="col left rounded-left">
                     <img src="https://images.crateandbarrel.com/is/image/Crate/cb_dSC_201901_FURNp1_Hero2?wid=1680&qlt=75" alt="">
                 </div>
@@ -112,9 +119,7 @@
                 </div>
             </div>
         </div>
-        
-    </div>
-    
+        </div>    
 </body>
 
 

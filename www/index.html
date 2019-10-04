@@ -40,8 +40,10 @@
                     <a class="dropdown-item">三樓</a> -->
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
-                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4">編輯</a>
-                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter5">刪除</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4" id="pedit"
+                        style="display:none;">編輯</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter5" id="pdelete"
+                        style="display:none;">刪除</a>
                 </div>
             </li>
 
@@ -176,7 +178,8 @@
     </div>
 
     <!-- 新增格局的彈跳按鈕 -->
-    <div class="circlefix add" data-toggle="modal" data-target="#exampleModalCenter2">
+    <div class="circlefix add" data-toggle="modal" data-target="#exampleModalCenter2" id="saddbutton"
+        style="display:none;">
         <i class="icon ion-md-add"></i>
     </div>
     <!-- 新增格局的彈跳視窗 -->
@@ -194,9 +197,9 @@
 
                 <div class="modal-body ">
                     <form id='sniform'>
-                    <label for="insertsname">名稱</label>
-                    <P id="sniwarn" style="display:inline-flex;color: red;margin:0px;"></P>
-                    <input id="insertsname" class="form-control" placeholder="" required>
+                        <label for="insertsname">名稱</label>
+                        <P id="sniwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input id="insertsname" class="form-control" placeholder="" required>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -365,7 +368,9 @@
                         for (var i = 0; i < len; i++) {
                             $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
                         }
-
+                        $("#pedit").css('display', 'block');
+                        $("#pdelete").css('display', 'block');
+                        $("#saddbutton").css('display', 'block');
                         let urlParams = new URLSearchParams(window.location.search);
                         // alert(urlParams)
                         var planargraphId = urlParams.get('planargraph');
@@ -499,14 +504,47 @@
         // 刪除平面圖
         function delPlanargraph(id) {
             db.transaction(function (tx) {
-                var query = "DELETE FROM planargraph where planargraphId = ?";
-                tx.executeSql(query, [id]);
-                var query = "DELETE FROM space where planargraphId = ?";
-                tx.executeSql(query, [id], function (tx, res) {
-                    location.href = "index.html"
+                tx.executeSql("SELECT * FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                    var len = res.rows.length;
+                    if (res.rows.length >= 1) {
+                        for (var i = 0; i < len; i++) {
+                            var tran = function (i) {
+                                var spaceId = res.rows.item(i)['spaceId']
+                                tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [spaceId], function (tx, res) {
+                                    var len = res.rows.length;
+                                    if (res.rows.length >= 1) {
+                                        for (var j = 0; j < len; j++) {
+                                            var trans = function (j) {
+                                                tx.executeSql("DELETE FROM thing where furnitureId = ?", [res.rows.item(j)['furnitureId']], function (tx, res) {
+                                                    tx.executeSql("DELETE FROM furniture where spaceId = ?", [spaceId], function (tx, res) {
+                                                        tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                                                            tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                                                location.href = "index.html"
+                                                            });
+                                                        });
+                                                    });
+
+                                                });
+                                            }(j);
+                                        }
+                                    } else {
+                                        tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                                            tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                                location.href = "index.html"
+                                            });
+                                        });
+                                    }
+                                });
+
+                            }(i);
+                        }
+                    } else {
+                        tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                            location.href = "index.html"
+                        });
+                    }
                 });
             });
-
         }
 
 

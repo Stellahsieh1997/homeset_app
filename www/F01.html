@@ -32,14 +32,14 @@
 
 <!-- 最上面標題列 -->
 
-<body class="font container-fluid" style="background-color: #f0f0f0;padding: 0px;">
+<body class="font container-fluid" style="background-color: #ffffff;padding: 0px;">
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
-        <div class="row  " style="background-color:#254F6E;">
+        <div class="row " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
                 <i onclick="back()" class="icon ion-ios-arrow-back icon1"></i>
             </div>
             <div class="col-4 title">
-                <p id="stitle" style="margin:0px;font-size:24px"></p>
+                <p id="stitle" style="margin:0px;font-size:18px;font-weight: bold;line-height: 40px;"></p>
             </div>
             <div class="col-4 ">
 
@@ -61,6 +61,44 @@
 
             </div>
         </div>
+        <div class="row" style="background-color:#254F6E;height: 10px;"></div>
+        <!-- 物品數量 -->
+        <div class="row bordertype objcenter">
+            <div class="col-6" style="text-align: center;">
+                <P style="margin: 0px">物品數量</P>
+                <P id="tcount" style="margin: 0px">0</P>
+
+            </div>
+            <div class="col-6 " style="border-left: 2px solid #254F6E;text-align: center;">
+                <P style="margin: 0px">夾層數</P>
+                <P id="lcount" style="margin: 0px">0</P>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 放物品的地方 -->
+    <div class="box-wrap">
+        <!-- <div class="objcenter" style="height: 50vh;width: 100vw;">
+                    <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
+                </div> -->
+        <!-- <p><span>尚未編輯完成</span><i class='icon ion-md-arrow-dropdown'></i></p>
+        <hr/>
+        <div class="shrink">
+            <div class="box">
+                <a href="#"><img
+                        src="static/photo-library.png" style=width:100%;height:100%></a>
+            </div>
+        </div>
+        
+        <p>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></p>
+        <hr/>
+        <div class="shrink">
+            <div class="box">
+                <a href="#"><img
+                        src="static/photo-library.png" style=width:100%;height:100%></a>
+            </div>
+        </div> -->
     </div>
 
     <!-- 增加儲物櫃互動視窗 -->
@@ -112,14 +150,30 @@
         </div>
     </div>
 
-
-    <!-- 放物品的地方 -->
-    <div class="box-wrap">
-        <!-- <div class="objcenter" style="height: 50vh;width: 100vw;">
-            <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
-        </div> -->
-
+    <div class="modal fade" style="z-index:1065;margin: 0px 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog" aria-labelledby="openphoto"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width:70vw;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>選擇相機或相簿</b></h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6" style="text-align: center">
+                            <button type=" button" id="takecamera" class="btn btn-light photobtn"
+                                onclick="takecamera()"><img src="static/camera.png" style=width:40px><br>
+                                相機</img></button><br>
+                        </div>
+                        <div class="col-6" style="text-align: center">
+                            <button type="button" id="fimgedit" class="btn btn-light photobtn" onclick="fimgedit()"><img
+                                    src="static/photo-library.png" style=width:40px><br> 從相簿中選擇</img></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <!-- <nav class="cd-stretchy-nav">
         <a class="cd-nav-trigger" href="#0">
@@ -202,46 +256,46 @@
                         for (var i = 0; i < len; i++) {
                             $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
                             // 為長按出現的互動視窗
-                            var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
-                                <div class="modal-content" style="border-radius: 0%;">
-                                <div class="modal-body " style="background-color: #254F6E">
-                                <div class="row" style="width:100vw;text-align: center">
-                                <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `','` + res.rows.item(i)['layer'] + `')">
-                                <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                                <p style="color: #f0f0f0">編輯名稱</p>
-                                </div>
-                                <div class="col-4" onclick="fdclick('`+ res.rows.item(i)['furnitureId'] + `')">
-                                <i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">刪除</p> 
-                                </div> 
-                                <div class="col-4" onclick="fsclick( '`+ res.rows.item(i)['furnitureId'] + `' )"> 
-                                <i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">共享</p> 
-                                </div> 
-                                </div> 
-                                <div class="row" style="width:100vw;text-align: center"> 
-                                <div class="col-4" onclick="fpclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['image'] + `','` + res.rows.item(i)['name'] + `')"> 
-                                <i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">編輯圖片</p> 
-                                </div> 
-                                <div class="col-4"></div> 
-                                <div class="col-4 fedtitle"> 
-                                <p style="color: #f0f0f0;" id="fpoint`+ res.rows.item(i)['furnitureId'] + `"> ` + res.rows.item(i)['name'] + `</p>
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div>`;
+                            // var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
+                            //     <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
+                            //     <div class="modal-content" style="border-radius: 0%;">
+                            //     <div class="modal-body " style="background-color: #254F6E">
+                            //     <div class="row" style="width:100vw;text-align: center">
+                            //     <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `','` + res.rows.item(i)['layer'] + `')">
+                            //     <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            //     <p style="color: #f0f0f0">編輯名稱</p>
+                            //     </div>
+                            //     <div class="col-4" onclick="fdclick('`+ res.rows.item(i)['furnitureId'] + `')">
+                            //     <i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">刪除</p> 
+                            //     </div> 
+                            //     <div class="col-4" onclick="fsclick( '`+ res.rows.item(i)['furnitureId'] + `' )"> 
+                            //     <i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">共享</p> 
+                            //     </div> 
+                            //     </div> 
+                            //     <div class="row" style="width:100vw;text-align: center"> 
+                            //     <div class="col-4" onclick="fpclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['image'] + `','` + res.rows.item(i)['name'] + `')"> 
+                            //     <i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">編輯圖片</p> 
+                            //     </div> 
+                            //     <div class="col-4"></div> 
+                            //     <div class="col-4 fedtitle"> 
+                            //     <p style="color: #f0f0f0;" id="fpoint`+ res.rows.item(i)['furnitureId'] + `"> ` + res.rows.item(i)['name'] + `</p>
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div>`;
 
-                            $("body").append(fed);
-                            var feds = `<script>
-                            document.getElementById("fpress`+ res.rows.item(i)['furnitureId'] + `").addEventListener('long-press', function (e) {
-                                $("#fed`+ res.rows.item(i)['furnitureId'] + `").modal('show');
-                            });<\/script>`;
+                            // $("body").append(fed);
+                            // var feds = `<script>
+                            // document.getElementById("fpress`+ res.rows.item(i)['furnitureId'] + `").addEventListener('long-press', function (e) {
+                            //     $("#fed`+ res.rows.item(i)['furnitureId'] + `").modal('show');
+                            // });<\/script>`;
 
-                            $("body").append(feds);
+                            // $("body").append(feds);
                             //fpclick fped 為儲物櫃編輯照片互動視窗
                             // var fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
                             //             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -360,7 +414,7 @@
                                                                 <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
                                                             </div>
                                                             <div class='camera' >
-                                                                <i class='icon ion-ios-camera' onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')"></i>
+                                                                <i class='icon ion-ios-camera' onclick="fpem('`+ res.rows.item(i)['furnitureId'] + `')"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -443,8 +497,18 @@
 
             //右下角功能鍵
             db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [x],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            $("#tcount").html(len);
+                        } else {
+                            $("#tcount").html(0);
+                        }
+                    });
                 tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [x],
                     function (tx, res) {
+                        $("#lcount").html(res.rows.item(0)['layer']);
                         var addthing = `<nav class="cd-stretchy-nav">
                             <div></div>
                             <a class="cd-nav-trigger" href="#0">        
@@ -493,7 +557,7 @@
                             if (!num) {
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furnitureId = ?', [x], function (tx, res) {
-                                        $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></p>`)
+                                        $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'><span>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer Null len:" + len);
@@ -546,7 +610,7 @@
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
                                         $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
-                                        $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></p>`)
+                                        $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer len:" + len);
@@ -635,7 +699,7 @@
 
         //fnclick fned 為儲物櫃名稱編輯修改互動視窗
         function fnclick(id, name, layer) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
 
             $('#fned' + id + '').modal('show')
         }
@@ -665,9 +729,9 @@
                     // fclick(id);
                     var obj = document.getElementById("" + id + "");
                     obj.src = img;
-                    $("#fpoint" + id + "").text(name);
+                    // $("#fpoint" + id + "").text(name);
                     $("#fname" + id + "").text(name);
-                    $("#fpname" + id + "").text(name);
+                    // $("#fpname" + id + "").text(name);
                     $("#fdname" + id + "").text(name);
                     $("#fsname" + id + "").text(name);
                     $("#fned" + id + "").modal('hide');
@@ -711,9 +775,11 @@
 
 
                                     if (layernum > updateflayer) {
+                                        if (layernum != "無夾層") {
                                         db.transaction(function (tx) {
                                             tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
                                         });
+                                        }
                                     }
 
                                 }(layernum, thingId);
@@ -728,10 +794,16 @@
             });
 
         }
+        //修改儲物櫃圖片
+        function fpem(id) {
+            $('#openphoto').modal('show')
+            $('#takecamera').attr('onclick', 'takecamera("' + id + '")');
+            $('#fimgedit').attr('onclick', 'fimgedit("' + id + '")');
+        }
 
         //fdclick fdd 為儲物櫃刪除互動視窗
         function fdclick(id) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fdd' + id + '').modal('show')
 
         }
@@ -757,7 +829,7 @@
 
         //fpclick fped 為儲物櫃編輯照片互動視窗
         function fpclick(id, image, name) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fped' + id + '').modal('show')
         }
 
@@ -785,7 +857,7 @@
 
         //fpclick fsd 為儲物櫃共享互動視窗
         function fsclick(id) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fsd' + id + '').modal('show')
         }
 
@@ -850,7 +922,7 @@
         // ----------------------------照相---------------------------------------
         function takephoto() {
             let opts = {
-                quality: 100,
+                quality: 50,
                 destinationType: Camera.DestinationType.FILE_URI,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 mediaType: Camera.MediaType.PICTURE,
@@ -930,6 +1002,7 @@
                         var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
                         $("#feimg" + id + "").text("");
                         $("#feimg" + id + "").append(myimg);
+                        $("#openphoto").modal("hide");
                     }
                 }, function (error) {
                     console.log('Error: ' + error);
@@ -956,7 +1029,26 @@
             //         // height: 1440,
             //         quality: 100
             //     });
+
         }
+        function takecamera(id) {
+            let opts = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                mediaType: Camera.MediaType.PICTURE,
+                encodingType: Camera.EncodingType.JPEG,
+                cameraDirection: Camera.Direction.BACK
+            };
+            navigator.camera.getPicture(function cameraSuccess(imgURI) {
+                var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+                $("#feimg" + id + "").html(myimg);
+                $("#openphoto").modal("hide");
+            }, function cameraError(error) {
+                alert("Unable to obtain picture: " + error, "app");
+            }, opts);
+        }
+
 
     </script>
 

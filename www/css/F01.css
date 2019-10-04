@@ -1,3 +1,7 @@
+* {
+    /* border:solid 1px black; */
+    font-family: 微軟正黑體;
+}
 .font {
     font-family: Microsoft JhengHei;
     padding: 0px;
@@ -29,7 +33,7 @@
     text-align: center;
     color: white;
     margin-right: 15px;
-    font-size: 20px
+    font-size: 18px
 }
 
 
@@ -76,13 +80,13 @@
 }
 
 .bordertype {
-    border-style: solid;
-    border-width: 3px;
-    border-color: white;
-    border-radius: 10px;
+    border-top-right-radius: 35px;
+    border-top-left-radius: 35px;
     background-color: white;
-    padding: 10px;
-    margin-top: 10px;
+    margin: -10px 0px 0px -10px;
+    padding: 0px;
+    height: 55px;
+    width: 100vw;
 }
 
 
@@ -114,32 +118,45 @@
     position: relative;
 }
 .box-wrap {
-    text-align: center;
+    /* text-align: center; */
     overflow: hidden;
-    margin-top:195px;
+    margin-top:245px;
     margin-bottom: 40px;
 }
 
 .shrink>div {
-    width: 33vw;
-    height: 33vw;
+    width: 32vw;
+    height: 32vw;
     padding-bottom: 0%;
-    margin: 0.16%;
+    margin-left:1vw;
+    margin-bottom:1vw;
     float: left;
 }
-
+/* .shrink{
+    margin-bottom: 1px;
+} */
 .box-wrap>p {
-    color:gray;
+    color:black;
     display:flex;
     width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin-left:15px;
-    margin-bottom: 0px;
-    padding: 10px 0px;
+    /* align-items: center;
+    justify-content: center; */
+    /* background-color: #f4c82ae7; */
+    margin: 3px 0px 0px 1vw;
+
+    /* padding: 5px */
 
 }
-.box-wrap p>i {
+.box-wrap>p>span {
+    padding: 5px;
+    background-color: #f4c82ae7;
+}
+.box-wrap>hr{
+    border-top: 1px solid #f4c82ae7;
+    margin: 0px 15px 10px 1vw;
+    
+}
+.box-wrap>p>span>i {
     color:rgb(0, 0, 0);
     font-size: 18px;
     padding: 0px 10px;
@@ -147,6 +164,8 @@
 .icon1 {
     color: rgb(255, 255, 255);
     font-size: 30px;
+    line-height: 40px;
+
 }
 
 .circlefix {
@@ -259,4 +278,9 @@ ul{
     display:inline-block;
     *display:inline;
     *zoom:1;
+}
+/*物品圖片*/
+.photobtn {
+    background-color: transparent;
+    border: 0;
 }

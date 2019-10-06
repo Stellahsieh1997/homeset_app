@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel=stylesheet type="text/css" href="../www/css/H01.css">
+
+    <!-- mmenu scripts -->
+    <script src="../www/js/mmenu.js"></script>
+    <script src="../www/js/mmenu.debugger.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <title>H01</title>
+</head>
+
+<body>
+
+    <div id="page" class="outer">
+
+        <!-- 導覽列 -->
+        <ul class="nav header">
+            <li class="nav-item two">
+                <a class="nav-link active" href="#menu"></a>
+            </li>
+            <li class="dropdown nav-fill">
+                <a id="pnid" class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                    aria-haspopup="true" aria-expanded="false"></a>
+                <div class="dropdown-menu  plan1">
+                    <!-- <a class="dropdown-item plan1"></a> -->
+                    <!-- <a class="dropdown-item">二樓</a>
+                    <a class="dropdown-item">三樓</a> -->
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter3">新增</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter4" id="pedit"
+                        style="display:none;">編輯</a>
+                    <a class="dropdown-item " data-toggle="modal" data-target="#exampleModalCenter5" id="pdelete"
+                        style="display:none;">刪除</a>
+                </div>
+            </li>
+
+        </ul>
+        <nav id="menu">
+            <ul>
+                <li><a href="../www/H02.html">與我共用的項目</a></li>
+                <li><a href="../www/H03.html">儲存的文章</a></li>
+                <li><a href="../www/H04.html">物品提醒</a></li>
+                <li><a href="#">設定</a></li>
+                <li><a href="#">登出</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- 顯示格局的地方 -->
+    <div class="box-wrap">
+        <!-- <div class="box">
+            <i class='icon ion-md-more imore'></i>
+            <a href="F01.html?space=test"><span style="color: white">客廳</span></a>
+        </div>
+        <div class="box">
+            <i class='icon ion-md-more imore'></i>
+            <a href="T01_edit.html"></a>
+        </div>
+        <div class="box">
+            <i class='icon ion-md-more imore'></i>
+            <a href="T01_edit.html"></a>
+        </div> -->
+    </div>
+
+
+
+    <!-- 新增樓層的彈跳視窗 -->
+
+    <div class="modal fade hide bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增樓層</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <form id='pniform'>
+                        <label for="exampleInputPassword1">名稱</label>
+                        <P id="pniwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input id="insertpname" class="form-control" placeholder="" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="insertplanargraph()">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 是否繼續新增樓層互動視窗 -->
+    <div class="modal hide fade" id="addpwarn" tabindex="-1" role="dialog" aria-labelledby="addpwarn"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 5%;">
+                <div class="modal-body text-black">
+                    <p style="font-size: 16px"><span id="existedp" style="font-size: 20px"></span>
+                        已經存在，可能會造成混淆，是否繼續以相同名稱創建?</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary" onclick="addpwarnNo()">否</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-secondary" onclick="addpwarnYes()">是</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯樓層的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter4" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">編輯樓層</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <form id='pneform'>
+                        <label for="exampleInputPassword1">名稱</label>
+                        <P id="pnewarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input id="editpname" class="form-control" placeholder="" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button id="delname" type="button" class="btn"> <i class="ion-md-trash icon3"></i></button> -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="editPlanargraph" type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 刪除平面圖 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModalCenter5" aria-labelledby="exampleModalLabel5"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                <div class="modal-body text-black">
+                    <p style="font-size: 16px">是否要刪除<span id="delPname"></span>?</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                        </div>
+                        <div class="col">
+                            <button id="delPlanargraph" type="button" class="btn btn-outline-secondary">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增格局的彈跳按鈕 -->
+    <div class="circlefix add" data-toggle="modal" data-target="#exampleModalCenter2" id="saddbutton"
+        style="display:none;">
+        <i class="icon ion-md-add"></i>
+    </div>
+    <!-- 新增格局的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModalCenter2" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新增格局</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <form id='sniform'>
+                        <label for="insertsname">名稱</label>
+                        <P id="sniwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input id="insertsname" class="form-control" placeholder="" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="insertspace" type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 修改格局的彈跳視窗-->
+    <div class="modal" id="editSpace" tabindex="-1" role="dialog" aria-labelledby="editSpace" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document"
+            style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
+            <div class="modal-content" style="border-radius: 0%;">
+                <div class="modal-body " style="background-color: #254F6E">
+                    <div class="row" style="width:100vw;text-align: center">
+                        <div class="col-4 icon22">
+                            <button onclick="closespace()" class="buttontype" data-toggle="modal"
+                                data-target="#editsmodal">
+                                <i class="ion-md-create icon2"></i>
+                                <p>編輯</p>
+                            </button>
+                        </div>
+                        <div class="col-4 icon22 ">
+                            <button onclick="closespace()" class="buttontype" data-toggle="modal"
+                                data-target="#delsmodal">
+                                <i class=" ion-md-trash icon2"></i>
+                                <p>刪除</p>
+                            </button>
+                        </div>
+                        <div class="col-4 icon22">
+                            <button id="editscolor" onclick="closespace()" class="buttontype">
+                                <i class=" ion-md-list icon2"></i>
+                                <p>顏色</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯格局名稱的彈跳視窗 -->
+
+    <div class="modal fade bd-example-modal-sm" id="editsmodal" tabindex="-1" role="dialog" aria-labelledby="editsmodal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">編輯格局</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <form id='sneform'>
+                        <label for="exampleInputPassword1">名稱</label>
+                        <P id="snewarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input id="editsnameval" class="form-control" placeholder="" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button id="delname" type="button" class="btn"> <i class="ion-md-trash icon3"></i></button> -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="editsname" type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 刪除格局 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delsmodal" aria-labelledby="delsmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                <div class="modal-body text-black">
+                    <p style="font-size: 16px">是否要刪除<span id="delsname"></span>?</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                        </div>
+                        <div class="col">
+                            <button id="delspace" type="button" class="btn btn-outline-secondary">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-fluid  footer">
+        <div class="row row1 ">
+            <div class="col-4 icon">
+                <a href="S01.html">
+                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
+
+                </a> </div>
+            <div class="col-4 icon ">
+                <a href="H01.html">
+                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1" style="color: #254F6E"></i>
+
+                </a> </div>
+            <div class="col-4 icon">
+                <a href="A01.html">
+                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        new Mmenu(document.querySelector('#menu'));
+
+        document.addEventListener('click', (evnt) => {
+            let anchor = evnt.target.closest('a[href^="#/"]');
+            if (anchor) {
+                alert('Thank you for clicking, but that\'s a demo link.');
+                evnt.preventDefault();
+            }
+        });
+        // 按鈕點選變色，點另一个按紐顏色還原
+        var t = 1;
+        function test(x) {
+            // 這個是判斷第一次點選
+            if (x == 1 && t == 1) {
+                document.getElementById(x).style.color = "#254F6E";
+            }
+            // 這個判斷是防止重複點選 
+            else if (x != t) {
+                document.getElementById(x).style.color = "#254F6E";
+                document.getElementById(t).style.color = "black";
+            }
+            t = x;
+        }
+
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+            });
+
+            // 平面圖選單內容
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
+                    var len = res.rows.length;
+
+                    if (res.rows.length >= 1) {
+                        for (var i = 0; i < len; i++) {
+                            $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+                        }
+                        $("#pedit").css('display', 'block');
+                        $("#pdelete").css('display', 'block');
+                        $("#saddbutton").css('display', 'block');
+                        let urlParams = new URLSearchParams(window.location.search);
+                        // alert(urlParams)
+                        var planargraphId = urlParams.get('planargraph');
+                        if (!planargraphId) {
+                            pnidclick(res.rows.item(0)['planargraphId'])
+
+                        } else {
+                            pnidclick(planargraphId)
+
+                        }
+                    }
+                });
+            });
+
+        }
+
+        // 更改點擊選單中的平面圖
+        // pnid為標題顯示文字
+        // editpname 為編輯輸入框
+        //editPlanargraph 為編輯平面圖名稱的確認鍵
+        //delPlanargraph  為編刪除平面圖的確認鍵
+        //insertspace 新增格局
+        function pnidclick(id) {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM planargraph WHERE planargraphId = ?', [id],
+                    function (tx, res) {
+                        $("#pnid").html(res.rows.item(0)['name'])
+                        $("#editpname").val(res.rows.item(0)['name'])
+                        $("#delPname").html(res.rows.item(0)['name'])
+                    });
+            });
+            $('#insertspace').attr('onclick', 'insertspace("' + id + '")');
+            $('#editPlanargraph').attr('onclick', 'editplanargraph("' + id + '")');
+            $('#delPlanargraph').attr('onclick', 'delPlanargraph("' + id + '")');
+
+            //呈現格局
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [id],
+                    function (tx, res) {
+                        $(".box-wrap").html("")
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                $(".box-wrap").append(`<div class="box">
+                                                        <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['spaceId'] + `")' class='icon ion-md-more imore'></i>
+                                                        <a href="F01.html?space=`+ res.rows.item(i)['spaceId'] + `"><span id="sname` + res.rows.item(i)['spaceId'] + `" style="color: white">` + res.rows.item(i)['name'] + `</span></a>
+                                                        </div>`)
+                            }
+                        }
+                    });
+            });
+
+        }
+        //關閉修改格局(編輯 刪除 顏色)互動視窗
+        function closespace() {
+            $("#editSpace").modal('hide');
+        }
+        //點選格局三個點點
+        function spacemore(spaceId) {
+            $("#editSpace").modal('show');
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [spaceId],
+                    function (tx, res) {
+                        $("#editsnameval").val(res.rows.item(0)['name'])
+                        $("#delsname").html(res.rows.item(0)['name'])
+                    });
+            });
+            $('#editsname').attr('onclick', 'editsname("' + spaceId + '")');
+            $('#delspace').attr('onclick', 'delspace("' + spaceId + '")');
+            // $('#editscolor').attr('onclick', 'editscolor("' + spaceId + '")');
+
+        }
+
+        //修改格局
+        function editsname(id) {
+            var name = $("#editsnameval").val();
+            if (!name) {
+                $('#snewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#snewarn').append("請輸入格局名稱");
+                $('#sneform').addClass("was-validated");
+                return
+            }
+            db.transaction(function (tx) {
+                var query = "UPDATE space SET name = ? WHERE spaceId = ?";
+                tx.executeSql(query, [name, id], function (tx, res) {
+                    $("#editsmodal").modal('hide');
+                    $("#sname" + id + "").html(name);
+                });
+            });
+
+        }
+
+
+        //修改平面圖
+        function editplanargraph(id) {
+            var name = $("#editpname").val();
+            if (!name) {
+                $('#pnewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#pnewarn').append("請輸入樓層名稱");
+                $('#pneform').addClass("was-validated");
+                return
+            }
+            db.transaction(function (tx) {
+                var query = "UPDATE planargraph SET name = ? WHERE planargraphId = ?";
+                tx.executeSql(query, [name, id], function (tx, res) {
+                    $("#exampleModalCenter4").modal('hide');
+                    location.href = "H01.html?planargraph=" + id + "";
+                });
+            });
+
+        }
+
+        // 刪除格局
+        function delspace(id) {
+            var planargraphId
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [id],
+                    function (tx, res) {
+                        planargraphId = res.rows.item(0)['planargraphId']
+                    });
+
+                var query = "DELETE FROM space where spaceId = ?";
+                tx.executeSql(query, [id], function (tx, res) {
+                    location.href = "H01.html?planargraph=" + planargraphId + "";
+                });
+            });
+
+        }
+
+
+        // 刪除平面圖
+        function delPlanargraph(id) {
+            db.transaction(function (tx) {
+                tx.executeSql("SELECT * FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                    var len = res.rows.length;
+                    if (res.rows.length >= 1) {
+                        for (var i = 0; i < len; i++) {
+                            var tran = function (i) {
+                                var spaceId = res.rows.item(i)['spaceId']
+                                tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [spaceId], function (tx, res) {
+                                    var len = res.rows.length;
+                                    if (res.rows.length >= 1) {
+                                        for (var j = 0; j < len; j++) {
+                                            var trans = function (j) {
+                                                tx.executeSql("DELETE FROM thing where furnitureId = ?", [res.rows.item(j)['furnitureId']], function (tx, res) {
+                                                    tx.executeSql("DELETE FROM furniture where spaceId = ?", [spaceId], function (tx, res) {
+                                                        tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                                                            tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                                                location.href = "H01.html"
+                                                            });
+                                                        });
+                                                    });
+
+                                                });
+                                            }(j);
+                                        }
+                                    } else {
+                                        tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                                            tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                                location.href = "H01.html"
+                                            });
+                                        });
+                                    }
+                                });
+
+                            }(i);
+                        }
+                    } else {
+                        tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                            location.href = "H01.html"
+                        });
+                    }
+                });
+            });
+        }
+
+
+        // 新增平面圖(預設一樓))
+        //exampleModalCenter3 新增樓層的彈跳視窗
+        //insertpname 新增樓層的輸入框
+        //要抓到目前登入使用者的帳號
+        function insertplanargraph() {
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+                var name = $("#insertpname").val();
+                if (!name) {
+                    $('#pniwarn').html('<i class="icon ion-md-information-circle"></i>');
+                    $('#pniwarn').append("請輸入樓層名稱");
+                    $('#pniform').addClass("was-validated");
+                    return
+                }
+                tx.executeSql('SELECT * FROM planargraph WHERE email = ?', ['ben32388@gmail.com'],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                $('#exampleModalCenter3').modal('hide')
+                                if (name == res.rows.item(i)['name']) {
+
+                                    $("#existedp").html(name)
+                                    $('#addpwarn').modal('show')
+                                    return false;
+                                }
+
+                            }
+
+                        }
+                        tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ben32388@gmail.com"],
+                            function (tx, res) {
+                                $('#exampleModalCenter3').modal('hide')
+                                $("#insertpname").val("");
+                                location.href = "H01.html?planargraph=" + planargraphId + "";
+                            }, function (error) {
+                                alert('Something went Wrong');
+                            });
+                    });
+
+
+            });
+        }
+        // 是否繼續新增樓層互動視窗
+        function addpwarnNo() {
+            $('#addpwarn').modal('hide')
+            $('#exampleModalCenter3').modal('show')
+        }
+        // 是否繼續新增樓層互動視窗
+        function addpwarnYes() {
+            $('#addpwarn').modal('hide')
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+                var name = $("#insertpname").val();
+                tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ben32388@gmail.com"],
+                    function (tx, res) {
+                        $('#exampleModalCenter3').modal('hide')
+                        $("#insertpname").val("");
+                        location.href = "H01.html?planargraph=" + planargraphId + "";
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+
+        }
+
+
+        // 新增格局
+
+        function insertspace(planargraphId) {
+
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var spaceId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+                var name = $("#insertsname").val();
+                if (!name) {
+                    $('#sniwarn').html('<i class="icon ion-md-information-circle"></i>');
+                    $('#sniwarn').append("請輸入格局名稱");
+                    $('#sniform').addClass("was-validated");
+                    return
+                }
+
+                tx.executeSql('INSERT INTO space (spaceId, name, planargraphId) VALUES (?,?,?)', [spaceId, name, planargraphId],
+                    function (tx, res) {
+                        $('#exampleModalCenter2').modal('hide')
+                        $("#insertsname").val("");
+                        location.href = "H01.html?planargraph=" + planargraphId + "";
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

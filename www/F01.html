@@ -912,7 +912,7 @@
                 tx.executeSql('SELECT * FROM space WHERE spaceId=?', [spaceId], function (tx, res) {
                     var len = res.rows.length;
                     if (res.rows.length >= 1) {
-                        location.href = "index.html?planargraph=" + res.rows.item(0)['planargraphId'] + "";
+                        location.href = "H01.html?planargraph=" + res.rows.item(0)['planargraphId'] + "";
                     }
                 });
             });

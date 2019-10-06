@@ -53,8 +53,9 @@
                 <li><a href="../www/H02.html">與我共用的項目</a></li>
                 <li><a href="../www/H03.html">儲存的文章</a></li>
                 <li><a href="../www/H04.html">物品提醒</a></li>
-                <li><a href="#">設定</a></li>
-                <li><a href="#">登出</a></li>
+                <li><a href="#">同步</a></li>
+                <li><a href="#" onclick="reset()">重設密碼</a></li>
+                <li><a href="#" onclick="logout()">登出</a></li>
             </ul>
         </nav>
     </div>
@@ -295,6 +296,25 @@
     </div>
 
 
+    <!-- 重設密碼互動視窗 -->
+    <div class="modal fade " id="resetpassword" tabindex="-1" role="dialog" aria-labelledby="resetpassword"
+        aria-hidden="False">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 5%;">
+                <div class="modal-header">
+                    <h5 class="modal-title">重設密碼</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-black" id="resettext">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div class="container-fluid  footer">
         <div class="row row1 ">
@@ -321,6 +341,10 @@
 
 
     <script>
+        var user_email;
+        var user_token;
+
+
         new Mmenu(document.querySelector('#menu'));
 
         document.addEventListener('click', (evnt) => {
@@ -355,37 +379,78 @@
             });
 
             db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
             });
 
-            // 平面圖選單內容
+
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
-                    var len = res.rows.length;
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            user_email = res.rows.item(0)['email']
+                            user_token = res.rows.item(0)['token']
 
-                    if (res.rows.length >= 1) {
-                        for (var i = 0; i < len; i++) {
-                            $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+                            tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [res.rows.item(0)['email']], function (tx, res) {
+                                var len = res.rows.length;
+
+                                if (res.rows.length >= 1) {
+                                    for (var i = 0; i < len; i++) {
+                                        $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+                                    }
+                                    $("#pedit").css('display', 'block');
+                                    $("#pdelete").css('display', 'block');
+                                    $("#saddbutton").css('display', 'block');
+                                    let urlParams = new URLSearchParams(window.location.search);
+                                    // alert(urlParams)
+                                    var planargraphId = urlParams.get('planargraph');
+                                    if (!planargraphId) {
+                                        pnidclick(res.rows.item(0)['planargraphId'])
+
+                                    } else {
+                                        pnidclick(planargraphId)
+
+                                    }
+                                }
+                            });
+
                         }
-                        $("#pedit").css('display', 'block');
-                        $("#pdelete").css('display', 'block');
-                        $("#saddbutton").css('display', 'block');
-                        let urlParams = new URLSearchParams(window.location.search);
-                        // alert(urlParams)
-                        var planargraphId = urlParams.get('planargraph');
-                        if (!planargraphId) {
-                            pnidclick(res.rows.item(0)['planargraphId'])
-
-                        } else {
-                            pnidclick(planargraphId)
-
-                        }
-                    }
-                });
+                    });
             });
 
+
+
+            // 平面圖選單內容
+            // db.transaction(function (tx) {
+            //     tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
+            //         var len = res.rows.length;
+
+            //         if (res.rows.length >= 1) {
+            //             for (var i = 0; i < len; i++) {
+            //                 $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+            //             }
+            //             $("#pedit").css('display', 'block');
+            //             $("#pdelete").css('display', 'block');
+            //             $("#saddbutton").css('display', 'block');
+            //             let urlParams = new URLSearchParams(window.location.search);
+            //             // alert(urlParams)
+            //             var planargraphId = urlParams.get('planargraph');
+            //             if (!planargraphId) {
+            //                 pnidclick(res.rows.item(0)['planargraphId'])
+
+            //             } else {
+            //                 pnidclick(planargraphId)
+
+            //             }
+            //         }
+            //     });
+            // });
+
         }
+
+
 
         // 更改點擊選單中的平面圖
         // pnid為標題顯示文字
@@ -515,18 +580,16 @@
                                     if (res.rows.length >= 1) {
                                         for (var j = 0; j < len; j++) {
                                             var trans = function (j) {
-                                                tx.executeSql("DELETE FROM thing where furnitureId = ?", [res.rows.item(j)['furnitureId']], function (tx, res) {
-                                                    tx.executeSql("DELETE FROM furniture where spaceId = ?", [spaceId], function (tx, res) {
+                                                tx.executeSql("DELETE FROM thing where furnitureId = ?", [res.rows.item(j)['furnitureId']]);
+                                            }(j);
+                                        }
+                                        tx.executeSql("DELETE FROM furniture where spaceId = ?", [spaceId], function (tx, res) {
                                                         tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
                                                             tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
                                                                 location.href = "H01.html"
                                                             });
                                                         });
                                                     });
-
-                                                });
-                                            }(j);
-                                        }
                                     } else {
                                         tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
                                             tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
@@ -556,7 +619,7 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+                var planargraphId = btoa(user_email) + timestamp;
                 // alert("furnitureId"+furnitureId);
                 var name = $("#insertpname").val();
                 if (!name) {
@@ -565,7 +628,7 @@
                     $('#pniform').addClass("was-validated");
                     return
                 }
-                tx.executeSql('SELECT * FROM planargraph WHERE email = ?', ['ben32388@gmail.com'],
+                tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email],
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
@@ -581,7 +644,7 @@
                             }
 
                         }
-                        tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ben32388@gmail.com"],
+                        tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
                             function (tx, res) {
                                 $('#exampleModalCenter3').modal('hide')
                                 $("#insertpname").val("");
@@ -604,9 +667,9 @@
             $('#addpwarn').modal('hide')
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
-                var planargraphId = btoa('ben32388@gmail.com') + timestamp;
+                var planargraphId = btoa(user_email) + timestamp;
                 var name = $("#insertpname").val();
-                tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, "ben32388@gmail.com"],
+                tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
                     function (tx, res) {
                         $('#exampleModalCenter3').modal('hide')
                         $("#insertpname").val("");
@@ -626,7 +689,7 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var spaceId = btoa('ben32388@gmail.com') + timestamp;
+                var spaceId = btoa(user_email) + timestamp;
                 // alert("furnitureId"+furnitureId);
                 var name = $("#insertsname").val();
                 if (!name) {
@@ -644,6 +707,35 @@
                     }, function (error) {
                         alert('Something went Wrong');
                     });
+            });
+        }
+
+        // 重設密碼
+        function reset() {
+            // $('#menu1').click();
+            $("html").removeClass("mm-wrapper_opening")
+            $.ajax({
+                type: "POST",
+                url: "http://140.131.114.157/users/password_reset",
+                data: {
+                    "email": user_email
+                },
+                error: function (err) {
+                    alert(err)
+                },
+                success: function (res) {
+                    $("#resettext").html(`<p style="font-size:18px;"><b>變更密碼確認信已送出</b></p>
+                                 <p>為了確保會員切身的權益，我們已經寄發確認信到 <span style="font-size:18px;"> `+ user_email + `</span>。</p>
+                                 <p>請在24小時內至該信箱收取確認信，並重新設定密碼。</p>`)
+                    $("#resetpassword").modal("show")
+                }
+            })
+        }
+
+        function logout() {
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE IF EXISTS user');
+                location.href = 'index.html'
             });
         }
 

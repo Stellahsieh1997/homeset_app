@@ -5,38 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; 
-            style-src 'self' 'unsafe-inline'; 
-            media-src *; 
-            script-src 'self' 'unsafe-inline';
-            img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+    img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+    style-src  'self' 'unsafe-inline' *">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <title>Furnitures</title>
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link rel=stylesheet type="text/css" href="../www/css/F01.css">
+    <link rel="stylesheet" href="../www/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="../www/css/style.css"> <!-- Resource style -->
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/long-press-event.min.js"></script>
+    <script src="js/modernizr.js"></script> <!-- Modernizr -->
+    <script src="js/main.js"></script><!-- Modernizr -->
     <script src="cordova.js" type="text/javascript"></script>
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
 
 
 </head>
 
-<body class="font container-fluid" style="background-color: #f0f0f0;padding: 0px;">
+<!-- 最上面標題列 -->
+
+<body class="font container-fluid" style="background-color: #ffffff;padding: 0px;">
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
-        <div class="row  " style="background-color:#254F6E;">
+        <div class="row " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
-                <a href="H01-1.html">
-                    <i class="icon ion-ios-arrow-back icon1"></i>
-                </a>
+                <i onclick="back()" class="icon ion-ios-arrow-back icon1"></i>
             </div>
             <div class="col-4 title">
-                <p style="margin:0px;font-size:24px">客廳</p>
+                <p id="stitle" style="margin:0px;font-size:18px;font-weight: bold;line-height: 40px;"></p>
             </div>
             <div class="col-4 ">
+
             </div>
         </div>
 
@@ -55,6 +61,44 @@
 
             </div>
         </div>
+        <div class="row" style="background-color:#254F6E;height: 10px;"></div>
+        <!-- 物品數量 -->
+        <div class="row bordertype objcenter">
+            <div class="col-6" style="text-align: center;">
+                <P style="margin: 0px">物品數量</P>
+                <P id="tcount" style="margin: 0px">0</P>
+
+            </div>
+            <div class="col-6 " style="border-left: 2px solid #254F6E;text-align: center;">
+                <P style="margin: 0px">夾層數</P>
+                <P id="lcount" style="margin: 0px">0</P>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 放物品的地方 -->
+    <div class="box-wrap">
+        <!-- <div class="objcenter" style="height: 50vh;width: 100vw;">
+                    <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
+                </div> -->
+        <!-- <p><span>尚未編輯完成</span><i class='icon ion-md-arrow-dropdown'></i></p>
+        <hr/>
+        <div class="shrink">
+            <div class="box">
+                <a href="#"><img
+                        src="static/photo-library.png" style=width:100%;height:100%></a>
+            </div>
+        </div>
+        
+        <p>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></p>
+        <hr/>
+        <div class="shrink">
+            <div class="box">
+                <a href="#"><img
+                        src="static/photo-library.png" style=width:100%;height:100%></a>
+            </div>
+        </div> -->
     </div>
 
     <!-- 增加儲物櫃互動視窗 -->
@@ -77,18 +121,23 @@
                             <input type="text" class="form-control" id="insertfname" required>
                         </div>
                         <div style="margin-bottom:10px;">
+                            <label for="furniturename">夾層數量</label>
+                            <button type="button" class="btn btn-outline " id="insertflayer">無夾層</button>
+                        </div>
+                        <div style="margin-bottom:10px;">
                             <label>照片</label><br>
-                            <div id="fimg">
-                                <P id="fpwarn" style="display:inline-flex;color: red;"></P>
+                            <div id="fimg" style="display:none;">
+                                <P id="fpwarn" style="display:inline-flex;color: red;"><i
+                                        class="icon ion-md-information-circle"></i>請選擇儲物櫃照片</P>
                                 <img src="" class="a" id="insertfphoto">
                             </div>
 
                             <div class="takephotobtn">
-                                <a href="#" onclick="takephoto()">相機</a>
+                                <a href="javascript:;" onclick="takephoto()">相機</a>
                             </div>
                             <div style="display: inline-flex; margin-right:10px"></div>
                             <div class="takephotobtn">
-                                <a href="#" onclick="imgget()">從相簿中選擇</a>
+                                <a href="javascript:;" onclick="imgget()">從相簿中選擇</a>
                             </div>
                             <br>
                         </div>
@@ -101,46 +150,62 @@
         </div>
     </div>
 
-
-    <!--新增物品的設定  -->
-    <div class="modal" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document"
-            style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
+    <div class="modal fade" style="z-index:1065;margin: 0px 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog"
+        aria-labelledby="openphoto" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width:70vw;" role="document">
             <div class="modal-content">
-                <div class="modal-body " style="background-color: rgb(255, 255, 255);padding: 5px 0px 16px 0px;">
-                    <div class="row objcenter">
-                        <p style="margin:0px ;">新增物品從</p>
-                    </div>
-                    <hr style="margin: 5px 0px 16px 0px">
-                    <div class="row objcenter">
-                        <a href="T01_新增.html">單筆建立</a>
-                    </div>
-                    <hr>
-                    <div class="row objcenter">
-                        <a href="#" onclick="imgget()">多筆建立</a>
-                    </div>
-                    <hr>
-                    <div class="row objcenter">
-                        <a href="#" id="tcancel">取消</a>
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>選擇相機或相簿</b></h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6" style="text-align: center">
+                            <button type=" button" id="takecamera" class="btn btn-light photobtn"
+                                onclick="takecamera()"><img src="static/camera.png" style=width:40px><br>
+                                相機</img></button><br>
+                        </div>
+                        <div class="col-6" style="text-align: center">
+                            <button type="button" id="fimgedit" class="btn btn-light photobtn" onclick="fimgedit()"><img
+                                    src="static/photo-library.png" style=width:40px><br> 從相簿中選擇</img></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 放物品的地方 -->
-    <div class="box-wrap">
-        <div class="objcenter" style="height: 50vh;width: 100vw;">
-            <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
-        </div>
-    </div>
+
+    <!-- <nav class="cd-stretchy-nav">
+        <a class="cd-nav-trigger" href="#0">
+
+            <span aria-hidden="true"></span>
+        </a>
+
+        <ul>
+            <li><a href="#0"><span>新增物品 <i class="icon ion-md-add"
+                            style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
+            <li><a href="#0"><span>修改儲物櫃名稱<i class="icon ion-md-create"
+                            style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
+            <li><a href="#0"><span>修改儲物櫃圖片<i class="icon ion-ios-create"
+                            style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 19px"></i></span></a></li>
+            <li><a href="#0"><span>刪除儲物櫃<i class="icon ion-ios-trash"
+                            style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+            <li><a href="#0"><span>共享儲物櫃<i class="icon ion-ios-share"
+                            style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+        </ul>
+
+        <span aria-hidden="true" class="stretchy-nav-bg"></span>
+    </nav> -->
 
     <!-- 新增物品 -->
     <div class="addthings">
 
     </div>
+
     <script>
+        var user_email;
+        var user_token;
+
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
@@ -149,100 +214,117 @@
                 name: 'my.db',
                 location: 'default',
             });
-            //----------------------------------------------------------------------------------------------------
-            //儲物櫃
-            // db.sqlBatch([
-            //     'CREATE TABLE IF NOT EXISTS furniture (furnitureId integer primary key, name text, image text, spaceId integer, email text)',
-            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['矮櫃', 'static/1.jpg']],
-            //     ['INSERT INTO furniture (name, image) VALUES (?,?)', ['三層櫃', 'static/2.jpg']],
-            // ], function () {
-            //     // alert("sqlbatch");
-            // }, function (error) {
-            //     alert(error);
-            // });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, spaceId integer, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
             });
 
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture', [], function (tx, res) {
+
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            user_email = res.rows.item(0)['email'];
+                            user_token = res.rows.item(0)['token'];
+                        }
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [spaceId],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            $("#stitle").html(res.rows.item(0)['name'])
+                        }
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+
+                tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
                     var len = res.rows.length;
-                    alert(len);
+                    // alert(len);
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
-                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='80' width='80' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
+                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
+                            // 為長按出現的互動視窗
+                            // var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
+                            //     <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
+                            //     <div class="modal-content" style="border-radius: 0%;">
+                            //     <div class="modal-body " style="background-color: #254F6E">
+                            //     <div class="row" style="width:100vw;text-align: center">
+                            //     <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `','` + res.rows.item(i)['layer'] + `')">
+                            //     <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
+                            //     <p style="color: #f0f0f0">編輯名稱</p>
+                            //     </div>
+                            //     <div class="col-4" onclick="fdclick('`+ res.rows.item(i)['furnitureId'] + `')">
+                            //     <i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">刪除</p> 
+                            //     </div> 
+                            //     <div class="col-4" onclick="fsclick( '`+ res.rows.item(i)['furnitureId'] + `' )"> 
+                            //     <i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">共享</p> 
+                            //     </div> 
+                            //     </div> 
+                            //     <div class="row" style="width:100vw;text-align: center"> 
+                            //     <div class="col-4" onclick="fpclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['image'] + `','` + res.rows.item(i)['name'] + `')"> 
+                            //     <i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
+                            //     <p style="color: #f0f0f0">編輯圖片</p> 
+                            //     </div> 
+                            //     <div class="col-4"></div> 
+                            //     <div class="col-4 fedtitle"> 
+                            //     <p style="color: #f0f0f0;" id="fpoint`+ res.rows.item(i)['furnitureId'] + `"> ` + res.rows.item(i)['name'] + `</p>
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div> 
+                            //     </div>`;
 
-                            var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
-                                <div class="modal-content" style="border-radius: 0%;">
-                                <div class="modal-body " style="background-color: #254F6E">
-                                <div class="row" style="width:100vw;text-align: center">
-                                <div class="col-4" onclick="fnclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['name'] + `')">
-                                <i class="icon ion-md-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i>
-                                <p style="color: #f0f0f0">編輯名稱</p>
-                                </div>
-                                <div class="col-4" onclick="fdclick('`+ res.rows.item(i)['furnitureId'] + `')">
-                                <i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">刪除</p> 
-                                </div> 
-                                <div class="col-4" onclick="fsclick( '`+ res.rows.item(i)['furnitureId'] + `' )"> 
-                                <i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">共享</p> 
-                                </div> 
-                                </div> 
-                                <div class="row" style="width:100vw;text-align: center"> 
-                                <div class="col-4" onclick="fpclick('` + res.rows.item(i)['furnitureId'] + `','` + res.rows.item(i)['image'] + `','` + res.rows.item(i)['name'] + `')"> 
-                                <i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding: 0px"></i> 
-                                <p style="color: #f0f0f0">編輯圖片</p> 
-                                </div> 
-                                <div class="col-4"></div> 
-                                <div class="col-4 fedtitle"> 
-                                <p style="color: #f0f0f0;" id="fpoint`+ res.rows.item(i)['furnitureId'] + `"> ` + res.rows.item(i)['name'] + `</p>
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div> 
-                                </div>`;
+                            // $("body").append(fed);
+                            // var feds = `<script>
+                            // document.getElementById("fpress`+ res.rows.item(i)['furnitureId'] + `").addEventListener('long-press', function (e) {
+                            //     $("#fed`+ res.rows.item(i)['furnitureId'] + `").modal('show');
+                            // });<\/script>`;
 
-                            $("body").append(fed);
-                            var feds = `<script>
-                            document.getElementById("fpress`+ res.rows.item(i)['furnitureId'] + `").addEventListener('long-press', function (e) {
-                                $("#fed`+ res.rows.item(i)['furnitureId'] + `").modal('show');
-                            });<\/script>`;
-
-                            $("body").append(feds);
-
-                            fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                             <div class="modal-content" style="border-radius: 5%;">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"><b id="fpname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</b></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            <div class="modal-body text-black">
-                                                <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" style="text-align:center">
-                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
-                                                </div>
-                                                <div class="row" style="text-align: center">
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')">換圖</button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fpdv('`+ res.rows.item(i)['furnitureId'] + `')">儲存</button>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
-                            $("body").append(fped);
-
-                            fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
+                            // $("body").append(feds);
+                            //fpclick fped 為儲物櫃編輯照片互動視窗
+                            // var fped = `<div class="modal fade " id="fped` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fped` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
+                            //             <div class="modal-dialog modal-dialog-centered" role="document">
+                            //                  <div class="modal-content" style="border-radius: 5%;">
+                            //                     <div class="modal-header">
+                            //                         <h5 class="modal-title"><b id="fpname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</b></h5>
+                            //                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            //                         <span aria-hidden="true">&times;</span>
+                            //                         </button>
+                            //                     </div>
+                            //                 <div class="modal-body text-black">
+                            //                     <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" style="text-align:center">
+                            //                     <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                            //                     </div>
+                            //                     <div class="row" style="text-align: center">
+                            //                         <div class="col">
+                            //                             <button type="button" class="btn btn-outline-secondary" onclick="fimgedit('`+ res.rows.item(i)['furnitureId'] + `')">換圖</button>
+                            //                         </div>
+                            //                         <div class="col">
+                            //                             <button type="button" class="btn btn-outline-secondary" onclick="fpdv('`+ res.rows.item(i)['furnitureId'] + `')">儲存</button>
+                            //                         </div>
+                            //                 </div>
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            // </div>`
+                            // $("body").append(fped);
+                            //fdclick fdd 為儲物櫃刪除互動視窗
+                            var fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
                                             <div class="modal-body text-black">
@@ -261,8 +343,8 @@
                                     </div>`
 
                             $("body").append(fdd);
-
-                            fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+                            //fpclick fsd 為儲物櫃共享互動視窗
+                            var fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
@@ -285,75 +367,280 @@
                                     </div>
                                 </div>`
                             $("body").append(fsd);
+                            //atd 為增加物品的互動視窗
+                            var atd = `<div class="modal" id="atd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="atd` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
+                                            <div class="modal-content">
+                                                <div class="modal-body " style="background-color: rgb(255, 255, 255);padding: 5px 0px 16px 0px;">
+                                                    <div class="row objcenter">
+                                                        <p style="margin:0px ;">新增物品從</p>
+                                                    </div>
+                                                    <hr style="margin: 5px 0px 16px 0px">
+                                                    <div class="row objcenter">
+                                                        <a href="T01_insert.html?furniture=`+ res.rows.item(i)['furnitureId'] + `">單筆建立</a>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row objcenter">
+                                                        <a href="javascript:;" onclick="imgbatch('`+ res.rows.item(i)['furnitureId'] + `')">多筆建立</a>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row objcenter">
+                                                        <a href="javascript:;" onclick="tcancel('`+ res.rows.item(i)['furnitureId'] + `')">取消</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+                            $("body").append(atd);
+                            //fnclick fned 為儲物櫃名稱編輯修改互動視窗
+                            var fned = `<div class="modal fade " id="fned` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fned` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" style="border-radius: 5%;">
+                                            <div class="modal-body text-black">
+                                                <form id='fnform'>
+                                                    <div style="margin-bottom:10px;">
+                                                        <label for="furniturename">儲物櫃名稱</label>
+                                                        <P id="fndwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                                                        <input type="text" class="form-control" id="furniturename`+ res.rows.item(i)['furnitureId'] + `" value="` + res.rows.item(i)['name'] + `" required>
+                                                    </div>
+                                                    <div style="margin-bottom:10px;">
+                                                    <label for="furniturename">夾層數量</label>
+                                                    <button type="button" class="btn btn-outline " id="updateflayer`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['layer'] + `</button>
+                                                    </div>
+                                                    <label>照片</label>
+                                                    <div style="margin-bottom: 10px;">
+                                                        <div style="position: relative;" class="fit">
+                                                            <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" class="fit">
+                                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                                                            </div>
+                                                            <div class='camera' >
+                                                                <i class='icon ion-ios-camera' onclick="fpem('`+ res.rows.item(i)['furnitureId'] + `')"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class="row" style="text-align: center">
+                                                            <div class="col">
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ res.rows.item(i)['furnitureId'] + `')">確認</button>
+                                                            </div>
+                                                        </div>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+                            $("body").append(fned);
+                            // 為fned修改夾層的滾輪
+                            var layerselect = `<script>
+                                        var layers`+ res.rows.item(i)['furnitureId'] + ` = new MobileSelect({
+                                        trigger: '#updateflayer`+ res.rows.item(i)['furnitureId'] + `',
+                                        title: '夾層',
+                                        cancelBtnColor: '#f0f0f0',
+                                        ensureBtnColor: '#f0f0f0',
+                                        titleBgColor: '#254F6E',
+                                        titleColor: '#f0f0f0',
+                                        ensureBtnText: '確認',
+                                        wheels: [
+                                            { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+                                        ],
+                                        position: [0] //初始化定位
+
+                                    });
+                                    <\/script>`;
+
+                            $("body").append(layerselect);
+
+
                         }
 
-                        fidclick(res.rows.item(0)['furnitureId'])
-                        fclick(res.rows.item(0)['furnitureId'])
+
+
+                        let urlParams = new URLSearchParams(window.location.search);
+                        // alert(urlParams)
+                        var furnitureId = urlParams.get('furniture');
+                        if (!furnitureId) {
+                            fidclick(res.rows.item(0)['furnitureId'])
+                            fclick(res.rows.item(0)['furnitureId'])
+                        } else {
+                            fidclick(furnitureId)
+                            fclick(furnitureId)
+                        }
 
                     }
                 });
             });
 
-            //----------------------------------------------------------------------------------------------------
-            //物品
-            // db.sqlBatch([
-            //     'CREATE TABLE IF NOT EXISTS thing (thingId integer primary key, name text, description text, image text, category text, owner text, planargraphId integer, spaceId integer, furnitureId text, number integer, layer integer, out integer)',
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 1, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 2, 1, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            //     ['INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 3, 0, 'YmVuMzIzODhAZ21haWwuY29t1564997401544']],
-            // ], function () {
-            //     alert("sqlbatch");
-            // }, function (error) {
-            //     alert(error);
-            // });
         }
 
         // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
+
+        function shrink(x) {
+
+            $("#" + x + "").slideToggle();
+            // alert(x);
+        }
+
+        // alert(location.href)
+
         function fidclick(x) {
             // 新增物品
             // alert(x)
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            window.history.pushState({}, 0, "F01.html?space=" + spaceId + "&furniture=" + x + "")
+            // location.href = "F01.html?space=" + spaceId + "&furniture=" + x + "";
+            // alert(location.href)
             $(".addthings").html("")
-            var addthing = `<div class="fixed-bottom row plus" style="display: flex;justify-content:center;align-content:center;">
-                                    <button type="button" class="buttontype" data-toggle="modal" data-target="#exampleModal3" style="outline: none;">
-                                        <b><i class="icon ion-md-add " style="font-size:40px;color:#254F6E;padding:0px"></i></b>
-                                    </button>
-                                </div>`;
-            $(".addthings").append(addthing);
+
+            //右下角功能鍵
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [x],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            $("#tcount").html(len);
+                        } else {
+                            $("#tcount").html(0);
+                        }
+                    });
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [x],
+                    function (tx, res) {
+                        $("#lcount").html(res.rows.item(0)['layer']);
+                        var addthing = `<nav class="cd-stretchy-nav">
+                            <div></div>
+                            <a class="cd-nav-trigger" href="#0">        
+                            <span aria-hidden="true"></span>
+                            </a>
+                            <ul>
+                                <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
+                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
+                                <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['furnitureId'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                                <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                            </ul> 
+                            <span aria-hidden="true" class="stretchy-nav-bg"></span>
+                            </nav>`;
+                        $(".addthings").append(addthing);
+
+                        if ($('.cd-stretchy-nav').length > 0) {
+                            var stretchyNavs = $('.cd-stretchy-nav');
+
+                            stretchyNavs.each(function () {
+                                var stretchyNav = $(this),
+                                    stretchyNavTrigger = stretchyNav.find('.cd-nav-trigger');
+
+                                stretchyNavTrigger.on('click', function (event) {
+                                    event.preventDefault();
+                                    stretchyNav.toggleClass('nav-is-visible');
+                                });
+                            });
+
+                            $(document).on('click', function (event) {
+                                (!$(event.target).is('.cd-nav-trigger') && !$(event.target).is('.cd-nav-trigger span')) && stretchyNavs.removeClass('nav-is-visible');
+                            });
+                        }
+                    });
+            });
+
             //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
-                tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer ASC', [x], function (tx, res) {
+                tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer DESC', [x], function (tx, res) {
                     var len = res.rows.length;
-                    // alert("layer len:" + len);
 
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
                             var num = res.rows.item(i)['layer'];
-                            var tr = function (num) {
-                                tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
-                                    $(".box-wrap").append("<p style='color:gray'>第" + num + "層</p>")
-                                    var len = res.rows.length;
-                                    // alert("num:" + num)
-                                    // alert("WHERE layer len:" + len);
-                                    // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
-                                    // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
-                                    if (res.rows.length >= 1) {
-                                        var warn
-                                        for (var j = 0; j < len; j++) {
-                                            if (res.rows.item(j)['out'] == 1) {
-                                                warn = "<i class='icon ion-md-information-circle iwarn'></i>";
-                                            } else {
-                                                warn = "";
-                                            }
-                                            $(".box-wrap").append(`<div class="box">
+                            // alert(num)
+                            if (!num) {
+                                var tr = function (num, i) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furnitureId = ?', [x], function (tx, res) {
+                                        $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'><span>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
+                                        var len = res.rows.length;
+                                        // alert("num:" + num)
+                                        // alert("WHERE layer Null len:" + len);
+                                        // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
+                                        // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                        if (res.rows.length >= 1) {
+                                            var warn
+                                            $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                            for (var j = 0; j < len; j++) {
+                                                if (res.rows.item(j)['out'] == 1) {
+                                                    warn = "<i class='icon ion-md-information-circle iwarn'></i>";
+                                                } else {
+                                                    warn = "";
+                                                }
+                                                $("#shrink" + x + i + "").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_編輯.html"><img src="`+ res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+                                            }
+                                            $("#shrink" + x + i + "").slideDown(0);
                                         }
-                                    }
-                                });
-                            }(num)
+                                    });
+                                }(num, i)
+                            } else if (num == "無夾層") {
+                                var tr = function (num, i) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
+                                        var len = res.rows.length;
+                                        // alert("num:" + num)
+                                        // alert("WHERE layer len:" + len);
+                                        // alert("res.rows.item(0)['thingId']:" + res.rows.item(0)["thingId"]);
+                                        // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                        if (res.rows.length >= 1) {
+                                            var warn
+                                            $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                            for (var j = 0; j < len; j++) {
+                                                if (res.rows.item(j)['out'] == 1) {
+                                                    warn = "<i class='icon ion-md-information-circle iwarn'></i>";
+                                                } else {
+                                                    warn = "";
+                                                }
+                                                $("#shrink" + x + i + "").append(`<div class="box">
+                                                                `+ warn + `
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                </div>`)
+                                            }
+                                        }
+                                    });
+                                }(num, i)
+                            } else {
+                                var tr = function (num, i) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
+                                        $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                        $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
+                                        var len = res.rows.length;
+                                        // alert("num:" + num)
+                                        // alert("WHERE layer len:" + len);
+                                        // alert("res.rows.item(0)['thingId']:" + res.rows.item(0)["thingId"]);
+                                        // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+                                        if (res.rows.length >= 1) {
+                                            var warn
+
+                                            for (var j = 0; j < len; j++) {
+                                                if (res.rows.item(j)['out'] == 1) {
+                                                    warn = "<i class='icon ion-md-information-circle iwarn'></i>";
+                                                } else {
+                                                    warn = "";
+                                                }
+                                                $("#shrink" + x + i + "").append(`<div class="box">
+                                                                `+ warn + `
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                </div>`)
+                                            }
+                                            $("#shrink" + x + i + "").slideDown(0);
+                                        }
+                                    });
+                                }(num, i)
+                            }
+                            // alert("ok")
                         }
+                    } else {
+                        // $(".box-wrap").append(`<div class="objcenter" style="height: 50vh;width: 100vw;">
+                        //                     <p style="color:gray; font-size:18px;">請點選下方的加鍵，以新增物品。</p>
+                        //                         </div>`)
                     }
                 });
             });
@@ -374,49 +661,46 @@
         var t = null;
         function fclick(x) {
             // 這個是判斷第一次點選
-            document.getElementById(x).style.height = "100px";
-            document.getElementById(x).style.width = "100px";
+            document.getElementById(x).style.height = "110px";
+            document.getElementById(x).style.width = "110px";
             document.getElementById(x).style.border = "3px solid yellow";
+            //螢幕寬度
+            var w = $(document).width()
+            //點選的位置
+            var set = $("#" + x + "").offset();
+            //螢幕上左邊第一個的位置
+            var first = $(".flex").scrollLeft()
+
+            if (set.left > w) {
+                $(".flex").animate({ scrollLeft: set.left }, 0);
+            } else if (set.left > w * 0.75) {
+                $(".flex").animate({ scrollLeft: first + w * 0.65 }, 300);
+            } else if (set.left < 0) {
+                $(".flex").animate({ scrollLeft: first - w * 0.65 }, 300);
+            }
+
             if (t != null & x != t) {
-                document.getElementById(t).style.height = "80px";
-                document.getElementById(t).style.width = "80px";
+                document.getElementById(t).style.height = "90px";
+                document.getElementById(t).style.width = "90px";
                 document.getElementById(t).style.border = "0px ";
             }
             t = x;
         };
 
+        function thingaddclick(id) {
+            $('#atd' + id + '').modal('show');
+        }
+
+
         // 新增物品的取消
-        $('#tcancel').click(function () {
-            $('#exampleModal3').modal('hide')
-        })
+        function tcancel(id) {
+            $('#atd' + id + '').modal('hide');
+        }
 
         //fnclick fned 為儲物櫃名稱編輯修改互動視窗
-        function fnclick(id, name) {
-            $('#fed' + id).modal('hide')
-            fned = `<div class="modal fade " id="fned` + id + `" tabindex="-1" role="dialog" aria-labelledby="fned` + id + `" aria-hidden="False">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
-                                            <div class="modal-body text-black">
-                                                <form id='fnform'>
-                                                    <div style="margin-bottom:10px;">
-                                                        <label for="furniturename">儲物櫃名稱</label>
-                                                        <P id="fndwarn" style="display:inline-flex;color: red;"></P>
-                                                        <input type="text" class="form-control" id="furniturename`+ id + `" value="` + name + `" required>
-                                        </div>
-                                                        <div class="row" style="text-align: center">
-                                                            <div class="col">
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ id + `')">取消</button>
-                                                            </div>
-                                                            <div class="col">
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ id + `')">確認</button>
-                                                            </div>
-                                                        </div>
-                                    </form>
-                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`
-            $("body").append(fned);
+        function fnclick(id, name, layer) {
+            // $('#fed' + id).modal('hide')
+
             $('#fned' + id + '').modal('show')
         }
 
@@ -433,26 +717,93 @@
                 $('#fnform').addClass("was-validated");
                 return
             }
+            var updateflayer = $("#updateflayer" + id + "").text();
+
+
+            var img = document.getElementById("fimagedit" + id + "").src;
+
             db.transaction(function (tx) {
-                var query = "UPDATE furniture SET name = ? WHERE furnitureId = ?";
-                tx.executeSql(query, [name, id], function (tx, res) {
-                    fidclick(id);
-                    fclick(id);
-                    $("#fpoint" + id + "").text(name);
+                var query = "UPDATE furniture SET name = ?,layer = ?,image = ? WHERE furnitureId = ?";
+                tx.executeSql(query, [name, updateflayer, img, id], function (tx, res) {
+                    // fidclick(id);
+                    // fclick(id);
+                    var obj = document.getElementById("" + id + "");
+                    obj.src = img;
+                    // $("#fpoint" + id + "").text(name);
                     $("#fname" + id + "").text(name);
-                    $("#fpname" + id + "").text(name);
+                    // $("#fpname" + id + "").text(name);
                     $("#fdname" + id + "").text(name);
                     $("#fsname" + id + "").text(name);
                     $("#fned" + id + "").modal('hide');
-
                 });
+
+                if (updateflayer == "無夾層") {
+                    tx.executeSql("SELECT * FROM thing WHERE furnitureId = ?", [id], function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var layernum = res.rows.item(i)['layer']
+                                var thingId = res.rows.item(i)['thingId']
+                                var tran = function (layernum, thingId) {
+                                    if (!layernum) {
+                                    } else {
+                                        db.transaction(function (tx) {
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                        });
+                                    }
+                                }(layernum, thingId);
+                            }
+                            fidclick(id);
+                            fclick(id);
+                        }
+                    });
+
+                } else {
+                    tx.executeSql("SELECT * FROM thing WHERE furnitureId = ?", [id], function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+
+                            for (var i = 0; i < len; i++) {
+                                var layernum = res.rows.item(i)['layer']
+                                var thingId = res.rows.item(i)['thingId']
+                                var tran = function (layernum, thingId) {
+                                    if (layernum == "無夾層") {
+                                        db.transaction(function (tx) {
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [1, thingId]);
+                                        });
+                                    }
+
+
+                                    if (layernum > updateflayer) {
+                                        if (layernum != "無夾層") {
+                                            db.transaction(function (tx) {
+                                                tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                            });
+                                        }
+                                    }
+
+                                }(layernum, thingId);
+                            }
+                            fidclick(id);
+                            fclick(id);
+                        }
+                    });
+                }
+
+
             });
 
+        }
+        //修改儲物櫃圖片
+        function fpem(id) {
+            $('#openphoto').modal('show')
+            $('#takecamera').attr('onclick', 'takecamera("' + id + '")');
+            $('#fimgedit').attr('onclick', 'fimgedit("' + id + '")');
         }
 
         //fdclick fdd 為儲物櫃刪除互動視窗
         function fdclick(id) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fdd' + id + '').modal('show')
 
         }
@@ -464,12 +815,12 @@
         function fddv(id) {
             db.transaction(function (tx) {
                 var query = "DELETE FROM furniture where furnitureId = ?";
-                tx.executeSql(query, [id], function (tx, res) {
-                    location.reload()
-                });
+                tx.executeSql(query, [id]);
                 var query2 = "DELETE FROM thing where furnitureId = ?";
                 tx.executeSql(query2, [id], function (tx, res) {
-                    location.reload()
+                    let urlParams = new URLSearchParams(window.location.search);
+                    var spaceId = urlParams.get('space');
+                    location.href = "F01.html?space=" + spaceId
                 });
             });
             $("#fdd" + id + "").modal('hide')
@@ -478,27 +829,27 @@
 
         //fpclick fped 為儲物櫃編輯照片互動視窗
         function fpclick(id, image, name) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fped' + id + '').modal('show')
         }
 
         // fpdv 為儲物櫃圖片編輯互動視窗的儲存鍵,更新資料庫
-        function fpdv(id) {
-            var img = document.getElementById("fimagedit" + id + "").src;
+        // function fpdv(id) {
+        //     var img = document.getElementById("fimagedit" + id + "").src;
 
-            db.transaction(function (tx) {
-                var query = "UPDATE furniture SET image = ? WHERE furnitureId = ?";
-                tx.executeSql(query, [img, id], function (tx, res) {
-                    fidclick(id);
-                    fclick(id);
-                    var obj = document.getElementById(""+id+"");
-                    obj.src = img;
-                    $("#fped" + id + "").modal('hide');
+        //     db.transaction(function (tx) {
+        //         var query = "UPDATE furniture SET image = ? WHERE furnitureId = ?";
+        //         tx.executeSql(query, [img, id], function (tx, res) {
+        //             fidclick(id);
+        //             fclick(id);
+        //             var obj = document.getElementById("" + id + "");
+        //             obj.src = img;
+        //             $("#fped" + id + "").modal('hide');
 
-                });
-            });
+        //         });
+        //     });
 
-        }
+        // }
 
         function fpdc(id) {
             $("#fped" + id + "").modal('hide')
@@ -506,7 +857,7 @@
 
         //fpclick fsd 為儲物櫃共享互動視窗
         function fsclick(id) {
-            $('#fed' + id).modal('hide')
+            // $('#fed' + id).modal('hide')
             $('#fsd' + id + '').modal('show')
         }
 
@@ -524,42 +875,56 @@
             }
             var a = $('#insertfphoto').hasClass('a');
             if (a === true) {
-                $('#fpwarn').html('<i class="icon ion-md-information-circle"></i>');
-                $('#fpwarn').append("請選擇儲物櫃照片");
+                $("#fimg").css('display', 'block');
                 return
             }
+            var layervalue = $("#insertflayer").text();
             var img = document.getElementById("insertfphoto").src;
 
-
-            // if (!img) {
-            //     alert("img is null");
-            // }
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            // alert(spaceId);
 
             db.transaction(function (tx) {
-                var timestamp = (new Date()).valueOf();
-                // alert("timestamp"+timestamp);
-                var furnitureId = btoa('ben32388@gmail.com') + timestamp;
-                // alert("furnitureId"+furnitureId);
-
-                tx.executeSql('INSERT INTO furniture (furnitureId, name, image) VALUES (?,?,?)', [furnitureId, name, img],
+                tx.executeSql('SELECT * FROM user', [],
                     function (tx, res) {
-                        alert("成功匯入");
-                        location.reload()
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            var timestamp = (new Date()).valueOf();
+                
+                            var email = user_email.replace(/@/g,"").split(".").join("");
+                            var furnitureId = email+ timestamp;
+                            tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
+                                function (tx, res) {
+                                    location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                                }, function (error) {
+                                    alert('Something went Wrong');
+                                });
+                        }
                     }, function (error) {
                         alert('Something went Wrong');
                     });
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/4.jpg', 1, 0, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 2, 1, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 4, 0, furnitureId]);
-                tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 3, 1, furnitureId]);
             });
-
         }
+
+        function back() {
+            let urlParams = new URLSearchParams(window.location.search);
+            var spaceId = urlParams.get('space');
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE spaceId=?', [spaceId], function (tx, res) {
+                    var len = res.rows.length;
+                    if (res.rows.length >= 1) {
+                        location.href = "H01.html?planargraph=" + res.rows.item(0)['planargraphId'] + "";
+                    }
+                });
+            });
+        }
+
 
         // ----------------------------照相---------------------------------------
         function takephoto() {
             let opts = {
-                quality: 100,
+                quality: 50,
                 destinationType: Camera.DestinationType.FILE_URI,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 mediaType: Camera.MediaType.PICTURE,
@@ -567,8 +932,9 @@
                 cameraDirection: Camera.Direction.BACK
             };
             navigator.camera.getPicture(function cameraSuccess(imgURI) {
-                alert("data:" + imgURI);
+                // alert("data:" + imgURI);
                 myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                $("#fimg").css('display', 'block');
                 $("#fimg").text("");
                 $("#fimg").append(myimg);
                 // $('#exampleModal').modal('show')
@@ -578,55 +944,203 @@
             }, opts);
         }
 
-
-    </script>
-    <script>
         function imgget() {
-            ImagePicker.getPictures(function (result) {
-                alert(JSON.stringify(result));
-                alert(result['images'][0]['uri']);
-                var imgURI = result['images'][0]['uri']
-                var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
-                $("#fimg").text("");
-                $("#fimg").append(myimg);
-
-                // $('#exampleModal').modal('show')
-            }, function (err) {
-                alert(err);
-            }, {
+            var permissions = cordova.plugins.permissions;
+            permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
+                window.imagePicker.getPictures(
+                    function (results) {
+                        var imgURI = results[0]
+                        // alert(imgURI);
+                        if (!imgURI) {
+                        } else {
+                            var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+                            $("#fimg").css('display', 'block');
+                            $("#fimg").text("");
+                            $("#fimg").append(myimg);
+                        }
+                    }, function (error) {
+                        console.log('Error: ' + error);
+                    }, {
                     maximumImagesCount: 1,
-                    // width: 1920,
-                    // height: 1440,
-                    quality: 100
-                });
+                    quality: 50
+                }
+                );
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
+
+            // ImagePicker.getPictures(function (result) {
+            //     alert(JSON.stringify(result));
+            //     alert(result['images'][0]['uri']);
+            //     var imgURI = result['images'][0]['uri']
+            //     var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
+            //     $("#fimg").text("");
+            //     $("#fimg").append(myimg);
+
+            //     // $('#exampleModal').modal('show')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         // width: 1920,
+            //         // height: 1440,
+            //         quality: 100
+            //     });
         }
 
-    </script>
 
-    <script>
         function fimgedit(id) {
-            ImagePicker.getPictures(function (result) {
-                alert(JSON.stringify(result));
-                alert(result['images'][0]['uri']);
-                var imgURI = result['images'][0]['uri']
-                var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
-                $("#feimg" + id + "").text("");
-                $("#feimg" + id + "").append(myimg);
 
-                // $('#exampleModal').modal('show')
-            }, function (err) {
-                alert(err);
-            }, {
-                    maximumImagesCount: 1,
-                    // width: 1920,
-                    // height: 1440,
-                    quality: 100
-                });
+            window.imagePicker.getPictures(
+                function (results) {
+                    var imgURI = results[0]
+                    if (!imgURI) {
+                    } else {
+                        var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+                        $("#feimg" + id + "").text("");
+                        $("#feimg" + id + "").append(myimg);
+                        $("#openphoto").modal("hide");
+                    }
+                }, function (error) {
+                    console.log('Error: ' + error);
+                }, {
+                maximumImagesCount: 1,
+                quality: 50
+            }
+            );
+
+            // ImagePicker.getPictures(function (result) {
+            //     alert(JSON.stringify(result));
+            //     alert(result['images'][0]['uri']);
+            //     var imgURI = result['images'][0]['uri']
+            //     var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+            //     $("#feimg" + id + "").text("");
+            //     $("#feimg" + id + "").append(myimg);
+
+            //     // $('#exampleModal').modal('show')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         // width: 1920,
+            //         // height: 1440,
+            //         quality: 100
+            //     });
+
+        }
+        function takecamera(id) {
+            let opts = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                mediaType: Camera.MediaType.PICTURE,
+                encodingType: Camera.EncodingType.JPEG,
+                cameraDirection: Camera.Direction.BACK
+            };
+            navigator.camera.getPicture(function cameraSuccess(imgURI) {
+                var myimg = `<img src="` + imgURI + `" class="fephotothumb" id="fimagedit` + id + `">`;
+                $("#feimg" + id + "").html(myimg);
+                $("#openphoto").modal("hide");
+            }, function cameraError(error) {
+                alert("Unable to obtain picture: " + error, "app");
+            }, opts);
         }
 
+
+        function imgbatch(id) {
+
+            var permissions = cordova.plugins.permissions;
+            permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
+                window.imagePicker.getPictures(
+                    function (results) {
+                        var len = results.length;
+                        for (var i = 0; i < len; i++) {
+                            var uri = results[i];
+                            var timestamp = (new Date()).valueOf();
+                            var email = user_email.replace(/@/g,"").split(".").join("");
+                            var thingId = email+ timestamp + "" + i + "";
+
+                            var tran = function (uri, thingId) {
+                                db.transaction(function (tx) {
+                                    tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
+                                });
+                            }(uri, thingId);
+                        }
+
+                        fidclick(id);
+                        fclick(id);
+                        $("#atd" + id + "").modal('hide')
+                    }, function (error) {
+                        console.log('Error: ' + error);
+                    }, {
+                    maximumImagesCount: 10,
+                    quality: 50
+                }
+                );
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
+
+            // ImagePicker.getPictures(function (result) {
+            //     // alert(JSON.stringify(result));
+            //     // alert(result['images'].length);
+            //     var len = result['images'].length;
+            //     for (var i = 0; i < len; i++) {
+            //         var uri = result['images'][i]['uri'];
+            //         var timestamp = (new Date()).valueOf();
+            //         var thingId = btoa('ben32388@gmail.com') + timestamp + "" + i + "";
+            //         var tran = function (uri, thingId) {
+            //             db.transaction(function (tx) {
+            //                 tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
+            //             });
+            //         }(uri, thingId);
+            //     }
+
+            //     fidclick(id);
+            //     fclick(id);
+            //     $("#atd" + id + "").modal('hide')
+            // }, function (err) {
+            //     alert(err);
+            // }, {
+            //         maximumImagesCount: 10,
+            //         quality: 100
+            //     });
+        }
+
+        var mobileSelect1 = new MobileSelect({
+            trigger: '#insertflayer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+            ],
+            position: [2], //初始化定位
+            callback: function (indexArr, data) {
+
+            }
+        });
+
+        // var mobileSelect2 = new MobileSelect({
+        //     trigger: '#updateflayer',
+        //     title: '夾層',
+        //     cancelBtnColor: '#f0f0f0',
+        //     ensureBtnColor: '#f0f0f0',
+        //     titleBgColor: '#254F6E',
+        //     titleColor: '#f0f0f0',
+        //     ensureBtnText: '確認',
+        //     wheels: [
+        //         { data: ['無夾層', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'] }
+        //     ],
+        //     position: [2], //初始化定位
+        //     callback: function (indexArr, data) {
+
+        //     }
+        // });
     </script>
-
-
 </body>
 
 </html>

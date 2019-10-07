@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; 
+            style-src 'self' 'unsafe-inline'; 
+            media-src *; 
+            script-src 'self' 'unsafe-inline';
+            img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Furnitures</title>
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../www/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="../www/css/style.css"> <!-- Resource style -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/long-press-event.min.js"></script>
+    <script src="js/modernizr.js"></script> <!-- Modernizr -->
+    <script src="js/main.js"></script><!-- Modernizr -->
+    <script src="cordova.js" type="text/javascript"></script>
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
+
+    <style>
+        .box {
+            position: relative;
+            background-color: rgb(4, 126, 126);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shrink>div {
+            width: 33vw;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin-left: 11%;
+            margin-top: 11%;
+            float: left;
+        }
+
+        .iwarn {
+            font-size: 25px;
+            color: white;
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+        }
+
+        a,
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+            color: white;
+            text-decoration: none;
+            /*變成沒底線*/
+            font-size: 18px
+        }
+    </style>
+</head>
+
+<!-- 最上面標題列 -->
+
+<body>
+    <div class="shrink">
+        <div class="box">
+            <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+            <a href="T01_edit.html" class="acol">客廳</a>
+        </div>
+        <div class="box">
+            <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+            <a href="T01_edit.html"></a>
+        </div>
+        <div class="box">
+            <i onclick="location='F01.html'" class='icon ion-md-more iwarn'></i>
+            <a href="T01_edit.html"></a>
+        </div>
+    </div>
+
+</body>
+
+</html>

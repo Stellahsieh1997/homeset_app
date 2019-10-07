@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel=stylesheet type="text/css" href="../www/css/T01e.css">
+    <title>Things</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--載入日期picker連結-->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!--匯入icon-->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!--匯入滾輪-->
+    <link rel="stylesheet" href="css/mobileSelect.css">
+    <script src="js/mobileSelect.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+
+
+
+    <script type="text/javascript" charset="utf-8">
+        function init() {
+            //alert("You are years old!");
+        }
+
+        /*取消新增類別、所屬人*/
+        function clearcategoryvalue() {
+            document.getElementById("category").innerHTML = '<img src="static/right-arrow.png" style="height:20px">';
+        }
+
+        function clearownervalue() {
+            document.getElementById("owner").innerHTML = '<img src="static/right-arrow.png" style="height:20px">';
+        }
+        //提醒小幫手
+        function datechecked() {
+            var reminderinput = document.getElementById("reminder");
+            var remindertext = document.getElementById("remindertext");
+            var onoffcheckbox = document.getElementById("myonoffswitch2");
+            if (onoffcheckbox.checked == true) {
+                reminderinput.style.display = "";
+                remindertext.style.display = "";
+                reminderinput.value = "時間設定";
+            }
+            else {
+                reminderinput.style.display = "none";
+                remindertext.style.display = "none";
+                reminderinput.value = "";
+                remindertext.value = "";
+
+            }
+        }
+
+    </script>
+</head>
+
+<body onload="init();">
+
+    <!-- 上方標題 -->
+    <div class="fixed-top">
+        <div class="title container-fluid">
+            <div class="row p-1 " style="background-color:#254F6E;">
+                <div class="col-4">
+                    <a href="javascript:;" class="icon ion-ios-arrow-back icon2" onclick="reload()"></a>
+                </div>
+                <div class="col-4 title">
+                </div>
+                <div class="col-4 ">
+                    <button type="button" id="save" class="btn btn-secondary float-right buttontype"
+                        style="line-height: 1.2;" onclick="savevalue()">儲存 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 選擇物品照片及輸入名稱 -->
+
+    <div class="texts container-fluid" style="margin-top: 50px">
+
+        <div class="row">
+            <div class="col-5 imgcol">
+                <div class="app" data-toggle="modal" data-target="#exampleModal4">
+                    <img id="myImage" src="static/imageadd.png" style="height:140px;width:140px;">
+                </div>
+            </div>
+            <div class="col-7" style="margin-top:0px">
+                <form style="background-color:transparent">
+                    <div class="form-group" id="tnform" style="margin-bottom: 0rem;">
+                        <P id="tndwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                        <input type="text" class="form-control textform" style="font-weight: bold;font-size:18px;"
+                            id="exampleFormControlInput1" placeholder="輸入名稱" required>
+                    </div>
+                    <div class="form-group">
+
+                        <textarea class="form-control textform" id="exampleFormControlTextarea1" placeholder="請描述您的物品"
+                            rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 選擇物品的屬性 -->
+
+    <div class="bordertype">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-pricetags icon1"><b>類別</b><span id="categorywarn"
+                        style="color: red;margin:0px;"></span></span>
+                <div class="thingbtn" id="category"><img src="static/right-arrow.png" style="height:20px"></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-cente"><span
+                    class="icon ion-md-person icon1"><b>所屬人</b><span id="ownerwarn"
+                        style="color: red;margin:0px;"></span></span>
+                <div class="thingbtn" id="owner"><img src="static/right-arrow.png" style="height:20px"></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-archive icon1"><b>存放位置</b></span>
+                <div class="thingbtn" id="place" style="width: 100px;"></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-stats icon1"><b>數量</b></span>
+                <div class="thingbtn" id="number">1</div>
+            </li>
+            <li class="list-group-item list-group-item-action justify-content-between align-items-center hide"
+                id="layertest"><span class="icon ion-md-browsers icon1"><b>夾層</b><span id="layerwarn"
+                        style="color: red;margin:0px;"></span></span>
+                <div class="thingbtn" id="layer">1</div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-alert icon1"><b>是否拿出</b></span>
+                <span>
+                    <div class="onoffswitch ">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </span>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div id="badge7"><span class="badge">
+                    </span></div>
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
+                    class="icon ion-md-time icon1"><b>提醒小幫手</b></span>
+
+                <span>
+                    <div class="onoffswitch ">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2"
+                            onclick="datechecked()">
+                        <label class="onoffswitch-label" for="myonoffswitch2">
+                            <span class="onoffswitch-inner" id="switcher"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </span>
+            </li>
+            <div class="remindblock">
+                <div class="reminddate">
+                        <input type="button" value="時間設定" style="
+                        display:none;color:rgb(90, 90, 90);background-position: 3px;background:url(./static/calender.png)no-repeat;background-color: #fff; cursor: pointer; ; border: 0.7px solid #ccc; width: 180px;"
+                            name="reminder" id="reminder" />
+                </div>
+                <div class="remindtext">
+                    <input type="text" id="remindertext" style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px;" placeholder="提醒內容" />
+                </div>
+            </div>
+        </ul>
+        <!-- <button type="button" class="btn btn-light deletebtn " position="absolute" data-toggle="modal"
+            data-target="#exampleModal3">
+            <img src="static/dustbin3.png" style="height:30px"></button> -->
+    </div>
+
+
+    <!-- <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>刪除物品</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="">確定要刪除嗎?</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="tddv()">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>選擇相機或相簿</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="box-wrap">
+
+
+                        <div class="box1">
+                            <button type=" button" class="btn btn-light photobtn" onclick="takephoto()"><img
+                                    src="static/camera.png" style=width:40px><br> 相機</img></button><br>
+                        </div>
+
+                        <div class="box">
+                            <button type="button" class="btn btn-light photobtn" onclick="imgget()"><img
+                                    src="static/photo-library.png" style=width:40px><br> 從相簿中選擇</img></button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增類別、所屬人 -->
+    <div class="modal " id="categorymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>新增類別</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <P id="categorynwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                    <form id="categorynameform" style="background-color:transparent">
+                        <input type="text" class="form-control" id="addcategory" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm" placeholder="輸入類別" required>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="clearcategoryvalue();">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addcategory();">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal " id="ownermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">
+                        <div class="icon ion-md-trash icon1"><b>新增所屬人</b></div>
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <P id="ownernwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                    <form id="ownernameform" style="background-color:transparent">
+                        <input type="text" class="form-control" id="addowner" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm" placeholder="輸入所屬人" required>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="clearownervalue();">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addowner();">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<!-- 是否繼續新增物品互動視窗 -->
+    <div class="modal fade" id="addingthing" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel5" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                <div class="modal-body text-black">
+                    <p>是否要繼續新增物品?</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="addthingc()">否</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-secondary"
+                                onclick="addthingv()">是</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        //資料庫
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        var categorypicker
+        var ownerpicker
+        let urlParams = new URLSearchParams(window.location.search);
+        var furnitureIdedit = urlParams.get('furniture');
+
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
+            });
+
+            //測試
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var spaceId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+                tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test1", "臥室"]);
+                tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test", "客廳"],
+                    function (tx, res) {
+                        // alert("成功匯入");
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+            });
+
+            //可選擇位置滾輪資料庫
+            var storage = []
+            var fstorage = []
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        // alert(len)
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var spaceId = res.rows.item(i)['spaceId'];
+                                var spacename = res.rows.item(i)['name'];
+                                var tr = function (spaceId, spacename) {
+                                    tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                                        var len = res.rows.length;
+                                        // alert(len);
+                                        if (res.rows.length >= 1) {
+                                            for (var j = 0; j < len; j++) {
+                                                fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
+                                            }
+                                            // alert(fstorage);
+                                            storage.push({ id: spaceId, value: spacename, childs: fstorage });
+                                            // alert(storage);
+                                            fstorage = []
+                                            placeselect.updateWheels(storage);
+                                        }
+                                    });
+                                }(spaceId, spacename)
+                            }
+                        }
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+
+
+
+            //呈現物品位置資訊
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        if (res.rows.length >= 1) {
+                            var furniturename = res.rows.item(0)['name'];
+                            tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [res.rows.item(0)['spaceId']],
+                                function (tx, res) {
+                                    var spacename = res.rows.item(0)['name'];
+                                    $("#place").text(spacename + " " + furniturename);
+                                });
+                        }
+                    });
+            });
+
+            //類別滾輪
+            var categoryselect = []
+            var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM category', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                categoryselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var categoryselect3 = categoryselect.concat(categoryselect2)
+                        categorypicker = new MobileSelect({
+                            trigger: '#category',
+                            title: '類別',
+                            cancelBtnColor: '#f0f0f0',
+                            ensureBtnColor: '#f0f0f0',
+                            titleBgColor: '#254F6E',
+                            titleColor: '#f0f0f0',
+                            ensureBtnText: '確認',
+                            wheels: [
+                                { data: categoryselect3 }
+                            ],
+                            position: [0],
+                            callback: function (indexArr, data) {
+                                $('#categorywarn').text("");
+
+                            } //初始化定位        
+
+                        });
+
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+
+            //所屬人滾輪
+            var ownerselect = []
+            var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM owner', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                ownerselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var ownerselect3 = ownerselect.concat(ownerselect2)
+
+                        ownerpicker = new MobileSelect({
+                            trigger: '#owner',
+                            title: '所屬人',
+                            cancelBtnColor: '#f0f0f0',
+                            ensureBtnColor: '#f0f0f0',
+                            titleBgColor: '#254F6E',
+                            titleColor: '#f0f0f0',
+                            ensureBtnText: '確認',
+                            wheels: [
+                                { data: ownerselect3 }
+                            ],
+                            position: [0], //初始化定位
+                            callback: function (indexArr, data) {
+                                $('#ownerwarn').text("");
+                            }
+                        });
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+            // 執行夾層判斷
+            layertest();
+
+        }
+
+
+        function layertest() {
+            // 夾層
+            var layers = []
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            if (res.rows.item(0)['layer'] != "無夾層") {
+                                $('#layertest').removeClass('hide');
+                                $('#layertest').addClass('d-flex');
+                                for (var i = 1; i <= res.rows.item(0)['layer']; i++) {
+                                    layers.push(i)
+                                }
+                                layerselect.updateWheel(0, layers);
+                                layerselect.locatePosition(0, 0);
+                            } else {
+                                $('#layertest').removeClass('d-flex');
+                                $('#layertest').addClass('hide');
+                            }
+                        }
+
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+            });
+        }
+
+
+
+
+
+        //更新資料庫 儲存按鈕
+        function savevalue() {
+
+            var img = $("#myImage").attr("src");
+            var name = $("#exampleFormControlInput1").val();
+            if (!name) {
+                $('#tndwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#tndwarn').append("請輸入物品名稱");
+                $('#tnform').addClass("was-validated");
+                document.getElementById('exampleFormControlInput1').focus()
+                return
+            }
+            var description = $("#exampleFormControlTextarea1").val();
+            var categoryValue = $("#category").text();
+            if (!categoryValue) {
+                $('#categorywarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#categorywarn').append("尚未選取");
+                return
+            }
+            var ownerValue = $("#owner").text();
+            if (!ownerValue) {
+                $('#ownerwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#ownerwarn').append("尚未選取");
+                return
+            }
+            // var placeValue = document.getElementById("place").innerHTML;
+            var numberValue = $("#number").text();
+            var layertest = $('#layertest').hasClass('hide');
+            if (layertest === true) {
+                var layerValue = "無夾層"
+            } else {
+                var layerValue = $("#layer").text();
+            }
+            var onoffcheckbox = document.getElementById("myonoffswitch");
+            var out
+            if (onoffcheckbox.checked == true) {
+                out = 1
+
+            } else {
+                out = 0
+            }
+
+            var onoffcheckbox2 = document.getElementById("myonoffswitch2");
+            var remind
+            var reminder
+            var remindertextValue
+            if (onoffcheckbox2.checked == true) {
+                remind = 1
+                reminder = $("#reminder").val();
+                remindertextValue = $("#remindertext").val();
+            } else {
+                remind = 0
+                reminder = null
+                remindertextValue = null
+            }
+
+            // alert(img + name + description + categoryValue + ownerValue + numberValue + layerValue + out + remind + reminder + remindertextValue)
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var thingId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        tx.executeSql('INSERT INTO thing (thingId, name, description, image, category, owner, furnitureId, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [thingId, name, description, img, categoryValue, ownerValue, furnitureIdedit, numberValue, layerValue, out, remind, reminder, remindertextValue]);
+                        $('#addingthing').modal('show')
+                        // location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+
+        // 是否繼續新增物品互動視窗
+        
+        function addthingc(){
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+
+        function addthingv(){
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        location.href = "T01_insert.html?furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+        
+
+
+        //刪除物品
+        // function tddv() {
+        //     let urlParams = new URLSearchParams(window.location.search);
+        //     var thingId = urlParams.get('thing');
+        //     db.transaction(function (tx) {
+
+        //         tx.executeSql('SELECT * FROM thing WHERE thingId = ?', [thingId],
+        //             function (tx, res) {
+        //                 tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [res.rows.item(0)['furnitureId']],
+        //                     function (tx, res) {
+        //                         var query = "DELETE FROM thing where thingId = ?";
+        //                         tx.executeSql(query, [thingId]);
+        //                         location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+        //                     });
+        //             }, function (error) {
+        //                 alert('Something went Wrong');
+        //             });
+        //     });
+
+        // }
+
+        //回上一頁
+        function reload() {
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                    function (tx, res) {
+                        location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                    });
+            });
+        }
+
+        //拍照
+        function takephoto() {
+            let opts = {
+                quality: 100,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                mediaType: Camera.MediaType.PICTURE,
+                encodingType: Camera.EncodingType.JPEG,
+                cameraDirection: Camera.Direction.BACK
+            };
+            navigator.camera.getPicture(function cameraSuccess(imgURI) {
+                document.getElementById('myImage').src = imgURI;
+                $('#exampleModal4').modal('hide')
+            }, function cameraError(error) {
+                alert("Unable to obtain picture: " + error, "app");
+            }, opts);
+        }
+
+        function imgget() {
+            var permissions = cordova.plugins.permissions;
+            permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
+                window.imagePicker.getPictures(
+                    function (results) {
+                        var imgURI = results[0]
+                        if (!imgURI) {
+                        } else {
+                            document.getElementById('myImage').src = imgURI;
+                        }
+                        $('#exampleModal4').modal('hide')
+                    }, function (error) {
+                        console.log('Error: ' + error);
+                    }, {
+                    maximumImagesCount: 1,
+                    quality: 50
+                }
+                );
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
+        }
+
+        //新增類別
+        function addcategory() {
+            var categoryselect = []
+            var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
+            var addcategoryValue = document.getElementById("addcategory").value;
+            if (!addcategoryValue) {
+                $('#categorynwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#categorynwarn').append("請輸入類別");
+                $('#categorynameform').addClass("was-validated");
+                return
+            }
+            document.getElementById("category").innerHTML = addcategoryValue;
+
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var categoryId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+
+                tx.executeSql('INSERT INTO category (categoryId, name) VALUES (?,?)', [categoryId, addcategoryValue],
+                    function (tx, res) {
+                        tx.executeSql('SELECT * FROM category', [],
+                            function (tx, res) {
+                                var len = res.rows.length;
+                                // alert(len)
+                                if (res.rows.length >= 1) {
+                                    for (var i = 0; i < len; i++) {
+                                        categoryselect.push(res.rows.item(i)['name'])
+                                    }
+                                }
+                                var categoryselect3 = categoryselect.concat(categoryselect2)
+                                // alert(typeof categoryselect3)
+                                categorypicker.updateWheel(0, categoryselect3);
+                                categorypicker.locatePosition(0, 0);
+                                $('#addcategory').val("");
+                                $('#categorynwarn').html('');
+                                $('#categorynameform').removeClass("was-validated");
+                                $('#categorymodal').modal('hide')
+                            }, function (error) {
+                                alert('Something went Wrong');
+                            });
+
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+            });
+        }
+
+        //新增所屬人
+        function addowner() {
+            var ownerselect = []
+            var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
+            var addownerValue = document.getElementById("addowner").value;
+            if (!addownerValue) {
+                $('#ownernwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#ownernwarn').append("請輸入所屬人");
+                $('#ownernameform').addClass("was-validated");
+                return
+            }
+            document.getElementById("owner").innerHTML = addownerValue;
+
+            db.transaction(function (tx) {
+                var timestamp = (new Date()).valueOf();
+                // alert("timestamp"+timestamp);
+                var ownerId = btoa('ben32388@gmail.com') + timestamp;
+                // alert("furnitureId"+furnitureId);
+
+                tx.executeSql('INSERT INTO owner (ownerId, name) VALUES (?,?)', [ownerId, addownerValue],
+                    function (tx, res) {
+                        tx.executeSql('SELECT * FROM owner', [],
+                            function (tx, res) {
+                                var len = res.rows.length;
+                                // alert(len)
+                                if (res.rows.length >= 1) {
+                                    for (var i = 0; i < len; i++) {
+                                        ownerselect.push(res.rows.item(i)['name'])
+                                    }
+                                }
+                                var ownerselect3 = ownerselect.concat(ownerselect2)
+                                ownerpicker.updateWheel(0, ownerselect3);
+                                ownerpicker.locatePosition(0, 0);
+                                $('#addowner').val("");
+                                $('#ownernwarn').html('');
+                                $('#ownernameform').removeClass("was-validated");
+                                $('#ownermodal').modal('hide')
+                            }, function (error) {
+                                alert('Something went Wrong');
+                            });
+
+                    }, function (error) {
+                        alert('Something went Wrong');
+                    });
+
+            });
+
+            ownerpicker.updateWheel(0, [addownerValue, '自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']);
+            ownerpicker.locatePosition(0, 0);
+
+        }
+
+    </script>
+
+    <script>
+        $('input[name="reminder"]').daterangepicker({
+
+            "singleDatePicker": true,
+            "showDropdowns": true,
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "autoUpdateInput":false,
+            "minDate": moment(),
+            "cancelButtonClasses": "btn btn-secondary",
+            // ranges: {
+            //     "今天": [moment()],
+            //     "明天": [moment().subtract(-1, "days")],
+            //     "後天": [moment().subtract(-2, "days")],
+            //     "下個月": [moment().subtract(-1, "month").startOf("month")]
+            // },
+            "locale": {
+                "direction": "ltr",
+                "format": "YYYY/MM/DD/ HH:mm",
+                "separator": " - ",
+                "applyLabel": "確定",
+                "cancelLabel": "取消",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "",
+                "daysOfWeek": [
+                    "日",
+                    "一",
+                    "二",
+                    "三",
+                    "四",
+                    "五",
+                    "六"
+                ],
+                "monthNames": [
+                    "1月",
+                    "2月",
+                    "3月",
+                    "4月",
+                    "5月",
+                    "6月",
+                    "7月",
+                    "8月",
+                    "9月",
+                    "10月",
+                    "11月",
+                    "12月"
+                ],
+                "firstDay": 1
+            },
+           // "alwaysShowCalendars": true,
+            //"startDate": "2019/07/22",
+           // "endDate": "2019/07/13",
+            "drops": "up"
+        }, function (start, end, label) {
+           // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        });
+        $('input[name="reminder"]').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('YYYY/MM/DD/ HH:mm'));
+        });
+
+        $('input[name="reminder"]').on('cancel.daterangepicker', function (ev, picker) {
+            // $(this).val('');
+        });
+
+        //數量滾輪
+        var mobileSelect2 = new MobileSelect({
+            trigger: '#number',
+            title: '數量',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                {
+                    data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                        , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+                }
+            ],
+            position: [2] //初始化定位
+        });
+
+        //夾層滾輪
+        var layerselect = new MobileSelect({
+            trigger: '#layer',
+            title: '夾層',
+            cancelBtnColor: '#f0f0f0',
+            ensureBtnColor: '#f0f0f0',
+            titleBgColor: '#254F6E',
+            titleColor: '#f0f0f0',
+            ensureBtnText: '確認',
+            wheels: [
+                { data: ['1'] }
+            ],
+            position: [0] //初始化定位
+        });
+
+        //位置滾輪
+
+ 
+        var placeselect = new MobileSelect({
+                trigger: '#place',
+                title: '存放位置',
+                cancelBtnColor: '#f0f0f0',
+                ensureBtnColor: '#f0f0f0',
+                titleBgColor: '#254F6E',
+                titleColor: '#f0f0f0',
+                ensureBtnText: '確認',
+                wheels: [
+                    {
+                        data: [
+                        {
+                            id:'1',
+                            value:'',
+                            childs:[
+                                {id:'A1',value:''},
+                            ]
+                        }
+                    ]
+                    }
+                ],
+                position: [0, 0],
+                callback: function (indexArr, data) {
+                    furnitureIdedit = data[1]["id"]
+                    layertest()
+                    $("#layer").text("1");
+                }
+            });
+
+
+        
+    </script>
+     <script>
+        let app = {
+      init: function () {
+        document.addEventListener("deviceready", app.ready);
+      },
+      ready: function () {
+        app.addListeners();
+      },
+      addListeners: function () {
+        document.querySelector("#save").addEventListener("click", app.addNote);
+        cordova.plugins.notification.local.on("click", function (notification) {
+          //navigator.notification.alert("clicked: " + notification.id);
+          //user has clicked on the popped up notification
+          console.log(notification.data);
+        });
+        cordova.plugins.notification.local.on("trigger", function (notification) {
+          //added to the notification center on the date to trigger it.
+         // navigator.notification.alert("triggered: " + notification.id);
+         
+        }
+        // cordova.plugins.notification.local.on("update", function (notification) {
+        //   //added to the notification center on the date to trigger it.
+          
+        // });
+      },
+      addNote: function (ev) {
+        let props = cordova.plugins.notification.local.getDefaults();
+        //console.log(props);
+        /**
+         * Notification Object Properties - use it as a reference later on
+         * id
+         * text
+         * title
+         * every
+         * at
+         * data
+         * sound
+         * badge
+         */
+        // let inOneMin = new Date();
+        // inOneMin.setMinutes(inOneMin.getMinutes() + 1);
+        let id = new Date().getMilliseconds();
+    
+        var date1 =  $("#reminder").val()
+        let timer = new Date(date1);
+        
+        let noteOptions = {
+          id: id,
+          title:$("#exampleFormControlInput1").val()+ "的物品提醒",
+          text: $("#remindertext").val(),
+          at:timer,
+          badge: 1,
+          led: { color: '#FF00FF', on: 500, off: 500 },
+          vibrate: true,
+          data: {
+            prop: "prop value",
+            num: 42
+          },
+          actions: [{
+            id: 'reply',
+            type: 'alert',
+            title: "物品提醒",
+            text: $("#remindertext").val()}
+            ]
+        };
+    
+        
+        
+        
+        // if(props.led){
+        //   noteOptions.led = '#33CC00'
+        // }
+        // if(props.actions){
+        //   noteOptions.actions = [{ id: "yes", title: "Do it" }, { id: "no", title: "Nah" }]
+        // }
+        
+    
+        cordova.plugins.notification.local.schedule(noteOptions, function(note){
+          //this is the callback function for the schedule method
+          //this runs AFTER the notification has been scheduled.
+          
+        });
+    
+        
+    
+        //navigator.notification.alert("Added notification id " + id);
+    
+        cordova.plugins.notification.local.cancel(id, function () {
+          // will get rid of notification id 1 if it has NOT been triggered or added to the notification center
+          // cancelAll() will get rid of all of them
+        });
+        cordova.plugins.notification.local.clear(id, function () {
+          // will dismiss a notification that has been triggered or added to notification center
+        });
+        cordova.plugins.notification.local.isPresent(id, function (present) {
+        //   navigator.notification.alert($("#remindertext").val(),'物品提醒',);
+        //   navigator.vibrate(2000); 
+        // navigator.notification.beep(2);
+          
+          // can also call isTriggered() or isScheduled()
+          // getAllIds(), getScheduledIds() and getTriggeredIds() will give you an array of ids
+          // get(), getAll(), getScheduled() and getTriggered() will get the notification based on an id
+        });
+    
+      }
+    };
+    app.init();
+        </script>
+</body>
+
+</html>

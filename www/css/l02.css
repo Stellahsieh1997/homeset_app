@@ -1,0 +1,85 @@
+*{
+    /* border:solid 1px black; */
+    background-color: #254F6E;
+}
+
+.font {
+   
+    font-family: Microsoft JhengHei;
+}
+
+.flex {
+    flex: 1 auto;
+    display: flex;
+    height: 250px;
+    padding: 15px;
+    border: 8px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #254F6E;
+    align-items: center;
+    justify-content: center;
+    margin-top:30px;
+
+}
+
+.contentstyle {
+    background-color: white
+}
+
+.title {
+    align-items: center;
+    justify-content: center;
+}
+.btn-block+.btn-block{
+    margin-top:20px;
+}
+.bordertype {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #254F6E;
+    border-radius: 30px;
+    background-color: #254F6E;
+    margin-top:-28px;
+    height: 400px;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+
+/* logo特效 */
+.w3-animate-fading{
+    animation:fading 5s infinite
+}
+
+/* 確認按鈕 */
+.logcon{
+    border-radius: 30px;
+    background-color:white;
+    color:#254F6E;
+    display: table;
+    margin: 0 auto;
+    line-height:30px;
+    transition: 0.5s;
+}
+.logcon:hover{
+    background-color:#f4c92a;
+    color:#254F6E;
+}
+.btn:hover{
+    color:none;
+}
+
+label{
+    margin-top:10px;
+    display: inline-block;
+    color: white;
+}
+/* #f4c92a
+#254F6E
+white */

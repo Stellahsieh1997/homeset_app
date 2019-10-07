@@ -6,387 +6,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src *;
-    img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
-    style-src  'self' 'unsafe-inline' *">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- 匯入ionicons 字型圖標 -->
     <link rel="stylesheet" href="css/ionicons.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- <link rel=stylesheet type="text/css" href="../www/css/H01.css"> -->
+
+    <title>Search</title>
     <!--匯入滾輪-->
     <link rel="stylesheet" href="css/mobileSelect.css">
     <script src="js/mobileSelect.js"></script>
     <script src="cordova.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8"></script>
-    <title>Search</title>
+
+    <style>
+        .font {
+            font-family: Microsoft JhengHei;
+        }
+
+        input[type=text] {
+            border-radius: 20px;
+            background-color: white;
+            border: 0;
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding-left: 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            width: 100%;
+            height: 40px;
+        }
+
+        input[type=text] {
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+
+
+        .imgtype {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        img {
+            width: 100%;
+            height: 100%
+        }
+
+        .box-wrap {
+            text-align: center;
+            background-color: transparent;
+            overflow: hidden;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .box-wrap>div {
+            width: 33%;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin: 0.16%;
+            float: left;
+        }
+
+        .searchrow {
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .searchbtn {
+            margin-right: 30px;
+        }
+
+        .btn-outline {
+            border-radius: 8px;
+            border-color: #254F6E;
+            color: #254F6E;
+            font-family: "微軟正黑體";
+        }
+
+        .btn-outline:hover {
+            background-color: #254F6E;
+            color: #f0f0f0;
+        }
+
+        .categoryth {
+            text-align: center;
+            width: 30%;
+        }
+
+        .thingth {
+            text-align: center;
+            width: 70%;
+
+        }
+
+        .category {
+            text-align: center;
+            position: relative;
+            transform: translateY(0%);
+
+        }
+
+        tbody>tr {
+            border-top: 2px rgb(92, 137, 170) dashed;
+        }
+
+        thead>tr>th {
+            padding-bottom: 10px;
+        }
+
+        .searchcontent {
+            margin-bottom: 40px;
+        }
+
+        .searchtext {
+            font-size: 26px;
+            font-weight: bold;
+
+        }
+
+        b {
+            color: rgb(90, 88, 88);
+            margin-left: 15px;
+
+        }
+
+        .footer{
+            position: fixed;
+            bottom: 0;
+            background: #fff;
+            box-shadow:  2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+            
+        }
+        .row1{
+            width: 100%;
+            height: 40px;
+            margin: 0px;
+        }
+        .icon{
+            display: flex;
+            justify-content:center;
+            align-content: center;
+            padding-top: 2px;
+        }
+        .icon1:hover{
+            color: #254F6E;
+        }
+        .icon1 {
+            color:black;
+            font-size: 30px;
+        }
+        ion-icon{
+            width: 30px;
+            height: 25px;
+            }
+        a, a:link, a:active, a:visited, a:hover
+        {
+            color: inherit;
+            text-decoration: none;
+            font-size: 18px
+        }
+    </style>
+
 </head>
-<style>
-    .font {
 
-        font-family: Microsoft JhengHei;
-    }
-
-    .flex {
-        flex: 1 auto;
-        display: flex;
-        height: 250px;
-
-        border: 8px;
-        flex-wrap: wrap;
-        flex-direction: column;
-        background-color: #254F6E;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-
-
-
-    }
-
-    .contentstyle {
-        background-color: white
-    }
-
-    .title {
-        align-items: center;
-        justify-content: center;
-    }
-
-    .bordertype {
-        border-style: solid;
-        border-width: 0.1vw;
-        border-color: white;
-        border-radius: 30px;
-        background-color: white;
-        margin-top: -28px;
-        padding: 0px;
-        height: 60vh;
-    }
-
-    .buttontype {
-        background-color: transparent;
-        border-color: transparent;
-    }
-
-    /* logo特效 */
-    .w3-animate-fading {
-        animation: fading 5s infinite
-    }
-
-
-
-    /* 類別 所屬人 未放回 */
-    .upcon1 {
-        display: table;
-        margin: 0 auto;
-        border-radius: 20px;
-        height: 40px;
-        outline: none;
-        color: #fff;
-        background-color: #254F6E;
-        width: 27%;
-        float: left;
-        margin-right: 5px;
-        margin-top: 0px;
-        margin-left: 7px;
-    }
-
-    .upcon2 {
-        display: table;
-        margin: 0 auto;
-        border-radius: 20px;
-        height: 40px;
-        outline: none;
-        color: #fff;
-        background-color: #254F6E;
-        width: 33%;
-        float: right;
-        margin-right: 5px;
-        margin-top: 0px;
-        margin-left: 7px;
-    }
-
-    .upcon1:hover {
-        background-color: #254F6E;
-        color: #ffee00;
-    }
-
-    .upcon2:hover {
-        background-color: #254F6E;
-        color: #ffee00;
-    }
-
-
-
-
-
-
-    button:focus {
-        outline: none;
-    }
-
-    /* s */
-    .font {
-        font-family: Microsoft JhengHei;
-    }
-
-    input[type=text] {
-        border-radius: 20px;
-        background-color: white;
-        border: 0;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        margin-left: 20px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-        width: 87%;
-        height: 40px;
-        background-color: rgba(252, 248, 248, 0.082);
-        color: white;
-        border: transparent;
-        padding-left: 30px;
-
-    }
-
-    input[type=text] {
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-
-    }
-
-    ::-webkit-input-placeholder {
-        color: white;
-    }
-
-    input:focus {
-        outline: none;
-    }
-
-    .imgtype {
-        align-items: center;
-        justify-content: center;
-
-    }
-
-    img {
-        width: 100%;
-        height: 100%;
-    }
-
-
-    .box-wrap {
-        text-align: center;
-        background-color: transparent;
-        overflow: hidden;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    .box-wrap>div {
-        width: 33vw;
-        height: 33vw;
-        padding-bottom: 0%;
-        margin: 0.12%;
-        float: left;
-    }
-
-    .searchrow {
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-
-    .searchbtn {
-        margin-right: 30px;
-    }
-
-    .btn-outline {
-        border-radius: 8px;
-        border-color: #254F6E;
-        color: #254F6E;
-        font-family: "微軟正黑體";
-    }
-
-    .btn-outline:hover {
-        background-color: #254F6E;
-        color: #f0f0f0;
-    }
-
-    .categoryth {
-        text-align: center;
-        width: 30%;
-    }
-
-    .thingth {
-        text-align: center;
-        width: 70%;
-
-    }
-
-    .category {
-        text-align: center;
-        position: relative;
-        transform: translateY(0%);
-
-    }
-
-
-
-    .searchcontent {
-        margin-bottom: 40px;
-        margin-top: 45px;
-        padding: 0px;
-    }
-
-    .searchtext {
-        font-size: 33px;
-        font-weight: bold;
-        color: #f0f0f0;
-
-
-
-
-    }
-
-    .s {
-        color: #f0f0f0;
-        font-size: 35px;
-    }
-
-    b {
-        color: rgb(90, 88, 88);
-        margin-left: 15px;
-
-    }
-
-    .footer {
-        position: fixed;
-        bottom: 0;
-        background: #fff;
-        box-shadow: 2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
-
-    }
-
-    .row1 {
-        width: 100%;
-        height: 40px;
-        margin: 0px;
-    }
-
-    .icon {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        padding-top: 2px;
-    }
-
-    .icon1:hover {
-        color: #254F6E;
-    }
-
-    .icon1 {
-        color: black;
-        font-size: 30px;
-    }
-
-    ion-icon {
-        width: 30px;
-        height: 25px;
-    }
-
-    a,
-    a:link,
-    a:active,
-    a:visited,
-    a:hover {
-        color: inherit;
-        text-decoration: none;
-        font-size: 18px
-    }
-</style>
-
-<body class="font" style="background-color: #ffffff">
-
-    <div class=" flex ">
-        <div class="row" style="height: 100px;">
-            <div class="col" style="height:70px; ">
-                <span class="searchtext" style="line-height: 100px"> <b class="s">Search</b></span>
-
+<body onload="init();" class="font" style="background-color: #f0f0f0">
+    <div class="container-fluid searchcontent">
+
+        <div class="row searchrow">
+            <div class="col">
+                <span class="icon ion-md-search searchtext"> <b>Search</b></span>
+                <hr>
+                <input type="text" id="searchinput" placeholder="    Search something" oninput="filtersearch();">
 
             </div>
-            <div class="col" style="height:70px ">
-                <div>
-                    <svg class="w3-animate-fading" id="圖層_1" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 595.28 595.28" style="  width: 120px;
-                                            height: 120px; ">
-                        <defs>
-                            <style>
-                                .cls-2 {
-                                    fill: #fff;
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline " id="categorysearch">類別</button>
+            <button type="button" class="btn btn-outline" id="ownersearch">所屬人</button>
+            <button type="button" class="btn btn-outline" id="thingon" onclick="outgood();"> 未放回物品 </button>
+        </div> <br>
 
-                                }
-                            </style>
-                        </defs>
-                        <!-- <title>專題logo藍底白字</title> -->
-                        <!-- <rect class="cls-1" width="300" height="595.28" /> -->
-                        <path class="cls-2"
-                            d="M363.53,81.34l-31.68-.78a8.73,8.73,0,0,0-7.53,4l-41.17,63.78a8.7,8.7,0,0,1-8.07,4l-14.14-1.23a6.68,6.68,0,0,1-4.95-10.4l33.42-49.2a8.72,8.72,0,0,0-6.89-13.6L205.75,75a8.7,8.7,0,0,0-7.48,3.76L119.61,192.68a8.75,8.75,0,0,0-1.54,4.95V349.92a8.72,8.72,0,0,0,6.24,8.36L191,377.92a8.7,8.7,0,0,0,11.17-8.3l.42-75.91a8.72,8.72,0,0,1,10.36-8.51L232.6,289a8.72,8.72,0,0,1,7.06,8.65l-.92,85.28a8.7,8.7,0,0,0,6.8,8.6L314,406.88a8.71,8.71,0,0,0,10.61-8.26l4.49-162.28a8.7,8.7,0,0,1,1.61-4.82L399.55,135a8.71,8.71,0,0,1,13.13-1.22l44.05,42.45a8.72,8.72,0,0,1,2.67,6.3l-.33,115.66a8.72,8.72,0,0,1-4.1,7.36l-4.73,3A8.71,8.71,0,0,1,436.91,301l.39-48.46a8.7,8.7,0,0,0-3.39-7l-27.23-21a8.71,8.71,0,0,0-12.32,1.71l-34.48,46.57a8.78,8.78,0,0,0-1.71,5.13l-.49,78.2a8.7,8.7,0,0,1-3.9,7.21l-12.26,8.13a8.71,8.71,0,0,0-3.9,7l-.34,13.33a8.72,8.72,0,0,0,13.41,7.56L381.09,380a8.7,8.7,0,0,0,4-7.34V285.79a4.86,4.86,0,0,1,.84-2.74l14.26-21.2a8.72,8.72,0,0,1,12-2.41h0a8.73,8.73,0,0,1,3.91,7.29L416,340.29a8.71,8.71,0,0,0,13.15,7.52l50.26-29.76a8.73,8.73,0,0,0,4.27-7.5V167a8.7,8.7,0,0,0-2.86-6.45L403.26,90.17a8.7,8.7,0,0,0-13,1.51L300.69,221.76a8.7,8.7,0,0,0-1.54,4.94v140a8.71,8.71,0,0,1-10.5,8.53l-16.57-3.5a8.69,8.69,0,0,1-6.91-8.62l1.05-89.2a8.72,8.72,0,0,0-7.18-8.68l-70-12.5a8.71,8.71,0,0,0-10.24,8.48L178,335a8.71,8.71,0,0,1-11.09,8.28l-15.58-4.42a8.72,8.72,0,0,1-6.33-8.34l-.5-125.86a8.66,8.66,0,0,1,1.55-5L215.43,99.33a8.74,8.74,0,0,1,7.66-3.74l15.43.89a8.71,8.71,0,0,1,6.84,13.4L213.9,158.93a8.72,8.72,0,0,0,6.34,13.36l64.83,7.48a8.72,8.72,0,0,0,8.24-3.81L340,106.18a8.71,8.71,0,0,1,7.24-3.87H361a8.73,8.73,0,0,0,7.31-4l2.31-3.56A8.71,8.71,0,0,0,363.53,81.34Z" />
-
-                    </svg></div>
+        <div class="box-wrap">
+            <!-- <div class="box">
+                <a href=""> <img src="static/things/4.jpg"> </a>
             </div>
+            <div class="box">
+                <img src="static/things/2.jpg">
+            </div>
+            <div class="box">
+                <img src="static/things/7.jpg">
+            </div>
+            <div class="box">
+                <a href=""> <img src="static/things/5.jpg"> </a>
+            </div>
+            <div class="box">
+                <img src="static/things/6.jpg">
+            </div>
+            <div class="box">
+                <img src="static/things/9.jpg">
+            </div> -->
+
         </div>
-        <div class="row" style="margin-bottom: 40px;width: 100%">
-            <input type="text" id="searchinput" placeholder="    Search something" oninput="filtersearch();">
-        </div>
+        <!-- <table class="order-table">
+            <thead>
+                <tr>
+                    <th class="categoryth">類別</th>
+                    <th class="thingth">物品</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="searchresult">
+                    <td class="category">包包</td>
+                    <td class="thingimg">
+                        <div class="box-wrap  ">
+                            <div class="box">
+                                <a href=""> <img src="static/things/4.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/2.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/7.jpg">
+                            </div>
+                            <div class="box">
+                                <a href=""> <img src="static/things/5.jpg"> </a>
+                            </div>
+                            <div class="box">
+                                <img src="static/things/6.jpg">
+                            </div>
+                            <div class="box">
+                                <img src="static/things/9.jpg">
+                            </div>
 
+                        </div>
+                    </td> 
+                </tr>
 
-
+            </tbody>
+        </table> -->
 
 
     </div>
-
-
-
-    <div class="bordertype col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-
-        <div class="container px-lg-5 btnstyle" style="margin-top:10px">
-            <button type="button" class="buttontype  tablink upcon1" id="categorysearch">類別</button>
-            <button type="button" class="buttontype tablink upcon1" id="ownersearch">所屬人</button>
-            <button type="button" class="buttontype  tablink upcon2 " id="thingon" onclick="outgood();">未放回物品 </button>
-        </div>
-        <br>
-        <div class=" searchcontent">
-            <div class="box-wrap">
-                <!-- <div class="box">
-                        <a href=""> <img src="http://www.thai-wei.com/Uploads/ClinicService/36a71b67-5613-434e-9ee2-1904dd049aa4.jpg"> </a>
-                    </div> -->
-                <!-- <div class="box">
-                        <img src="static/things/2.jpg">
-                    </div>
-                    <div class="box">
-                        <img src="static/things/7.jpg">
-                    </div>
-                    <div class="box">
-                        <a href=""> <img src="static/things/5.jpg"> </a>
-                    </div>
-                    <div class="box">
-                        <img src="static/things/6.jpg">
-                    </div>
-                    <div class="box">
-                        <img src="static/things/9.jpg">
-                    </div> -->
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- <div id="register" class="w3-container  city">
-
-        </div> -->
-
-
 
 
     <div class="container-fluid  footer">
@@ -397,7 +261,7 @@
 
                 </a> </div>
             <div class="col-4 icon ">
-                <a href="H01.html">
+                <a href="index.html">
                     <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
 
                 </a> </div>
@@ -413,6 +277,17 @@
     </div>
 
 
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" charset="UTF-8">
         // 按鈕點選變色，點另一个按紐顏色還原
         var t = 1;
@@ -474,9 +349,6 @@
         //     });
 
         // })(document);
-
-
-
 
 
 
@@ -695,7 +567,7 @@
         }
 
         function filtersearch() {
-            var inputValue = $("#searchinput").val();
+            var inputValue = $("#searchinput").val();     
             var inputevalue2 = String(inputValue)
             if (inputValue == "") {
                 $(".box-wrap").html("")
@@ -706,11 +578,11 @@
 
                         if (res.rows.length >= 1) {
                             for (var j = 0; j < res.rows.length; j++) {
-
-                                $(".box-wrap").append(`<div class="box">
+                                
+                                    $(".box-wrap").append(`<div class="box">
                                                   <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                   </div>`)
-
+                                
 
                             }
 

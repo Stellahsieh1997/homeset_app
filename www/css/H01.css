@@ -2,7 +2,7 @@
         * {
             /* border:solid 1px black; */
             font-family: 微軟正黑體;
-            /* background-color: #F5F6F8; */
+            
         }
 
         ion-icon{
@@ -18,22 +18,24 @@
         {
             padding: 0;
             margin: 0;
+            
         }
         body
         {
             background-color: #F5F6F8;
             font-family: Arial, Helvetica, Verdana;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 22px;
             color: #666;
             position: relative;
             -webkit-text-size-adjust: none;
+            padding: 0px;
         }
         body *
         {
             text-shadow: none;
         }
-        h1, h2, h3, h4, h5, h6
+        h1, h2, h3, h4, h6
         {
             line-height: 1;
             font-weight: bold;
@@ -55,9 +57,15 @@
         {
             color: inherit;
             text-decoration: none;
+            font-size: 18px
         }
-        
-
+        /* 設定樓層置中 */
+        .outer{
+            text-align: center;
+        }
+        .outer ul{
+            display: inline-block;
+        }
         nav:not(.mm-menu)
         {
             display: none;
@@ -82,6 +90,7 @@
             height: 40px;
             padding: 0 50px;
         }
+        
         .triangle{
             /* width: 0;
             height: 0;
@@ -98,7 +107,10 @@
         .triangle:hover{
             font-size: 35px;
         }
-        
+
+        /* li:hover{
+            background-color: rgb(230, 225, 225);
+        } */
         .footer{
             position: fixed;
             bottom: 0;
@@ -123,20 +135,26 @@
             bottom: 0;
             left: 0;
         }
-        .header a
+        .two a
         {
             background: center center no-repeat transparent;
             background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
-            display: block;
+            display: inline-block;
             width: 40px;
             height: 40px;
             position: absolute;
-            top: 0;
+            top:0px;
             left: 10px;
+        }
+
+        .three{
+            float: right;
         }
         .content
         {
-            padding: 150px 80px 80px 80px;
+            padding: 30px 30px 30px 30px;
+            color:white;
+            
         }	
         .icon{
             display: flex;
@@ -189,7 +207,12 @@
             margin-left:0;
             margin-right:0 ;
         }
-        
+        .icon3{
+            color:#254F6E;
+            font-size: 30px;
+            margin-left:0;
+            margin-right:0 ;
+        }
         .icon22{
             display: flex;
             justify-content:center;
@@ -204,36 +227,60 @@
             padding-left:0;
             font-size: 16px;
           }
-        .add i,
-        .points i
+        .add i
         {
             font-size: 30px;
             color:rgb(255, 255, 255);
         }
         
+        .points{
+            font-size: 30px;
+            /* padding-top:20px;  */
+        }
         /* 以下都是H01-1 */
 
         .exrect{
             display:flex;
             align-items:center;
             justify-content:center;
-            width: 100px;
-            height: 100px;
+            width: 20vh;
+            height: 20vh;
             background-color:#254F6E;
             border-color: black;
             color: white;
             text-align: center;
         }
         .points i{
-            position: relative;
+            position: absolute;
+            top: 10px;
+            right: 0;
             /* margin-right: -30px;
             padding-top: -30px; */
-            left:20px;
-            top:25px;
+           
+            color:white;
         }
 
+        .exrect1{
+            width: 20vw;
+            height: 20vw;
+            margin:10px;
+            background-color: #254F6E;
+            position: relative;
+            text-align: center;
+        }
+        .text{
+            color:white;
+            display: inline-block;
+        }
+        .left{
+            width:80%;
+            
+        }
+        .right{
+            padding-top:60px;
+            width:20%;
 
-
+        }
         /* The Modal (background) 彈跳視窗 */
         .modal2 {
             display: none; /* Hidden by default */
@@ -256,7 +303,7 @@
         .modal2-content {
             position: fixed;
             bottom: 0;
-            background-color: #254F6E;;
+            background-color: #254F6E;
             width: 100%;
             -webkit-animation-name: slideIn;
             -webkit-animation-duration: 0.4s;
@@ -316,4 +363,66 @@
         .title{
            text-align: center;
         }
-        
+
+        /*互動視窗*/
+        .modal-header {
+            background-color: #254F6E;
+           
+        }
+
+        .modal-title {
+            color: #FFFFFF;
+            
+        }
+
+        .close {
+            color: #FFFFFF
+        }
+
+
+        /* 透明的按鈕 */
+
+        .buttontype {
+            background-color: transparent;
+            border-color: transparent;
+            margin: 0px;
+            color: white;
+        }
+
+       .four{
+        padding: 5px;
+        }
+
+        .btn-primary{
+            background-color: #254F6E;
+            color: white;
+            border:none;
+        }
+
+        .btn-primary:hover{
+            border: none;
+            background-color: none;
+        }
+        /* 格局 */
+        .box {
+            position: relative;
+            background-color: rgb(4, 126, 126);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .box-wrap>div {
+            width: 33vw;
+            height: 33vw;
+            padding-bottom: 0%;
+            margin-left: 11%;
+            margin-top: 11%;
+            float: left;
+        }
+        .imore {
+            font-size: 25px;
+            color: white;
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+        }

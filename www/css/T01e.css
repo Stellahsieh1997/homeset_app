@@ -1,0 +1,236 @@
+body {
+    background-color: #f0f0f0;
+    font-family: "微軟正黑體";
+}
+
+
+/* 透明的按鈕 */
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0px;
+}
+
+/* 上方名稱欄位 */
+.texts {
+    height: 180px;
+    background-color: #254F6E;
+}
+.title {
+    height: 40px;
+    background-color: #254F6E;
+}
+
+.textform {
+    background-color: transparent;
+    color: white;
+    border: 1px solid transparent;
+
+}
+
+.badge {
+    font-size: 11pt;
+    font-weight: normal;
+}
+
+.bordertype {
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    height: 550px;
+}
+
+.imgtype {
+    align-items: center;
+    justify-content: center;
+
+}
+
+.imgcol {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.icon2 {
+    transition: 0.3s;
+    color: white;
+    font-size: 30px;
+
+}
+
+/*icon旁文字*/
+b {
+    margin-left: 15px;
+}
+
+/*日期div*/
+.reminddate {
+    position: absolute;
+    flex: 5;
+
+}
+
+/*提醒內容div*/
+.remindtext {
+    position: absolute;
+    flex: 5;
+    margin-top: 40px;
+
+}
+
+
+.remindblock {
+    display: flex;
+    position: relative;
+    justify-content: left;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    width: 314px;
+    padding-left: 30px;
+}
+
+/*互動視窗*/
+.modal-header {
+    background-color: #254F6E;
+}
+
+.modal-title {
+    color: #FFFFFF
+}
+
+.close {
+    color: #FFFFFF
+}
+
+.box-wrap {
+    text-align: center;
+    background-color: white;
+    overflow: hidden;
+}
+
+.box-wrap>div {
+    width: 31%;
+    padding-bottom: 0%;
+    margin: 1%;
+    border-radius: 10%;
+    float: left;
+    color: #254F6E;
+}
+
+/*刪除按鈕*/
+.deletebtn {
+
+    margin-left: 80%;
+    margin-bottom: 20%;
+    background-color: transparent;
+    border: 0;
+}
+
+/*物品圖片*/
+.photobtn {
+    background-color: transparent;
+    border: 0;
+}
+
+/*物品箭頭按鈕*/
+.thingbtn {
+    text-align: right;
+    width: 80px;
+}
+
+/*toggleswitch屬性*/
+.onoffswitch {
+    position: relative;
+    width: 75px;
+    align-items: center;
+    justify-content: center;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    border: 0;
+    border-radius: 29px;
+}
+
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 20px;
+    padding: 0;
+    line-height: 20px;
+    font-size: 14px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+    content: "是";
+    padding-left: 15px;
+    background-color: #254F6E;
+    color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+    content: "否";
+    padding-right: 15px;
+    background-color: gray;
+    color: #FFFFFF;
+    text-align: right;
+}
+
+.onoffswitch-switch {
+    display: block;
+    width: 14px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 50px;
+    border: 2px solid #FCF7F7;
+    border-radius: 29px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
+    right: 10px;
+}
+
+.hide{
+    display:none;  
+  }

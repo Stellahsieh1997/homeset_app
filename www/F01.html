@@ -150,8 +150,8 @@
         </div>
     </div>
 
-    <div class="modal fade" style="z-index:1065;margin: 0px 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog" aria-labelledby="openphoto"
-        aria-hidden="true">
+    <div class="modal fade" style="z-index:1065;margin: 0px 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog"
+        aria-labelledby="openphoto" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="width:70vw;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,7 +203,8 @@
     </div>
 
     <script>
-
+        var user_email;
+        var user_token;
 
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -230,9 +231,8 @@
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
-                            for (var i = 0; i < len; i++) {
-                                alert(res.rows.item(i)['email'])
-                            }
+                            user_email = res.rows.item(0)['email'];
+                            user_token = res.rows.item(0)['token'];
                         }
                     }, function (error) {
                         alert('Something went Wrong');
@@ -776,9 +776,9 @@
 
                                     if (layernum > updateflayer) {
                                         if (layernum != "無夾層") {
-                                        db.transaction(function (tx) {
-                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
-                                        });
+                                            db.transaction(function (tx) {
+                                                tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                            });
                                         }
                                     }
 
@@ -886,23 +886,25 @@
             // alert(spaceId);
 
             db.transaction(function (tx) {
-                var timestamp = (new Date()).valueOf();
-                // alert("timestamp"+timestamp);
-                var furnitureId = btoa('ben32388@gmail.com') + timestamp;
-                // alert("furnitureId"+furnitureId);
-
-                tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
+                tx.executeSql('SELECT * FROM user', [],
                     function (tx, res) {
-                        location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            var timestamp = (new Date()).valueOf();
+                
+                            var email = user_email.replace(/@/g,"").split(".").join("");
+                            var furnitureId = email+ timestamp;
+                            tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
+                                function (tx, res) {
+                                    location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
+                                }, function (error) {
+                                    alert('Something went Wrong');
+                                });
+                        }
                     }, function (error) {
                         alert('Something went Wrong');
                     });
-                // tx.executeSql('INSERT INTO thing (image, furnitureId) VALUES (?,?)', ['static/things/4.jpg', furnitureId]);
-                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/1.jpg', 2, 1, furnitureId]);
-                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/3.jpg', 4, 0, furnitureId]);
-                // tx.executeSql('INSERT INTO thing (image, layer, out, furnitureId) VALUES (?,?,?,?)', ['static/things/2.jpg', 3, 1, furnitureId]);
             });
-
         }
 
         function back() {
@@ -942,9 +944,6 @@
             }, opts);
         }
 
-
-    </script>
-    <script>
         function imgget() {
             var permissions = cordova.plugins.permissions;
             permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function (s) {
@@ -989,9 +988,7 @@
             //     });
         }
 
-    </script>
 
-    <script>
         function fimgedit(id) {
 
             window.imagePicker.getPictures(
@@ -1050,9 +1047,6 @@
         }
 
 
-    </script>
-
-    <script>
         function imgbatch(id) {
 
             var permissions = cordova.plugins.permissions;
@@ -1063,7 +1057,9 @@
                         for (var i = 0; i < len; i++) {
                             var uri = results[i];
                             var timestamp = (new Date()).valueOf();
-                            var thingId = btoa('ben32388@gmail.com') + timestamp + "" + i + "";
+                            var email = user_email.replace(/@/g,"").split(".").join("");
+                            var thingId = email+ timestamp + "" + i + "";
+
                             var tran = function (uri, thingId) {
                                 db.transaction(function (tx) {
                                     tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
@@ -1111,9 +1107,6 @@
             //     });
         }
 
-    </script>
-
-    <script>
         var mobileSelect1 = new MobileSelect({
             trigger: '#insertflayer',
             title: '夾層',

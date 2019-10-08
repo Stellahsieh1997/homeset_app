@@ -638,8 +638,8 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var email = user_email.replace(/@/g,"").split(".").join("");
-                var planargraphId = email+ timestamp;
+                var email = user_email.replace(/@/g, "").split(".").join("");
+                var planargraphId = email + timestamp;
                 var name = $("#insertpname").val();
                 if (!name) {
                     $('#pniwarn').html('<i class="icon ion-md-information-circle"></i>');
@@ -686,7 +686,7 @@
             $('#addpwarn').modal('hide')
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
-                var email = user_email.replace(/@/g,"").split(".").join("");
+                var email = user_email.replace(/@/g, "").split(".").join("");
                 var planargraphId = email + timestamp;
                 var name = $("#insertpname").val();
                 tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
@@ -709,8 +709,8 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var email = user_email.replace(/@/g,"").split(".").join("")
-                var spaceId = email+ timestamp;
+                var email = user_email.replace(/@/g, "").split(".").join("")
+                var spaceId = email + timestamp;
                 var name = $("#insertsname").val();
                 if (!name) {
                     $('#sniwarn').html('<i class="icon ion-md-information-circle"></i>');
@@ -754,8 +754,9 @@
 
         function logout() {
             db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE IF EXISTS user');
-                location.href = 'index.html'
+                tx.executeSql('DROP TABLE IF EXISTS user', [], function (tx,res) {
+                    location.href = 'index.html'
+                });
             });
         }
 

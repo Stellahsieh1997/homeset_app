@@ -111,12 +111,14 @@
         <div id="register" class="w3-container  city">
             <form>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-
+                    <label for="registeremail">Email</label>
                     <P id="emailwarn0" style="display:inline-flex;color: red;margin: 0px 5px;"></P>
-
                     <input type="email" class="form-control" id="registeremail" placeholder="輸入的Email將成為您的 Homeset 帳號">
-
+                </div>
+                <div class="form-group">
+                    <label for="registernickname">暱稱</label>
+                    <P id="nicknamewarn" style="display:inline-flex;color: red;margin: 0px 5px;"></P>
+                    <input type="text" class="form-control" id="registernickname" placeholder="">
                 </div>
                 <button type="button" onclick="register()" id="loading" class="btn btn-block logcon">確定</button>
             </form>
@@ -271,13 +273,22 @@
                 return
             }
 
+            let nicknamevalue = $("#registernickname").val();
+            if (!nicknamevalue) {
+                $('#nicknamewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#nicknamewarn').append("請填寫您的暱稱");
+                $("#loading").html("確定")
+                return
+            }
+
             $.ajax({
                 type: "POST",
                 url: "http://140.131.114.157/users",
                 data: {
                     "username": emailvalue,
                     "email": emailvalue,
-                    "is_active": true,
+                    "nickname" :nicknamevalue,
+                    "is_active": true
                 },
                 error: function (err) {
                     if (err.status == 400) {

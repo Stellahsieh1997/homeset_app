@@ -21,7 +21,7 @@
     <div style="position: relative">
         <i class="icon ion-md-close postclose" onclick="history.back()"></i>
         <i class="icon collection ion-md-heart" id="post" onclick="collection()"></i>
-        <img id="postimg" src="" style="width:100vw;height: 40vh;">
+        <img id="postimg" style="width:100vw;height: 40vh;">
     </div>
     <div class="objcenter" style="margin: 20px 32px 0px 32px;">
         <h4 id="posttitle"></h4>
@@ -29,6 +29,10 @@
     <div class="objcenter" style="margin: 20px 18px 0px 18px;">
         <p id="postcontent"></p>
     </div>
+    <div style="margin: 0px 18px 0px 18px;">
+        <p id="postsource"></p>
+    </div>
+
 
 
     <script>
@@ -68,6 +72,7 @@
                                     $("#posttitle").html(res.title);
                                     var content = res.content.replace(/\r\n/g, "<br />");
                                     $("#postcontent").html(content);
+                                    $("#postsource").append(res.source);                                    
                                     var obj = document.getElementById("postimg");
                                     obj.src = res.image;
                                     if (res.liked == true) {

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel=stylesheet type="text/css" href="../www/css/A03.css">
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <title>收納資訊</title>
+</head>
+
+<body>
+    <div style="position: relative">
+        <i class="icon ion-md-close postclose" onclick="history.back()"></i>
+        <i class="icon collection ion-md-heart" id="post" onclick="collection()"></i>
+        <img id="postimg" src="" style="width:100vw;height: 40vh;">
+    </div>
+    <div class="objcenter" style="margin: 20px 32px 0px 32px;">
+        <h4 id="posttitle"></h4>
+    </div>
+    <div class="objcenter" style="margin: 20px 18px 0px 18px;">
+        <p id="postcontent"></p>
+    </div>
+
+
+    <script>
+        var user_email;
+        var user_token;
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            user_email = res.rows.item(0)['email']
+                            user_token = res.rows.item(0)['token']
+                            let urlParams = new URLSearchParams(window.location.search);
+                            var postid = urlParams.get('post');
+                            $.ajax({
+                                headers: {
+                                    "Authorization": "Token " + user_token + ""
+                                },
+                                type: "GET",
+                                url: "http://140.131.114.157/posts/" + postid + "",
+                                error: function (err) {
+                                    alert(JSON.stringify(err))
+                                },
+                                success: function (res) {
+                                    $("#posttitle").html(res.title);
+                                    var content = res.content.replace(/\r\n/g, "<br />");
+                                    $("#postcontent").html(content);
+                                    var obj = document.getElementById("postimg");
+                                    obj.src = res.image;
+                                    if (res.liked == true) {
+                                        $("#post").addClass("selectcolor");
+                                    }
+
+                                }
+                            })
+                        }
+                    });
+            });
+        }
+
+        function collection() {
+            $("#post").toggleClass("selectcolor");
+            let urlParams = new URLSearchParams(window.location.search);
+            var id = urlParams.get('post');
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                type: "POST",
+                url: "http://140.131.114.157/posts/" + id + "/like",
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                }
+            })
+        }
+
+    </script>
+</body>
+
+
+</html>

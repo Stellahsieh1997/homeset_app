@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ntub.homeset" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ntub.homeset" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" 
+xmlns:android="http://schemas.android.com/apk/res/android"    
+xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>homeset</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -19,9 +21,13 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <icon src="res/android/logo.jpg" density="mdpi" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+        <application android:usesCleartextTraffic="true" />
+        </edit-config>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    
 </widget>

@@ -49,7 +49,7 @@
                 reminderinput.style.display = "";
                 remindertext.style.display = "";
                 reminderinput.value = "時間設定";
-               
+
             }
             else {
                 reminderinput.value = "";
@@ -62,7 +62,7 @@
         }
 
     </script>
-    
+
 </head>
 
 <body onload="init();">
@@ -173,13 +173,15 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate" style="position: relative;display:inline-block">
-                          
-                  <input type="button" value="時間設定" style="
+
+                    <input type="button" value="時間設定"
+                        style="
                     display:none;color:rgb(90, 90, 90);background-position: 3px;background:url(./static/calender.png)no-repeat;background-color: #fff; cursor: pointer; ; border: 0.7px solid #ccc; width: 180px;"
                         name="reminder" id="reminder" />
                 </div>
                 <div class="remindtext">
-                    <input type="text" id="remindertext" style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px" placeholder="提醒內容" />
+                    <input type="text" id="remindertext"
+                        style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px" placeholder="提醒內容" />
                 </div>
             </div>
         </ul>
@@ -459,15 +461,15 @@
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM thing WHERE thingId = ?', [thingId], function (tx, res) {
                     var date1 = res.rows.item(0)['time']
-                    
+
                     var timer = new Date(date1);
-                    
+
                     var curdate = new Date();
-                    
+
                     if (timer < curdate) {
                         let urlParams = new URLSearchParams(window.location.search);
                         var thingId = urlParams.get('thing');
-                        
+
                         db.transaction(function (tx) {
                             var query = "UPDATE thing SET remind=? WHERE thingId = ?";
                             tx.executeSql(query, [0, thingId]);
@@ -671,7 +673,7 @@
                             function (tx, res) {
                                 var query = "UPDATE thing SET name = ?,description = ?,image = ?,category = ?,owner = ?,number = ?,layer = ?,out = ?,remind = ?,time = ?,content = ? WHERE thingId = ?";
                                 tx.executeSql(query, [name, description, img, categoryValue, ownerValue, numberValue, layerValue, out, remind, reminder, remindertextValue, thingId]);
-                                
+
 
                                 history.back()
 
@@ -1023,15 +1025,20 @@
                 cordova.plugins.notification.local.on("click", function (notification) {
                     //navigator.notification.alert("clicked: " + notification.id);
                     //user has clicked on the popped up notification
+                    let urlParams = new URLSearchParams(window.location.search);
+                    var thingId = urlParams.get('thing');
+                    window.location.href=' T01_edit.html ? thing = `+thingId+`'
                     console.log(notification.data);
+                    
                 });
                 cordova.plugins.notification.local.on("trigger", function (notification) {
                     //added to the notification center on the date to trigger it.
                     //navigator.notification.alert("triggered: " + notification.id);
-
-
+                    
+                    
 
                 });
+            
                 // cordova.plugins.notification.local.on("update", function (notification) {
                 //   //added to the notification center on the date to trigger it.
 
@@ -1060,7 +1067,7 @@
 
                 let noteOptions = {
                     id: id,
-                    title: $("#exampleFormControlInput1").val()+ "的物品提醒",
+                    title: $("#exampleFormControlInput1").val() + "的物品提醒",
                     text: $("#remindertext").val(),
                     at: timer,
                     badge: 1,

@@ -304,9 +304,31 @@
         text-decoration: none;
         font-size: 18px
     }
+
+    .teach {
+        position: absolute;
+        z-index: 100;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        
+        background-size: cover;
+    }
+
+    .teachbtn {
+        margin-left: 60%;
+        margin-top: 620px;
+        font-size: 20px;
+        
+    }
 </style>
 
 <body class="font" style="background-color: #ffffff">
+    <div class="teach col-md-8 offset-md-2 col-lg-6 offset-lg-3" 
+    style="background: url(./static/s/search.jpg)no-repeat ; background-size: cover;">
+        <button class="btn btn-warning teachbtn" onclick="nextteach()">了解</button>
+    </div>
 
     <div class=" flex ">
         <div class="row" style="height: 100px;">
@@ -475,8 +497,30 @@
 
         // })(document);
 
-
-
+        //導覽
+        function nextteach() {
+            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="ownpage()">了解</button>')
+            $(".teach").css('background', 'url(./static/s/類別.jpg)no-repeat');
+            $(".teach").css('background-size', 'cover');
+        }
+        function ownpage(){
+            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="outpage()">了解</button>')
+            $(".teach").css('background', 'url(./static/s/所屬人.jpg)no-repeat');
+            $(".teach").css('background-size', 'cover');
+        }
+        function outpage(){
+            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="thingpage()">了解</button>')
+            $(".teach").css('background', 'url(./static/s/未放回.jpg)no-repeat');
+            $(".teach").css('background-size', 'cover');
+        }
+        function thingpage(){
+            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="nopage()">開始搜尋</button>')
+            $(".teach").css('background', 'url(./static/s/結果.jpg)no-repeat');
+            $(".teach").css('background-size', 'cover');
+        }
+        function nopage(){
+            $(".teach").css('display', 'none');
+        }
 
 
 

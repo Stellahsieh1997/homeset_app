@@ -45,12 +45,12 @@ body{
 .card1{
     overflow:hidden;
     height: 120px;
-    margin: 20px 5vw;
+    margin: 20px 10px;
   
 }
 .rounded-left img{
     height: 120px;
-    width:  50vw;
+    width: 100%;
 }
 .left{
     width: 50%;
@@ -59,9 +59,8 @@ body{
     padding:0px;
 }
 .right{
-    position: relative;
     width: 50%; 
-    padding:10px 5px 5px 5px;  
+    padding:20px 10px;  
     float:right;
     background-color: rgb(95, 95, 95);
 }

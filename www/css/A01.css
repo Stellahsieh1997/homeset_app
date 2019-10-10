@@ -113,6 +113,7 @@ input[type=text] {
 /* 導覽列 */
 .footer{
     position: fixed;
+    z-index: 2;
     bottom: 0;
     left: 0px;
     background: #fff;
@@ -145,11 +146,17 @@ input[type=text] {
 }
 .collection{
     position:absolute;
-    z-index: 2;
+    z-index: 1;
     right: 7vw;
     top: 3px;
     color: rgb(255, 255, 255);
     font-size: 24px;
+}
+.nicknamestyle{
+    position:absolute;
+    z-index: 1;
+    right: 6vw;
+    bottom: -3px;
 }
 a, a:link, a:active, a:visited, a:hover
 {

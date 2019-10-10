@@ -215,7 +215,7 @@
                                 },
                                 success: function (res) {
                                     if (res.length >= 1) {
-                                        for (i = 0; i < res.length; i++) {
+                                        for (i = res.length-1; i >=0; i--) {
                                             var category
                                             switch (parseInt(res[i].category)) {
                                                 case 1:
@@ -242,6 +242,7 @@
 
                                             var post = `<div style="position: relative">
                                                     <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
+                                                    <h6 class="nicknamestyle">`+ res[i].nickname + `</h6>
                                                     <a href="A03.html?post=`+ res[i].id + `">
                                                         <div class="row card1 border rounded">
                                                             <div class="col left rounded-left ">
@@ -250,7 +251,6 @@
                                                             <div class="col right rounded-right ">
                                                                 <h5>`+ category + `收納</h5>
                                                                 <h4>`+ res[i].title + `</h4>
-                                                                <h6 style="position:absolute;right: 5px;bottom: 0px;">`+ res[i].nickname + `</h6>
                                                             </div>
                                                         </div>
                                                     </a>

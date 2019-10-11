@@ -104,6 +104,9 @@
 				if (_this.curValue == "新增所屬人"){
 					$('#ownermodal').modal('show');
 				}
+				if (_this.curValue == "輸入數量"){
+					$('#numbermodal').modal('show');
+				}
 		    	_this.callback(_this.curIndexArr, _this.curValue);
 		    });
 

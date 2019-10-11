@@ -239,7 +239,10 @@
                                                 default:
                                                     category = "無類別";
                                             }
-
+                                            var title = res[i].title;
+                                            if(title.length>25){
+                                                title = res[i].title.substr(0,24)+"...";
+                                            }
                                             var post = `<div style="position: relative">
                                                     <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
                                                     <h6 class="nicknamestyle">`+ res[i].nickname + `</h6>
@@ -250,7 +253,7 @@
                                                             </div>
                                                             <div class="col right rounded-right ">
                                                                 <h5>`+ category + `收納</h5>
-                                                                <h4>`+ res[i].title + `</h4>
+                                                                <h4>`+ title + `</h4>
                                                             </div>
                                                         </div>
                                                     </a>

@@ -394,7 +394,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');

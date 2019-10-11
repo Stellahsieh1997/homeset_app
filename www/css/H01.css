@@ -406,7 +406,7 @@
         /* 格局 */
         .box {
             position: relative;
-            background-color: rgb(4, 126, 126);
+            background-color: #047e7e;
             display: flex;
             align-items: center;
             justify-content: center;

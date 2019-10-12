@@ -27,7 +27,7 @@
     <div id="page" class="outer">
 
         <!-- 導覽列 -->
-        <ul class="nav header">
+        <ul class="nav header fixed-top">
             <li class="nav-item two">
                 <a class="nav-link active" href="#menu"></a>
             </li>
@@ -59,25 +59,12 @@
             </ul>
         </nav>
     </div>
-
+    <!-- 因mmenu的關係代替margin-top:30px; -->
+    <div style="height: 30px;"></div>
     <!-- 顯示格局的地方 -->
     <div class="box-wrap">
-        <!-- <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="F01.html?space=test"><span style="color: white">客廳</span></a>
-        </div>
-        <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="T01_edit.html"></a>
-        </div>
-        <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="T01_edit.html"></a>
-        </div> -->
+
     </div>
-
-
-
     <!-- 新增樓層的彈跳視窗 -->
 
     <div class="modal fade hide bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
@@ -346,17 +333,19 @@
         <div class="row row1 ">
             <div class="col-4 icon">
                 <a href="S01.html">
-                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
+                    <i class="icon ion-md-search icon1"></i>
 
-                </a> </div>
+                </a>
+            </div>
             <div class="col-4 icon ">
                 <a href="H01.html">
-                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1" style="color: #254F6E"></i>
+                    <i class="icon ion-md-home icon1" style="color: #254F6E"></i>
 
-                </a> </div>
+                </a>
+            </div>
             <div class="col-4 icon">
                 <a href="A01.html">
-                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+                    <i class="icon ion-md-bookmarks icon1"></i>
 
                 </a>
             </div>
@@ -380,21 +369,6 @@
                 evnt.preventDefault();
             }
         });
-        // 按鈕點選變色，點另一个按紐顏色還原
-        var t = 1;
-        function test(x) {
-            // 這個是判斷第一次點選
-            if (x == 1 && t == 1) {
-                document.getElementById(x).style.color = "#254F6E";
-            }
-            // 這個判斷是防止重複點選 
-            else if (x != t) {
-                document.getElementById(x).style.color = "#254F6E";
-                document.getElementById(t).style.color = "black";
-            }
-            t = x;
-        }
-
 
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
@@ -498,9 +472,9 @@
                     function (tx, res) {
                         $("#editsnameval").val(res.rows.item(0)['name'])
                         $("#delsname").html(res.rows.item(0)['name'])
-                        if(!res.rows.item(0)['space_color']){
+                        if (!res.rows.item(0)['space_color']) {
                             $("#colorid").val("#047e7e")
-                        }else{
+                        } else {
                             $("#colorid").val(res.rows.item(0)['space_color'])
                         }
                     });

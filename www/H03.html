@@ -1,89 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 匯入ionicons 字型圖標 -->
+    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel=stylesheet type="text/css" href="../www/css/H03.css">
 
-
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="css/ionicons.min.css">
-        <link rel=stylesheet type="text/css" href="../www/css/H03.css">
-        <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <script src="js/jquery-3.4.1.min.js"></script>
-        <title>H03</title>
-    </head>
+    <!-- mmenu scripts -->
+    <script src="../www/js/mmenu.js"></script>
+    <script src="../www/js/mmenu.debugger.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <title>H03</title>
+</head>
 
 <body>
 
     <div id="page">
-        <div class="header">
-            <a href="../www/H01.html" class="icon ion-ios-arrow-back icon2"> <span></span></a>
+        <div class="header fixed-top">
+            <a href="../www/H01.html" class="icon ion-ios-arrow-back icon2"></a>
             儲存的文章
-
         </div>
         <div class="content">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>文章名稱</p></div></li>
-                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>文章名稱</p></div></li>
-                <li class="list-group-item"><div class="rect" ><img src="../www/static/things/3.jpg" alt=""><p>文章名稱</p></div></li>
-               
-            </ul>
+
         </div>
 
     </div>
+
+    <div class="container-fluid  footer">
+        <div class="row row1 ">
+            <div class="col-4 icon">
+                <a href="S01.html">
+                    <i class="icon ion-md-search icon1"></i>
+                </a>
+            </div>
+            <div class="col-4 icon ">
+                <a href="H01.html">
+                    <i class="icon ion-md-home icon1"></i>
+                </a>
+            </div>
+            <div class="col-4 icon">
+                <a href="A01.html">
+                    <i class="icon ion-md-bookmarks icon1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //收藏
+        var user_email;
+        var user_token;
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            user_email = res.rows.item(0)['email']
+                            user_token = res.rows.item(0)['token']
+                            $.ajax({
+                                headers: {
+                                    "Authorization": "Token " + user_token + ""
+                                },
+                                type: "GET",
+                                url: "http://140.131.114.157/posts/likes",
+                                error: function (err) {
+                                    alert(JSON.stringify(err))
+                                },
+                                success: function (res) {
+                                    if (res.length >= 1) {
+                                        for (i = res.length-1; i >=0; i--) {
+                                            var category
+                                            switch (parseInt(res[i].category)) {
+                                                case 1:
+                                                    category = "客廳";
+                                                    break;
+                                                case 2:
+                                                    category = "廚房";
+                                                    break;
+                                                case 3:
+                                                    category = "臥室";
+                                                    break;
+                                                case 4:
+                                                    category = "浴室";
+                                                    break;
+                                                case 5:
+                                                    category = "技巧";
+                                                    break;
+                                                case 6:
+                                                    category = "設計";
+                                                    break;
+                                                default:
+                                                    category = "無類別";
+                                            }
+                                            var title = res[i].title;
+                                            if(title.length>25){
+                                                title = res[i].title.substr(0,24)+"...";
+                                            }
+                                            var post = `<div style="position: relative">
+                                                    <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
+                                                    <h6 class="nicknamestyle">`+ res[i].nickname + `</h6>
+                                                    <a href="A03.html?post=`+ res[i].id + `">
+                                                        <div class="row card1 border rounded">
+                                                            <div class="col left rounded-left ">
+                                                                <img src="`+ res[i].image + `">
+                                                            </div>
+                                                            <div class="col right rounded-right ">
+                                                                <h5>`+ category + `收納</h5>
+                                                                <h4>`+ title + `</h4>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>`
+                                            $(".content").append(post)
+
+                                            if (res[i].liked == true) {
+                                                $("#post" + res[i].id + "").addClass("selectcolor");
+                                            }
+
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    });
+            });
+        }
+
+
+        function collection(id) {
+            $("#post" + id + "").toggleClass("selectcolor");
+
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                type: "POST",
+                url: "http://140.131.114.157/posts/" + id + "/like",
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                }
+            })
+
+
+        }
+
+    </script>
 
 
 </body>
-<div class="container-fluid  footer">
-    <div class="row row1">
-        <div class="col-4 icon">
-            <a href="#">
-                <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
-            </a> </div>
-        <div class="col-4 icon ">
-            <a href="#">
-                <i id="2" onclick="test(2)" class="icon ion-md-home icon1"></i>
-            </a> </div>
-        <div class="col-4 icon">
-            <a href="#">
-                <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
-            </a>
-        </div>
-
-
-    </div>
-
-</div>
-
-<!-- mmenu scripts -->
-<script src="../www/js/mmenu.js"></script>
-<script src="../www/js/mmenu.debugger.js"></script>
-<script>
-
-    var t = 1;
-    function test(x) {
-        // 這個是判斷第一次點選
-        if (x == 1 && t == 1) {
-            document.getElementById(x).style.color = "#254F6E";
-        }
-        // 這個判斷是防止重複點選 
-        else if (x != t) {
-            document.getElementById(x).style.color = "#254F6E";
-            document.getElementById(t).style.color = "black";
-        }
-        t = x;
-    }
-</script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
 
 </html>

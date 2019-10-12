@@ -24,15 +24,9 @@ body{
     background-color: #F5F6F8;
 }
 .content{
-    justify-content:center;
-    align-items:center;
+    margin-top:0px;
+    margin-bottom:60px;
 }
-.header
-.content,
-.footer{
-     text-align: center;
-}
-
 .ctitle{
     background:linear-gradient(transparent 0%,black 100%);
     box-sizing:border-box;

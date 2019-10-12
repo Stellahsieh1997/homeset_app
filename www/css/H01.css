@@ -4,16 +4,6 @@
             font-family: 微軟正黑體;
             
         }
-
-        ion-icon{
-            width: 30px;
-            height: 25px;
-            }
-
-		/* html, body {
-			position: relative;
-			height: 100%;
-		} */
         html, body
         {
             padding: 0;
@@ -91,26 +81,6 @@
             padding: 0 50px;
         }
         
-        .triangle{
-            /* width: 0;
-            height: 0;
-            border-style: solid;
-            border-width:13.0px 7.5px 0 7.5px;
-            border-color: #ffffff transparent transparent transparent; */
-            position: absolute;
-            right: 50px;
-            font-size: 30px;
-            transition:0.5s;
-            
-        }
-
-        .triangle:hover{
-            font-size: 35px;
-        }
-
-        /* li:hover{
-            background-color: rgb(230, 225, 225);
-        } */
         .footer{
             position: fixed;
             bottom: 0;
@@ -232,42 +202,7 @@
             font-size: 30px;
             color:rgb(255, 255, 255);
         }
-        
-        .points{
-            font-size: 30px;
-            /* padding-top:20px;  */
-        }
-        /* 以下都是H01-1 */
 
-        .exrect{
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            width: 20vh;
-            height: 20vh;
-            background-color:#254F6E;
-            border-color: black;
-            color: white;
-            text-align: center;
-        }
-        .points i{
-            position: absolute;
-            top: 10px;
-            right: 0;
-            /* margin-right: -30px;
-            padding-top: -30px; */
-           
-            color:white;
-        }
-
-        .exrect1{
-            width: 20vw;
-            height: 20vw;
-            margin:10px;
-            background-color: #254F6E;
-            position: relative;
-            text-align: center;
-        }
         .text{
             color:white;
             display: inline-block;
@@ -280,35 +215,6 @@
             padding-top:60px;
             width:20%;
 
-        }
-        /* The Modal (background) 彈跳視窗 */
-        .modal2 {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            -webkit-animation-name: fadeIn; /* Fade in the background */
-            -webkit-animation-duration: 0.4s;
-            animation-name: fadeIn;
-            animation-duration: 0.4s
-        }
-        
-        /* Modal Content */
-        .modal2-content {
-            position: fixed;
-            bottom: 0;
-            background-color: #254F6E;
-            width: 100%;
-            -webkit-animation-name: slideIn;
-            -webkit-animation-duration: 0.4s;
-            animation-name: slideIn;
-            animation-duration: 0.4s
         }
         
         /* The Close Button */
@@ -326,20 +232,7 @@
             cursor: pointer;
         }
         
-        .modal2-header {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
-        }
-        
-        .modal2-body {padding: 2px 16px;}
-        
-        .modal2-footer {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
-        }
-        
+
         /* Add Animation */
         @-webkit-keyframes slideIn {
             from {bottom: -300px; opacity: 0} 
@@ -410,6 +303,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .box-wrap{
+            overflow: hidden;
+            margin-bottom:100px;
         }
         .box-wrap>div {
             width: 33vw;

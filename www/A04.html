@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html style="height: 100%;width: 100%">
 
 <head>
     <meta charset="UTF-8">
@@ -12,55 +11,125 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel=stylesheet type="text/css" href="../www/css/A02.css">
     <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <title>收納資訊</title>
 </head>
 
 <body style="background-color: #E0E0E0">
-<div class="container-fluid">
-    <div class="row p-1 fixed-top title">
-        <div class="col-4">
-                <a href="A01.html"><button type="button" class="float-left buttontype " style="background-color: transparent;
-                        border-color: transparent;margin-left:-10px"><img src="static/arrowhead.png" width="38" height="38"></button></a>
-        </div> 
-    </div> 
+    <div class="container-fluid">
+        <div style="position:absolute;top: 10px;z-index:100;">
+            <a href="A01.html"><img src="static/arrowhead.png" width="38" height="38"></a>
 
-    <div class="header">
-        <h1 style="font-size:30px;margin-left:50px;margin-top:10px">我的收納文章</h1>
-        <img src="static/pencil.png" style="width:30px;background-color: transparent;border-color:transparent;margin-top:-78px;margin-left:240px">
+        </div>
+
+        <div class="header">
+            <h1 style="font-size:30px;margin-left:50px;margin-top:10px">我的收納文章</h1>
+            <img src="static/pencil.png"
+                style="width:30px;background-color: transparent;border-color:transparent;margin-top:-78px;margin-left:240px">
+        </div>
+        <hr style="margin-top:-10px">
+        <form method="post" enctype="multipart/form-data" style="font-size:18px;">
+            <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:50px">
+                <label for="title"><b>文章標題</b></label>
+                <input type="text" class="form-control" id="title">
+            </div>
+            <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:200px">
+                <label for="category"><b>類別</b></label>
+                <select class="form-control" id="category">
+                    <option value="1">客廳</option>
+                    <option value="2">廚房</option>
+                    <option value="3">臥室</option>
+                    <option value="4">浴室</option>
+                    <option value="5">技巧</option>
+                    <option value="6">設計</option>
+                </select>
+            </div>
+            <div class="form-group" style="padding-left:20px;">
+                <label for="image"><b>上傳圖片</b></label>
+                <input type="file" class="form-control-file" id="image" accept="image/jpeg, image/png">
+                <img id="showimg" width="300" height="200" style="display: none;" />
+            </div>
+            <div class="form-group" style="font-size:18px;padding-left:18px;padding-right:20px;margin-top:10px">
+                <label for="content"><b>文章內容</b></label>
+                <textarea class="form-control" id="content" rows="13"></textarea>
+            </div>
+            <div class="row">
+                <a class="btn btn-light col" href="A01.html">取消</a>
+                <a class="btn btn-light col" role="button" id="insertpost">發送</a>
+            </div>
+        </form>
+
     </div>
-    <hr style="margin-top:-10px">
-    <form>
-    <div class="form-group" style="font-size:18px;font-color:#0080FF;padding-left:20px;padding-right:50px">
-        <label for="exampleFormControlInput1"><b><font color="4F9D9D">文章標題</font></b></label>
-        <input type="text" class="form-control" id="exampleFormControlInput1">
-    </div>
-    <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:200px">
-    <label for="exampleFormControlSelect1"><b><font color="4F9D9D">選擇</font></b></label>
-    <select class="form-control" id="exampleFormControlSelect1">
-        <option>客廳</option>
-        <option>廚房</option>
-        <option>臥室</option>
-        <option>浴室</option>
-        <option>技巧</option>
-        <option>設計</option>
-    </select>
-    </div>
-    <P style="font-size:18px;margin-left:20px;font-color:#FF0000"><b><font color="4F9D9D">上傳圖片</font></b><P>
-    <div style="margin-left:20px">
-    <input type="file" name="file" onchange="showImg(this)" />
-    <img id="showimg" src="" style="display:none" /></div>
-    <div class="form-group" style="font-size:18px;padding-left:18px;padding-right:20px;margin-top:10px">
-    <label for="exampleFormControlTextarea1"><b><font color="4F9D9D">文章內容</b></font></label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="13"></textarea>
-    </div>
-    </form>
-    <div class="row">
-                <a class="btn btn-light col bpadding"  role="button">取消</a>
-                <a class="btn btn-light col bpadding"  role="button">發送</a>
-    </div>
-</div>
+
+    <script>
+        var user_email;
+        var user_token;
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var db;
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({
+                name: 'my.db',
+                location: 'default',
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM user', [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            user_email = res.rows.item(0)['email']
+                            user_token = res.rows.item(0)['token']
+                        }
+                    });
+            });
+        }
+
+
+
+
+        $('#insertpost').click(function () {
+            var formData = new FormData();
+            formData.append('title', $('#title').val())
+            formData.append('category', $('#category').val())
+            formData.append('image', document.getElementById("image").files[0])
+            formData.append('content', $('#content').val())
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                url: "http://140.131.114.157/posts",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    alert(JSON.stringify(data))
+                    location.href = "A01.html";
+                }
+            })
+        })
+
+        //form 預覽圖片
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                $("#showimg").css('display', 'block');
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#showimg").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#image").change(function () {
+            readURL(this);
+        });
+
+    </script>
 </body>
+
+</html>

@@ -27,7 +27,7 @@
     <div id="page" class="outer">
 
         <!-- 導覽列 -->
-        <ul class="nav header">
+        <ul class="nav header fixed-top">
             <li class="nav-item two">
                 <a class="nav-link active" href="#menu"></a>
             </li>
@@ -59,25 +59,12 @@
             </ul>
         </nav>
     </div>
-
+    <!-- 因mmenu的關係代替margin-top:30px; -->
+    <div style="height: 30px;"></div>
     <!-- 顯示格局的地方 -->
     <div class="box-wrap">
-        <!-- <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="F01.html?space=test"><span style="color: white">客廳</span></a>
-        </div>
-        <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="T01_edit.html"></a>
-        </div>
-        <div class="box">
-            <i class='icon ion-md-more imore'></i>
-            <a href="T01_edit.html"></a>
-        </div> -->
+
     </div>
-
-
-
     <!-- 新增樓層的彈跳視窗 -->
 
     <div class="modal fade hide bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
@@ -235,7 +222,8 @@
                             </button>
                         </div>
                         <div class="col-4 icon22">
-                            <button id="editscolor" onclick="closespace()" class="buttontype">
+                            <button id="editscolor" onclick="closespace()" class="buttontype" data-toggle="modal"
+                                data-target="#colormodal">
                                 <i class=" ion-md-list icon2"></i>
                                 <p>顏色</p>
                             </button>
@@ -314,23 +302,50 @@
         </div>
     </div>
 
+    <div class="modal fade bd-example-modal-sm" id="colormodal" tabindex="-1" role="dialog" aria-labelledby="editsmodal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">選擇顏色</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form>
+                        <label>顏色</label>
+                        <input type="color" id="colorid">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="editcolor" type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 
     <div class="container-fluid  footer">
         <div class="row row1 ">
             <div class="col-4 icon">
                 <a href="S01.html">
-                    <i id="1" onclick="test(1)" class="icon ion-md-search icon1"></i>
+                    <i class="icon ion-md-search icon1"></i>
 
-                </a> </div>
+                </a>
+            </div>
             <div class="col-4 icon ">
                 <a href="H01.html">
-                    <i id="2" onclick="test(2)" class="icon ion-md-home icon1" style="color: #254F6E"></i>
+                    <i class="icon ion-md-home icon1" style="color: #254F6E"></i>
 
-                </a> </div>
+                </a>
+            </div>
             <div class="col-4 icon">
                 <a href="A01.html">
-                    <i id="3" onclick="test(3)" class="icon ion-md-bookmarks icon1"></i>
+                    <i class="icon ion-md-bookmarks icon1"></i>
 
                 </a>
             </div>
@@ -354,21 +369,6 @@
                 evnt.preventDefault();
             }
         });
-        // 按鈕點選變色，點另一个按紐顏色還原
-        var t = 1;
-        function test(x) {
-            // 這個是判斷第一次點選
-            if (x == 1 && t == 1) {
-                document.getElementById(x).style.color = "#254F6E";
-            }
-            // 這個判斷是防止重複點選 
-            else if (x != t) {
-                document.getElementById(x).style.color = "#254F6E";
-                document.getElementById(t).style.color = "black";
-            }
-            t = x;
-        }
-
 
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
@@ -381,7 +381,7 @@
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
             });
 
 
@@ -419,35 +419,6 @@
                         }
                     });
             });
-
-
-
-            // 平面圖選單內容
-            // db.transaction(function (tx) {
-            //     tx.executeSql('SELECT * FROM planargraph', [], function (tx, res) {
-            //         var len = res.rows.length;
-
-            //         if (res.rows.length >= 1) {
-            //             for (var i = 0; i < len; i++) {
-            //                 $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
-            //             }
-            //             $("#pedit").css('display', 'block');
-            //             $("#pdelete").css('display', 'block');
-            //             $("#saddbutton").css('display', 'block');
-            //             let urlParams = new URLSearchParams(window.location.search);
-            //             // alert(urlParams)
-            //             var planargraphId = urlParams.get('planargraph');
-            //             if (!planargraphId) {
-            //                 pnidclick(res.rows.item(0)['planargraphId'])
-
-            //             } else {
-            //                 pnidclick(planargraphId)
-
-            //             }
-            //         }
-            //     });
-            // });
-
         }
 
 
@@ -479,7 +450,7 @@
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             for (var i = 0; i < len; i++) {
-                                $(".box-wrap").append(`<div class="box">
+                                $(".box-wrap").append(`<div style="background-color:` + res.rows.item(i)['space_color'] + `;" class="box">
                                                         <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['spaceId'] + `")' class='icon ion-md-more imore'></i>
                                                         <a href="F01.html?space=`+ res.rows.item(i)['spaceId'] + `"><span id="sname` + res.rows.item(i)['spaceId'] + `" style="color: white">` + res.rows.item(i)['name'] + `</span></a>
                                                         </div>`)
@@ -501,12 +472,32 @@
                     function (tx, res) {
                         $("#editsnameval").val(res.rows.item(0)['name'])
                         $("#delsname").html(res.rows.item(0)['name'])
+                        if (!res.rows.item(0)['space_color']) {
+                            $("#colorid").val("#047e7e")
+                        } else {
+                            $("#colorid").val(res.rows.item(0)['space_color'])
+                        }
                     });
             });
             $('#editsname').attr('onclick', 'editsname("' + spaceId + '")');
             $('#delspace').attr('onclick', 'delspace("' + spaceId + '")');
-            // $('#editscolor').attr('onclick', 'editscolor("' + spaceId + '")');
+            $('#editcolor').attr('onclick', 'editcolor("' + spaceId + '")');
 
+        }
+
+        //修改顏色
+        function editcolor(id) {
+            var spacecolor = $("#colorid").val();
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [id],
+                    function (tx, res) {
+                        var planargraphId = res.rows.item(0)['planargraphId']
+                        tx.executeSql("UPDATE space SET space_color = ? WHERE spaceId = ?", [spacecolor, id],
+                            function (tx, res) {
+                                location.href = "H01.html?planargraph=" + planargraphId + "";
+                            });
+                    });
+            });
         }
 
         //修改格局
@@ -556,32 +547,28 @@
                 tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [id],
                     function (tx, res) {
                         planargraphId = res.rows.item(0)['planargraphId']
+
+                        tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
+                            var len = res.rows.length;
+                            if (res.rows.length >= 1) {
+                                for (var j = 0; j < len; j++) {
+                                    var trans = function (j) {
+                                        tx.executeSql("DELETE FROM thing WHERE furnitureId = ?", [res.rows.item(j)['furnitureId']]);
+                                    }(j);
+                                }
+                                tx.executeSql("DELETE FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
+                                    tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
+                                        location.href = "H01.html?planargraph=" + planargraphId + "";
+                                    });
+                                });
+                            } else {
+                                tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
+                                    location.href = "H01.html?planargraph=" + planargraphId + "";
+                                });
+                            }
+                        });
                     });
             });
-
-
-            db.transaction(function (tx) {
-                tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
-                    var len = res.rows.length;
-                    if (res.rows.length >= 1) {
-                        for (var j = 0; j < len; j++) {
-                            var trans = function (j) {
-                                tx.executeSql("DELETE FROM thing WHERE furnitureId = ?", [res.rows.item(j)['furnitureId']]);
-                            }(j);
-                        }
-                        tx.executeSql("DELETE FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
-                            tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
-                                location.href = "H01.html?planargraph=" + planargraphId + "";
-                            });
-                        });
-                    } else {
-                        tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
-                            location.href = "H01.html?planargraph=" + planargraphId + "";
-                        });
-                    }
-                });
-            });
-
         }
 
 
@@ -638,8 +625,8 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var email = user_email.replace(/@/g,"").split(".").join("");
-                var planargraphId = email+ timestamp;
+                var email = user_email.replace(/@/g, "").split(".").join("");
+                var planargraphId = email + timestamp;
                 var name = $("#insertpname").val();
                 if (!name) {
                     $('#pniwarn').html('<i class="icon ion-md-information-circle"></i>');
@@ -686,7 +673,7 @@
             $('#addpwarn').modal('hide')
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
-                var email = user_email.replace(/@/g,"").split(".").join("");
+                var email = user_email.replace(/@/g, "").split(".").join("");
                 var planargraphId = email + timestamp;
                 var name = $("#insertpname").val();
                 tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
@@ -709,8 +696,8 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var email = user_email.replace(/@/g,"").split(".").join("")
-                var spaceId = email+ timestamp;
+                var email = user_email.replace(/@/g, "").split(".").join("")
+                var spaceId = email + timestamp;
                 var name = $("#insertsname").val();
                 if (!name) {
                     $('#sniwarn').html('<i class="icon ion-md-information-circle"></i>');
@@ -754,8 +741,9 @@
 
         function logout() {
             db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE IF EXISTS user');
-                location.href = 'index.html'
+                tx.executeSql('DROP TABLE IF EXISTS user', [], function (tx, res) {
+                    location.href = 'index.html'
+                });
             });
         }
 

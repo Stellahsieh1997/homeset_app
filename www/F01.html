@@ -150,9 +150,10 @@
         </div>
     </div>
 
-    <div class="modal fade" style="z-index:1065;margin: 0px 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog"
+    <div class="modal fade" style="z-index:1065;margin: 30vw 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog"
         aria-labelledby="openphoto" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="width:70vw;" role="document">
+        <div class="mask" style="position: fixed;top: 0;left: 0;"></div>
+        <div class="modal-dialog " style="width:70vw;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><b>選擇相機或相簿</b></h5>
@@ -219,7 +220,7 @@
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
             });
 
             let urlParams = new URLSearchParams(window.location.search);

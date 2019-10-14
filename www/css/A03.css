@@ -1,42 +1,35 @@
-
 * {
-    border:solid 1px black;
     font-family: 微軟正黑體;
-    /* background-color: #F5F6F8; */
 }
-/* body{
-    background-color: #F5F6F8;
-    font-family: Arial, Helvetica, Verdana;
-    font-size: 14px;
-    line-height: 22px;
-    color: #666;
-    position: relative;
-    -webkit-text-size-adjust: none;
-    } */
-body *{
-    text-shadow: none;
-    }
-    .header,
-    .content,
-    .footer
-    {
-        text-align: center;
-    }
-    .header
-    {
-        background-image: url(https://i0.wp.com/wudani.com/wp-content/uploads/2018/07/books-e.jpg?resize=1050%2C788&ssl=1);
-        background-size: cover;
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        line-height: 40px;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;	
-        position: relative;
-        height: 200px;
-        max-width: 100%; 
-        justify-content: center;
-    }
-    
-     
-  
+.postclose{
+    position: absolute;
+    left:20px;
+    font-size:50px;
+    color: white;
+    font-weight:900;
+}
+.objcenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+h4{
+    color:rgb(83, 81, 81);
+    font-size: 20px;
+    font-weight: 700;
+}
+p{
+    font-size: 16px;
+    word-wrap:break-word; 
+    word-break:normal;
+}
+.collection{
+    position:absolute;
+    z-index: 2;
+    right: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+}
+.selectcolor{
+    color: rgb(255, 0, 0);
+}

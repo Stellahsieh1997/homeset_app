@@ -13,7 +13,6 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!--載入日期picker連結-->
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -49,7 +48,7 @@
                 reminderinput.style.display = "";
                 remindertext.style.display = "";
                 reminderinput.value = "時間設定";
-               
+
             }
             else {
                 reminderinput.value = "";
@@ -62,7 +61,7 @@
         }
 
     </script>
-    
+
 </head>
 
 <body onload="init();">
@@ -130,7 +129,7 @@
             </li>
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
                     class="icon ion-md-archive icon1"><b>存放位置</b></span>
-                <div class="thingbtn" id="place" style="width: 100px;"></div>
+                <div class="thingbtn" id="place" style="width: 150px;"></div>
             </li>
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><span
                     class="icon ion-md-stats icon1"><b>數量</b></span>
@@ -173,13 +172,15 @@
             </li>
             <div class="remindblock">
                 <div class="reminddate" style="position: relative;display:inline-block">
-                          
-                  <input type="button" value="時間設定" style="
+
+                    <input type="button" value="時間設定"
+                        style="
                     display:none;color:rgb(90, 90, 90);background-position: 3px;background:url(./static/calender.png)no-repeat;background-color: #fff; cursor: pointer; ; border: 0.7px solid #ccc; width: 180px;"
                         name="reminder" id="reminder" />
                 </div>
                 <div class="remindtext">
-                    <input type="text" id="remindertext" style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px" placeholder="提醒內容" />
+                    <input type="text" id="remindertext"
+                        style="display:none;text-align: center;color:rgb(90, 90, 90);width: 180px" placeholder="提醒內容" />
                 </div>
             </div>
         </ul>
@@ -253,17 +254,17 @@
 
     <!-- 新增類別、所屬人 -->
     <div class="modal " id="categorymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title " id="exampleModalLabel">
-                        <div class="icon ion-md-trash icon1"><b>新增類別</b></div>
+                        <div><b>新增類別</b></div>
                     </h5>
 
                 </div>
                 <div class="modal-body">
-                    <P id="categorynwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                    <P id="categorynwarn" style="display:none;color: red;margin:0px;"></P>
                     <form id="categorynameform" style="background-color:transparent">
                         <input type="text" class="form-control" id="addcategory" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm" placeholder="輸入類別" required>
@@ -281,17 +282,17 @@
     </div>
 
     <div class="modal " id="ownermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title " id="exampleModalLabel">
-                        <div class="icon ion-md-trash icon1"><b>新增所屬人</b></div>
+                        <div><b>新增所屬人</b></div>
                     </h5>
 
                 </div>
                 <div class="modal-body">
-                    <P id="ownernwarn" style="display:inline-flex;color: red;margin:0px;"></P>
+                    <P id="ownernwarn" style="display:none;color: red;margin:0px;"></P>
                     <form id="ownernameform" style="background-color:transparent">
                         <input type="text" class="form-control" id="addowner" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm" placeholder="輸入所屬人" required>
@@ -308,7 +309,58 @@
         </div>
     </div>
 
+    <div class="modal " id="numbermodal" tabindex="-1" role="dialog" aria-labelledby="numbermodal"
+        data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title ">
+                        <div><b>數量</b></div>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <P id="numberwarn" style="display:none;color: red;margin:0px;"></P>
+                    <form id="numberform" style="background-color:transparent">
+                        <input type="text" class="form-control" id="addnumber" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm" placeholder="輸入數量">
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="clearnumber();">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addnumber();">確定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
+        function clearnumber() {
+            $("#number").html(1);
+        }
+        function addnumber() {
+            var addnumbervalue = $("#addnumber").val()
+            if (!addnumbervalue) {
+                $("#numberwarn").css('display', 'block');
+                $('#numberwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#numberwarn').append("請輸入數量");
+                return
+            }
+            if (parseFloat(addnumbervalue).toString() == "NaN") {
+                $("#numberwarn").css('display', 'block');
+                $('#numberwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#numberwarn').append("請輸入數字");
+                return
+            }
+            $('#numberwarn').html("");
+            $("#number").html(addnumbervalue);
+            $("#numbermodal").modal("hide");
+        }
+
+        var user_email;
+        var user_token;
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
@@ -321,79 +373,144 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
 
-            // var date1 = $("#reminder").val();
-            // alert(date1)
-            // var timer = new Date(date1);
-            // alert(timer);
-            // var curdate = new Date();
-            // alert(curdate);
-            // if (timer < curdate) {
-            //     let urlParams = new URLSearchParams(window.location.search);
-            //     var thingId = urlParams.get('thing');
-            //     db.transaction(function (tx) {
-            //         var query = "UPDATE thing SET remind=? WHERE thingId = ?";
-            //         tx.executeSql(query, [0,thingId]);
-            //         alert("ok");
-            //     });
-            // }
-
-            //測試
-            // db.transaction(function (tx) {
-            //     var timestamp = (new Date()).valueOf();
-            //     // alert("timestamp"+timestamp);
-            //     var spaceId = btoa('ben32388@gmail.com') + timestamp;
-            //     // alert("furnitureId"+furnitureId);
-            //     tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test1", "臥室"]);
-            //     tx.executeSql('INSERT INTO space (spaceId, name) VALUES (?,?)', ["test", "客廳"],
-            //         function (tx, res) {
-            //             // alert("成功匯入");
-            //         }, function (error) {
-            //             alert('Something went Wrong');
-            //         });
-
-            // });
-
-            //可選擇位置滾輪資料庫
-            var storage = []
-            var fstorage = []
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space', [],
+                tx.executeSql('SELECT * FROM user', [],
                     function (tx, res) {
                         var len = res.rows.length;
-                        // alert(len)
                         if (res.rows.length >= 1) {
-                            for (var i = 0; i < len; i++) {
-                                var spaceId = res.rows.item(i)['spaceId'];
-                                var spacename = res.rows.item(i)['name'];
-                                var tr = function (spaceId, spacename) {
-                                    tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
-                                        var len = res.rows.length;
-                                        // alert(len);
-                                        if (res.rows.length >= 1) {
-                                            for (var j = 0; j < len; j++) {
-                                                fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
-                                            }
-                                            storage.push({ id: spaceId, value: spacename, childs: fstorage });
+                            user_email = res.rows.item(0)['email'];
+                            user_token = res.rows.item(0)['token'];
 
-                                            // alert(JSON.stringify(storage));
-                                            fstorage = []
-                                            placeselect.updateWheels(storage);
+                            //類別滾輪
+                            var categoryselect = []
+                            var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
+                            tx.executeSql('SELECT * FROM category WHERE email=?', [res.rows.item(0)['email']],
+                                function (tx, res) {
+                                    var len = res.rows.length;
+                                    if (res.rows.length >= 1) {
+                                        for (var i = 0; i < len; i++) {
+                                            categoryselect.push(res.rows.item(i)['name'])
+                                        }
+                                    }
+                                    var categoryselect3 = categoryselect.concat(categoryselect2)
+                                    categorypicker = new MobileSelect({
+                                        trigger: '#category',
+                                        title: '類別',
+                                        cancelBtnColor: '#f0f0f0',
+                                        ensureBtnColor: '#f0f0f0',
+                                        titleBgColor: '#254F6E',
+                                        titleColor: '#f0f0f0',
+                                        ensureBtnText: '確認',
+                                        wheels: [
+                                            { data: categoryselect3 }
+                                        ],
+                                        position: [0],
+                                        callback: function (indexArr, data) {
+                                            $('#categorywarn').text("");
+
+                                        } //初始化定位        
+
+                                    });
+
+                                }, function (error) {
+                                    alert('Something went Wrong');
+                                });
+
+
+                            //所屬人滾輪
+                            var ownerselect = []
+                            var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
+
+                            tx.executeSql('SELECT * FROM owner WHERE email=?', [res.rows.item(0)['email']],
+                                function (tx, res) {
+                                    var len = res.rows.length;
+                                    if (res.rows.length >= 1) {
+                                        for (var i = 0; i < len; i++) {
+                                            ownerselect.push(res.rows.item(i)['name'])
+                                        }
+                                    }
+                                    var ownerselect3 = ownerselect.concat(ownerselect2)
+
+                                    ownerpicker = new MobileSelect({
+                                        trigger: '#owner',
+                                        title: '所屬人',
+                                        cancelBtnColor: '#f0f0f0',
+                                        ensureBtnColor: '#f0f0f0',
+                                        titleBgColor: '#254F6E',
+                                        titleColor: '#f0f0f0',
+                                        ensureBtnText: '確認',
+                                        wheels: [
+                                            { data: ownerselect3 }
+                                        ],
+                                        position: [0], //初始化定位
+                                        callback: function (indexArr, data) {
+                                            $('#ownerwarn').text("");
                                         }
                                     });
-                                }(spaceId, spacename)
-                            }
+                                }, function (error) {
+                                    alert('Something went Wrong');
+                                });
+
+                            //可選擇位置滾輪資料庫
+                            var storage = []
+                            var fstorage = []
+                            tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email], function (tx, res) {
+                                if (res.rows.length >= 1) {
+                                    var len = res.rows.length;
+                                    for (var y = 0; y < len; y++) {
+                                        var planargraphname = res.rows.item(y)['name']
+                                        var tran = function (y,planargraphname) {
+                                            tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
+                                                function (tx, res) {
+                                                    var len = res.rows.length;
+                                                    // alert(len)
+                                                    if (res.rows.length >= 1) {
+                                                        for (var i = 0; i < len; i++) {
+                                                            var spaceId = res.rows.item(i)['spaceId'];
+                                                            var spacename = planargraphname+" "+res.rows.item(i)['name'];
+                                                            var tr = function (spaceId, spacename) {
+                                                                tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                                                                    var len = res.rows.length;
+                                                                    // alert(len);
+                                                                    if (res.rows.length >= 1) {
+                                                                        for (var j = 0; j < len; j++) {
+                                                                            fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
+                                                                        }
+                                                                        storage.push({ id: spaceId, value: spacename, childs: fstorage });
+
+                                                                        // alert(JSON.stringify(storage));
+                                                                        fstorage = []
+                                                                        placeselect.updateWheels(storage);
+                                                                    }
+                                                                });
+                                                            }(spaceId, spacename)
+                                                        }
+                                                    }
+                                                }, function (error) {
+                                                    alert('Something went Wrong');
+                                                });
+                                        }(y,planargraphname)
+                                    }
+                                }
+                            });
+
                         }
                     }, function (error) {
                         alert('Something went Wrong');
                     });
             });
+
+
+
 
             let urlParams = new URLSearchParams(window.location.search);
             var thingId = urlParams.get('thing');
@@ -459,15 +576,15 @@
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM thing WHERE thingId = ?', [thingId], function (tx, res) {
                     var date1 = res.rows.item(0)['time']
-                    
+
                     var timer = new Date(date1);
-                    
+
                     var curdate = new Date();
-                    
+
                     if (timer < curdate) {
                         let urlParams = new URLSearchParams(window.location.search);
                         var thingId = urlParams.get('thing');
-                        
+
                         db.transaction(function (tx) {
                             var query = "UPDATE thing SET remind=? WHERE thingId = ?";
                             tx.executeSql(query, [0, thingId]);
@@ -480,80 +597,6 @@
                 });
             });
 
-
-
-            //類別滾輪
-            var categoryselect = []
-            var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
-            db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM category', [],
-                    function (tx, res) {
-                        var len = res.rows.length;
-                        if (res.rows.length >= 1) {
-                            for (var i = 0; i < len; i++) {
-                                categoryselect.push(res.rows.item(i)['name'])
-                            }
-                        }
-                        var categoryselect3 = categoryselect.concat(categoryselect2)
-                        categorypicker = new MobileSelect({
-                            trigger: '#category',
-                            title: '類別',
-                            cancelBtnColor: '#f0f0f0',
-                            ensureBtnColor: '#f0f0f0',
-                            titleBgColor: '#254F6E',
-                            titleColor: '#f0f0f0',
-                            ensureBtnText: '確認',
-                            wheels: [
-                                { data: categoryselect3 }
-                            ],
-                            position: [0],
-                            callback: function (indexArr, data) {
-                                $('#categorywarn').text("");
-
-                            } //初始化定位        
-
-                        });
-
-                    }, function (error) {
-                        alert('Something went Wrong');
-                    });
-            });
-
-            //所屬人滾輪
-            var ownerselect = []
-            var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
-
-            db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM owner', [],
-                    function (tx, res) {
-                        var len = res.rows.length;
-                        if (res.rows.length >= 1) {
-                            for (var i = 0; i < len; i++) {
-                                ownerselect.push(res.rows.item(i)['name'])
-                            }
-                        }
-                        var ownerselect3 = ownerselect.concat(ownerselect2)
-
-                        ownerpicker = new MobileSelect({
-                            trigger: '#owner',
-                            title: '所屬人',
-                            cancelBtnColor: '#f0f0f0',
-                            ensureBtnColor: '#f0f0f0',
-                            titleBgColor: '#254F6E',
-                            titleColor: '#f0f0f0',
-                            ensureBtnText: '確認',
-                            wheels: [
-                                { data: ownerselect3 }
-                            ],
-                            position: [0], //初始化定位
-                            callback: function (indexArr, data) {
-                                $('#ownerwarn').text("");
-                            }
-                        });
-                    }, function (error) {
-                        alert('Something went Wrong');
-                    });
-            });
             // 執行夾層判斷
             layertest();
 
@@ -671,7 +714,7 @@
                             function (tx, res) {
                                 var query = "UPDATE thing SET name = ?,description = ?,image = ?,category = ?,owner = ?,number = ?,layer = ?,out = ?,remind = ?,time = ?,content = ? WHERE thingId = ?";
                                 tx.executeSql(query, [name, description, img, categoryValue, ownerValue, numberValue, layerValue, out, remind, reminder, remindertextValue, thingId]);
-                                
+
 
                                 history.back()
 
@@ -770,9 +813,9 @@
             var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
             var addcategoryValue = document.getElementById("addcategory").value;
             if (!addcategoryValue) {
+                $("#categorynwarn").css('display', 'block');
                 $('#categorynwarn').html('<i class="icon ion-md-information-circle"></i>');
                 $('#categorynwarn').append("請輸入類別");
-                $('#categorynameform').addClass("was-validated");
                 return
             }
             document.getElementById("category").innerHTML = addcategoryValue;
@@ -780,36 +823,51 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var categoryId = btoa('ben32388@gmail.com') + timestamp;
-                // alert("furnitureId"+furnitureId);
+                var email = user_email.replace(/@/g, "").split(".").join("");
+                var categoryId = email + timestamp;
 
-                tx.executeSql('INSERT INTO category (categoryId, name) VALUES (?,?)', [categoryId, addcategoryValue],
+
+                tx.executeSql('SELECT * FROM category WHERE email=?', [user_email],
                     function (tx, res) {
-                        tx.executeSql('SELECT * FROM category', [],
+                        var len = res.rows.length;
+                        categoryselect = []
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                categoryselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var categoryselect3 = categoryselect.concat(categoryselect2)
+                        for (var i = 0; i < categoryselect3.length; i++) {
+                            if (addcategoryValue == categoryselect3[i]) {
+                                $("#categorynwarn").css('display', 'block');
+                                $('#categorynwarn').html('<i class="icon ion-md-information-circle"></i>');
+                                $('#categorynwarn').append("已有此類別");
+                                return false
+                            }
+                        }
+
+                        tx.executeSql('INSERT INTO category (categoryId, name, email) VALUES (?,?,?)', [categoryId, addcategoryValue, user_email],
                             function (tx, res) {
-                                var len = res.rows.length;
-                                // alert(len)
-                                if (res.rows.length >= 1) {
-                                    for (var i = 0; i < len; i++) {
-                                        categoryselect.push(res.rows.item(i)['name'])
-                                    }
-                                }
-                                var categoryselect3 = categoryselect.concat(categoryselect2)
-                                // alert(typeof categoryselect3)
-                                categorypicker.updateWheel(0, categoryselect3);
-                                categorypicker.locatePosition(0, 0);
-                                $('#addcategory').val("");
-                                $('#categorynwarn').html('');
-                                $('#categorynameform').removeClass("was-validated");
-                                $('#categorymodal').modal('hide')
-                            }, function (error) {
-                                alert('Something went Wrong');
+                                tx.executeSql('SELECT * FROM category WHERE email=?', [user_email],
+                                    function (tx, res) {
+                                        var len = res.rows.length;
+                                        categoryselect = []
+                                        if (res.rows.length >= 1) {
+                                            for (var i = 0; i < len; i++) {
+                                                categoryselect.push(res.rows.item(i)['name'])
+                                            }
+                                        }
+                                        var categoryselect3 = categoryselect.concat(categoryselect2)
+                                        // alert(typeof categoryselect3)
+                                        categorypicker.updateWheel(0, categoryselect3);
+                                        categorypicker.locatePosition(0, 0);
+                                        $('#addcategory').val("");
+                                        $('#categorynwarn').html('');
+                                        $('#categorymodal').modal('hide')
+                                    });
+
                             });
-
-                    }, function (error) {
-                        alert('Something went Wrong');
                     });
-
             });
         }
 
@@ -819,9 +877,9 @@
             var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
             var addownerValue = document.getElementById("addowner").value;
             if (!addownerValue) {
+                $("#ownernwarn").css('display', 'block');
                 $('#ownernwarn').html('<i class="icon ion-md-information-circle"></i>');
                 $('#ownernwarn').append("請輸入所屬人");
-                $('#ownernameform').addClass("was-validated");
                 return
             }
             document.getElementById("owner").innerHTML = addownerValue;
@@ -829,40 +887,48 @@
             db.transaction(function (tx) {
                 var timestamp = (new Date()).valueOf();
                 // alert("timestamp"+timestamp);
-                var ownerId = btoa('ben32388@gmail.com') + timestamp;
-                // alert("furnitureId"+furnitureId);
+                var email = user_email.replace(/@/g, "").split(".").join("");
+                var ownerId = email + timestamp;
 
-                tx.executeSql('INSERT INTO owner (ownerId, name) VALUES (?,?)', [ownerId, addownerValue],
+                tx.executeSql('SELECT * FROM owner WHERE email=?', [user_email],
                     function (tx, res) {
-                        tx.executeSql('SELECT * FROM owner', [],
+                        var len = res.rows.length;
+                        ownerselect = []
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                ownerselect.push(res.rows.item(i)['name'])
+                            }
+                        }
+                        var ownerselect3 = ownerselect.concat(ownerselect2);
+                        for (var i = 0; i < ownerselect3.length; i++) {
+                            if (addownerValue == ownerselect3[i]) {
+                                $("#ownernwarn").css('display', 'block');
+                                $('#ownernwarn').html('<i class="icon ion-md-information-circle"></i>');
+                                $('#ownernwarn').append("已有此所屬人");
+                                return false
+                            }
+                        }
+                        tx.executeSql('INSERT INTO owner (ownerId, name, email) VALUES (?,?,?)', [ownerId, addownerValue, user_email],
                             function (tx, res) {
-                                var len = res.rows.length;
-                                // alert(len)
-                                if (res.rows.length >= 1) {
-                                    for (var i = 0; i < len; i++) {
-                                        ownerselect.push(res.rows.item(i)['name'])
-                                    }
-                                }
-                                var ownerselect3 = ownerselect.concat(ownerselect2)
-                                ownerpicker.updateWheel(0, ownerselect3);
-                                ownerpicker.locatePosition(0, 0);
-                                $('#addowner').val("");
-                                $('#ownernwarn').html('');
-                                $('#ownernameform').removeClass("was-validated");
-                                $('#ownermodal').modal('hide')
-                            }, function (error) {
-                                alert('Something went Wrong');
+                                tx.executeSql('SELECT * FROM owner WHERE email=?', [user_email],
+                                    function (tx, res) {
+                                        var len = res.rows.length;
+                                        ownerselect = []
+                                        if (res.rows.length >= 1) {
+                                            for (var i = 0; i < len; i++) {
+                                                ownerselect.push(res.rows.item(i)['name'])
+                                            }
+                                        }
+                                        var ownerselect3 = ownerselect.concat(ownerselect2);
+                                        ownerpicker.updateWheel(0, ownerselect3);
+                                        ownerpicker.locatePosition(0, 0);
+                                        $('#addowner').val("");
+                                        $('#ownernwarn').html('');
+                                        $('#ownermodal').modal('hide')
+                                    });
                             });
-
-                    }, function (error) {
-                        alert('Something went Wrong');
                     });
-
             });
-
-            ownerpicker.updateWheel(0, [addownerValue, '自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']);
-            ownerpicker.locatePosition(0, 0);
-
         }
 
     </script>
@@ -946,7 +1012,7 @@
             wheels: [
                 {
                     data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-                        , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+                        , '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '輸入數量']
                 }
             ],
             position: [2] //初始化定位
@@ -1023,7 +1089,11 @@
                 cordova.plugins.notification.local.on("click", function (notification) {
                     //navigator.notification.alert("clicked: " + notification.id);
                     //user has clicked on the popped up notification
+                    let urlParams = new URLSearchParams(window.location.search);
+                    var thingId = urlParams.get('thing');
+                    window.location.href = ' T01_edit.html ? thing = `+thingId+`'
                     console.log(notification.data);
+
                 });
                 cordova.plugins.notification.local.on("trigger", function (notification) {
                     //added to the notification center on the date to trigger it.
@@ -1032,6 +1102,7 @@
 
 
                 });
+
                 // cordova.plugins.notification.local.on("update", function (notification) {
                 //   //added to the notification center on the date to trigger it.
 
@@ -1060,7 +1131,7 @@
 
                 let noteOptions = {
                     id: id,
-                    title: $("#exampleFormControlInput1").val()+ "的物品提醒",
+                    title: $("#exampleFormControlInput1").val() + "的物品提醒",
                     text: $("#remindertext").val(),
                     at: timer,
                     badge: 1,

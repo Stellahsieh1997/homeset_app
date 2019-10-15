@@ -1,0 +1,184 @@
+* {
+    /* border:solid 1px black; */
+    font-family: 微軟正黑體;
+}
+.header
+{
+    background:#254F6E;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 40px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;	
+    width: 100%;
+    height: 40px;
+    padding: 0 50px;
+    text-align: center;
+}
+.icon2{
+    color:white;
+    font-size: 30px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+}
+.posts{
+    margin-top:50px;
+    margin-bottom:60px;
+}
+a, a:link, a:active, a:visited, a:hover
+{
+    color: inherit;
+    text-decoration: none;
+}
+.circlefix{
+    width:50px;
+    height:50px;
+    background-color: #254F6E;
+    border-radius:50%;
+    border-color: transparent;
+    position: fixed;
+    right:20px;
+    bottom:30px;
+    box-shadow:0px 0px 35px rgba(0,0,0,0.3);
+    transition:0.5s;
+}
+.circlefix:hover{
+    box-shadow:5px 5px 60px rgba(0,0,0,0.4);
+    transform:translate(-5px,-5px)
+ }
+.add{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding-top: 2px;
+}
+.add i
+{
+    font-size: 30px;
+    color:rgb(255, 255, 255);
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding-top: 7px;
+}
+.limitcontent{
+    overflow:auto;
+    height: 70vh;
+}
+/*互動視窗*/
+.modal-header {
+    background-color: #254F6E;
+    
+}
+
+.modal-title {
+    color: #FFFFFF;
+    
+}
+
+.close {
+    color: #FFFFFF
+}
+/* 文章的card */
+.card1{
+    overflow:hidden;
+    height: 120px;
+    margin: 20px 10px;
+  
+}
+.rounded-left img{
+    height: 120px;
+    width: 100%;
+}
+.left{
+    width: 50%;
+    background-size: cover;
+    float: left;
+    padding:0px;
+}
+.right{
+    width: 50%; 
+    padding:20px 10px;  
+    float:right;
+    background-color: rgb(95, 95, 95);
+}
+.collection{
+    position:absolute;
+    z-index: 1;
+    right: 7vw;
+    top: 3px;
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+}
+.imore {
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    right: 6vw;
+    bottom: -3px;
+    z-index: 1;
+}
+.selectcolor{
+    color: rgb(255, 0, 0);
+}
+.content{
+    margin-top:50px;
+    margin-bottom:60px;
+}
+.right>h4{
+    background-color:  rgb(95, 95, 95);
+    color:white;
+    font-size: 15px;
+}
+.right>h5{
+    background-color:  rgb(95, 95, 95);
+    color:white;
+    font-weight: bold;
+    font-size: 14px;
+}
+h6{
+    background-color:  rgb(95, 95, 95);
+    color: #00A9DE;
+    font-size: 12px;
+}
+/* 透明的按鈕 */
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0px;
+    color: white;
+    font-size: 18px;
+}
+p{
+    margin: 0px;
+}
+.editicon{
+    font-size: 34px;
+}
+/* 編輯文章 */
+.fit{
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+}
+.camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    border-radius:50%;
+    border: #FFFFFF solid 1px;
+    background-color:rgb(139, 191, 228);
+    width: 40px;
+    height: 40px;
+    color: rgb(255, 255, 255);
+}

@@ -26,7 +26,7 @@
     <div class="objcenter" style="margin: 20px 32px 0px 32px;">
         <h4 id="posttitle"></h4>
     </div>
-    <div class="objcenter" style="margin: 20px 18px 0px 18px;">
+    <div style="margin: 20px 18px 0px 18px;">
         <p id="postcontent"></p>
     </div>
     <div style="margin: 0px 18px 0px 18px;">
@@ -70,7 +70,7 @@
                                 },
                                 success: function (res) {
                                     $("#posttitle").html(res.title);
-                                    var content = res.content.replace(/\r\n/g, "<br />");
+                                    var content = res.content.replace(/\n/g, "<br />");
                                     $("#postcontent").html(content);
                                     $("#postsource").append(res.source);                                    
                                     var obj = document.getElementById("postimg");

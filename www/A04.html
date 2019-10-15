@@ -12,52 +12,179 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <link rel=stylesheet type="text/css" href="css/A04.css">
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <title>收納資訊</title>
 </head>
 
-<body style="background-color: #E0E0E0">
+<body>
     <div class="container-fluid">
-        <div style="position:absolute;top: 10px;z-index:100;">
-            <a href="A01.html"><img src="static/arrowhead.png" width="38" height="38"></a>
+        <div class="header fixed-top">
+            <a href="A01.html" class="icon ion-ios-arrow-back icon2"></a>
+            我的收納技巧貼文
+        </div>
+        <div class="posts">
+
+        </div>
+        <!-- 新增文章的彈跳按鈕 -->
+        <div class="circlefix add" data-toggle="modal" data-target="#addpostmodal">
+            <i class="icon ion-md-add"></i>
         </div>
 
-        <div class="header">
-            <h3 style="margin-left:50px;margin-top:10px">我的收納文章</h3>
-            <img src="static/pencil.png"
-                style="width:30px;background-color: transparent;border-color:transparent;margin-top:-78px;margin-left:240px">
+        <!-- 新增文章的彈跳視窗 -->
+        <div class="modal fade" id="addpostmodal" tabindex="-1" role="dialog" aria-labelledby="addpostmodal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">新增文章</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body limitcontent">
+                        <form method="post" enctype="multipart/form-data" style="font-size:18px;">
+                            <div class="form-group">
+                                <label for="title"><b>文章標題</b></label>
+                                <p id="addtitlewarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="category"><b>類別</b></label>
+                                <select class="form-control" id="category">
+                                    <option value="1">客廳</option>
+                                    <option value="2">廚房</option>
+                                    <option value="3">臥室</option>
+                                    <option value="4">浴室</option>
+                                    <option value="5">技巧</option>
+                                    <option value="6">設計</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="image"><b>上傳圖片</b></label>
+                                <p id="addimagewarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <input type="file" class="form-control-file" id="image" accept="image/jpeg, image/png">
+                                <img id="showimg" width="250" height="200" style="display: none;" />
+                            </div>
+                            <div class="form-group">
+                                <label for="content"><b>文章內容</b></label>
+                                <p id="addcontentwarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <textarea class="form-control" id="content" rows="13"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button id="insertpost" type="button" class="btn btn-primary">發送</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <hr style="margin-top:-10px">
-        <form method="post" enctype="multipart/form-data" style="font-size:18px;">
-            <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:50px">
-                <label for="title"><b>文章標題</b></label>
-                <input type="text" class="form-control" id="title">
+
+
+        <!-- 修改刪除文章的彈跳視窗-->
+        <div class="modal" id="editpost" tabindex="-1" role="dialog" aria-labelledby="editpost" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document"
+                style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
+                <div class="modal-content">
+                    <div class="modal-body " style="background-color: #254F6E">
+                        <div class="row" style="width:100vw;text-align: center">
+                            <div class="col-6">
+                                <button onclick="closespace()" class="buttontype" data-toggle="modal"
+                                    data-target="#editpostmodal">
+                                    <i class="ion-md-create editicon"></i>
+                                    <p>編輯</p>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button onclick="closespace()" class="buttontype" data-toggle="modal"
+                                    data-target="#deletepostmodal">
+                                    <i class=" ion-md-trash editicon"></i>
+                                    <p>刪除</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group" style="font-size:18px;padding-left:20px;padding-right:200px">
-                <label for="category"><b>類別</b></label>
-                <select class="form-control" id="category">
-                    <option value="1">客廳</option>
-                    <option value="2">廚房</option>
-                    <option value="3">臥室</option>
-                    <option value="4">浴室</option>
-                    <option value="5">技巧</option>
-                    <option value="6">設計</option>
-                </select>
+        </div>
+
+
+        <!-- 修改文章的彈跳視窗 -->
+        <div class="modal fade" id="editpostmodal" tabindex="-1" role="dialog" aria-labelledby="editpostmodal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">編輯文章</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body limitcontent">
+                        <form method="post" enctype="multipart/form-data" style="font-size:18px;">
+                            <div class="form-group">
+                                <label for="edittitle"><b>文章標題</b></label>
+                                <p id="edittitlewarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <input type="text" class="form-control" id="edittitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="editcategory"><b>類別</b></label>
+                                <select class="form-control" id="editcategory">
+                                    <option value="1">客廳</option>
+                                    <option value="2">廚房</option>
+                                    <option value="3">臥室</option>
+                                    <option value="4">浴室</option>
+                                    <option value="5">技巧</option>
+                                    <option value="6">設計</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editimage"><b>上傳圖片</b></label>
+                                <p id="editimagewarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <input type="file" class="form-control-file" style="display: none;" id="editimage"
+                                    accept="image/jpeg, image/png">
+                                <div style="position: relative;" class="fit">
+                                    <img id="editshowimg" width="250" height="200" style="display: none;" />
+                                    <label for="editimage" class="camera"><i class="icon ion-ios-camera"></i></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editcontent"><b>文章內容</b></label>
+                                <p id="editcontentwarn" style="display:inline-flex;color: red;margin:0px;"></p>
+                                <textarea class="form-control" id="editcontent" rows="13"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button id="editpostsend" type="button" class="btn btn-primary">發送</button>
+                    </div>
+                </div>
+
             </div>
-            <div class="form-group" style="padding-left:20px;">
-                <label for="image"><b>上傳圖片</b></label>
-                <input type="file" class="form-control-file" id="image" accept="image/jpeg, image/png">
-                <img id="showimg" width="300" height="200" style="display: none;" />
+        </div>
+
+        <!-- 刪除文章 -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="deletepostmodal" aria-labelledby="deletepostmodal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                    <div class="modal-body text-black">
+                        <p style="font-size: 16px">是否要刪除<span id="delpostname"></span>?</p>
+                        <div class="row" style="text-align: center">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                            </div>
+                            <div class="col">
+                                <button id="deletepost" type="button" class="btn btn-outline-secondary">確認</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group" style="font-size:18px;padding-left:18px;padding-right:20px;margin-top:10px">
-                <label for="content"><b>文章內容</b></label>
-                <textarea class="form-control" id="content" rows="13"></textarea>
-            </div>
-            <div class="row">
-                <a class="btn btn-light col" href="A01.html">取消</a>
-                <a class="btn btn-light col" role="button" id="insertpost">發送</a>
-            </div>
-        </form>
+        </div>
 
     </div>
 
@@ -83,6 +210,71 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
+
+                            $.ajax({
+                                headers: {
+                                    "Authorization": "Token " + user_token + ""
+                                },
+                                url: "http://140.131.114.157/posts/my",
+                                type: "GET",
+                                success: function (res) {
+                                    if (res.length >= 1) {
+                                        for (i = res.length - 1; i >= 0; i--) {
+                                            var category
+                                            switch (parseInt(res[i].category)) {
+                                                case 1:
+                                                    category = "客廳";
+                                                    break;
+                                                case 2:
+                                                    category = "廚房";
+                                                    break;
+                                                case 3:
+                                                    category = "臥室";
+                                                    break;
+                                                case 4:
+                                                    category = "浴室";
+                                                    break;
+                                                case 5:
+                                                    category = "技巧";
+                                                    break;
+                                                case 6:
+                                                    category = "設計";
+                                                    break;
+                                                default:
+                                                    category = "無類別";
+                                            }
+                                            var title = res[i].title;
+                                            if (title.length > 25) {
+                                                title = res[i].title.substr(0, 24) + "...";
+                                            }
+                                            var post = `<div style="position: relative">
+                                                    <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
+                                                    <i id="postmore" onclick='postmore("`+ res[i].id + `")' class='icon ion-md-more imore'></i>
+                                                    <a href="A03.html?post=`+ res[i].id + `">
+                                                        <div class="row card1 border rounded">
+                                                            <div class="col left rounded-left ">
+                                                                <img src="`+ res[i].image + `">
+                                                            </div>
+                                                            <div class="col right rounded-right ">
+                                                                <h5>`+ category + `收納</h5>
+                                                                <h4>`+ title + `</h4>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>`
+                                            $(".posts").append(post)
+
+                                            if (res[i].liked == true) {
+                                                $("#post" + res[i].id + "").addClass("selectcolor");
+                                            }
+
+                                        }
+                                    }
+                                }
+                            })
+
+
+
                         }
                     });
             });
@@ -90,8 +282,26 @@
 
 
 
-
+        //新增文章
         $('#insertpost').click(function () {
+            var addtitle = $("#title").val();
+            if (!addtitle) {
+                $('#addtitlewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#addtitlewarn').append("請輸入標題");
+                return
+            }
+            var addimage = document.getElementById("image").files[0];
+            if (!addimage) {
+                $('#addimagewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#addimagewarn').append("請上傳圖片");
+                return
+            }
+            var addcontent = $('#content').val();
+            if (!addcontent) {
+                $('#addcontentwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#addcontentwarn').append("請輸入文章內容");
+                return
+            }
             var formData = new FormData();
             formData.append('title', $('#title').val())
             formData.append('category', $('#category').val())
@@ -108,7 +318,7 @@
                 contentType: false,
                 success: function (data) {
                     alert(JSON.stringify(data))
-                    location.href = "A01.html";
+                    location.href = "A04.html";
                 }
             })
         })
@@ -127,6 +337,124 @@
         $("#image").change(function () {
             readURL(this);
         });
+
+        //收藏
+        function collection(id) {
+            $("#post" + id + "").toggleClass("selectcolor");
+
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                type: "POST",
+                url: "http://140.131.114.157/posts/" + id + "/like",
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                }
+            })
+        }
+        // 三個點點
+        function postmore(id) {
+            $("#editpost").modal('show');
+
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                type: "GET",
+                url: "http://140.131.114.157/posts/" + id + "",
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                },
+                success: function (res) {
+                    $("#edittitle").val(res.title);
+                    $("#editcontent").val(res.content);
+                    $("#editshowimg").css('display', 'block');
+                    $("#editshowimg").attr('src', res.image);
+                    $("#editcategory").val(res.category);
+                    $('#editpostsend').attr('onclick', 'editpostsend("' + res.id + '")');
+                    $("#delpostname").html(res.title);
+                    $('#deletepost').attr('onclick', 'deletepost("' + res.id + '")');
+                }
+            })
+        }
+
+        //確認刪除文章
+        function deletepost(id) {
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                url: "http://140.131.114.157/posts/" + id + "",
+                type: "DELETE",
+                success: function (data) {
+                    location.href = "A04.html";
+                }
+            })
+        }
+
+
+
+        //確認修改文章
+        function editpostsend(id) {
+            var edittitle = $("#edittitle").val();
+            if (!edittitle) {
+                $('#edittitlewarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#edittitlewarn').append("請輸入標題");
+                return
+            }
+            var editcontent = $('#editcontent').val();
+            if (!editcontent) {
+                $('#editcontentwarn').html('<i class="icon ion-md-information-circle"></i>');
+                $('#editcontentwarn').append("請輸入文章內容");
+                return
+            }
+            var formData = new FormData();
+            formData.append('title', $('#edittitle').val())
+            formData.append('category', $('#editcategory').val())
+            formData.append('content', $('#editcontent').val())
+            var editimage = document.getElementById("editimage").files[0];
+            if (!editimage) {
+
+            } else {
+                formData.append('image', document.getElementById("editimage").files[0])
+            }
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                url: "http://140.131.114.157/posts/" + id + "",
+                type: "PATCH",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    location.href = "A04.html";
+                }
+            })
+
+        }
+
+        //form 修改的預覽圖片
+        function editreadURL(input) {
+            if (input.files && input.files[0]) {
+                $("#editshowimg").css('display', 'block');
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#editshowimg").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#editimage").change(function () {
+            editreadURL(this);
+        });
+
+
+        //關閉修改文章互動視窗
+        function closespace() {
+            $("#editpost").modal('hide');
+        }
 
     </script>
 </body>

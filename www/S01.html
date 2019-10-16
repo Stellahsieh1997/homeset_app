@@ -541,6 +541,10 @@
                 name: 'my.db',
                 location: 'default',
             });
+            //提醒跳轉
+            cordova.plugins.notification.local.on("click", function (notification) {
+                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+            });
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');

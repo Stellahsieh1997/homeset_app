@@ -216,10 +216,16 @@
                 location: 'default',
             });
 
+            //提醒跳轉
+            cordova.plugins.notification.local.on("click", function (notification) {
+                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+            });
+
+
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
             });
 
@@ -892,9 +898,9 @@
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             var timestamp = (new Date()).valueOf();
-                
-                            var email = user_email.replace(/@/g,"").split(".").join("");
-                            var furnitureId = email+ timestamp;
+
+                            var email = user_email.replace(/@/g, "").split(".").join("");
+                            var furnitureId = email + timestamp;
                             tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
                                 function (tx, res) {
                                     location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
@@ -1058,8 +1064,8 @@
                         for (var i = 0; i < len; i++) {
                             var uri = results[i];
                             var timestamp = (new Date()).valueOf();
-                            var email = user_email.replace(/@/g,"").split(".").join("");
-                            var thingId = email+ timestamp + "" + i + "";
+                            var email = user_email.replace(/@/g, "").split(".").join("");
+                            var thingId = email + timestamp + "" + i + "";
 
                             var tran = function (uri, thingId) {
                                 db.transaction(function (tx) {
@@ -1141,6 +1147,11 @@
 
         //     }
         // });
+
+
+
+
+
     </script>
 </body>
 

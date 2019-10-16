@@ -377,7 +377,7 @@
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
@@ -468,7 +468,7 @@
                                     var len = res.rows.length;
                                     for (var y = 0; y < len; y++) {
                                         var planargraphname = res.rows.item(y)['name']
-                                        var tran = function (y,planargraphname) {
+                                        var tran = function (y, planargraphname) {
                                             tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
                                                 function (tx, res) {
                                                     var len = res.rows.length;
@@ -476,7 +476,7 @@
                                                     if (res.rows.length >= 1) {
                                                         for (var i = 0; i < len; i++) {
                                                             var spaceId = res.rows.item(i)['spaceId'];
-                                                            var spacename = planargraphname+" "+res.rows.item(i)['name'];
+                                                            var spacename = planargraphname + " " + res.rows.item(i)['name'];
                                                             var tr = function (spaceId, spacename) {
                                                                 tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
                                                                     var len = res.rows.length;
@@ -498,7 +498,7 @@
                                                 }, function (error) {
                                                     alert('Something went Wrong');
                                                 });
-                                        }(y,planargraphname)
+                                        }(y, planargraphname)
                                     }
                                 }
                             });
@@ -1087,13 +1087,7 @@
             addListeners: function () {
                 document.querySelector("#save").addEventListener("click", app.addNote);
                 cordova.plugins.notification.local.on("click", function (notification) {
-                    //navigator.notification.alert("clicked: " + notification.id);
-                    //user has clicked on the popped up notification
-                    let urlParams = new URLSearchParams(window.location.search);
-                    var thingId = urlParams.get('thing');
-                    window.location.href = ' T01_edit.html ? thing = `+thingId+`'
-                    console.log(notification.data);
-
+                    window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
                 });
                 cordova.plugins.notification.local.on("trigger", function (notification) {
                     //added to the notification center on the date to trigger it.
@@ -1124,6 +1118,9 @@
                  */
                 // let inOneMin = new Date();
                 // inOneMin.setMinutes(inOneMin.getMinutes() + 1);
+
+                let urlParams = new URLSearchParams(window.location.search);
+                var thingId = urlParams.get('thing');
                 let id = new Date().getMilliseconds();
 
                 var date1 = $("#reminder").val()
@@ -1141,6 +1138,7 @@
                         prop: "prop value",
                         num: 42
                     },
+                    thingId: thingId,
                     actions: [{
                         id: 'reply',
                         type: 'alert',

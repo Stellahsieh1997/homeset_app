@@ -222,7 +222,7 @@
 
             db.transaction(function (tx) {
                 // tx.executeSql('DROP TABLE IF EXISTS user');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
             });
 
         }
@@ -242,10 +242,10 @@
             
         }
 
-        function adduser(email, token) {
+        function adduser(email, token, nickname) {
 
             db.transaction(function (tx) {
-                tx.executeSql('INSERT INTO user (email, token) VALUES (?,?)', [email, token],
+                tx.executeSql('INSERT INTO user (email, token, nickname) VALUES (?,?,?)', [email, token, nickname],
                     function (tx, res) {
                         location.href = 'H01.html'
                     }, function (error) {
@@ -346,7 +346,7 @@
                     // alert(JSON.stringify(res))
                     // alert(res.token)
                     $("#loading2").html("確定")
-                    adduser(res.user.email, res.token)
+                    adduser(res.user.email, res.token, res.user.nickname)
                 }
             })
         }

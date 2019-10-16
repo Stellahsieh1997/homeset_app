@@ -18,9 +18,10 @@
 </head>
 
 <body>
-    <div style="position: relative">
+    <div style="position: relative;">
         <i class="icon ion-md-close postclose" onclick="history.back()"></i>
         <i class="icon collection ion-md-heart" id="post" onclick="collection()"></i>
+        <i id="postmore" class='icon ion-md-more imore'></i>
         <img id="postimg" style="width:100vw;height: 40vh;">
     </div>
     <div class="objcenter" style="margin: 20px 32px 0px 32px;">
@@ -45,9 +46,12 @@
                 name: 'my.db',
                 location: 'default',
             });
-
+            //提醒跳轉
+            cordova.plugins.notification.local.on("click", function (notification) {
+                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+            });
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
             });
 
             db.transaction(function (tx) {
@@ -57,6 +61,7 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
+                            var nickname = res.rows.item(0)['nickname']
                             let urlParams = new URLSearchParams(window.location.search);
                             var postid = urlParams.get('post');
                             $.ajax({
@@ -69,6 +74,8 @@
                                     alert(JSON.stringify(err))
                                 },
                                 success: function (res) {
+                                    alert("res.rows.item(0)['nickname']"+nickname)
+                                    alert("res.nickname"+res.nickname)
                                     $("#posttitle").html(res.title);
                                     var content = res.content.replace(/\n/g, "<br />");
                                     $("#postcontent").html(content);

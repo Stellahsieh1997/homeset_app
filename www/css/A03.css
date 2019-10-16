@@ -33,3 +33,15 @@ p{
 .selectcolor{
     color: rgb(255, 0, 0);
 }
+.imore {
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    right: 6vw;
+    bottom: 5px;
+    z-index: 1;
+    text-shadow: 0 0 0.5em rgb(0, 0, 0);
+}
+body>div>i{
+    text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);
+}

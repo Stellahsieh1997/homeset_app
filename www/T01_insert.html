@@ -393,11 +393,16 @@
                 location: 'default',
             });
 
+            //提醒跳轉
+            cordova.plugins.notification.local.on("click", function (notification) {
+                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+            });
+
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
             });
@@ -648,7 +653,33 @@
                     function (tx, res) {
                         tx.executeSql('INSERT INTO thing (thingId, name, description, image, category, owner, furnitureId, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [thingId, name, description, img, categoryValue, ownerValue, furnitureIdedit, numberValue, layerValue, out, remind, reminder, remindertextValue]);
                         $('#addingthing').modal('show')
-                        // location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                        //建立提醒通知
+                        let props = cordova.plugins.notification.local.getDefaults();
+                        let id = new Date().getMilliseconds();
+                        var date1 = $("#reminder").val()
+                        let timer = new Date(date1);
+                        let noteOptions = {
+                            id: id,
+                            title: $("#exampleFormControlInput1").val() + "的物品提醒",
+                            text: $("#remindertext").val(),
+                            at: timer,
+                            badge: 1,
+                            led: { color: '#FF00FF', on: 500, off: 500 },
+                            vibrate: true,
+                            data: {
+                                prop: "prop value",
+                                num: 42
+                            },
+                            thingId: thingId,
+                            actions: [{
+                                id: 'reply',
+                                type: 'alert',
+                                title: "物品提醒",
+                                text: $("#remindertext").val()
+                            }
+                            ]
+                        };
+                        cordova.plugins.notification.local.schedule(noteOptions);
                     });
             });
         }
@@ -982,124 +1013,6 @@
 
 
 
-    </script>
-    <script>
-        let app = {
-            init: function () {
-                document.addEventListener("deviceready", app.ready);
-            },
-            ready: function () {
-                app.addListeners();
-            },
-            addListeners: function () {
-                document.querySelector("#save").addEventListener("click", app.addNote);
-
-                cordova.plugins.notification.local.on("click", function (notification) {
-                    //navigator.notification.alert("clicked: " + notification.id);
-                    //user has clicked on the popped up notification
-                    let urlParams = new URLSearchParams(window.location.search);
-                    var thingId = urlParams.get('thing');
-                    window.location.href = ' T01_edit.html ? thing = `+thingId+`'
-                    console.log(notification.data);
-
-                });
-                cordova.plugins.notification.local.on("trigger", function (notification) {
-                    //added to the notification center on the date to trigger it.
-                    // navigator.notification.alert("triggered: " + notification.id);
-
-
-                });
-
-                // cordova.plugins.notification.local.on("update", function (notification) {
-                //   //added to the notification center on the date to trigger it.
-
-                // });
-            },
-
-
-            addNote: function (ev) {
-                let props = cordova.plugins.notification.local.getDefaults();
-                //console.log(props);
-                /**
-                 * Notification Object Properties - use it as a reference later on
-                 * id
-                 * text
-                 * title
-                 * every
-                 * at
-                 * data
-                 * sound
-                 * badge
-                 */
-                // let inOneMin = new Date();
-                // inOneMin.setMinutes(inOneMin.getMinutes() + 1);
-                let id = new Date().getMilliseconds();
-
-                var date1 = $("#reminder").val()
-                let timer = new Date(date1);
-
-                let noteOptions = {
-                    id: id,
-                    title: $("#exampleFormControlInput1").val() + "的物品提醒",
-                    text: $("#remindertext").val(),
-                    at: timer,
-                    badge: 1,
-                    led: { color: '#FF00FF', on: 500, off: 500 },
-                    vibrate: true,
-                    data: {
-                        prop: "prop value",
-                        num: 42
-                    },
-                    actions: [{
-                        id: 'reply',
-                        type: 'alert',
-                        title: "物品提醒",
-                        text: $("#remindertext").val()
-                    }
-                    ]
-                };
-
-
-
-
-                // if(props.led){
-                //   noteOptions.led = '#33CC00'
-                // }
-                // if(props.actions){
-                //   noteOptions.actions = [{ id: "yes", title: "Do it" }, { id: "no", title: "Nah" }]
-                // }
-
-
-                cordova.plugins.notification.local.schedule(noteOptions, function (note) {
-                    //this is the callback function for the schedule method
-                    //this runs AFTER the notification has been scheduled.
-
-                });
-
-
-
-                //navigator.notification.alert("Added notification id " + id);
-
-                cordova.plugins.notification.local.cancel(id, function () {
-                    // will get rid of notification id 1 if it has NOT been triggered or added to the notification center
-                    // cancelAll() will get rid of all of them
-                });
-                cordova.plugins.notification.local.clear(id, function () {
-                    // will dismiss a notification that has been triggered or added to notification center
-                });
-                cordova.plugins.notification.local.isPresent(id, function (present) {
-                    //   navigator.notification.alert($("#remindertext").val(),'物品提醒',);
-                    //   navigator.vibrate(2000); 
-                    // navigator.notification.beep(2);
-
-                    // can also call isTriggered() or isScheduled()
-                    // getAllIds(), getScheduledIds() and getTriggeredIds() will give you an array of ids
-                    // get(), getAll(), getScheduled() and getTriggered() will get the notification based on an id
-                });
-
-            }
-        };
-        app.init();
     </script>
 </body>
 

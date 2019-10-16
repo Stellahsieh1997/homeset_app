@@ -322,4 +322,5 @@
             position: absolute;
             right: 10px;
             bottom: 5px;
+            text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);
         }

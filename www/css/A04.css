@@ -123,6 +123,15 @@ a, a:link, a:active, a:visited, a:hover
     bottom: -3px;
     z-index: 1;
 }
+.likes {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 50%;
+    bottom: 3px;
+    z-index: 1;
+}
+
 .selectcolor{
     color: rgb(255, 0, 0);
 }
@@ -181,4 +190,12 @@ p{
     width: 40px;
     height: 40px;
     color: rgb(255, 255, 255);
+}
+.objcenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    width: auto;
+    padding: 30px;
 }

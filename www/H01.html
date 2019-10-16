@@ -379,7 +379,7 @@
             });
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
 
             db.transaction(function (tx) {
@@ -396,7 +396,7 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
-
+                            $(".mm-navbar__title").html("Hi~"+" "+res.rows.item(0)['nickname']);
                             tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [res.rows.item(0)['email']], function (tx, res) {
                                 var len = res.rows.length;
 
@@ -456,7 +456,7 @@
                             for (var i = 0; i < len; i++) {
                                 $(".box-wrap").append(`<div style="background-color:` + res.rows.item(i)['space_color'] + `;" class="box">
                                                         <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['spaceId'] + `")' class='icon ion-md-more imore'></i>
-                                                        <a href="F01.html?space=`+ res.rows.item(i)['spaceId'] + `"><span id="sname` + res.rows.item(i)['spaceId'] + `" style="color: white">` + res.rows.item(i)['name'] + `</span></a>
+                                                        <a href="F01.html?space=`+ res.rows.item(i)['spaceId'] + `"><span id="sname` + res.rows.item(i)['spaceId'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
                                                         </div>`)
                             }
                         }

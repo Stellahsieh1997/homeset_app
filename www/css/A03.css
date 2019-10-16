@@ -45,3 +45,57 @@ p{
 body>div>i{
     text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);
 }
+/* 透明的按鈕 */
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0px;
+    color: white;
+    font-size: 18px;
+}
+p{
+    margin: 0px;
+}
+.editicon{
+    font-size: 34px;
+}
+/* 編輯文章 */
+.fit{
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+}
+.camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    border-radius:50%;
+    border: #FFFFFF solid 1px;
+    background-color:rgb(139, 191, 228);
+    width: 40px;
+    height: 40px;
+    color: rgb(255, 255, 255);
+}
+/*互動視窗*/
+.modal-header {
+    background-color: #254F6E;
+    
+}
+
+.modal-title {
+    color: #FFFFFF;
+    
+}
+
+.close {
+    color: #FFFFFF
+}
+.limitcontent{
+    overflow:auto;
+    height: 70vh;
+}

@@ -200,7 +200,7 @@
             });
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
 
             db.transaction(function (tx) {
@@ -223,6 +223,7 @@
                                 type: "GET",
                                 success: function (res) {
                                     if (res.length >= 1) {
+                                        $(".posts").html("");
                                         for (i = res.length - 1; i >= 0; i--) {
                                             var category
                                             switch (parseInt(res[i].category)) {
@@ -254,6 +255,7 @@
                                             var post = `<div style="position: relative">
                                                     <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
                                                     <i id="postmore" onclick='postmore("`+ res[i].id + `")' class='icon ion-md-more imore'></i>
+                                                    <p class="likes">`+ res[i].likes + `人收藏 </p>
                                                     <a href="A03.html?post=`+ res[i].id + `">
                                                         <div class="row card1 border rounded">
                                                             <div class="col left rounded-left ">
@@ -273,6 +275,11 @@
                                             }
 
                                         }
+                                    } else {
+                                        var post = `<div class="objcenter">
+                                                        在此的貼文將會向所有人公開，同步分享至收納資訊上。
+                                                    </div>`
+                                        $(".posts").html(post)
                                     }
                                 }
                             })

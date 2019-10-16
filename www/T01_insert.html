@@ -395,7 +395,7 @@
 
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
 
             db.transaction(function (tx) {
@@ -544,7 +544,11 @@
                             tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [res.rows.item(0)['spaceId']],
                                 function (tx, res) {
                                     var spacename = res.rows.item(0)['name'];
-                                    $("#place").text(spacename + " " + furniturename);
+                                    tx.executeSql('SELECT * FROM planargraph WHERE planargraphId = ?', [res.rows.item(0)['planargraphId']],
+                                        function (tx, res) {
+                                            var planargraphname = res.rows.item(0)['name'];
+                                            $("#place").text(planargraphname + " " + spacename + " " + furniturename);
+                                        });
                                 });
                         }
                     });

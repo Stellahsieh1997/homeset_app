@@ -539,7 +539,11 @@
                                     tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [res.rows.item(0)['spaceId']],
                                         function (tx, res) {
                                             var spacename = res.rows.item(0)['name'];
-                                            $("#place").text(spacename + " " + furniturename);
+                                            tx.executeSql('SELECT * FROM planargraph WHERE planargraphId = ?', [res.rows.item(0)['planargraphId']],
+                                                function (tx, res) {
+                                                   var planargraphname = res.rows.item(0)['name'];
+                                                    $("#place").text(planargraphname + " " + spacename + " " + furniturename);
+                                                });
                                         });
                                 });
 
@@ -1087,7 +1091,7 @@
             addListeners: function () {
                 document.querySelector("#save").addEventListener("click", app.addNote);
                 cordova.plugins.notification.local.on("click", function (notification) {
-                    window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                    window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
                 });
                 cordova.plugins.notification.local.on("trigger", function (notification) {
                     //added to the notification center on the date to trigger it.

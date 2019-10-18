@@ -538,6 +538,7 @@
         var ownerpicker
         var user_email;
         var user_token;
+        var user_id;
         function onDeviceReady() {
             db = window.sqlitePlugin.openDatabase({
                 name: 'my.db',
@@ -549,10 +550,10 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
             });
 
             db.transaction(function (tx) {
@@ -562,12 +563,12 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email'];
                             user_token = res.rows.item(0)['token'];
-
+                            user_id = res.rows.item(0)['id'];
 
                             //類別滾輪
                             var categoryselect = []
                             var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡']
-                            tx.executeSql('SELECT * FROM category WHERE email=?', [res.rows.item(0)['email']],
+                            tx.executeSql('SELECT * FROM category WHERE user_id=?', [res.rows.item(0)['id']],
                                 function (tx, res) {
                                     var len = res.rows.length;
                                     if (res.rows.length >= 1) {
@@ -603,7 +604,7 @@
                             //所屬人滾輪
                             var ownerselect = []
                             var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事']
-                            tx.executeSql('SELECT * FROM owner WHERE email=?', [res.rows.item(0)['email']],
+                            tx.executeSql('SELECT * FROM owner WHERE user_id=?', [res.rows.item(0)['id']],
                                 function (tx, res) {
                                     var len = res.rows.length;
                                     if (res.rows.length >= 1) {
@@ -653,7 +654,7 @@
                             for (var j = 0; j < res.rows.length; j++) {
                                 if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
                                     $(".box-wrap").append(`<div class="box">
-                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
                                 }
                             }
@@ -665,30 +666,30 @@
 
                 db.transaction(function (tx) {
                     $(".box-wrap").html("")
-                    tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email], function (tx, res) {
+                    tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [user_id], function (tx, res) {
                         if (res.rows.length >= 1) {
                             var len = res.rows.length;
                             for (var y = 0; y < len; y++) {
                                 var tran = function (y) {
-                                    tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
+                                    tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [res.rows.item(y)['id']],
                                         function (tx, res) {
                                             var len = res.rows.length;
                                             if (res.rows.length >= 1) {
                                                 for (var i = 0; i < len; i++) {
-                                                    var spaceId = res.rows.item(i)['spaceId'];
+                                                    var spaceId = res.rows.item(i)['id'];
                                                     var tr = function (spaceId) {
-                                                        tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                                                        tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId], function (tx, res) {
                                                             var len = res.rows.length;
                                                             if (res.rows.length >= 1) {
                                                                 for (var x = 0; x < len; x++) {
-                                                                    var furnitureId = res.rows.item(x)['furnitureId'];
+                                                                    var furnitureId = res.rows.item(x)['id'];
                                                                     var trans = function (furnitureId) {
-                                                                        tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [furnitureId], function (tx, res) {
+                                                                        tx.executeSql('SELECT * FROM thing WHERE furniture_id = ?', [furnitureId], function (tx, res) {
                                                                             if (res.rows.length >= 1) {
                                                                                 for (var j = 0; j < res.rows.length; j++) {
                                                                                     if (res.rows.item(j)['category'] == cateValue) {
                                                                                         $(".box-wrap").append(`<div class="box">
-                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
                                                                                     }
 
@@ -729,7 +730,7 @@
                             for (var j = 0; j < res.rows.length; j++) {
                                 if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
                                     $(".box-wrap").append(`<div class="box">
-                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
                                 }
 
@@ -748,7 +749,7 @@
                             for (var j = 0; j < res.rows.length; j++) {
                                 if (res.rows.item(j)['owner'] == ownerValue) {
                                     $(".box-wrap").append(`<div class="box">
-                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                              <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
                                 }
 
@@ -771,7 +772,7 @@
                         for (var j = 0; j < res.rows.length; j++) {
                             if (res.rows.item(j)['out'] == 1) {
                                 $(".box-wrap").append(`<div class="box">
-                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                   </div>`)
                             }
 
@@ -797,7 +798,7 @@
                             for (var j = 0; j < res.rows.length; j++) {
 
                                 $(".box-wrap").append(`<div class="box">
-                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                   </div>`)
 
 

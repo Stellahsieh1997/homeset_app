@@ -135,13 +135,13 @@
             });
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
             });
 
 
@@ -153,7 +153,7 @@
                         for (var j = 0; j < res.rows.length; j++) {
                             if (res.rows.item(j)['remind'] == 1) {
                                 $(".list-group-flush").append(`<li class="list-group-item">
-                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><div class="rect"><img src="` + res.rows.item(j)['image'] + `" ><p>` + res.rows.item(j)['name'] + `</p><p>提醒日:` + res.rows.item(j)['time'] + `</p><p>提醒內容:` + res.rows.item(j)['content'] + `</p></div></a></li>`)
+                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><div class="rect"><img src="` + res.rows.item(j)['image'] + `" ><p>` + res.rows.item(j)['name'] + `</p><p>提醒日:` + res.rows.item(j)['time'] + `</p><p>提醒內容:` + res.rows.item(j)['content'] + `</p></div></a></li>`)
 
                             }
                         }

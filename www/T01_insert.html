@@ -384,6 +384,9 @@
         var db;
         var categorypicker
         var ownerpicker
+        var user_email;
+        var user_token;
+        var user_id;
         let urlParams = new URLSearchParams(window.location.search);
         var furnitureIdedit = urlParams.get('furniture');
 
@@ -399,12 +402,13 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS category (categoryId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (ownerId text primary key, name text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
             });
 
             db.transaction(function (tx) {
@@ -414,11 +418,12 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email'];
                             user_token = res.rows.item(0)['token'];
+                            user_id = res.rows.item(0)['id'];
 
                             //類別滾輪
                             var categoryselect = []
                             var categoryselect2 = ['包包', '鞋子', '衣服', '文具', '工具', '玩具', '杯子', '飾品', '化妝品', '眼鏡', '新增類別']
-                            tx.executeSql('SELECT * FROM category WHERE email=?', [res.rows.item(0)['email']],
+                            tx.executeSql('SELECT * FROM category WHERE user_id=?', [res.rows.item(0)['id']],
                                 function (tx, res) {
                                     var len = res.rows.length;
                                     if (res.rows.length >= 1) {
@@ -455,7 +460,7 @@
                             var ownerselect = []
                             var ownerselect2 = ['自己', '爸爸', '媽媽', '哥哥', '弟弟', '姊姊', '妹妹', '爺爺', '奶奶', '朋友', '同事', '新增所屬人']
 
-                            tx.executeSql('SELECT * FROM owner WHERE email=?', [res.rows.item(0)['email']],
+                            tx.executeSql('SELECT * FROM owner WHERE user_id=?', [res.rows.item(0)['id']],
                                 function (tx, res) {
                                     var len = res.rows.length;
                                     if (res.rows.length >= 1) {
@@ -488,27 +493,27 @@
                             //可選擇位置滾輪資料庫
                             var storage = []
                             var fstorage = []
-                            tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email], function (tx, res) {
+                            tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [res.rows.item(0)['id']], function (tx, res) {
                                 if (res.rows.length >= 1) {
                                     var len = res.rows.length;
                                     for (var y = 0; y < len; y++) {
                                         var planargraphname = res.rows.item(y)['name']
                                         var tran = function (y, planargraphname) {
-                                            tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
+                                            tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [res.rows.item(y)['id']],
                                                 function (tx, res) {
                                                     var len = res.rows.length;
                                                     // alert(len)
                                                     if (res.rows.length >= 1) {
                                                         for (var i = 0; i < len; i++) {
-                                                            var spaceId = res.rows.item(i)['spaceId'];
+                                                            var spaceId = res.rows.item(i)['id'];
                                                             var spacename = planargraphname + " " + res.rows.item(i)['name'];
                                                             var tr = function (spaceId, spacename) {
-                                                                tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                                                                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId], function (tx, res) {
                                                                     var len = res.rows.length;
                                                                     // alert(len);
                                                                     if (res.rows.length >= 1) {
                                                                         for (var j = 0; j < len; j++) {
-                                                                            fstorage.push({ id: res.rows.item(j)['furnitureId'], value: res.rows.item(j)['name'] });
+                                                                            fstorage.push({ id: res.rows.item(j)['id'], value: res.rows.item(j)['name'] });
                                                                         }
                                                                         storage.push({ id: spaceId, value: spacename, childs: fstorage });
 
@@ -537,14 +542,14 @@
 
             //呈現物品位置資訊
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
                         if (res.rows.length >= 1) {
                             var furniturename = res.rows.item(0)['name'];
-                            tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [res.rows.item(0)['spaceId']],
+                            tx.executeSql('SELECT * FROM space WHERE id = ?', [res.rows.item(0)['space_id']],
                                 function (tx, res) {
                                     var spacename = res.rows.item(0)['name'];
-                                    tx.executeSql('SELECT * FROM planargraph WHERE planargraphId = ?', [res.rows.item(0)['planargraphId']],
+                                    tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [res.rows.item(0)['planargraph_id']],
                                         function (tx, res) {
                                             var planargraphname = res.rows.item(0)['name'];
                                             $("#place").text(planargraphname + " " + spacename + " " + furniturename);
@@ -563,7 +568,7 @@
             // 夾層
             var layers = []
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
@@ -653,9 +658,9 @@
                 // alert("timestamp"+timestamp);
                 var email = user_email.replace(/@/g, "").split(".").join("");
                 var thingId = email + timestamp;
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
-                        tx.executeSql('INSERT INTO thing (thingId, name, description, image, category, owner, furnitureId, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [thingId, name, description, img, categoryValue, ownerValue, furnitureIdedit, numberValue, layerValue, out, remind, reminder, remindertextValue]);
+                        tx.executeSql('INSERT INTO thing (id, name, description, image, category, owner, furniture_id, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [thingId, name, description, img, categoryValue, ownerValue, furnitureIdedit, numberValue, layerValue, out, remind, reminder, remindertextValue]);
                         $('#addingthing').modal('show')
                         //建立提醒通知
                         let props = cordova.plugins.notification.local.getDefaults();
@@ -692,18 +697,18 @@
 
         function addthingc() {
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
-                        location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                        location.href = "F01.html?space=" + res.rows.item(0)['space_id'] + "&furniture=" + res.rows.item(0)['id'] + "";
                     });
             });
         }
 
         function addthingv() {
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
-                        location.href = "T01_insert.html?furniture=" + res.rows.item(0)['furnitureId'] + "";
+                        location.href = "T01_insert.html?furniture=" + res.rows.item(0)['id'] + "";
                     });
             });
         }
@@ -711,9 +716,9 @@
         function reload() {
 
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [furnitureIdedit],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
                     function (tx, res) {
-                        location.href = "F01.html?space=" + res.rows.item(0)['spaceId'] + "&furniture=" + res.rows.item(0)['furnitureId'] + "";
+                        location.href = "F01.html?space=" + res.rows.item(0)['space_id'] + "&furniture=" + res.rows.item(0)['id'] + "";
                     });
             });
         }
@@ -779,7 +784,7 @@
                 var categoryId = email + timestamp;
 
 
-                tx.executeSql('SELECT * FROM category WHERE email=?', [user_email],
+                tx.executeSql('SELECT * FROM category WHERE user_id=?', [user_id],
                     function (tx, res) {
                         var len = res.rows.length;
                         categoryselect = []
@@ -798,9 +803,9 @@
                             }
                         }
 
-                        tx.executeSql('INSERT INTO category (categoryId, name, email) VALUES (?,?,?)', [categoryId, addcategoryValue, user_email],
+                        tx.executeSql('INSERT INTO category (id, name, user_id) VALUES (?,?,?)', [categoryId, addcategoryValue, user_id],
                             function (tx, res) {
-                                tx.executeSql('SELECT * FROM category WHERE email=?', [user_email],
+                                tx.executeSql('SELECT * FROM category WHERE user_id=?', [user_id],
                                     function (tx, res) {
                                         var len = res.rows.length;
                                         categoryselect = []
@@ -842,7 +847,7 @@
                 var email = user_email.replace(/@/g, "").split(".").join("");
                 var ownerId = email + timestamp;
 
-                tx.executeSql('SELECT * FROM owner WHERE email=?', [user_email],
+                tx.executeSql('SELECT * FROM owner WHERE user_id=?', [user_id],
                     function (tx, res) {
                         var len = res.rows.length;
                         ownerselect = []
@@ -860,9 +865,9 @@
                                 return false
                             }
                         }
-                        tx.executeSql('INSERT INTO owner (ownerId, name, email) VALUES (?,?,?)', [ownerId, addownerValue, user_email],
+                        tx.executeSql('INSERT INTO owner (id, name, user_id) VALUES (?,?,?)', [ownerId, addownerValue, user_id],
                             function (tx, res) {
-                                tx.executeSql('SELECT * FROM owner WHERE email=?', [user_email],
+                                tx.executeSql('SELECT * FROM owner WHERE user_id=?', [user_id],
                                     function (tx, res) {
                                         var len = res.rows.length;
                                         ownerselect = []

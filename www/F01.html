@@ -206,6 +206,7 @@
     <script>
         var user_email;
         var user_token;
+        var user_id;
 
         //資料庫
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -218,15 +219,15 @@
 
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
 
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (furnitureId text primary key, name text, image text, layer text, spaceId text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer integer, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text, email text)');
             });
 
             let urlParams = new URLSearchParams(window.location.search);
@@ -240,12 +241,13 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email'];
                             user_token = res.rows.item(0)['token'];
+                            user_id = res.rows.item(0)['id']
                         }
                     }, function (error) {
                         alert('Something went Wrong');
                     });
 
-                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [spaceId],
+                tx.executeSql('SELECT * FROM space WHERE id = ?', [spaceId],
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
@@ -256,12 +258,12 @@
                     });
 
 
-                tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId], function (tx, res) {
                     var len = res.rows.length;
                     // alert(len);
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
-                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['furnitureId'] + `' onclick='fidclick("` + res.rows.item(i)['furnitureId'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['furnitureId'] + `' onclick='fclick("` + res.rows.item(i)['furnitureId'] + `")'><div class='content' id='fname` + res.rows.item(i)['furnitureId'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
+                            $(".flex").append(`<div id='fpress` + res.rows.item(i)['id'] + `' onclick='fidclick("` + res.rows.item(i)['id'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['id'] + `' onclick='fclick("` + res.rows.item(i)['id'] + `")'><div class='content' id='fname` + res.rows.item(i)['id'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
                             // 為長按出現的互動視窗
                             // var fed = `<div class="modal" id="fed` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fed` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
                             //     <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw">
@@ -331,17 +333,17 @@
                             // </div>`
                             // $("body").append(fped);
                             //fdclick fdd 為儲物櫃刪除互動視窗
-                            var fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
+                            var fdd = `<div class="modal fade" id="fdd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
                                             <div class="modal-body text-black">
-                                                <p>是否要刪除<spen id="fdname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</spen>?</p>
+                                                <p>是否要刪除<spen id="fdname`+ res.rows.item(i)['id'] + `">` + res.rows.item(i)['name'] + `</spen>?</p>
                                                 <div class="row" style="text-align: center">
                                                     <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fddc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fddc('`+ res.rows.item(i)['id'] + `')">取消</button>
                                                     </div>
                                                     <div class="col">
-                                                        <button type="submit" class="btn btn-outline-secondary" onclick="fddv('`+ res.rows.item(i)['furnitureId'] + `')">確認</button>
+                                                        <button type="submit" class="btn btn-outline-secondary" onclick="fddv('`+ res.rows.item(i)['id'] + `')">確認</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -351,17 +353,17 @@
 
                             $("body").append(fdd);
                             //fpclick fsd 為儲物櫃共享互動視窗
-                            var fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+                            var fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
                                         <div class="modal-body text-black">
-                                            <label>與他人共享<spen id="fsname`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['name'] + `</spen></label>
+                                            <label>與他人共享<spen id="fsname`+ res.rows.item(i)['id'] + `">` + res.rows.item(i)['name'] + `</spen></label>
                                             <input type="text" class="form-control" placeholder="輸入使用者帳號(電子郵件地址)">
 
                                                 <div class="row" style="text-align: center;margin-top: 5px">
                                                     <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fsdc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                        <button type="button" class="btn btn-outline-secondary" onclick="fsdc('`+ res.rows.item(i)['id'] + `')">取消</button>
                                                     </div>
                                                     <div class="col">
                                                         <button type="submit" class="btn btn-outline-secondary"
@@ -375,7 +377,7 @@
                                 </div>`
                             $("body").append(fsd);
                             //atd 為增加物品的互動視窗
-                            var atd = `<div class="modal" id="atd` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="atd` + res.rows.item(i)['furnitureId'] + `" aria-hidden="true">
+                            var atd = `<div class="modal" id="atd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="atd` + res.rows.item(i)['id'] + `" aria-hidden="true">
                                         <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
                                             <div class="modal-content">
                                                 <div class="modal-body " style="background-color: rgb(255, 255, 255);padding: 5px 0px 16px 0px;">
@@ -384,15 +386,15 @@
                                                     </div>
                                                     <hr style="margin: 5px 0px 16px 0px">
                                                     <div class="row objcenter">
-                                                        <a href="T01_insert.html?furniture=`+ res.rows.item(i)['furnitureId'] + `">單筆建立</a>
+                                                        <a href="T01_insert.html?furniture=`+ res.rows.item(i)['id'] + `">單筆建立</a>
                                                     </div>
                                                     <hr>
                                                     <div class="row objcenter">
-                                                        <a href="javascript:;" onclick="imgbatch('`+ res.rows.item(i)['furnitureId'] + `')">多筆建立</a>
+                                                        <a href="javascript:;" onclick="imgbatch('`+ res.rows.item(i)['id'] + `')">多筆建立</a>
                                                     </div>
                                                     <hr>
                                                     <div class="row objcenter">
-                                                        <a href="javascript:;" onclick="tcancel('`+ res.rows.item(i)['furnitureId'] + `')">取消</a>
+                                                        <a href="javascript:;" onclick="tcancel('`+ res.rows.item(i)['id'] + `')">取消</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -400,7 +402,7 @@
                                     </div>`
                             $("body").append(atd);
                             //fnclick fned 為儲物櫃名稱編輯修改互動視窗
-                            var fned = `<div class="modal fade " id="fned` + res.rows.item(i)['furnitureId'] + `" tabindex="-1" role="dialog" aria-labelledby="fned` + res.rows.item(i)['furnitureId'] + `" aria-hidden="False">
+                            var fned = `<div class="modal fade " id="fned` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="fned` + res.rows.item(i)['id'] + `" aria-hidden="False">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content" style="border-radius: 5%;">
                                             <div class="modal-body text-black">
@@ -408,30 +410,30 @@
                                                     <div style="margin-bottom:10px;">
                                                         <label for="furniturename">儲物櫃名稱</label>
                                                         <P id="fndwarn" style="display:inline-flex;color: red;margin:0px;"></P>
-                                                        <input type="text" class="form-control" id="furniturename`+ res.rows.item(i)['furnitureId'] + `" value="` + res.rows.item(i)['name'] + `" required>
+                                                        <input type="text" class="form-control" id="furniturename`+ res.rows.item(i)['id'] + `" value="` + res.rows.item(i)['name'] + `" required>
                                                     </div>
                                                     <div style="margin-bottom:10px;">
                                                     <label for="furniturename">夾層數量</label>
-                                                    <button type="button" class="btn btn-outline " id="updateflayer`+ res.rows.item(i)['furnitureId'] + `">` + res.rows.item(i)['layer'] + `</button>
+                                                    <button type="button" class="btn btn-outline " id="updateflayer`+ res.rows.item(i)['id'] + `">` + res.rows.item(i)['layer'] + `</button>
                                                     </div>
                                                     <label>照片</label>
                                                     <div style="margin-bottom: 10px;">
                                                         <div style="position: relative;" class="fit">
-                                                            <div id="feimg`+ res.rows.item(i)['furnitureId'] + `" class="fit">
-                                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['furnitureId'] + `">
+                                                            <div id="feimg`+ res.rows.item(i)['id'] + `" class="fit">
+                                                                <img src="` + res.rows.item(i)['image'] + `" class="fephotothumb" id="fimagedit` + res.rows.item(i)['id'] + `">
                                                             </div>
                                                             <div class='camera' >
-                                                                <i class='icon ion-ios-camera' onclick="fpem('`+ res.rows.item(i)['furnitureId'] + `')"></i>
+                                                                <i class='icon ion-ios-camera' onclick="fpem('`+ res.rows.item(i)['id'] + `')"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                         <div class="row" style="text-align: center">
                                                             <div class="col">
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ res.rows.item(i)['furnitureId'] + `')">取消</button>
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndc('`+ res.rows.item(i)['id'] + `')">取消</button>
                                                             </div>
 
                                                             <div class="col">
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ res.rows.item(i)['furnitureId'] + `')">確認</button>
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="fndv('`+ res.rows.item(i)['id'] + `')">確認</button>
                                                             </div>
                                                         </div>
                                                 </form>
@@ -442,8 +444,8 @@
                             $("body").append(fned);
                             // 為fned修改夾層的滾輪
                             var layerselect = `<script>
-                                        var layers`+ res.rows.item(i)['furnitureId'] + ` = new MobileSelect({
-                                        trigger: '#updateflayer`+ res.rows.item(i)['furnitureId'] + `',
+                                        var layers`+ res.rows.item(i)['id'] + ` = new MobileSelect({
+                                        trigger: '#updateflayer`+ res.rows.item(i)['id'] + `',
                                         title: '夾層',
                                         cancelBtnColor: '#f0f0f0',
                                         ensureBtnColor: '#f0f0f0',
@@ -469,8 +471,8 @@
                         // alert(urlParams)
                         var furnitureId = urlParams.get('furniture');
                         if (!furnitureId) {
-                            fidclick(res.rows.item(0)['furnitureId'])
-                            fclick(res.rows.item(0)['furnitureId'])
+                            fidclick(res.rows.item(0)['id'])
+                            fclick(res.rows.item(0)['id'])
                         } else {
                             fidclick(furnitureId)
                             fclick(furnitureId)
@@ -504,7 +506,7 @@
 
             //右下角功能鍵
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [x],
+                tx.executeSql('SELECT * FROM thing WHERE furniture_id = ?', [x],
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
@@ -513,7 +515,7 @@
                             $("#tcount").html(0);
                         }
                     });
-                tx.executeSql('SELECT * FROM furniture WHERE furnitureId = ?', [x],
+                tx.executeSql('SELECT * FROM furniture WHERE id = ?', [x],
                     function (tx, res) {
                         $("#lcount").html(res.rows.item(0)['layer']);
                         var addthing = `<nav class="cd-stretchy-nav">
@@ -522,10 +524,10 @@
                             <span aria-hidden="true"></span>
                             </a>
                             <ul>
-                                <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
-                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['furnitureId'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
-                                <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['furnitureId'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
-                                <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['furnitureId'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                                <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['id'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
+                                <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['id'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
+                                <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['id'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                                <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['id'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                             </ul> 
                             <span aria-hidden="true" class="stretchy-nav-bg"></span>
                             </nav>`;
@@ -554,7 +556,7 @@
             //呈現物品
             db.transaction(function (tx) {
                 $(".box-wrap").html("")
-                tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furnitureId = ? ORDER BY layer DESC', [x], function (tx, res) {
+                tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furniture_id = ? ORDER BY layer DESC', [x], function (tx, res) {
                     var len = res.rows.length;
 
                     if (res.rows.length >= 1) {
@@ -563,7 +565,7 @@
                             // alert(num)
                             if (!num) {
                                 var tr = function (num, i) {
-                                    tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furnitureId = ?', [x], function (tx, res) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furniture_id = ?', [x], function (tx, res) {
                                         $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'><span>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         var len = res.rows.length;
                                         // alert("num:" + num)
@@ -581,7 +583,7 @@
                                                 }
                                                 $("#shrink" + x + i + "").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
                                             }
                                             $("#shrink" + x + i + "").slideDown(0);
@@ -590,7 +592,7 @@
                                 }(num, i)
                             } else if (num == "無夾層") {
                                 var tr = function (num, i) {
-                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer len:" + len);
@@ -607,7 +609,7 @@
                                                 }
                                                 $("#shrink" + x + i + "").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
                                             }
                                         }
@@ -615,7 +617,7 @@
                                 }(num, i)
                             } else {
                                 var tr = function (num, i) {
-                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furnitureId = ?', [num, x], function (tx, res) {
+                                    tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
                                         $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
                                         $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         var len = res.rows.length;
@@ -634,7 +636,7 @@
                                                 }
                                                 $("#shrink" + x + i + "").append(`<div class="box">
                                                                 `+ warn + `
-                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
+                                                                <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
                                             }
                                             $("#shrink" + x + i + "").slideDown(0);
@@ -730,7 +732,7 @@
             var img = document.getElementById("fimagedit" + id + "").src;
 
             db.transaction(function (tx) {
-                var query = "UPDATE furniture SET name = ?,layer = ?,image = ? WHERE furnitureId = ?";
+                var query = "UPDATE furniture SET name = ?,layer = ?,image = ? WHERE id = ?";
                 tx.executeSql(query, [name, updateflayer, img, id], function (tx, res) {
                     // fidclick(id);
                     // fclick(id);
@@ -745,17 +747,17 @@
                 });
 
                 if (updateflayer == "無夾層") {
-                    tx.executeSql("SELECT * FROM thing WHERE furnitureId = ?", [id], function (tx, res) {
+                    tx.executeSql("SELECT * FROM thing WHERE furniture_id = ?", [id], function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             for (var i = 0; i < len; i++) {
                                 var layernum = res.rows.item(i)['layer']
-                                var thingId = res.rows.item(i)['thingId']
+                                var thingId = res.rows.item(i)['id']
                                 var tran = function (layernum, thingId) {
                                     if (!layernum) {
                                     } else {
                                         db.transaction(function (tx) {
-                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE id = ?", [updateflayer, thingId]);
                                         });
                                     }
                                 }(layernum, thingId);
@@ -766,17 +768,17 @@
                     });
 
                 } else {
-                    tx.executeSql("SELECT * FROM thing WHERE furnitureId = ?", [id], function (tx, res) {
+                    tx.executeSql("SELECT * FROM thing WHERE furniture_id = ?", [id], function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
 
                             for (var i = 0; i < len; i++) {
                                 var layernum = res.rows.item(i)['layer']
-                                var thingId = res.rows.item(i)['thingId']
+                                var thingId = res.rows.item(i)['id']
                                 var tran = function (layernum, thingId) {
                                     if (layernum == "無夾層") {
                                         db.transaction(function (tx) {
-                                            tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [1, thingId]);
+                                            tx.executeSql("UPDATE thing SET layer = ? WHERE id = ?", [1, thingId]);
                                         });
                                     }
 
@@ -784,7 +786,7 @@
                                     if (layernum > updateflayer) {
                                         if (layernum != "無夾層") {
                                             db.transaction(function (tx) {
-                                                tx.executeSql("UPDATE thing SET layer = ? WHERE thingId = ?", [updateflayer, thingId]);
+                                                tx.executeSql("UPDATE thing SET layer = ? WHERE id = ?", [updateflayer, thingId]);
                                             });
                                         }
                                     }
@@ -821,9 +823,9 @@
 
         function fddv(id) {
             db.transaction(function (tx) {
-                var query = "DELETE FROM furniture where furnitureId = ?";
+                var query = "DELETE FROM furniture where id = ?";
                 tx.executeSql(query, [id]);
-                var query2 = "DELETE FROM thing where furnitureId = ?";
+                var query2 = "DELETE FROM thing where furniture_id = ?";
                 tx.executeSql(query2, [id], function (tx, res) {
                     let urlParams = new URLSearchParams(window.location.search);
                     var spaceId = urlParams.get('space');
@@ -901,7 +903,7 @@
 
                             var email = user_email.replace(/@/g, "").split(".").join("");
                             var furnitureId = email + timestamp;
-                            tx.executeSql('INSERT INTO furniture (furnitureId, name, image, layer, spaceId) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
+                            tx.executeSql('INSERT INTO furniture (id, name, image, layer, space_id) VALUES (?,?,?,?,?)', [furnitureId, name, img, layervalue, spaceId],
                                 function (tx, res) {
                                     location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
                                 }, function (error) {
@@ -918,10 +920,10 @@
             let urlParams = new URLSearchParams(window.location.search);
             var spaceId = urlParams.get('space');
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE spaceId=?', [spaceId], function (tx, res) {
+                tx.executeSql('SELECT * FROM space WHERE id=?', [spaceId], function (tx, res) {
                     var len = res.rows.length;
                     if (res.rows.length >= 1) {
-                        location.href = "H01.html?planargraph=" + res.rows.item(0)['planargraphId'] + "";
+                        location.href = "H01.html?planargraph=" + res.rows.item(0)['planargraph_id'] + "";
                     }
                 });
             });
@@ -1069,7 +1071,7 @@
 
                             var tran = function (uri, thingId) {
                                 db.transaction(function (tx) {
-                                    tx.executeSql('INSERT INTO thing (thingId, image, furnitureId) VALUES (?,?,?)', [thingId, uri, id]);
+                                    tx.executeSql('INSERT INTO thing (id, image, furniture_id) VALUES (?,?,?)', [thingId, uri, id]);
                                 });
                             }(uri, thingId);
                         }

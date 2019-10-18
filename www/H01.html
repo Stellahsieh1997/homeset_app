@@ -358,6 +358,7 @@
     <script>
         var user_email;
         var user_token;
+        var user_id;
 
 
         new Mmenu(document.querySelector('#menu'));
@@ -383,10 +384,11 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text, email text)');
             });
 
 
@@ -397,13 +399,15 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
+                            user_id = res.rows.item(0)['id']
+                            
                             $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
-                            tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [res.rows.item(0)['email']], function (tx, res) {
+                            tx.executeSql("SELECT * FROM planargraph WHERE user_id = ?", [res.rows.item(0)['id']], function (tx, res) {
                                 var len = res.rows.length;
 
                                 if (res.rows.length >= 1) {
                                     for (var i = 0; i < len; i++) {
-                                        $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['planargraphId'] + `')">` + res.rows.item(i)['name'] + `</a>`)
+                                        $(".plan1").prepend(`<a class="dropdown-item" onclick="pnidclick('` + res.rows.item(i)['id'] + `')">` + res.rows.item(i)['name'] + `</a>`)
                                     }
                                     $("#pedit").css('display', 'block');
                                     $("#pdelete").css('display', 'block');
@@ -412,7 +416,7 @@
                                     // alert(urlParams)
                                     var planargraphId = urlParams.get('planargraph');
                                     if (!planargraphId) {
-                                        pnidclick(res.rows.item(0)['planargraphId'])
+                                        pnidclick(res.rows.item(0)['id'])
 
                                     } else {
                                         pnidclick(planargraphId)
@@ -422,6 +426,8 @@
                             });
 
                         }
+                    }, function (error) {
+                        alert(JSON.stringify(error))
                     });
             });
         }
@@ -436,7 +442,7 @@
         //insertspace 新增格局
         function pnidclick(id) {
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM planargraph WHERE planargraphId = ?', [id],
+                tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [id],
                     function (tx, res) {
                         $("#pnid").html(res.rows.item(0)['name'])
                         $("#editpname").val(res.rows.item(0)['name'])
@@ -449,15 +455,15 @@
 
             //呈現格局
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [id],
+                tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [id],
                     function (tx, res) {
                         $(".box-wrap").html("")
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             for (var i = 0; i < len; i++) {
                                 $(".box-wrap").append(`<div style="background-color:` + res.rows.item(i)['space_color'] + `;" class="box">
-                                                        <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['spaceId'] + `")' class='icon ion-md-more imore'></i>
-                                                        <a href="F01.html?space=`+ res.rows.item(i)['spaceId'] + `"><span id="sname` + res.rows.item(i)['spaceId'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
+                                                        <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['id'] + `")' class='icon ion-md-more imore'></i>
+                                                        <a href="F01.html?space=`+ res.rows.item(i)['id'] + `"><span id="sname` + res.rows.item(i)['id'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
                                                         </div>`)
                             }
                         }
@@ -473,7 +479,7 @@
         function spacemore(spaceId) {
             $("#editSpace").modal('show');
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [spaceId],
+                tx.executeSql('SELECT * FROM space WHERE id = ?', [spaceId],
                     function (tx, res) {
                         $("#editsnameval").val(res.rows.item(0)['name'])
                         $("#delsname").html(res.rows.item(0)['name'])
@@ -494,10 +500,10 @@
         function editcolor(id) {
             var spacecolor = $("#colorid").val();
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [id],
+                tx.executeSql('SELECT * FROM space WHERE id = ?', [id],
                     function (tx, res) {
-                        var planargraphId = res.rows.item(0)['planargraphId']
-                        tx.executeSql("UPDATE space SET space_color = ? WHERE spaceId = ?", [spacecolor, id],
+                        var planargraphId = res.rows.item(0)['planargraph_id']
+                        tx.executeSql("UPDATE space SET space_color = ? WHERE id = ?", [spacecolor, id],
                             function (tx, res) {
                                 location.href = "H01.html?planargraph=" + planargraphId + "";
                             });
@@ -515,7 +521,7 @@
                 return
             }
             db.transaction(function (tx) {
-                var query = "UPDATE space SET name = ? WHERE spaceId = ?";
+                var query = "UPDATE space SET name = ? WHERE id = ?";
                 tx.executeSql(query, [name, id], function (tx, res) {
                     $("#editsmodal").modal('hide');
                     $("#sname" + id + "").html(name);
@@ -535,7 +541,7 @@
                 return
             }
             db.transaction(function (tx) {
-                var query = "UPDATE planargraph SET name = ? WHERE planargraphId = ?";
+                var query = "UPDATE planargraph SET name = ? WHERE id = ?";
                 tx.executeSql(query, [name, id], function (tx, res) {
                     $("#exampleModalCenter4").modal('hide');
                     location.href = "H01.html?planargraph=" + id + "";
@@ -546,28 +552,26 @@
 
         // 刪除格局
         function delspace(id) {
-
             var planargraphId
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE spaceId = ?', [id],
+                tx.executeSql('SELECT * FROM space WHERE id = ?', [id],
                     function (tx, res) {
-                        planargraphId = res.rows.item(0)['planargraphId']
-
-                        tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
+                        planargraphId = res.rows.item(0)['planargraph_id']
+                        tx.executeSql("SELECT * FROM furniture WHERE space_id = ?", [id], function (tx, res) {
                             var len = res.rows.length;
                             if (res.rows.length >= 1) {
                                 for (var j = 0; j < len; j++) {
                                     var trans = function (j) {
-                                        tx.executeSql("DELETE FROM thing WHERE furnitureId = ?", [res.rows.item(j)['furnitureId']]);
+                                        tx.executeSql("DELETE FROM thing WHERE furniture_id = ?", [res.rows.item(j)['id']]);
                                     }(j);
                                 }
-                                tx.executeSql("DELETE FROM furniture WHERE spaceId = ?", [id], function (tx, res) {
-                                    tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
+                                tx.executeSql("DELETE FROM furniture WHERE space_id = ?", [id], function (tx, res) {
+                                    tx.executeSql("DELETE FROM space WHERE id = ?", [id], function (tx, res) {
                                         location.href = "H01.html?planargraph=" + planargraphId + "";
                                     });
                                 });
                             } else {
-                                tx.executeSql("DELETE FROM space WHERE spaceId = ?", [id], function (tx, res) {
+                                tx.executeSql("DELETE FROM space WHERE id = ?", [id], function (tx, res) {
                                     location.href = "H01.html?planargraph=" + planargraphId + "";
                                 });
                             }
@@ -580,30 +584,30 @@
         // 刪除平面圖
         function delPlanargraph(id) {
             db.transaction(function (tx) {
-                tx.executeSql("SELECT * FROM space WHERE planargraphId = ?", [id], function (tx, res) {
+                tx.executeSql("SELECT * FROM space WHERE planargraph_id = ?", [id], function (tx, res) {
                     var len = res.rows.length;
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
                             var tran = function (i) {
-                                var spaceId = res.rows.item(i)['spaceId']
-                                tx.executeSql("SELECT * FROM furniture WHERE spaceId = ?", [spaceId], function (tx, res) {
+                                var spaceId = res.rows.item(i)['id']
+                                tx.executeSql("SELECT * FROM furniture WHERE space_id = ?", [spaceId], function (tx, res) {
                                     var len = res.rows.length;
                                     if (res.rows.length >= 1) {
                                         for (var j = 0; j < len; j++) {
                                             var trans = function (j) {
-                                                tx.executeSql("DELETE FROM thing where furnitureId = ?", [res.rows.item(j)['furnitureId']]);
+                                                tx.executeSql("DELETE FROM thing where furniture_id = ?", [res.rows.item(j)['id']]);
                                             }(j);
                                         }
-                                        tx.executeSql("DELETE FROM furniture where spaceId = ?", [spaceId], function (tx, res) {
-                                            tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
-                                                tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                        tx.executeSql("DELETE FROM furniture where space_id = ?", [spaceId], function (tx, res) {
+                                            tx.executeSql("DELETE FROM space WHERE planargraph_id = ?", [id], function (tx, res) {
+                                                tx.executeSql("DELETE FROM planargraph WHERE id = ?", [id], function (tx, res) {
                                                     location.href = "H01.html"
                                                 });
                                             });
                                         });
                                     } else {
-                                        tx.executeSql("DELETE FROM space WHERE planargraphId = ?", [id], function (tx, res) {
-                                            tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                                        tx.executeSql("DELETE FROM space WHERE planargraph_id = ?", [id], function (tx, res) {
+                                            tx.executeSql("DELETE FROM planargraph WHERE id = ?", [id], function (tx, res) {
                                                 location.href = "H01.html"
                                             });
                                         });
@@ -613,7 +617,7 @@
                             }(i);
                         }
                     } else {
-                        tx.executeSql("DELETE FROM planargraph WHERE planargraphId = ?", [id], function (tx, res) {
+                        tx.executeSql("DELETE FROM planargraph WHERE id = ?", [id], function (tx, res) {
                             location.href = "H01.html"
                         });
                     }
@@ -639,7 +643,7 @@
                     $('#pniform').addClass("was-validated");
                     return
                 }
-                tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email],
+                tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [user_id],
                     function (tx, res) {
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
@@ -655,7 +659,7 @@
                             }
 
                         }
-                        tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
+                        tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, name, user_id],
                             function (tx, res) {
                                 $('#exampleModalCenter3').modal('hide')
                                 $("#insertpname").val("");
@@ -663,7 +667,10 @@
                             }, function (error) {
                                 alert('Something went Wrong');
                             });
-                    });
+                    }, function (error) {
+                                alert('Something went Wrong');
+                                alert(JSON.stringify(error));
+                            });
 
 
             });
@@ -681,7 +688,7 @@
                 var email = user_email.replace(/@/g, "").split(".").join("");
                 var planargraphId = email + timestamp;
                 var name = $("#insertpname").val();
-                tx.executeSql('INSERT INTO planargraph (planargraphId, name, email) VALUES (?,?,?)', [planargraphId, name, user_email],
+                tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, name, user_id],
                     function (tx, res) {
                         $('#exampleModalCenter3').modal('hide')
                         $("#insertpname").val("");
@@ -711,7 +718,7 @@
                     return
                 }
 
-                tx.executeSql('INSERT INTO space (spaceId, name, planargraphId) VALUES (?,?,?)', [spaceId, name, planargraphId],
+                tx.executeSql('INSERT INTO space (id, name, planargraph_id) VALUES (?,?,?)', [spaceId, name, planargraphId],
                     function (tx, res) {
                         $('#exampleModalCenter2').modal('hide')
                         $("#insertsname").val("");

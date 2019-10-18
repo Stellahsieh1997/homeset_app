@@ -57,6 +57,7 @@
         //收藏
         var user_email;
         var user_token;
+        var user_id;
         document.addEventListener("deviceready", onDeviceReady, false);
         var db;
         function onDeviceReady() {
@@ -70,7 +71,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
             });
 
             db.transaction(function (tx) {
@@ -80,6 +81,7 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
+                            user_id = res.rows.item(0)['id']
                             $.ajax({
                                 headers: {
                                     "Authorization": "Token " + user_token + ""

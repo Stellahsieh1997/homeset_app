@@ -192,10 +192,10 @@
             });
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
             });
 
             db.transaction(function (tx) {
@@ -218,7 +218,7 @@
                                 },
                                 success: function (res) {
                                     if (res.length >= 1) {
-                                        for (i = res.length-1; i >=0; i--) {
+                                        for (i = res.length - 1; i >= 0; i--) {
                                             var category
                                             switch (parseInt(res[i].category)) {
                                                 case 1:
@@ -243,8 +243,8 @@
                                                     category = "無類別";
                                             }
                                             var title = res[i].title;
-                                            if(title.length>25){
-                                                title = res[i].title.substr(0,24)+"...";
+                                            if (title.length > 25) {
+                                                title = res[i].title.substr(0, 24) + "...";
                                             }
                                             var post = `<div style="position: relative">
                                                     <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>

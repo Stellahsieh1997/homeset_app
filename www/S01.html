@@ -665,18 +665,47 @@
 
                 db.transaction(function (tx) {
                     $(".box-wrap").html("")
-
-                    tx.executeSql('SELECT * FROM thing', [], function (tx, res) {
+                    tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email], function (tx, res) {
                         if (res.rows.length >= 1) {
-                            for (var j = 0; j < res.rows.length; j++) {
-                                if (res.rows.item(j)['category'] == cateValue) {
-                                    $(".box-wrap").append(`<div class="box">
+                            var len = res.rows.length;
+                            for (var y = 0; y < len; y++) {
+                                var tran = function (y) {
+                                    tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
+                                        function (tx, res) {
+                                            var len = res.rows.length;
+                                            if (res.rows.length >= 1) {
+                                                for (var i = 0; i < len; i++) {
+                                                    var spaceId = res.rows.item(i)['spaceId'];
+                                                    var tr = function (spaceId) {
+                                                        tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+                                                            var len = res.rows.length;
+                                                            if (res.rows.length >= 1) {
+                                                                for (var x = 0; x < len; x++) {
+                                                                    var furnitureId = res.rows.item(x)['furnitureId'];
+                                                                    var trans = function (furnitureId) {
+                                                                        tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [furnitureId], function (tx, res) {
+                                                                            if (res.rows.length >= 1) {
+                                                                                for (var j = 0; j < res.rows.length; j++) {
+                                                                                    if (res.rows.item(j)['category'] == cateValue) {
+                                                                                        $(".box-wrap").append(`<div class="box">
                                                               <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                               </div>`)
-                                }
+                                                                                    }
 
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }(furnitureId)
+                                                                }
+                                                            }
+
+                                                        });
+                                                    }(spaceId)
+                                                }
+                                            }
+                                        });
+                                }(y)
                             }
-
                         }
                     });
                 });
@@ -786,48 +815,48 @@
 
 
         // tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [user_email], function (tx, res) {
-        //     if (res.rows.length >= 1) {
-        //         var len = res.rows.length;
-        //         for (var y = 0; y < len; y++) {
-        //             var tran = function (y) {
-        //                 tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
-        //                     function (tx, res) {
-        //                         var len = res.rows.length;
-        //                         if (res.rows.length >= 1) {
-        //                             for (var i = 0; i < len; i++) {
-        //                                 var spaceId = res.rows.item(i)['spaceId'];
-        //                                 var tr = function (spaceId) {
-        //                                     tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
-        //                                         var len = res.rows.length;
-        //                                         if (res.rows.length >= 1) {
-        //                                             for (var x = 0; x < len; x++) {
-        //                                                 var furnitureId = res.rows.item(i)['furnitureId'];
-        //                                                 var trans = function (furnitureId) {
-        //                                                     tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [furnitureId], function (tx, res) {
-        //                                                         if (res.rows.length >= 1) {
-        //                                                             for (var j = 0; j < res.rows.length; j++) {
-        //                                                                 if (res.rows.item(j)['owner'] == ownerValue && res.rows.item(j)['category'] == cateValue) {
-        //                                                                     $(".box-wrap").append(`<div class="box">
+        //                 if (res.rows.length >= 1) {
+        //                     var len = res.rows.length;
+        //                     for (var y = 0; y < len; y++) {
+        //                         var tran = function (y) {
+        //                             tx.executeSql('SELECT * FROM space WHERE planargraphId = ?', [res.rows.item(y)['planargraphId']],
+        //                                 function (tx, res) {
+        //                                     var len = res.rows.length;
+        //                                     if (res.rows.length >= 1) {
+        //                                         for (var i = 0; i < len; i++) {
+        //                                             var spaceId = res.rows.item(i)['spaceId'];
+        //                                             var tr = function (spaceId) {
+        //                                                 tx.executeSql('SELECT * FROM furniture WHERE spaceId = ?', [spaceId], function (tx, res) {
+        //                                                     var len = res.rows.length;
+        //                                                     if (res.rows.length >= 1) {
+        //                                                         for (var x = 0; x < len; x++) {
+        //                                                             var furnitureId = res.rows.item(x)['furnitureId'];
+        //                                                             var trans = function (furnitureId) {
+        //                                                                 tx.executeSql('SELECT * FROM thing WHERE furnitureId = ?', [furnitureId], function (tx, res) {
+        //                                                                     if (res.rows.length >= 1) {
+        //                                                                         for (var j = 0; j < res.rows.length; j++) {
+        //                                                                             if (res.rows.item(j)['category'] == cateValue) {
+        //                                                                                 $(".box-wrap").append(`<div class="box">
         //                                                       <a href="T01_edit.html?thing=`+ res.rows.item(j)['thingId'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
         //                                                       </div>`)
-        //                                                                 }
-        //                                                             }
+        //                                                                             }
+
+        //                                                                         }
+        //                                                                     }
+        //                                                                 });
+        //                                                             }(furnitureId)
         //                                                         }
-        //                                                     });
+        //                                                     }
 
-        //                                                 }(furnitureId)
-        //                                             }
+        //                                                 });
+        //                                             }(spaceId)
         //                                         }
-
-        //                                     });
-        //                                 }(spaceId)
-        //                             }
-        //                         }
-        //                     });
-        //             }(y)
-        //         }
-        //     }
-        // });
+        //                                     }
+        //                                 });
+        //                         }(y)
+        //                     }
+        //                 }
+        //             });
 
 
 

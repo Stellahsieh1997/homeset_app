@@ -53,7 +53,7 @@
                 <li><a href="../www/H02.html">與我共用的項目</a></li>
                 <li><a href="../www/H03.html">儲存的文章</a></li>
                 <li><a href="../www/H04.html">物品提醒</a></li>
-                <li><a href="#">同步</a></li>
+                <li><a href="#" onclick="test()">同步</a></li>
                 <li><a href="#" onclick="reset()">重設密碼</a></li>
                 <li><a href="#" onclick="logout()">登出</a></li>
             </ul>
@@ -386,6 +386,7 @@
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (email text primary key, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph(planargraphId text primary key, name text, email text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (spaceId text primary key, name text, space_color text, planargraphId text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (thingId text primary key, name text, description text, image text, category text, owner text, furnitureId text, number integer, layer text, out integer, remind integer, time date, content text)');
             });
 
 
@@ -396,7 +397,7 @@
                         if (res.rows.length >= 1) {
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
-                            $(".mm-navbar__title").html("Hi~"+" "+res.rows.item(0)['nickname']);
+                            $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
                             tx.executeSql('SELECT * FROM planargraph WHERE email = ?', [res.rows.item(0)['email']], function (tx, res) {
                                 var len = res.rows.length;
 
@@ -751,9 +752,56 @@
             });
         }
 
+        function test() {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM thing', [],
+                    function (tx, res) {
+                        var image = res.rows.item(1)['image'];
+                        alert(image);
+                        uploadFile(image, "name")
+                    });
+            });
+        }
 
+        //完整代码：
+        function uploadFile(fileurl, name) {
+            let options = new FileUploadOptions();
+            options.fileKey = "image";
+            //获取后缀，用于生成图片时用
+            let point = fileurl.lastIndexOf(".");
+            let type = fileurl.substr(point);
+            // options.fileName = name;
+            // options.mimeType = "image/jpeg";
+            let headers = { "Authorization": "Token " + user_token + "" };
+            options.headers = headers;
+            //上传附带参数
+            var params = {};
+            params.type = type;
+            params.title = "eee";
+            params.content = "typeeeeee";
 
+            //设置参数，后台获取
+            options.params = params;
+            options.httpMethod = "POST";
+            //设置提交方式，可以修改，修改方式如上
+            let ft = new FileTransfer();
+            ft.upload(fileurl, encodeURI("http://140.131.114.157/posts/59/set_image"), onSuccess, onError, options);
+            function onSuccess(r) {
+                alert("Code = " + r.responseCode);
+                alert("Response = " + r.response);
+                alert("Sent = " + r.bytesSent);
+                alert("upload onSuccess " + JSON.stringify(r));
+                uploadhelp(r.response, type);
+            }
 
+            function onError(error) {
+                alert("An error has occurred: Code = " + error.code);
+                alert("upload error source " + error.source);
+                alert("upload error target " + error.target);
+                alert("upload error target " + JSON.stringify(error));
+            }
+
+        }
     </script>
 
 </body>

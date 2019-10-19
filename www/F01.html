@@ -79,27 +79,65 @@
 
     <!-- 放物品的地方 -->
     <div class="box-wrap">
-        <!-- <div class="objcenter" style="height: 50vh;width: 100vw;">
-                    <p style="color:gray; font-size:18px;">請點選左上方的加鍵，以建立儲物櫃。</p>
-                </div> -->
-        <!-- <p><span>尚未編輯完成</span><i class='icon ion-md-arrow-dropdown'></i></p>
-        <hr/>
-        <div class="shrink">
-            <div class="box">
-                <a href="#"><img
-                        src="static/photo-library.png" style=width:100%;height:100%></a>
+
+    </div>
+    <!-- 生成pdf -->
+    <div id="furniturepdf" style="display: none;">
+        <div style="background-color: #254F6E;padding: 12px;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
+            <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                <img id="fimgpdf" src="file:///android_asset/www/static/post/01.jpg" width="150" height="150"
+                    style="border-radius: 50%;">
+            </div>
+            <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:white;">
+                <p style="margin-bottom: 5px;">儲物櫃名稱: <span id="fnamepdf"></span></p>
+                <p style="margin-bottom: 5px;">夾層數: <span id="flayerpdf"></span></p>
+                <p style="margin-bottom: 0px;">存放位置: <span id="fplacepdf"></span></p>
             </div>
         </div>
-        
-        <p>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></p>
-        <hr/>
-        <div class="shrink">
-            <div class="box">
-                <a href="#"><img
-                        src="static/photo-library.png" style=width:100%;height:100%></a>
+        <div id="thingpdf">
+            <p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
+                    style="padding: 5px;background-color: #f4c82ae7;">尚未編輯完成</span></p>
+
+            <div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                    <img src="file:///android_asset/www/static/post/01.jpg" width="150" height="150">
+                </div>
+                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                    <p style="margin-bottom: 5px;">物品名稱</p>
+                    <p style="margin-bottom: 5px;">內容</p>
+                    <p style="margin-bottom: 0px;">數量</p>
+                </div>
             </div>
-        </div> -->
+
+            <div
+                style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                <div
+                    style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                    <img src="file:///android_asset/www/static/post/01.jpg" width="150" height="150">
+                </div>
+                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                    <p style="margin-bottom: 5px;">物品名稱</p>
+                    <p style="margin-bottom: 5px;">內容</p>
+                    <p style="margin-bottom: 0px;">數量</p>
+                </div>
+            </div>
+
+            <div
+                style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                <div
+                    style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                    <img src="file:///android_asset/www/static/post/01.jpg" width="150" height="150">
+                </div>
+                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                    <p style="margin-bottom: 5px;">物品名稱</p>
+                    <p style="margin-bottom: 5px;">內容</p>
+                    <p style="margin-bottom: 0px;">數量</p>
+                </div>
+            </div>
+
+        </div>
     </div>
+
 
     <!-- 增加儲物櫃互動視窗 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -483,6 +521,21 @@
             });
 
         }
+        // 生成pdf
+        function createpdf(name) {
+            let options = {
+                documentSize: 'A4',
+                type: 'share',
+                fileName: ''+name+'.pdf'
+            }
+
+            var furniturepdf = $("#furniturepdf").html()
+            pdf.fromData(furniturepdf, options)
+                .then((stats) => console.log('status', stats))   // ok..., ok if it was able to handle the file to the OS.  
+                .catch((err) => console.err(err))
+        }
+
+
 
         // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
 
@@ -527,7 +580,7 @@
                                 <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['id'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['id'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['id'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
-                                <li><a href="#0" onclick="fsclick( '`+ res.rows.item(0)['id'] + `' )"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                                <li><a href="#0" onclick="createpdf('`+ res.rows.item(0)['name'] + `')"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                             </ul> 
                             <span aria-hidden="true" class="stretchy-nav-bg"></span>
                             </nav>`;
@@ -550,12 +603,25 @@
                                 (!$(event.target).is('.cd-nav-trigger') && !$(event.target).is('.cd-nav-trigger span')) && stretchyNavs.removeClass('nav-is-visible');
                             });
                         }
+                        $("#fimgpdf").attr('src',res.rows.item(0)['image']);
+                        $("#fnamepdf").html(res.rows.item(0)['name']);
+                        $("#flayerpdf").html(res.rows.item(0)['layer']);
+                        tx.executeSql('SELECT * FROM space WHERE id = ?', [res.rows.item(0)['space_id']],
+                    function (tx, res) {
+                        var spacename = res.rows.item(0)['name']
+                        tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [res.rows.item(0)['planargraph_id']],
+                    function (tx, res) {
+                        $("#fplacepdf").html(res.rows.item(0)['name']+" "+spacename);                        
+                    })
+                    })
+                    
                     });
             });
 
             //呈現物品
             db.transaction(function (tx) {
-                $(".box-wrap").html("")
+                $(".box-wrap").html("");
+                $("#thingpdf").html("");
                 tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furniture_id = ? ORDER BY layer DESC', [x], function (tx, res) {
                     var len = res.rows.length;
 
@@ -567,6 +633,8 @@
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furniture_id = ?', [x], function (tx, res) {
                                         $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'><span>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
+                                        $("#thingpdf").append(`<p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
+                                                                style="padding: 5px;background-color: #f4c82ae7;">尚未編輯完成</span></p>`)
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer Null len:" + len);
@@ -585,6 +653,18 @@
                                                                 `+ warn + `
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+
+                                                $("#thingpdf").append(`<div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                                                                                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                                                                                    <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
+                                                                                </div>
+                                                                                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                                                                                    <p style="margin-bottom: 5px;"></p>
+                                                                                    <p style="margin-bottom: 5px;"></p>
+                                                                                    <p style="margin-bottom: 0px;"></p>
+                                                                                </div>
+                                                                            </div>`)
+
                                             }
                                             $("#shrink" + x + i + "").slideDown(0);
                                         }
@@ -611,6 +691,17 @@
                                                                 `+ warn + `
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+                                                                
+                                                $("#thingpdf").append(`<div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                                                                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                                                                    <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
+                                                                </div>
+                                                                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                                                                    <p style="margin-bottom: 5px;">物品名稱: ` + res.rows.item(j)['name'] + `</p>
+                                                                    <p style="margin-bottom: 5px;">內容: ` + res.rows.item(j)['description'] + `</p>
+                                                                    <p style="margin-bottom: 0px;">數量: ` + res.rows.item(j)['number'] + `</p>
+                                                                </div>
+                                                            </div>`)
                                             }
                                         }
                                     });
@@ -620,6 +711,10 @@
                                     tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
                                         $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
                                         $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
+                                        $("#thingpdf").prepend('<div id ="thingpdf' + x + i + '"></div>')                                        
+                                        $("#thingpdf").prepend(`<p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
+                                                                style="padding: 5px;background-color: #f4c82ae7;">第` + num + `層</span></p>`)
+
                                         var len = res.rows.length;
                                         // alert("num:" + num)
                                         // alert("WHERE layer len:" + len);
@@ -638,6 +733,16 @@
                                                                 `+ warn + `
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
+                                                $("#thingpdf" + x + i + "").append(`<div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                                                                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+                                                                    <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
+                                                                </div>
+                                                                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
+                                                                    <p style="margin-bottom: 5px;">物品名稱: ` + res.rows.item(j)['name'] + `</p>
+                                                                    <p style="margin-bottom: 5px;">內容: ` + res.rows.item(j)['description'] + `</p>
+                                                                    <p style="margin-bottom: 0px;">數量: ` + res.rows.item(j)['number'] + `</p>
+                                                                </div>
+                                                            </div>`)
                                             }
                                             $("#shrink" + x + i + "").slideDown(0);
                                         }

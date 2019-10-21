@@ -285,7 +285,7 @@ ul{
     border: 0;
 }
 
-.mask{
+.editmask{
     pointer-events: none;
     z-index: -1;
     width: 100vw;
@@ -293,3 +293,79 @@ ul{
     background-color: rgb(17, 16, 16);
     opacity: 0.7;
   }
+.lead{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1031;
+}
+.mask{
+    z-index: 1031;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(17, 16, 16);
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.caption{
+    color:white;
+    z-index: 1032;
+    position: fixed;
+    top: 170px;
+    left: 100px;
+}
+
+.arrow{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    top: 110px;
+    left: 20px;
+}
+.know{
+    z-index: 1034;
+    position: fixed;
+    top: 220px;
+    left: 120px;
+    border: white 1px solid;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 8px;
+}
+/* 點擊儲物櫃功能鍵引導頁 */
+.editarrow{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    bottom:0px;
+    right: 30px;
+    transform:rotate(40deg);
+}
+.editcaption{
+    color:white;
+    z-index: 1032;
+    position: fixed;
+    bottom: 150px;
+    right: 100px;
+}
+.editknow{
+    z-index: 1034;
+    position: fixed;
+    bottom: 80px;
+    right: 100px;
+    border: white 1px solid;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 8px;
+}

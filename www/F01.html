@@ -33,6 +33,13 @@
 <!-- 最上面標題列 -->
 
 <body class="font container-fluid" style="background-color: #ffffff;padding: 0px;">
+    <div class="lead" onclick="lead()">
+        <div class="mask"></div>
+        <p id="leadcaption" class="caption">點擊建立儲物櫃</p>
+        <img src="static/tap.png" id="leadarrow" class="arrow">
+        <!-- <i class="icon ion-md-arrow-round-back arrow"></i> -->
+        <div id="leadknow" class="know">我知道了</div>
+    </div>
     <div class="fixed-top" style="margin: 0px; padding:0px 10px ;background-color:#254F6E;">
         <div class="row " style="background-color:#254F6E;">
             <div class="col-4" style="display: flex;align-content:center;left: 15px;">
@@ -83,8 +90,10 @@
     </div>
     <!-- 生成pdf -->
     <div id="furniturepdf" style="display: none;">
-        <div style="background-color: #254F6E;padding: 12px;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
-            <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+        <div
+            style="background-color: #254F6E;padding: 12px;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
+            <div
+                style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
                 <img id="fimgpdf" src="file:///android_asset/www/static/post/01.jpg" width="150" height="150"
                     style="border-radius: 50%;">
             </div>
@@ -98,8 +107,10 @@
             <p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
                     style="padding: 5px;background-color: #f4c82ae7;">尚未編輯完成</span></p>
 
-            <div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
-                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
+            <div
+                style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                <div
+                    style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
                     <img src="file:///android_asset/www/static/post/01.jpg" width="150" height="150">
                 </div>
                 <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
@@ -190,7 +201,7 @@
 
     <div class="modal fade" style="z-index:1065;margin: 30vw 15vw 0px 13vw" id="openphoto" tabindex="-1" role="dialog"
         aria-labelledby="openphoto" aria-hidden="true">
-        <div class="mask" style="position: fixed;top: 0;left: 0;"></div>
+        <div class="editmask" style="position: fixed;top: 0;left: 0;"></div>
         <div class="modal-dialog " style="width:70vw;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,6 +253,12 @@
     </div>
 
     <script>
+        function lead() {
+            $(".lead").css('display', 'none');
+        }
+
+
+
         var user_email;
         var user_token;
         var user_id;
@@ -391,29 +408,29 @@
 
                             $("body").append(fdd);
                             //fpclick fsd 為儲物櫃共享互動視窗
-                            var fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
-                                aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
-                                        <div class="modal-body text-black">
-                                            <label>與他人共享<spen id="fsname`+ res.rows.item(i)['id'] + `">` + res.rows.item(i)['name'] + `</spen></label>
-                                            <input type="text" class="form-control" placeholder="輸入使用者帳號(電子郵件地址)">
+                            // var fsd = `<div class="modal fade" id="fsd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+                            //     aria-hidden="true">
+                            //     <div class="modal-dialog" role="document">
+                            //         <div class="modal-content" style="margin-top: 50%;border-radius: 5%;">
+                            //             <div class="modal-body text-black">
+                            //                 <label>與他人共享<spen id="fsname`+ res.rows.item(i)['id'] + `">` + res.rows.item(i)['name'] + `</spen></label>
+                            //                 <input type="text" class="form-control" placeholder="輸入使用者帳號(電子郵件地址)">
 
-                                                <div class="row" style="text-align: center;margin-top: 5px">
-                                                    <div class="col">
-                                                        <button type="button" class="btn btn-outline-secondary" onclick="fsdc('`+ res.rows.item(i)['id'] + `')">取消</button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <button type="submit" class="btn btn-outline-secondary"
-                                                            onclick="processFormData()">確認</button>
-                                                    </div>
-                                                </div>
+                            //                     <div class="row" style="text-align: center;margin-top: 5px">
+                            //                         <div class="col">
+                            //                             <button type="button" class="btn btn-outline-secondary" onclick="fsdc('`+ res.rows.item(i)['id'] + `')">取消</button>
+                            //                         </div>
+                            //                         <div class="col">
+                            //                             <button type="submit" class="btn btn-outline-secondary"
+                            //                                 onclick="processFormData()">確認</button>
+                            //                         </div>
+                            //                     </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>`
-                            $("body").append(fsd);
+                            //                 </div>
+                            //             </div>
+                            //         </div>
+                            //     </div>`
+                            // $("body").append(fsd);
                             //atd 為增加物品的互動視窗
                             var atd = `<div class="modal" id="atd` + res.rows.item(i)['id'] + `" tabindex="-1" role="dialog" aria-labelledby="atd` + res.rows.item(i)['id'] + `" aria-hidden="true">
                                         <div class="modal-dialog modal-xl" role="document" style="margin: 0px;position: absolute;bottom:0px; max-width: 1500px;width:100vw;">
@@ -516,6 +533,8 @@
                             fclick(furnitureId)
                         }
 
+                    }else{
+                        $(".lead").css('display', 'block');
                     }
                 });
             });
@@ -526,7 +545,7 @@
             let options = {
                 documentSize: 'A4',
                 type: 'share',
-                fileName: ''+name+'.pdf'
+                fileName: '' + name + '.pdf'
             }
 
             var furniturepdf = $("#furniturepdf").html()
@@ -559,6 +578,22 @@
 
             //右下角功能鍵
             db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length == 1) {
+                            $(".lead").css('display', 'block');
+                            $("#leadarrow").removeClass("arrow")
+                            $("#leadarrow").addClass("editarrow")
+                            $("#leadcaption").removeClass("caption")
+                            $("#leadcaption").addClass("editcaption")
+                            $("#leadcaption").html("點擊可以<br>新增物品 / 編輯儲物櫃<br>刪除儲物櫃 / 以PDF儲存")
+                            $("#leadknow").removeClass("know")
+                            $("#leadknow").addClass("editknow")
+                            // $(".arrow").css({"top":"0","left":"0"});
+                            // $(".arrow").css({"bottom":"0","left":"0"});
+                        }
+                    });
                 tx.executeSql('SELECT * FROM thing WHERE furniture_id = ?', [x],
                     function (tx, res) {
                         var len = res.rows.length;
@@ -580,7 +615,7 @@
                                 <li><a href="#0" onclick="thingaddclick( '`+ res.rows.item(0)['id'] + `' )"><span>新增物品 <i class="icon ion-md-add" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fnclick('` + res.rows.item(0)['id'] + `','` + res.rows.item(0)['name'] + `','` + res.rows.item(0)['layer'] + `')"><span>編輯儲物櫃<i class="icon ion-ios-create" style="font-size:35px;color:rgb(255, 255, 255);padding:0 14px 0 20px"></i></span></a></li>
                                 <li><a href="#0" onclick="fdclick('`+ res.rows.item(0)['id'] + `')"><span>刪除儲物櫃<i class="icon ion-ios-trash" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
-                                <li><a href="#0" onclick="createpdf('`+ res.rows.item(0)['name'] + `')"><span>共享儲物櫃<i class="icon ion-ios-share" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
+                                <li><a href="#0" onclick="createpdf('`+ res.rows.item(0)['name'] + `')"><span>以PDF儲存<i class="icon ion-ios-download" style="font-size:35px;color:rgb(255, 255, 255);padding:0 20px 0 25px"></i></span></a></li>
                             </ul> 
                             <span aria-hidden="true" class="stretchy-nav-bg"></span>
                             </nav>`;
@@ -603,18 +638,18 @@
                                 (!$(event.target).is('.cd-nav-trigger') && !$(event.target).is('.cd-nav-trigger span')) && stretchyNavs.removeClass('nav-is-visible');
                             });
                         }
-                        $("#fimgpdf").attr('src',res.rows.item(0)['image']);
+                        $("#fimgpdf").attr('src', res.rows.item(0)['image']);
                         $("#fnamepdf").html(res.rows.item(0)['name']);
                         $("#flayerpdf").html(res.rows.item(0)['layer']);
                         tx.executeSql('SELECT * FROM space WHERE id = ?', [res.rows.item(0)['space_id']],
-                    function (tx, res) {
-                        var spacename = res.rows.item(0)['name']
-                        tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [res.rows.item(0)['planargraph_id']],
-                    function (tx, res) {
-                        $("#fplacepdf").html(res.rows.item(0)['name']+" "+spacename);                        
-                    })
-                    })
-                    
+                            function (tx, res) {
+                                var spacename = res.rows.item(0)['name']
+                                tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [res.rows.item(0)['planargraph_id']],
+                                    function (tx, res) {
+                                        $("#fplacepdf").html(res.rows.item(0)['name'] + " " + spacename);
+                                    })
+                            })
+
                     });
             });
 
@@ -643,6 +678,7 @@
                                         if (res.rows.length >= 1) {
                                             var warn
                                             $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                            $("#thingpdf").append('<div id ="notedit" style="margin-left:50px"></div>')
                                             for (var j = 0; j < len; j++) {
                                                 if (res.rows.item(j)['out'] == 1) {
                                                     warn = "<i class='icon ion-md-information-circle iwarn'></i>";
@@ -654,16 +690,10 @@
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
 
-                                                $("#thingpdf").append(`<div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
-                                                                                <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
-                                                                                    <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
-                                                                                </div>
-                                                                                <div style="-ms-flex: 0 0 66.666667%;flex: 0 0 66.666667%;max-width: 66.666667%;color:black;">
-                                                                                    <p style="margin-bottom: 5px;"></p>
-                                                                                    <p style="margin-bottom: 5px;"></p>
-                                                                                    <p style="margin-bottom: 0px;"></p>
-                                                                                </div>
-                                                                            </div>`)
+                                                $("#notedit").append(`<div style="margin:0px 5px 8px 0px;display:inline-flex;">
+                                                                        <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
+                                                                        </div>
+                                                                        `)
 
                                             }
                                             $("#shrink" + x + i + "").slideDown(0);
@@ -691,7 +721,7 @@
                                                                 `+ warn + `
                                                                 <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><img src="` + res.rows.item(j)['image'] + `" style=width:100%;height:100%></a>
                                                                 </div>`)
-                                                                
+
                                                 $("#thingpdf").append(`<div style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
                                                                 <div style="-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%; align-items: center;justify-content: center;text-align: center;">
                                                                     <img src="` + res.rows.item(j)['image'] + `" width="150" height="150">
@@ -711,7 +741,7 @@
                                     tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
                                         $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
                                         $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
-                                        $("#thingpdf").prepend('<div id ="thingpdf' + x + i + '"></div>')                                        
+                                        $("#thingpdf").prepend('<div id ="thingpdf' + x + i + '"></div>')
                                         $("#thingpdf").prepend(`<p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
                                                                 style="padding: 5px;background-color: #f4c82ae7;">第` + num + `層</span></p>`)
 
@@ -970,14 +1000,14 @@
         }
 
         //fpclick fsd 為儲物櫃共享互動視窗
-        function fsclick(id) {
+        // function fsclick(id) {
             // $('#fed' + id).modal('hide')
-            $('#fsd' + id + '').modal('show')
-        }
+        //     $('#fsd' + id + '').modal('show')
+        // }
 
-        function fsdc(id) {
-            $("#fsd" + id + "").modal('hide')
-        }
+        // function fsdc(id) {
+        //     $("#fsd" + id + "").modal('hide')
+        // }
 
         function insertfurniture() {
             var name = $("#insertfname").val();

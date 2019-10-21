@@ -48,9 +48,8 @@
             </li>
 
         </ul>
-        <nav id="menu">
+        <nav id="menu" >
             <ul>
-                <li><a href="../www/H02.html">與我共用的項目</a></li>
                 <li><a href="../www/H03.html">儲存的文章</a></li>
                 <li><a href="../www/H04.html">物品提醒</a></li>
                 <li><a href="#" onclick="test()">同步</a></li>
@@ -400,8 +399,10 @@
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
                             user_id = res.rows.item(0)['id']
-                            
+                            var home = res.rows.item(0)['home']
+
                             $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
+                            $(".mm-navbar__title").css({"background-color":"#254F6E","color":"white"});
                             tx.executeSql("SELECT * FROM planargraph WHERE user_id = ?", [res.rows.item(0)['id']], function (tx, res) {
                                 var len = res.rows.length;
 
@@ -421,6 +422,17 @@
                                     } else {
                                         pnidclick(planargraphId)
 
+                                    }
+                                } else {
+                                    if (!home) {
+                                        var timestamp = (new Date()).valueOf();
+                                        var email = user_email.replace(/@/g, "").split(".").join("");
+                                        var planargraphId = email + timestamp;
+                                       
+                                        tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, "一樓", user_id],
+                                            function (tx, res) {
+                                                location.href = "H01.html?planargraph=" + planargraphId + "";
+                                            });
                                     }
                                 }
                             });
@@ -668,9 +680,9 @@
                                 alert('Something went Wrong');
                             });
                     }, function (error) {
-                                alert('Something went Wrong');
-                                alert(JSON.stringify(error));
-                            });
+                        alert('Something went Wrong');
+                        alert(JSON.stringify(error));
+                    });
 
 
             });

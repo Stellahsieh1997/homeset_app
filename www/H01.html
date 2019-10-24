@@ -14,7 +14,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel=stylesheet type="text/css" href="../www/css/H01.css">
-
+    <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
     <!-- mmenu scripts -->
     <script src="../www/js/mmenu.js"></script>
     <script src="../www/js/mmenu.debugger.js"></script>
@@ -24,8 +24,8 @@
 
 <body>
 
-    <div id="page" class="outer">
 
+    <div id="page" class="outer">
         <!-- 導覽列 -->
         <ul class="nav header fixed-top">
             <li class="nav-item two">
@@ -34,6 +34,7 @@
             <li class="dropdown nav-fill">
                 <a id="pnid" class="nav-item dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false"></a>
+
                 <div class="dropdown-menu  plan1">
                     <!-- <a class="dropdown-item plan1"></a> -->
                     <!-- <a class="dropdown-item">二樓</a>
@@ -46,9 +47,10 @@
                         style="display:none;">刪除</a>
                 </div>
             </li>
-
+            <img src="static/qr-scan.png" class="qrscan" onclick="createscan()">
+            <!-- <i class="icon ion-md-qr-scanner qrscan"></i> -->
         </ul>
-        <nav id="menu" >
+        <nav id="menu">
             <ul>
                 <li><a href="../www/H03.html">儲存的文章</a></li>
                 <li><a href="../www/H04.html">物品提醒</a></li>
@@ -58,12 +60,18 @@
             </ul>
         </nav>
     </div>
+
     <!-- 因mmenu的關係代替margin-top:30px; -->
     <div style="height: 30px;"></div>
     <!-- 顯示格局的地方 -->
     <div class="box-wrap">
 
     </div>
+    <!-- QRcode掃描 -->
+    <div id="showscan" style="display: none;">
+        <i class="icon ion-md-qr-scanner"></i>
+    </div>
+    
     <!-- 新增樓層的彈跳視窗 -->
 
     <div class="modal fade hide bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
@@ -206,25 +214,31 @@
             <div class="modal-content" style="border-radius: 0%;">
                 <div class="modal-body " style="background-color: #254F6E">
                     <div class="row" style="width:100vw;text-align: center">
-                        <div class="col-4 icon22">
+                        <div class="col-3 icon22">
                             <button onclick="closespace()" class="buttontype" data-toggle="modal"
                                 data-target="#editsmodal">
                                 <i class="ion-md-create icon2"></i>
                                 <p>編輯</p>
                             </button>
                         </div>
-                        <div class="col-4 icon22 ">
+                        <div class="col-3 icon22 ">
                             <button onclick="closespace()" class="buttontype" data-toggle="modal"
                                 data-target="#delsmodal">
                                 <i class=" ion-md-trash icon2"></i>
                                 <p>刪除</p>
                             </button>
                         </div>
-                        <div class="col-4 icon22">
+                        <div class="col-3 icon22">
                             <button id="editscolor" onclick="closespace()" class="buttontype" data-toggle="modal"
                                 data-target="#colormodal">
                                 <i class=" ion-md-list icon2"></i>
                                 <p>顏色</p>
+                            </button>
+                        </div>
+                        <div class="col-3 icon22" style="padding-right: 0px;">
+                            <button id="share" onclick="createpdf()" class="buttontype" data-dismiss="modal">
+                                <img src="static/qr-code.png" style="margin: 0px;">
+                                <p style="width: fit-content;margin-right: 3px;">QR Code</p>
                             </button>
                         </div>
                     </div>
@@ -352,7 +366,36 @@
         </div>
 
     </div>
+    <!-- 生成pdf -->
+    <div id="spacepdf" style="margin:0px;padding:0px;display:none;">
+        <div
+            style="background-color: #254F6E;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;color:white;vertical-align:middle;">
+            <h1 style="margin-top: 10px;font-size: 30px;">&emsp; <span id="printp">一樓</span> &emsp;/&ensp; <span
+                    id="prints">客廳</span></h1>
+        </div>
+        <div id="furniturepdf">
+            <div id="furnituresqr"
+                style="display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;margin-top: 10px;">
+                <div style="width: 80%;border: 1px solid black;margin:3% 0 0 6%;">
+                    <table border="1px" width="100%" style="border-collapse:collapse;">
+                        <tr>
+                            <th colspan="2">矮櫃</td>
+                            <td rowspan="2" style="width:33%;padding:5px;vertical-align:middle;text-align: center;"><img
+                                    src="file:///android_asset/www/static/qr-code-1.png"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="file:///android_asset/www/static/post/01.jpg" width="100%"></td>
+                            <td style="width:30%;"></td>
+                        </tr>
+                    </table>
+                </div>
 
+
+            </div>
+
+        </div>
+
+    </div>
 
     <script>
         var user_email;
@@ -402,7 +445,7 @@
                             var home = res.rows.item(0)['home']
 
                             $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
-                            $(".mm-navbar__title").css({"background-color":"#254F6E","color":"white"});
+                            $(".mm-navbar__title").css({ "background-color": "#254F6E", "color": "white" });
                             tx.executeSql("SELECT * FROM planargraph WHERE user_id = ?", [res.rows.item(0)['id']], function (tx, res) {
                                 var len = res.rows.length;
 
@@ -428,7 +471,6 @@
                                         var timestamp = (new Date()).valueOf();
                                         var email = user_email.replace(/@/g, "").split(".").join("");
                                         var planargraphId = email + timestamp;
-                                       
                                         tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, "一樓", user_id],
                                             function (tx, res) {
                                                 location.href = "H01.html?planargraph=" + planargraphId + "";
@@ -436,13 +478,63 @@
                                     }
                                 }
                             });
-
+                            // qrcode 掃描跳轉 homeset://
+                            window.handleOpenURL = function (url) {
+                                var open = url.split("/")[2]
+                                var spaceId = open.split("=")[1].slice(0, 13)
+                                var furnitureId = open.split("=")[2].slice(0, 13)
+                                var email = user_email.replace(/@/g, "").split(".").join("");
+                                location.replace("F01.html?space=" + email + spaceId + "&furniture=" + email + furnitureId + "");
+                                // window.location.hash = url.slice(7) 
+                            }
                         }
                     }, function (error) {
                         alert(JSON.stringify(error))
                     });
             });
         }
+
+
+
+        // 生成pdf base64
+        function createpdf() {
+
+            let options = {
+                documentSize: 'A4',
+                type: 'base64'
+            }
+            var spacepdf = $("#spacepdf").html()
+            pdf.fromData(spacepdf, options)
+                .then((base64) => furnitureshare(base64))   // returns base64:JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PC9DcmVh...
+                .catch((err) => alert(err))
+        }
+
+        //分享
+        function furnitureshare(name) {
+            var snamepdf = $("#prints").html()
+
+            var options = {
+                message: snamepdf, // not supported on some apps (Facebook, Instagram)
+                subject: snamepdf, // fi. for email
+                files: ['data:application/pdf;base64,' + name + ''], // an array of filenames either locally or remotely
+                // url: 'https://www.website.com/foo/#bar?a=b',
+                //chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title
+                //appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
+                //iPadCoordinates: '0,0,0,0' //IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height
+            };
+
+            var onSuccess = function (result) {
+                //alert("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+                //alert("Shared to app: " + result.app); // On Android result.app since plugin version 5.4.0 this is no longer empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+            };
+
+            var onError = function (msg) {
+                alert("Sharing failed with message: " + msg);
+            };
+
+            window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+        }
+
 
 
 
@@ -490,15 +582,52 @@
         //點選格局三個點點
         function spacemore(spaceId) {
             $("#editSpace").modal('show');
+            $("#furnituresqr").html('');
+
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM space WHERE id = ?', [spaceId],
                     function (tx, res) {
                         $("#editsnameval").val(res.rows.item(0)['name'])
                         $("#delsname").html(res.rows.item(0)['name'])
+                        $("#prints").html(res.rows.item(0)['name'])
                         if (!res.rows.item(0)['space_color']) {
                             $("#colorid").val("#047e7e")
                         } else {
                             $("#colorid").val(res.rows.item(0)['space_color'])
+                        }
+                    });
+                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            var spaceId1 = spaceId.slice(-13)
+
+
+                            for (var i = 0; i < len; i++) {
+                                var furnitureId1 = res.rows.item(i)['id'].slice(-13)
+                                var printcontent = `
+                                <div style="width: 100%;border: 1px solid black;margin:3% 0 0 6%;">
+                                    <table border="1px" width="500px" style="border-collapse:collapse;">
+                                        <tr>
+                                            <th colspan="2">`+ res.rows.item(i)['name'] + `</td>
+                                            <td rowspan="2" id="f`+ res.rows.item(i)['id'] + `" style="width:33%;padding:5px;vertical-align:middle;text-align: center;">
+                                               </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 33%;vertical-align:middle;text-align: center;"><img src="`+ res.rows.item(i)['image'] + `" height="100px" width="100px"></td>
+                                            <td style="width: 33%;"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                `
+                                $("#furnituresqr").append(printcontent);
+                                $('#f' + res.rows.item(i)['id'] + '').qrcode({
+                                    render: 'table',
+                                    width: 120,
+                                    height: 120,
+                                    text: 'homeset://F01.html?s=' + spaceId1 + '&f=' + furnitureId1 + ''
+                                });
+                            }
                         }
                     });
             });
@@ -770,6 +899,31 @@
                 });
             });
         }
+
+        //QRcode掃描器
+        function createscan() {
+
+            var callback = function (err, contents) {
+                if (err) {
+                    alert.error(err._message);
+                }
+                window.open(contents, '_system')
+
+            };
+
+            QRScanner.scan(callback);
+            QRScanner.show(function (status) {
+                $(".box-wrap").css('display', 'none');
+                $("#saddbutton").css('display', 'none');
+                $("#showscan").css('display', 'block');
+
+            });
+
+        }
+
+
+
+
 
         function test() {
             db.transaction(function (tx) {

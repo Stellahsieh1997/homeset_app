@@ -19,6 +19,16 @@
 
 
 <body class="font container-fluid">
+
+    <div class="lead" onclick="lead()">
+        <div class="mask"></div>
+        <p id="leadcaption" class="caption">點擊以新增我的收納技巧貼文</p>
+        <img src="static/tap.png" id="leadarrow" class="arrow">
+        <!-- <i class="icon ion-md-arrow-round-back arrow"></i> -->
+        <div id="leadknow" class="know">我知道了</div>
+    </div>
+
+
     <div class="row p-1  " style="background-color:transparent">
         <div class="header">
             <p>收納資訊</p>
@@ -75,6 +85,7 @@
 
 
     <script>
+
         //收藏
         var user_email;
         var user_token;
@@ -87,13 +98,26 @@
             });
             //提醒跳轉
             cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing='+ notification.thingId +''
+                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
             });
 
             db.transaction(function (tx) {
+
+                tx.executeSql("SELECT * FROM page", [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            var post_page = res.rows.item(0)['post_page']
+                            if (!post_page) {
+                                $(".lead").css('display', 'block');
+                            }
+                        }
+                    });
+
                 tx.executeSql('SELECT * FROM user', [],
                     function (tx, res) {
                         var len = res.rows.length;
@@ -169,6 +193,12 @@
             });
         }
 
+        function lead() {
+            $(".lead").css('display', 'none');
+            db.transaction(function (tx) {
+                tx.executeSql("UPDATE page SET post_page = ? WHERE id = ?", [1, 1]);
+            });
+        }
 
         function collection(id) {
             $("#post" + id + "").toggleClass("selectcolor");

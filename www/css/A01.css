@@ -166,3 +166,51 @@ a, a:link, a:active, a:visited, a:hover
 .selectcolor{
     color: rgb(255, 0, 0);
 }
+/* 引導頁 */
+.lead{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1031;
+}
+.mask{
+    z-index: 1031;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(17, 16, 16);
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.caption{
+    color:white;
+    z-index: 1032;
+    position: fixed;
+    top: 140px;
+    right: 30px;
+}
+
+.arrow{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    top: 45px;
+    right: 20px;
+}
+.know{
+    z-index: 1034;
+    position: fixed;
+    top: 180px;
+    right: 40px;
+    border: white 1px solid;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 8px;
+}

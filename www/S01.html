@@ -17,318 +17,20 @@
     <script src="js/bootstrap.min.js"></script>
     <!--匯入滾輪-->
     <link rel="stylesheet" href="css/mobileSelect.css">
+    <link rel=stylesheet type="text/css" href="css/S01.css">
     <script src="js/mobileSelect.js"></script>
     <script src="cordova.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8"></script>
     <title>Search</title>
 </head>
-<style>
-    .font {
-
-        font-family: Microsoft JhengHei;
-    }
-
-    .flex {
-        flex: 1 auto;
-        display: flex;
-        height: 250px;
-
-        border: 8px;
-        flex-wrap: wrap;
-        flex-direction: column;
-        background-color: #254F6E;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-
-
-
-    }
-
-    .contentstyle {
-        background-color: white
-    }
-
-    .title {
-        align-items: center;
-        justify-content: center;
-    }
-
-    .bordertype {
-        border-style: solid;
-        border-width: 0.1vw;
-        border-color: white;
-        border-radius: 30px;
-        background-color: white;
-        margin-top: -28px;
-        padding: 0px;
-        height: 60vh;
-    }
-
-    .buttontype {
-        background-color: transparent;
-        border-color: transparent;
-    }
-
-    /* logo特效 */
-    .w3-animate-fading {
-        animation: fading 5s infinite
-    }
-
-
-
-    /* 類別 所屬人 未放回 */
-    .upcon1 {
-        display: table;
-        margin: 0 auto;
-        border-radius: 20px;
-        height: 40px;
-        outline: none;
-        color: #fff;
-        background-color: #254F6E;
-        width: 27%;
-        float: left;
-        margin-right: 5px;
-        margin-top: 0px;
-        margin-left: 7px;
-    }
-
-    .upcon2 {
-        display: table;
-        margin: 0 auto;
-        border-radius: 20px;
-        height: 40px;
-        outline: none;
-        color: #fff;
-        background-color: #254F6E;
-        width: 33%;
-        float: right;
-        margin-right: 5px;
-        margin-top: 0px;
-        margin-left: 7px;
-    }
-
-    .upcon1:hover {
-        background-color: #254F6E;
-        color: #ffee00;
-    }
-
-    .upcon2:hover {
-        background-color: #254F6E;
-        color: #ffee00;
-    }
-
-
-
-
-
-
-    button:focus {
-        outline: none;
-    }
-
-    /* s */
-    .font {
-        font-family: Microsoft JhengHei;
-    }
-
-    input[type=text] {
-        border-radius: 20px;
-        background-color: white;
-        border: 0;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        margin-left: 20px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-        width: 87%;
-        height: 40px;
-        background-color: rgba(252, 248, 248, 0.082);
-        color: white;
-        border: transparent;
-        padding-left: 30px;
-
-    }
-
-    input[type=text] {
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-
-    }
-
-    ::-webkit-input-placeholder {
-        color: white;
-    }
-
-    input:focus {
-        outline: none;
-    }
-
-    .imgtype {
-        align-items: center;
-        justify-content: center;
-
-    }
-
-    img {
-        width: 100%;
-        height: 100%;
-    }
-
-
-    .box-wrap {
-        text-align: center;
-        background-color: transparent;
-        overflow: hidden;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    .box-wrap>div {
-        width: 33vw;
-        height: 33vw;
-        padding-bottom: 0%;
-        margin: 0.12%;
-        float: left;
-    }
-
-    .searchrow {
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-
-    .searchbtn {
-        margin-right: 30px;
-    }
-
-    .btn-outline {
-        border-radius: 8px;
-        border-color: #254F6E;
-        color: #254F6E;
-        font-family: "微軟正黑體";
-    }
-
-    .btn-outline:hover {
-        background-color: #254F6E;
-        color: #f0f0f0;
-    }
-
-    .categoryth {
-        text-align: center;
-        width: 30%;
-    }
-
-    .thingth {
-        text-align: center;
-        width: 70%;
-
-    }
-
-    .category {
-        text-align: center;
-        position: relative;
-        transform: translateY(0%);
-
-    }
-
-
-
-    .searchcontent {
-        margin-bottom: 40px;
-        margin-top: 45px;
-        padding: 0px;
-    }
-
-    .searchtext {
-        font-size: 33px;
-        font-weight: bold;
-        color: #f0f0f0;
-
-
-
-
-    }
-
-    .s {
-        color: #f0f0f0;
-        font-size: 35px;
-    }
-
-    b {
-        color: rgb(90, 88, 88);
-        margin-left: 15px;
-
-    }
-
-    .footer {
-        position: fixed;
-        bottom: 0;
-        background: #fff;
-        box-shadow: 2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
-
-    }
-
-    .row1 {
-        width: 100%;
-        height: 40px;
-        margin: 0px;
-    }
-
-    .icon {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        padding-top: 2px;
-    }
-
-    .icon1:hover {
-        color: #254F6E;
-    }
-
-    .icon1 {
-        color: black;
-        font-size: 30px;
-    }
-
-    ion-icon {
-        width: 30px;
-        height: 25px;
-    }
-
-    a,
-    a:link,
-    a:active,
-    a:visited,
-    a:hover {
-        color: inherit;
-        text-decoration: none;
-        font-size: 18px
-    }
-
-    .teach {
-        position: absolute;
-        z-index: 100;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        background-size: cover;
-    }
-
-    .teachbtn {
-        margin-left: 60%;
-        margin-top: 147%;
-        font-size: 20px;
-
-
-    }
-</style>
 
 <body class="font" style="background-color: #ffffff">
-    <div class="teach col-md-8 offset-md-2 col-lg-6 offset-lg-3"
-        style="background: url(./static/s/search.jpg)no-repeat ; background-size: cover;  overflow: hidden;">
-        <button class="btn btn-warning teachbtn" onclick="nextteach()">了解</button>
+    <div class="lead" onclick="lead()">
+        <div class="mask"></div>
+        <p id="leadcaption" class="caption">請輸入物品名稱的關鍵字<br>來進行搜尋</p>
+        <img src="static/tap.png" id="leadarrow" class="arrow">
+        <!-- <i class="icon ion-md-arrow-round-back arrow"></i> -->
+        <div id="leadknow" class="know">我知道了</div>
     </div>
 
     <div class=" flex ">
@@ -409,35 +111,31 @@
 
     <script type="text/javascript" charset="UTF-8">
 
-        //導覽
-        function nextteach() {
-            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="ownpage()">了解</button>')
-            $(".teach").css('background', 'url(./static/s/類別.jpg)no-repeat');
-            $(".teach").css('background-size', 'cover');
-            $(".teach").css('overflow', 'hidden');
+        //引導頁
+        function lead() {
+            $('.lead').attr('onclick', 'lead2()');
+            $(".arrow").css({ "left": "35px", "top": "250px" });
+            $(".caption").css("top", "350px");
+            $("#leadcaption").html("點選類別按鈕<br>可依照類別進行搜尋")
+            $(".know").css("top", "450px");
         }
-        function ownpage() {
-            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="outpage()">了解</button>')
-            $(".teach").css('background', 'url(./static/s/所屬人.jpg)no-repeat');
-            $(".teach").css('background-size', 'cover');
-            $(".teach").css('overflow', 'hidden');
+        function lead2() {
+            $('.lead').attr('onclick', 'lead3()');
+            $(".arrow").css({ "left": "140px", "top": "250px" });
+            $(".caption").css({ "left": "100px", "top": "350px" });
+            $("#leadcaption").html("點選所屬人按鈕<br>可依照所屬人進行搜尋")
+            $(".know").css("top", "450px");
         }
-        function outpage() {
-            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="thingpage()">了解</button>')
-            $(".teach").css('background', 'url(./static/s/未放回.jpg)no-repeat');
-            $(".teach").css('background-size', 'cover');
-            $(".teach").css('overflow', 'hidden');
+        function lead3() {
+            $('.lead').attr('onclick', 'lead4()');
+            $(".arrow").css({ "left": "250px", "top": "250px" });
+            $(".caption").css({ "left": "120px", "top": "350px" });
+            $("#leadcaption").html("點選未放回物品的按鈕<br>可搜尋尚未放回之物品")
+            $(".know").css("top", "450px");
         }
-        function thingpage() {
-            $(".teach").html('  <button class="btn btn-warning teachbtn" onclick="nopage()">開始搜尋</button>')
-            $(".teach").css('background', 'url(./static/s/結果.jpg)no-repeat');
-            $(".teach").css('background-size', 'cover');
-            $(".teach").css('overflow', 'hidden');
+        function lead4() {
+            $(".lead").css('display', 'none');
         }
-        function nopage() {
-            $(".teach").css('display', 'none');
-        }
-
 
 
 
@@ -461,13 +159,27 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
             });
 
             db.transaction(function (tx) {
+
+                tx.executeSql("SELECT * FROM page", [],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            var search_page = res.rows.item(0)['search_page']
+                            if (!search_page) {
+                                $(".lead").css('display', 'block');
+                                tx.executeSql("UPDATE page SET search_page = ? WHERE id = ?", [1, 1]);
+                            }
+                        }
+                    });
+
                 tx.executeSql('SELECT * FROM user', [],
                     function (tx, res) {
                         var len = res.rows.length;
@@ -785,7 +497,7 @@
                                                                     var furnitureId = res.rows.item(x)['id'];
                                                                     var trans = function (furnitureId) {
                                                                         $(".box-wrap").html("")
-                                                                        tx.executeSql('SELECT * FROM thing WHERE name LIKE? or description LIKE? and furniture_id = ? ', ['%' + inputevalue2 + '%','%' + inputevalue2 + '%',furnitureId], function (tx, res) {
+                                                                        tx.executeSql('SELECT * FROM thing WHERE name LIKE? or description LIKE? and furniture_id = ? ', ['%' + inputevalue2 + '%', '%' + inputevalue2 + '%', furnitureId], function (tx, res) {
                                                                             if (res.rows.length >= 1) {
                                                                                 for (var j = 0; j < res.rows.length; j++) {
                                                                                     $(".box-wrap").append(`<div class="box">

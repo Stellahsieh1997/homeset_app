@@ -226,9 +226,6 @@
     </div>
 
     <script>
-        function lead() {
-            $(".lead").css('display', 'none');
-        }
         var user_email;
         var user_token;
         var user_id;
@@ -249,10 +246,11 @@
 
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
             });
 
             let urlParams = new URLSearchParams(window.location.search);
@@ -424,37 +422,34 @@
                             fclick(furnitureId)
                         }
 
-                    } else {
-                        tx.executeSql('SELECT * FROM user', [],
-                            function (tx, res) {
-                                var len = res.rows.length;
-                                var userId = res.rows.item(0)['id']
-                                if (res.rows.length >= 1) {
-                                    if (!res.rows.item(0)['furniture_page']) {
-                                        $(".lead").css('display', 'block');
-                                        tx.executeSql("UPDATE user SET furniture_page = ? WHERE id = ?", [1, userId]);
-                                    }
-                                }
-                            });
-
                     }
+                    tx.executeSql("SELECT * FROM page", [],
+                        function (tx, res) {
+                            var len = res.rows.length;
+                            if (res.rows.length >= 1) {
+                                var furniture_page = res.rows.item(0)['furniture_page']
+                                if (!furniture_page) {
+                                    $(".lead").css('display', 'block');
+                                }
+                            }
+                        });
                 });
             });
 
         }
-        // 生成pdf
-        // function createpdf(name) {
-        //     let options = {
-        //         documentSize: 'A4',
-        //         type: 'share',
-        //         fileName: '' + name + '.pdf'
-        //     }
 
-        //     var furniturepdf = $("#furniturepdf").html()
-        //     pdf.fromData(furniturepdf, options)
-        //         .then((stats) => console.log('status', stats))   // ok..., ok if it was able to handle the file to the OS.  
-        //         .catch((err) => console.err(err))
-        // }
+        function lead() {
+            $(".lead").css('display', 'none');
+            db.transaction(function (tx) {
+                tx.executeSql("UPDATE page SET furniture_page = ? WHERE id = ?", [1, 1], function (tx, res) {
+                    location.reload()
+                });
+            });
+        }
+        function lead2() {
+            $(".lead").css('display', 'none');
+        }
+
         // 生成pdf base64
         function createpdf() {
 
@@ -521,30 +516,27 @@
 
             //右下角功能鍵
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId],
+
+                tx.executeSql("SELECT * FROM page", [],
                     function (tx, res) {
                         var len = res.rows.length;
-                        if (res.rows.length == 1) {
-                            tx.executeSql('SELECT * FROM user', [],
-                                function (tx, res) {
-                                    var len = res.rows.length;
-                                    var userId = res.rows.item(0)['id']
-                                    if (res.rows.length >= 1) {
-                                        if (res.rows.item(0)['furniture_page'] == 1) {
-                                            $(".lead").css('display', 'block');
-                                            $("#leadarrow").removeClass("arrow")
-                                            $("#leadarrow").addClass("editarrow")
-                                            $("#leadcaption").removeClass("caption")
-                                            $("#leadcaption").addClass("editcaption")
-                                            $("#leadcaption").html("點擊可以<br>新增物品 / 編輯儲物櫃<br>刪除儲物櫃 / 分享")
-                                            $("#leadknow").removeClass("know")
-                                            $("#leadknow").addClass("editknow")
-                                            tx.executeSql("UPDATE user SET furniture_page = ? WHERE id = ?", [2, userId]);
-                                        }
-                                    }
-                                });
+                        if (res.rows.length >= 1) {
+                            var furniture_page = res.rows.item(0)['furniture_page']
+                            if (furniture_page == 1) {
+                                $('.lead').attr('onclick', 'lead2()');
+                                $(".lead").css('display', 'block');
+                                $("#leadarrow").removeClass("arrow")
+                                $("#leadarrow").addClass("editarrow")
+                                $("#leadcaption").removeClass("caption")
+                                $("#leadcaption").addClass("editcaption")
+                                $("#leadcaption").html("點擊可以<br>新增物品 / 編輯儲物櫃<br>刪除儲物櫃 / 分享")
+                                $("#leadknow").removeClass("know")
+                                $("#leadknow").addClass("editknow")
+                                tx.executeSql("UPDATE page SET furniture_page = ? WHERE id = ?", [2, 1]);
+                            }
                         }
                     });
+
                 tx.executeSql('SELECT * FROM thing WHERE furniture_id = ?', [x],
                     function (tx, res) {
                         var len = res.rows.length;

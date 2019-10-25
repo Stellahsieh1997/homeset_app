@@ -226,8 +226,11 @@
                 // tx.executeSql('DROP TABLE IF EXISTS furniture');
                 // tx.executeSql('DROP TABLE IF EXISTS thing');
                 // tx.executeSql('DROP TABLE IF EXISTS category');
-                // tx.executeSql('DROP TABLE IF EXISTS owner');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                // tx.executeSql('DROP TABLE IF EXISTS user');
+                // tx.executeSql('DROP TABLE IF EXISTS page');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
+
             });
         }
 
@@ -238,25 +241,33 @@
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             location.href = 'H01.html'
-                        }else{
+                        } else {
                             $(".first").css('display', 'none');
                         }
                     }, function (error) {
                         alert(JSON.stringify(error))
                     });
             });
-            
+
         }
 
         function adduser(id, email, token, nickname) {
-            alert(id)
-            alert(email)
-            alert(token)
-            alert(nickname)
+
             db.transaction(function (tx) {
                 tx.executeSql("INSERT INTO user (id, email, token, nickname) VALUES (?,?,?,?)", [id, email, token, nickname],
                     function (tx, res) {
-                        location.href = 'H01.html'
+                        tx.executeSql("SELECT * FROM page", [],
+                            function (tx, res) {
+                                var len = res.rows.length;
+                                if (res.rows.length == 0) {
+                                    tx.executeSql("INSERT INTO page (id) VALUES (?)", [1],
+                                        function (tx, res) {
+                                            location.href = 'H01.html'
+                                        });
+                                } else {
+                                    location.href = 'H01.html'
+                                }
+                            });
                     }, function (error) {
                         alert(JSON.stringify(error))
                         // location.href = 'H01.html'
@@ -297,7 +308,7 @@
                 data: {
                     "username": emailvalue,
                     "email": emailvalue,
-                    "nickname" :nicknamevalue,
+                    "nickname": nicknamevalue,
                     "is_active": true
                 },
                 error: function (err) {

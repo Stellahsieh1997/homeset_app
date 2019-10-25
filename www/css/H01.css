@@ -1,343 +1,426 @@
+* {
+    /* border:solid 1px black; */
+    font-family: 微軟正黑體;
+    
+}
+html, body
+{
+    padding: 0;
+    margin: 0;
+    
+}
+body
+{
+    background-color: #F5F6F8;
+    font-family: Arial, Helvetica, Verdana;
+    font-size: 16px;
+    line-height: 22px;
+    color: #666;
+    position: relative;
+    -webkit-text-size-adjust: none;
+    padding: 0px;
+}
+body *
+{
+    text-shadow: none;
+}
+h1, h2, h3, h4, h6
+{
+    line-height: 1;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+h1, h2, h3
+{
+    font-size: 18px;
+}
+h4, h5, h6
+{
+    font-size: 16px;
+}
+p
+{
+    margin: 0 0 0 0;
+}
+a, a:link, a:active, a:visited, a:hover
+{
+    color: inherit;
+    text-decoration: none;
+    font-size: 18px
+}
+/* 設定樓層置中 */
+.outer{
+    text-align: center;
+}
+.outer ul{
+    display: inline-block;
+}
+nav:not(.mm-menu)
+{
+    display: none;
+}
 
-        * {
-            /* border:solid 1px black; */
-            font-family: 微軟正黑體;
-            
-        }
-        html, body
-        {
-            padding: 0;
-            margin: 0;
-            
-        }
-        body
-        {
-            background-color: #F5F6F8;
-            font-family: Arial, Helvetica, Verdana;
-            font-size: 16px;
-            line-height: 22px;
-            color: #666;
-            position: relative;
-            -webkit-text-size-adjust: none;
-            padding: 0px;
-        }
-        body *
-        {
-            text-shadow: none;
-        }
-        h1, h2, h3, h4, h6
-        {
-            line-height: 1;
-            font-weight: bold;
-            margin: 20px 0 10px 0;
-        }
-        h1, h2, h3
-        {
-            font-size: 18px;
-        }
-        h4, h5, h6
-        {
-            font-size: 16px;
-        }
-        p
-        {
-            margin: 0 0 0 0;
-        }
-        a, a:link, a:active, a:visited, a:hover
-        {
-            color: inherit;
-            text-decoration: none;
-            font-size: 18px
-        }
-        /* 設定樓層置中 */
-        .outer{
-            text-align: center;
-        }
-        .outer ul{
-            display: inline-block;
-        }
-        nav:not(.mm-menu)
-        {
-            display: none;
-        }
-        
-        .header,
-        .content,
-        .footer
-        {
-            text-align: center;
-        }
-        .header
-        {
-            background:#254F6E;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            line-height: 40px;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;	
-            width: 100%;
-            height: 40px;
-            padding: 0 50px;
-        }
-        
-        .footer{
-            position: fixed;
-            bottom: 0;
-            background: #fff;
-            box-shadow:  2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
-            
-        }
-        .row1{
-            width: 100%;
-            height: 40px;
-            margin: 0px;
-        }
-        .header.fixed
-        {
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        .footer.fixed
-        {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
-        .two a
-        {
-            background: center center no-repeat transparent;
-            background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top:0px;
-            left: 10px;
-        }
+.header,
+.content,
+.footer
+{
+    text-align: center;
+}
+.header
+{
+    background:#254F6E;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 40px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;	
+    width: 100%;
+    height: 40px;
+    padding: 0 50px;
+}
 
-        .three{
-            float: right;
-        }
-        .content
-        {
-            padding: 30px 30px 30px 30px;
-            color:white;
-            
-        }	
-        .icon{
-            display: flex;
-            justify-content:center;
-            align-content: center;
-            padding-top: 2px;
-        }
-        .icon1:hover{
-            color: #254F6E;
-        }
-        .icon1 {
-            color:black;
-            font-size: 30px;
-        }
-       
-        .circlefix{
-            width:40px;
-            height:40px;
-            /* background-image: url(../static/Home/_ionicons_svg_md-add.svg); */
-            background-color: #254F6E;
-            border-radius:50%;
-            border-color: transparent;
-            position: fixed;
-            right:20px;
-            bottom:60px;
-            box-shadow:0px 0px 35px rgba(0,0,0,0.3);
-            transition:0.5s;
-        }
-          .circlefix:hover{
-             box-shadow:5px 5px 60px rgba(0,0,0,0.4);
-            transform:translate(-5px,-5px)
-          }
+.footer{
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    box-shadow:  2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+    
+}
+.row1{
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+}
+.header.fixed
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.footer.fixed
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.two a
+{
+    background: center center no-repeat transparent;
+    background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top:0px;
+    left: 10px;
+}
 
-        .add{
-            display: flex;
-            justify-content:center;
-            align-content: center;
-            padding-top: 2px;
-        }
-        .icon1{
-            transition:0.3s;
-        }
-        .icon1:hover{
-           fill: #254F6E;
-           
-        }
-        .icon2{
-            color: #fff;
-            font-size: 30px;
-            margin-left:0;
-            margin-right:0 ;
-        }
-        .icon3{
-            color:#254F6E;
-            font-size: 30px;
-            margin-left:0;
-            margin-right:0 ;
-        }
-        .icon22{
-            display: flex;
-            justify-content:center;
-            align-content: center;
-            padding:20px 15px 20px 0px;
-            color: #fff;
-           
-        }
-        
-        .modal-body ul{
-            list-style:none;
-            padding-left:0;
-            font-size: 16px;
-          }
-        .add i
-        {
-            font-size: 30px;
-            color:rgb(255, 255, 255);
-        }
+.three{
+    float: right;
+}
+.content
+{
+    padding: 30px 30px 30px 30px;
+    color:white;
+    
+}	
+.icon{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding-top: 2px;
+}
+.icon1:hover{
+    color: #254F6E;
+}
+.icon1 {
+    color:black;
+    font-size: 30px;
+}
 
-        .text{
-            color:white;
-            display: inline-block;
-        }
-        .left{
-            width:80%;
-            
-        }
-        .right{
-            padding-top:60px;
-            width:20%;
+.circlefix{
+    width:40px;
+    height:40px;
+    /* background-image: url(../static/Home/_ionicons_svg_md-add.svg); */
+    background-color: #254F6E;
+    border-radius:50%;
+    border-color: transparent;
+    position: fixed;
+    right:20px;
+    bottom:60px;
+    box-shadow:0px 0px 35px rgba(0,0,0,0.3);
+    transition:0.5s;
+}
+    .circlefix:hover{
+        box-shadow:5px 5px 60px rgba(0,0,0,0.4);
+    transform:translate(-5px,-5px)
+    }
 
-        }
-        
-        /* The Close Button */
-        .close {
-            color: white;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
+.add{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding-top: 2px;
+}
+.icon1{
+    transition:0.3s;
+}
+.icon1:hover{
+    fill: #254F6E;
+    
+}
+.icon2{
+    color: #fff;
+    font-size: 30px;
+    margin-left:0;
+    margin-right:0 ;
+}
+.icon3{
+    color:#254F6E;
+    font-size: 30px;
+    margin-left:0;
+    margin-right:0 ;
+}
+.icon22{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    padding:20px 15px 20px 0px;
+    color: #fff;
+    
+}
 
-        /* Add Animation */
-        @-webkit-keyframes slideIn {
-            from {bottom: -300px; opacity: 0} 
-            to {bottom: 0; opacity: 1}
-        }
-        
-        @keyframes slideIn {
-            from {bottom: -300px; opacity: 0}
-            to {bottom: 0; opacity: 1}
-        }
-        
-        @-webkit-keyframes fadeIn {
-            from {opacity: 0} 
-            to {opacity: 1}
-        }
-        
-        @keyframes fadeIn {
-            from {opacity: 0} 
-            to {opacity: 1}
-        }
-        .title{
-           text-align: center;
-        }
+.modal-body ul{
+    list-style:none;
+    padding-left:0;
+    font-size: 16px;
+    }
+.add i
+{
+    font-size: 30px;
+    color:rgb(255, 255, 255);
+}
 
-        /*互動視窗*/
-        .modal-header {
-            background-color: #254F6E;
-           
-        }
+.text{
+    color:white;
+    display: inline-block;
+}
+.left{
+    width:80%;
+    
+}
+.right{
+    padding-top:60px;
+    width:20%;
 
-        .modal-title {
-            color: #FFFFFF;
-            
-        }
+}
 
-        .close {
-            color: #FFFFFF
-        }
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 
-        /* 透明的按鈕 */
+/* Add Animation */
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+}
 
-        .buttontype {
-            background-color: transparent;
-            border-color: transparent;
-            margin: 0px;
-            color: white;
-        }
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
 
-       .four{
-        padding: 5px;
-        }
+@-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
 
-        .btn-primary{
-            background-color: #254F6E;
-            color: white;
-            border:none;
-        }
+@keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
+.title{
+    text-align: center;
+}
 
-        .btn-primary:hover{
-            border: none;
-            background-color: none;
-        }
-        /* 格局 */
-        .box {
-            position: relative;
-            background-color: #047e7e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .box-wrap{
-            overflow: hidden;
-            margin-bottom:100px;
-        }
-        .box-wrap>div {
-            width: 33vw;
-            height: 33vw;
-            padding-bottom: 0%;
-            margin-left: 11%;
-            margin-top: 11%;
-            float: left;
-        }
-        .imore {
-            font-size: 25px;
-            color: white;
-            position: absolute;
-            right: 10px;
-            bottom: 5px;
-            text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);
-        }
-        /* 側邊欄 */
-        #mm-1{
-            background-color: #254F6E;
-        }
-        .qrscan{
-            position: absolute;
-            font-size: 30px;
-            right: 30px;
-            top: 3px;
-            z-index: 2;
-        }
-        #showscan{
-            z-index: 200;
-            margin-top: 10vh;
-            font-size: 300px;
-            color: white;
-        }
+/*互動視窗*/
+.modal-header {
+    background-color: #254F6E;
+    
+}
+
+.modal-title {
+    color: #FFFFFF;
+    
+}
+
+.close {
+    color: #FFFFFF
+}
+
+
+/* 透明的按鈕 */
+
+.buttontype {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0px;
+    color: white;
+}
+
+.four{
+padding: 5px;
+}
+
+.btn-primary{
+    background-color: #254F6E;
+    color: white;
+    border:none;
+}
+
+.btn-primary:hover{
+    border: none;
+    background-color: none;
+}
+/* 格局 */
+.box {
+    position: relative;
+    background-color: #047e7e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box-wrap{
+    overflow: hidden;
+    margin-bottom:100px;
+}
+.box-wrap>div {
+    width: 33vw;
+    height: 33vw;
+    padding-bottom: 0%;
+    margin-left: 11%;
+    margin-top: 11%;
+    float: left;
+}
+.imore {
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);
+}
+/* 側邊欄 */
+#mm-1{
+    background-color: #254F6E;
+}
+.qrscan{
+    position: absolute;
+    font-size: 30px;
+    right: 30px;
+    top: 3px;
+    z-index: 2;
+}
+#showscan{
+    z-index: 200;
+    margin-top: 10vh;
+    font-size: 300px;
+    color: white;
+}
+/* 引導頁 */
+.lead{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1031;
+}
+.mask{
+    z-index: 1031;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(17, 16, 16);
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.caption{
+    color:white;
+    z-index: 1032;
+    position: fixed;
+    top: 100px;
+    left: 150px;
+}
+
+.arrow{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    top: 10px;
+    left: 48vw;
+}
+.know{
+    z-index: 1034;
+    position: fixed;
+    top: 180px;
+    left: 180px;
+    border: white 1px solid;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 8px;
+}
+.caption2{
+    color:white;
+    z-index: 1032;
+    position: fixed;
+    bottom:150px;
+    left: 20vw;
+}
+
+.arrow2{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    bottom:  26px;
+    right: 8px;
+}
+.arrow5{
+    font-size: 50px;
+    color:white;
+    z-index: 1033;
+    position: fixed;
+    top:  10px;
+    right: 13px;
+}
+.know2{
+    z-index: 1034;
+    position: fixed;
+    bottom: 100px;
+    right:  20vw;
+    border: white 1px solid;
+    width: fit-content;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 8px;
+}

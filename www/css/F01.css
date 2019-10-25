@@ -293,6 +293,7 @@ ul{
     background-color: rgb(17, 16, 16);
     opacity: 0.7;
   }
+/* 引導頁 */
 .lead{
     display: none;
     position: fixed;

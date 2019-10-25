@@ -23,7 +23,13 @@
 </head>
 
 <body>
-
+    <div class="lead" onclick="lead()">
+        <div class="mask"></div>
+        <p id="leadcaption" class="caption">點擊可以選擇、新增、<br>編輯、刪除樓層</p>
+        <img src="static/tap.png" id="leadarrow" class="arrow">
+        <!-- <i class="icon ion-md-arrow-round-back arrow"></i> -->
+        <div id="leadknow" class="know">我知道了</div>
+    </div>
 
     <div id="page" class="outer">
         <!-- 導覽列 -->
@@ -71,7 +77,7 @@
     <div id="showscan" style="display: none;">
         <i class="icon ion-md-qr-scanner"></i>
     </div>
-    
+
     <!-- 新增樓層的彈跳視窗 -->
 
     <div class="modal fade hide bd-example-modal-sm" id="exampleModalCenter3" tabindex="-1" role="dialog"
@@ -398,6 +404,45 @@
     </div>
 
     <script>
+        //引導頁
+        function lead() {
+            $('.lead').attr('onclick', 'lead2()');
+            // $(".lead").css('display', 'block');
+            $("#leadarrow").removeClass("arrow")
+            $("#leadarrow").addClass("arrow2")
+            $("#leadcaption").removeClass("caption")
+            $("#leadcaption").addClass("caption2")
+            $("#leadcaption").html("點擊可以新增格局。")
+            $("#leadknow").removeClass("know")
+            $("#leadknow").addClass("know2")
+        }
+        function lead2() {
+            $('.lead').attr('onclick', 'lead3()');
+            $("#leadarrow").removeClass("arrow2")
+            $("#leadarrow").addClass("arrow")
+            $(".arrow").css("left", "3px");
+            $("#leadcaption").removeClass("caption2")
+            $("#leadcaption").addClass("caption")
+            $(".caption").css("left", "40px");
+            $("#leadcaption").html("點擊進入功能選單:<br>觀看儲存的文章、物品提醒、<br>同步、重設密碼、登出。")
+            $("#leadknow").removeClass("know2")
+            $("#leadknow").addClass("know")
+            $(".know").css("left", "120px");
+        }
+        function lead4() {
+            $('.lead').attr('onclick', 'lead5()');
+            $('#leadarrow').removeAttr("style")
+            $("#leadarrow").removeClass("arrow");
+            $("#leadarrow").addClass("arrow5");
+            $(".lead").css('display', 'block');
+            $(".caption").css({ "left": "100px", "top": "150px" });
+            $("#leadcaption").html("點擊開啟QR Code掃描器，<br>快速查找物品")
+            $(".know").css({ "left": "200px", "top": "200px" });
+        }
+        function lead5() {
+            $(".lead").css('display', 'none');
+        }
+
         var user_email;
         var user_token;
         var user_id;
@@ -426,11 +471,12 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text, email text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
             });
 
 
@@ -442,7 +488,7 @@
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
                             user_id = res.rows.item(0)['id']
-                            var home = res.rows.item(0)['home']
+
 
                             $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
                             $(".mm-navbar__title").css({ "background-color": "#254F6E", "color": "white" });
@@ -461,21 +507,29 @@
                                     var planargraphId = urlParams.get('planargraph');
                                     if (!planargraphId) {
                                         pnidclick(res.rows.item(0)['id'])
-
                                     } else {
                                         pnidclick(planargraphId)
 
                                     }
+                                    tx.executeSql("SELECT * FROM page", [],
+                                        function (tx, res) {
+                                            var len = res.rows.length;
+                                            if (res.rows.length >= 1) {
+                                                var home = res.rows.item(0)['home']
+                                                if (!home) {
+                                                    $(".lead").css('display', 'block');
+                                                }
+                                            }
+                                        });
                                 } else {
-                                    if (!home) {
-                                        var timestamp = (new Date()).valueOf();
-                                        var email = user_email.replace(/@/g, "").split(".").join("");
-                                        var planargraphId = email + timestamp;
-                                        tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, "一樓", user_id],
-                                            function (tx, res) {
-                                                location.href = "H01.html?planargraph=" + planargraphId + "";
-                                            });
-                                    }
+                                    var timestamp = (new Date()).valueOf();
+                                    var email = user_email.replace(/@/g, "").split(".").join("");
+                                    var planargraphId = email + timestamp;
+                                    tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [planargraphId, "一樓", user_id],
+                                        function (tx, res) {
+                                            location.href = "H01.html?planargraph=" + planargraphId + "";
+                                        });
+
                                 }
                             });
                             // qrcode 掃描跳轉 homeset://
@@ -491,10 +545,19 @@
                     }, function (error) {
                         alert(JSON.stringify(error))
                     });
+
+
             });
         }
 
-
+        function lead3() {
+            $(".lead").css('display', 'none');
+            db.transaction(function (tx) {
+                tx.executeSql("UPDATE page SET home = ? WHERE id = ?", [1, 1], function (tx, res) {
+                    location.reload()
+                });
+            });
+        }
 
         // 生成pdf base64
         function createpdf() {
@@ -551,6 +614,7 @@
                         $("#pnid").html(res.rows.item(0)['name'])
                         $("#editpname").val(res.rows.item(0)['name'])
                         $("#delPname").html(res.rows.item(0)['name'])
+                        $("#printp").html(res.rows.item(0)['name'])
                     });
             });
             $('#insertspace').attr('onclick', 'insertspace("' + id + '")');
@@ -570,6 +634,24 @@
                                                         <a href="F01.html?space=`+ res.rows.item(i)['id'] + `"><span id="sname` + res.rows.item(i)['id'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
                                                         </div>`)
                             }
+
+                            // 格局
+                            tx.executeSql("SELECT * FROM page", [],
+                                function (tx, res) {
+                                    var len = res.rows.length;
+                                    if (res.rows.length >= 1) {
+                                        var home = res.rows.item(0)['home']
+                                        if (home == 1) {
+                                            $('.lead').attr('onclick', 'lead4()');
+                                            $(".lead").css('display', 'block');
+                                            $(".arrow").css({ "left": "115px", "top": "160px" });
+                                            $(".caption").css({ "left": "60px", "top": "250px" });
+                                            $("#leadcaption").html("點擊可以<br>編輯、刪除、更改顏色<br>以及生成格局內儲物櫃QR Code")
+                                            $(".know").css({ "left": "200px", "top": "340px" });
+                                            tx.executeSql("UPDATE page SET home = ? WHERE id = ?", [2, 1]);
+                                        }
+                                    }
+                                });
                         }
                     });
             });
@@ -606,11 +688,11 @@
                             for (var i = 0; i < len; i++) {
                                 var furnitureId1 = res.rows.item(i)['id'].slice(-13)
                                 var printcontent = `
-                                <div style="width: 100%;border: 1px solid black;margin:3% 0 0 6%;">
-                                    <table border="1px" width="500px" style="border-collapse:collapse;">
+                                <div style="width: 100%;margin:2% 0 0 6%;">
+                                    <table border="1px" width="400px" style="border-collapse:collapse;">
                                         <tr>
                                             <th colspan="2">`+ res.rows.item(i)['name'] + `</td>
-                                            <td rowspan="2" id="f`+ res.rows.item(i)['id'] + `" style="width:33%;padding:5px;vertical-align:middle;text-align: center;">
+                                            <td rowspan="2" id="f`+ res.rows.item(i)['id'] + `" style="width:33%;padding:10px;">
                                                </td>
                                         </tr>
                                         <tr>
@@ -929,9 +1011,34 @@
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM thing', [],
                     function (tx, res) {
-                        var image = res.rows.item(1)['image'];
-                        alert(image);
-                        uploadFile(image, "name")
+                        var len = res.rows.length
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var image = res.rows.item(i)['image'];
+                                alert(image);
+
+                                $.ajax({
+                                    type: "POST",
+                                    headers: {
+                                        "Authorization": "Token " + user_token + ""
+                                    },
+                                    url: "http://140.131.114.157/posts",
+                                    data: {
+                                        "title": i,
+                                        "content": "11",
+                                    },
+                                    error: function (err) {
+                                        alert(JSON.stringify(err));
+                                    },
+                                    success: function (res) {
+                                        alert(JSON.stringify(res));
+                                    }
+                                })
+
+
+                                // uploadFile(image, "name")
+                            }
+                        }
                     });
             });
         }
@@ -958,7 +1065,7 @@
             options.httpMethod = "POST";
             //设置提交方式，可以修改，修改方式如上
             let ft = new FileTransfer();
-            ft.upload(fileurl, encodeURI("http://140.131.114.157/posts/59/set_image"), onSuccess, onError, options);
+            ft.upload(fileurl, encodeURI("http://140.131.114.157/posts"), onSuccess, onError, options);
             function onSuccess(r) {
                 alert("Code = " + r.responseCode);
                 alert("Response = " + r.response);

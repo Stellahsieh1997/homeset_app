@@ -204,7 +204,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, home integer, furniture_page integer, thing_page integer, search_page integer, post_page integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
             });
 
             db.transaction(function (tx) {
@@ -330,6 +330,9 @@
                 success: function (data) {
                     alert(JSON.stringify(data))
                     location.href = "A04.html";
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err))
                 }
             })
         })

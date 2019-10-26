@@ -58,11 +58,14 @@
         </ul>
         <nav id="menu">
             <ul>
-                <li><a href="../www/H03.html">儲存的文章</a></li>
-                <li><a href="../www/H04.html">物品提醒</a></li>
-                <li><a href="#" onclick="test()">同步</a></li>
-                <li><a href="#" onclick="reset()">重設密碼</a></li>
-                <li><a href="#" onclick="logout()">登出</a></li>
+                <li><a href="../www/H03.html"><i class="icon ion-ios-journal iconmenu"></i> &nbsp;儲存的文章</a></li>
+                <li><a href="../www/H04.html"><i class="icon ion-ios-notifications iconmenu"></i> &nbsp;物品提醒</a></li>
+                <li><a href="#" onclick="backup()"><i class="icon ion-md-cloud-upload iconmenu"></i> &nbsp;備份&nbsp;<span
+                            id="backup"></span></a></li>
+                <li><a href="#" onclick="recovery()"><i class="icon ion-md-cloud-download iconmenu"></i> &nbsp;還原</a>
+                </li>
+                <li><a href="#" onclick="reset()"><i class="icon ion-md-build iconmenu"></i> &nbsp;重設密碼</a></li>
+                <li><a href="#" onclick="logout()"><i class="icon ion-ios-log-out iconmenu"></i> &nbsp;登出</a></li>
             </ul>
         </nav>
     </div>
@@ -474,7 +477,7 @@
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer integer, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
             });
@@ -1003,55 +1006,366 @@
 
         }
 
+        // 備份
+        function uploadthing(furniture_id) {
 
-
-
-
-        function test() {
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM thing', [],
+                tx.executeSql('SELECT * FROM thing WHERE furniture_id = ?', [furniture_id],
+                    function (tx, res) {
+                        var len = res.rows.length
+
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                $("#backup").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                    <span style="font-size: 12px;">備份中...</span>
+                  `);
+                                var tid = res.rows.item(i)['id'];
+
+                                var tname = res.rows.item(i)['name'];
+                                if (!tname) {
+                                    tname = ""
+                                }
+                                var tdescription = res.rows.item(i)['description'];
+                                if (!tname) {
+                                    tdescription = ""
+                                }
+                                var timage = res.rows.item(i)['image'];
+                                var tcategory = res.rows.item(i)['category'];
+                                if (!tcategory) {
+                                    tcategory = ""
+                                }
+                                var towner = res.rows.item(i)['owner'];
+                                if (!towner) {
+                                    towner = ""
+                                }
+                                var tnumber = res.rows.item(i)['number'];
+                                if (!tnumber) {
+                                    tnumber = ""
+                                }
+                                var tlayer = res.rows.item(i)['layer'];
+                                if (!tlayer) {
+                                    tlayer = ""
+                                }
+                                var tout = res.rows.item(i)['out'];
+                                if (!tout) {
+                                    tout = ""
+                                }
+                                var tremind = res.rows.item(i)['remind'];
+                                if (!tremind) {
+                                    tremind = ""
+                                }
+                                var ttime = res.rows.item(i)['time'];
+
+                                if (!ttime) {
+                                    ttime = ""
+                                }
+                                var tcontent = res.rows.item(i)['content'];
+                                if (!tcontent) {
+                                    tcontent = ""
+                                }
+
+                                let options = new FileUploadOptions();
+                                options.fileKey = "image";
+                                let point = timage.lastIndexOf(".");
+                                let type = timage.substr(point);
+                                let headers = { "Authorization": "Token " + user_token + "" };
+                                options.headers = headers;
+                                //上传附带参数
+                                var params = {};
+                                params.type = type;
+                                params.id = tid;
+                                params.name = tname;
+                                params.description = tdescription;
+                                params.category = tcategory;
+                                params.owner = towner;
+                                params.number = tnumber;
+                                params.layer = tlayer;
+                                params.out = tout;
+                                params.remind = tremind;
+                                params.time = ttime;
+                                params.content = tcontent;
+                                params.furniture_id = furniture_id;
+
+                                //设置参数，后台获取
+                                options.params = params;
+                                options.httpMethod = "POST";
+                                let ft = new FileTransfer();
+                                ft.upload(timage, encodeURI("http://140.131.114.157/things"), onSuccess, onError, options);
+                                function onSuccess(r) {
+                                    // alert("upload onSuccess " + JSON.stringify(r));
+                                    $("#backup").html("");
+                                }
+
+                                function onError(error) {
+                                    alert("upload error target " + JSON.stringify(error));
+                                }
+
+                            }
+                        } else { $("#backup").html(""); }
+                    });
+            });
+        }
+
+
+        function uploadfurniture(space_id) {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [space_id],
                     function (tx, res) {
                         var len = res.rows.length
                         if (res.rows.length >= 1) {
                             for (var i = 0; i < len; i++) {
-                                var image = res.rows.item(i)['image'];
-                                alert(image);
+                                $("#backup").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                    <span style="font-size: 12px;">備份中...</span>
+                  `);
+                                var fid = res.rows.item(i)['id'];
+                                var fname = res.rows.item(i)['name'];
+                                var flayer = res.rows.item(i)['layer'];
+                                var fimage = res.rows.item(i)['image'];
 
+                                let options = new FileUploadOptions();
+                                options.fileKey = "image";
+                                let point = fimage.lastIndexOf(".");
+                                let type = fimage.substr(point);
+                                let headers = { "Authorization": "Token " + user_token + "" };
+                                options.headers = headers;
+                                //上传附带参数
+                                var params = {};
+                                params.type = type;
+                                params.id = fid;
+                                params.name = fname;
+                                params.layer = flayer;
+                                params.space_id = space_id;
+                                //设置参数，后台获取
+                                options.params = params;
+                                options.httpMethod = "POST";
+                                let ft = new FileTransfer();
+                                ft.upload(fimage, encodeURI("http://140.131.114.157/furnitures"), onSuccess, onError, options);
+                                function onSuccess(r) {
+                                    // alert("upload onSuccess " + JSON.stringify(r));
+                                    var obj = JSON.parse(r.response)
+                                    uploadthing(obj.id);
+                                    $("#backup").html("");
+                                }
+
+                                function onError(error) {
+                                    alert("upload error target " + JSON.stringify(error));
+                                }
+
+                            }
+                        } else { $("#backup").html(""); }
+                    });
+            });
+        }
+
+        function uploadspace(planargraph_id) {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [planargraph_id],
+                    function (tx, res) {
+                        var len = res.rows.length
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                $("#backup").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                    <span style="font-size: 12px;">備份中...</span>
+                  `);
+                                var sid = res.rows.item(i)['id'];
+                                var sname = res.rows.item(i)['name'];
+                                var scolor = res.rows.item(i)['space_color'];
                                 $.ajax({
                                     type: "POST",
                                     headers: {
                                         "Authorization": "Token " + user_token + ""
                                     },
-                                    url: "http://140.131.114.157/posts",
+                                    "async": false,
+                                    url: "http://140.131.114.157/spaces",
                                     data: {
-                                        "title": i,
-                                        "content": "11",
+                                        "id": sid,
+                                        "name": sname,
+                                        "space_color": scolor,
+                                        "planargraph_id": planargraph_id
                                     },
                                     error: function (err) {
                                         alert(JSON.stringify(err));
                                     },
                                     success: function (res) {
-                                        alert(JSON.stringify(res));
+                                        // alert(JSON.stringify(res));
+                                        $("#backup").html("");
+                                        uploadfurniture(sid)
                                     }
                                 })
+                            }
+                        } else { $("#backup").html(""); }
+                    });
+            });
+        }
 
 
+        function backup() {
+            $("#backup").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                    <span style="font-size: 12px;">備份中...</span>
+                  `);
+            $.ajax({
+                type: "DELETE",
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                async: false,
+                url: "http://140.131.114.157/planargraphs/my",
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                },
+                success: function (res) {
+                    // alert(JSON.stringify(res));
+                }
+            })
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [user_id],
+                    function (tx, res) {
+                        var len = res.rows.length
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var pid = res.rows.item(i)['id'];
+                                var pname = res.rows.item(i)['name'];
+                                $.ajax({
+                                    type: "POST",
+                                    headers: {
+                                        "Authorization": "Token " + user_token + ""
+                                    },
+                                    async: false,
+                                    url: "http://140.131.114.157/planargraphs",
+                                    data: {
+                                        "id": pid,
+                                        "name": pname,
+                                        "user_id": user_id
+                                    },
+                                    error: function (err) {
+                                        alert(JSON.stringify(err));
+                                    },
+                                    success: function (res) {
+                                        // alert(JSON.stringify(res));
+                                        $("#backup").html("");
+                                        uploadspace(pid)
+                                    }
+                                })
                                 // uploadFile(image, "name")
                             }
+                        } else {
+                            $("#backup").html("");
                         }
                     });
             });
         }
 
+
+        //還原
+
+        function downloadfurniture(space_id) {
+            db.transaction(function (tx) {
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/furnitures/own/" + space_id + "",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        alert(JSON.stringify(res));
+                        // alert(res.length);
+                        // alert(res[0].id);
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                tx.executeSql('INSERT INTO furniture (id, name, image, layer, space_id) VALUES (?,?,?,?,?)', [res[i].id, res[i].name, res[i].image, res[i].layer, res[i].space_id]);
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+
+        function downloadspace(planargraph_id) {
+            db.transaction(function (tx) {
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/spaces/own/" + planargraph_id + "",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        alert(JSON.stringify(res));
+                        // alert(res.length);
+                        // alert(res[0].id);
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                downloadfurniture(res[i].id);
+                                tx.executeSql('INSERT INTO space (id, name, space_color, planargraph_id) VALUES (?,?,?,?)', [res[i].id, res[i].name, res[i].space_color, res[i].planargraph_id]);
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+
+        function recovery() {
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE IF EXISTS planargraph');
+                tx.executeSql('DROP TABLE IF EXISTS space');
+                tx.executeSql('DROP TABLE IF EXISTS furniture');
+                tx.executeSql('DROP TABLE IF EXISTS thing');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
+
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/planargraphs/own",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        alert(JSON.stringify(res));
+                        // alert(res.length);
+                        // alert(res[0].id);
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                // alert(res[i].id);
+                                // alert(res[i].name);
+                                // alert(res[i].user_id);
+                                downloadspace(res[i].id);
+                                tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [res[i].id, res[i].name, res[i].user_id]);
+
+                            }
+                        }
+                    }
+                })
+
+
+            });
+        }
+
+
+
         //完整代码：
         function uploadFile(fileurl, name) {
             let options = new FileUploadOptions();
             options.fileKey = "image";
-            //获取后缀，用于生成图片时用
             let point = fileurl.lastIndexOf(".");
             let type = fileurl.substr(point);
-            // options.fileName = name;
-            // options.mimeType = "image/jpeg";
             let headers = { "Authorization": "Token " + user_token + "" };
             options.headers = headers;
             //上传附带参数
@@ -1059,11 +1373,9 @@
             params.type = type;
             params.title = "eee";
             params.content = "typeeeeee";
-
             //设置参数，后台获取
             options.params = params;
             options.httpMethod = "POST";
-            //设置提交方式，可以修改，修改方式如上
             let ft = new FileTransfer();
             ft.upload(fileurl, encodeURI("http://140.131.114.157/posts"), onSuccess, onError, options);
             function onSuccess(r) {

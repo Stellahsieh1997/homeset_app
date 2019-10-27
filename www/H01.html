@@ -23,6 +23,15 @@
 </head>
 
 <body>
+
+    <div class="loading">
+        <div class="maskloading"></div>
+        <span class="spinner-border text-light" style="position: fixed;top: 48vh;left: 48vw;" role="status"
+            aria-hidden="true"></span>
+        <p style="color: white;position: fixed;top: 54vh;left: 47vw;">復原中...</p>
+
+    </div>
+
     <div class="lead" onclick="lead()">
         <div class="mask"></div>
         <p id="leadcaption" class="caption">點擊可以選擇、新增、<br>編輯、刪除樓層</p>
@@ -62,7 +71,7 @@
                 <li><a href="../www/H04.html"><i class="icon ion-ios-notifications iconmenu"></i> &nbsp;物品提醒</a></li>
                 <li><a href="#" onclick="backup()"><i class="icon ion-md-cloud-upload iconmenu"></i> &nbsp;備份&nbsp;<span
                             id="backup"></span></a></li>
-                <li><a href="#" onclick="recovery()"><i class="icon ion-md-cloud-download iconmenu"></i> &nbsp;還原</a>
+                <li><a href="#" onclick="recovery()"><i class="icon ion-md-cloud-download iconmenu"></i> &nbsp;復原</a>
                 </li>
                 <li><a href="#" onclick="reset()"><i class="icon ion-md-build iconmenu"></i> &nbsp;重設密碼</a></li>
                 <li><a href="#" onclick="logout()"><i class="icon ion-ios-log-out iconmenu"></i> &nbsp;登出</a></li>
@@ -318,7 +327,11 @@
                     </button>
                 </div>
                 <div class="modal-body text-black" id="resettext">
-
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -349,6 +362,23 @@
         </div>
     </div>
 
+    <!-- 刪除格局 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="recoverymodal" aria-labelledby="recoverymodal"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 50%">
+                <div class="modal-body text-black">
+                    <p style="font-size: 16px">復原完成</p>
+                    <div class="row" style="text-align: center">
+                        <div class="col">
+                            <button type="button" onClick="location.reload()"
+                                class="btn btn-outline-secondary">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="container-fluid  footer">
@@ -959,6 +989,7 @@
         function reset() {
             // $('#menu1').click();
             $("html").removeClass("mm-wrapper_opening")
+            $("#resetpassword").modal("show")
             $.ajax({
                 type: "POST",
                 url: "http://140.131.114.157/users/password_reset",
@@ -1064,44 +1095,85 @@
                                     tcontent = ""
                                 }
 
-                                let options = new FileUploadOptions();
-                                options.fileKey = "image";
-                                let point = timage.lastIndexOf(".");
-                                let type = timage.substr(point);
-                                let headers = { "Authorization": "Token " + user_token + "" };
-                                options.headers = headers;
-                                //上传附带参数
-                                var params = {};
-                                params.type = type;
-                                params.id = tid;
-                                params.name = tname;
-                                params.description = tdescription;
-                                params.category = tcategory;
-                                params.owner = towner;
-                                params.number = tnumber;
-                                params.layer = tlayer;
-                                params.out = tout;
-                                params.remind = tremind;
-                                params.time = ttime;
-                                params.content = tcontent;
-                                params.furniture_id = furniture_id;
+                                var judge = timage.split(":")[0]
+                                // alert(judge)
+                                if (judge == "http") {
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {
+                                            "Authorization": "Token " + user_token + ""
+                                        },
+                                        async: false,
+                                        url: "http://140.131.114.157/things",
+                                        data: {
+                                            "id": tid,
+                                            "name": tname,
+                                            "description": tdescription,
+                                            "category": tcategory,
+                                            "owner": towner,
+                                            "number": tnumber,
+                                            "layer": tlayer,
+                                            "out": tout,
+                                            "remind": tremind,
+                                            "time": ttime,
+                                            "content": tcontent,
+                                            "furniture_id": furniture_id,
+                                            "url": timage
+                                        },
+                                        error: function (err) {
+                                            alert(JSON.stringify(err));
+                                        },
+                                        success: function (res) {
+                                            // alert(JSON.stringify(res));
+                                            var Today = new Date();
+                                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
 
-                                //设置参数，后台获取
-                                options.params = params;
-                                options.httpMethod = "POST";
-                                let ft = new FileTransfer();
-                                ft.upload(timage, encodeURI("http://140.131.114.157/things"), onSuccess, onError, options);
-                                function onSuccess(r) {
-                                    // alert("upload onSuccess " + JSON.stringify(r));
-                                    $("#backup").html("");
+                                        }
+                                    })
+
+                                } else {
+                                    let options = new FileUploadOptions();
+                                    options.fileKey = "image";
+                                    let point = timage.lastIndexOf(".");
+                                    let type = timage.substr(point);
+                                    let headers = { "Authorization": "Token " + user_token + "" };
+                                    options.headers = headers;
+                                    //上传附带参数
+                                    var params = {};
+                                    params.type = type;
+                                    params.id = tid;
+                                    params.name = tname;
+                                    params.description = tdescription;
+                                    params.category = tcategory;
+                                    params.owner = towner;
+                                    params.number = tnumber;
+                                    params.layer = tlayer;
+                                    params.out = tout;
+                                    params.remind = tremind;
+                                    params.time = ttime;
+                                    params.content = tcontent;
+                                    params.furniture_id = furniture_id;
+
+                                    //设置参数，后台获取
+                                    options.params = params;
+                                    options.httpMethod = "POST";
+                                    let ft = new FileTransfer();
+                                    ft.upload(timage, encodeURI("http://140.131.114.157/things"), onSuccess, onError, options);
+                                    function onSuccess(r) {
+                                        // alert("upload onSuccess " + JSON.stringify(r));
+                                        var Today = new Date();
+                                        $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                                    }
+
+                                    function onError(error) {
+                                        alert("upload error target " + JSON.stringify(error));
+                                    }
                                 }
-
-                                function onError(error) {
-                                    alert("upload error target " + JSON.stringify(error));
-                                }
-
                             }
-                        } else { $("#backup").html(""); }
+                        } else {
+                            var Today = new Date();
+                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                        }
                     });
             });
         }
@@ -1121,38 +1193,70 @@
                                 var fname = res.rows.item(i)['name'];
                                 var flayer = res.rows.item(i)['layer'];
                                 var fimage = res.rows.item(i)['image'];
+                                var judge = fimage.split(":")[0]
+                                // alert(judge)
+                                if (judge == "http") {
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {
+                                            "Authorization": "Token " + user_token + ""
+                                        },
+                                        async: false,
+                                        url: "http://140.131.114.157/furnitures",
+                                        data: {
+                                            "id": fid,
+                                            "name": fname,
+                                            "layer": flayer,
+                                            "space_id": space_id,
+                                            "url": fimage
+                                        },
+                                        error: function (err) {
+                                            alert(JSON.stringify(err));
+                                        },
+                                        success: function (res) {
+                                            // alert(JSON.stringify(res));
+                                            var Today = new Date();
+                                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                                            // alert(fid)
+                                            uploadthing(fid)
+                                        }
+                                    })
+                                } else {
+                                    let options = new FileUploadOptions();
+                                    options.fileKey = "image";
+                                    let point = fimage.lastIndexOf(".");
+                                    let type = fimage.substr(point);
+                                    let headers = { "Authorization": "Token " + user_token + "" };
+                                    options.headers = headers;
+                                    //上传附带参数
+                                    var params = {};
+                                    params.type = type;
+                                    params.id = fid;
+                                    params.name = fname;
+                                    params.layer = flayer;
+                                    params.space_id = space_id;
+                                    //设置参数，后台获取
+                                    options.params = params;
+                                    options.httpMethod = "POST";
+                                    let ft = new FileTransfer();
+                                    ft.upload(fimage, encodeURI("http://140.131.114.157/furnitures"), onSuccess, onError, options);
+                                    function onSuccess(r) {
+                                        // alert("upload onSuccess " + JSON.stringify(r));
+                                        var obj = JSON.parse(r.response)
+                                        uploadthing(obj.id);
+                                        var Today = new Date();
+                                        $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                                    }
 
-                                let options = new FileUploadOptions();
-                                options.fileKey = "image";
-                                let point = fimage.lastIndexOf(".");
-                                let type = fimage.substr(point);
-                                let headers = { "Authorization": "Token " + user_token + "" };
-                                options.headers = headers;
-                                //上传附带参数
-                                var params = {};
-                                params.type = type;
-                                params.id = fid;
-                                params.name = fname;
-                                params.layer = flayer;
-                                params.space_id = space_id;
-                                //设置参数，后台获取
-                                options.params = params;
-                                options.httpMethod = "POST";
-                                let ft = new FileTransfer();
-                                ft.upload(fimage, encodeURI("http://140.131.114.157/furnitures"), onSuccess, onError, options);
-                                function onSuccess(r) {
-                                    // alert("upload onSuccess " + JSON.stringify(r));
-                                    var obj = JSON.parse(r.response)
-                                    uploadthing(obj.id);
-                                    $("#backup").html("");
+                                    function onError(error) {
+                                        alert("upload error target " + JSON.stringify(error));
+                                    }
                                 }
-
-                                function onError(error) {
-                                    alert("upload error target " + JSON.stringify(error));
-                                }
-
                             }
-                        } else { $("#backup").html(""); }
+                        } else {
+                            var Today = new Date();
+                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                        }
                     });
             });
         }
@@ -1175,7 +1279,7 @@
                                     headers: {
                                         "Authorization": "Token " + user_token + ""
                                     },
-                                    "async": false,
+                                    async: false,
                                     url: "http://140.131.114.157/spaces",
                                     data: {
                                         "id": sid,
@@ -1188,12 +1292,16 @@
                                     },
                                     success: function (res) {
                                         // alert(JSON.stringify(res));
-                                        $("#backup").html("");
+                                        var Today = new Date();
+                                        $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
                                         uploadfurniture(sid)
                                     }
                                 })
                             }
-                        } else { $("#backup").html(""); }
+                        } else {
+                            var Today = new Date();
+                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
+                        }
                     });
             });
         }
@@ -1242,14 +1350,15 @@
                                     },
                                     success: function (res) {
                                         // alert(JSON.stringify(res));
-                                        $("#backup").html("");
+                                        var Today = new Date();
+                                        $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
                                         uploadspace(pid)
                                     }
                                 })
-                                // uploadFile(image, "name")
                             }
                         } else {
-                            $("#backup").html("");
+                            var Today = new Date();
+                            $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
                         }
                     });
             });
@@ -1257,6 +1366,40 @@
 
 
         //還原
+
+        function downloadthing(furniture_id) {
+            db.transaction(function (tx) {
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/things/own/" + furniture_id + "",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        // alert(JSON.stringify(res));
+                        // alert(res.length);
+                        // alert(res[0].id);
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+
+                                if (!res[i].url) {
+                                    // alert("image")
+                                    tx.executeSql('INSERT INTO thing (id, name, description, image, category, owner, furniture_id, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [res[i].id, res[i].name, res[i].description, res[i].image, res[i].category, res[i].owner, res[i].furniture_id, res[i].number, res[i].layer, res[i].out, res[i].remind, res[i].time, res[i].content]);
+                                } else {
+                                    // alert("url")
+                                    tx.executeSql('INSERT INTO thing (id, name, description, image, category, owner, furniture_id, number, layer, out, remind, time, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)', [res[i].id, res[i].name, res[i].description, res[i].url, res[i].category, res[i].owner, res[i].furniture_id, res[i].number, res[i].layer, res[i].out, res[i].remind, res[i].time, res[i].content]);
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        }
 
         function downloadfurniture(space_id) {
             db.transaction(function (tx) {
@@ -1271,13 +1414,18 @@
                         alert(JSON.stringify(err));
                     },
                     success: function (res) {
-                        alert(JSON.stringify(res));
+                        // alert(JSON.stringify(res));
                         // alert(res.length);
                         // alert(res[0].id);
                         var len = res.length
                         if (len >= 1) {
                             for (var i = 0; i < len; i++) {
-                                tx.executeSql('INSERT INTO furniture (id, name, image, layer, space_id) VALUES (?,?,?,?,?)', [res[i].id, res[i].name, res[i].image, res[i].layer, res[i].space_id]);
+                                downloadthing(res[i].id);
+                                if (!res[i].url) {
+                                    tx.executeSql('INSERT INTO furniture (id, name, image, layer, space_id) VALUES (?,?,?,?,?)', [res[i].id, res[i].name, res[i].image, res[i].layer, res[i].space_id]);
+                                } else {
+                                    tx.executeSql('INSERT INTO furniture (id, name, image, layer, space_id) VALUES (?,?,?,?,?)', [res[i].id, res[i].name, res[i].url, res[i].layer, res[i].space_id]);
+                                }
                             }
                         }
                     }
@@ -1299,7 +1447,7 @@
                         alert(JSON.stringify(err));
                     },
                     success: function (res) {
-                        alert(JSON.stringify(res));
+                        // alert(JSON.stringify(res));
                         // alert(res.length);
                         // alert(res[0].id);
                         var len = res.length
@@ -1316,6 +1464,9 @@
 
 
         function recovery() {
+            $(".loading").css('display', 'block');
+            $("html").removeClass("mm-wrapper_opening")
+            setTimeout(recoveryend, 5000);
             db.transaction(function (tx) {
                 tx.executeSql('DROP TABLE IF EXISTS planargraph');
                 tx.executeSql('DROP TABLE IF EXISTS space');
@@ -1337,15 +1488,10 @@
                         alert(JSON.stringify(err));
                     },
                     success: function (res) {
-                        alert(JSON.stringify(res));
-                        // alert(res.length);
-                        // alert(res[0].id);
+                        // alert(JSON.stringify(res));
                         var len = res.length
                         if (len >= 1) {
                             for (var i = 0; i < len; i++) {
-                                // alert(res[i].id);
-                                // alert(res[i].name);
-                                // alert(res[i].user_id);
                                 downloadspace(res[i].id);
                                 tx.executeSql('INSERT INTO planargraph (id, name, user_id) VALUES (?,?,?)', [res[i].id, res[i].name, res[i].user_id]);
 
@@ -1358,6 +1504,11 @@
             });
         }
 
+        function recoveryend() {
+            $(".loading").css('display', 'none');
+            $("#recoverymodal").modal('show');
+
+        }
 
 
         //完整代码：

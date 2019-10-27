@@ -602,14 +602,14 @@
                 $("#thingpdf").html("");
                 tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furniture_id = ? ORDER BY layer DESC', [x], function (tx, res) {
                     var len = res.rows.length;
-
+                    // alert(len)
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
                             var num = res.rows.item(i)['layer'];
                             // alert(num)
                             if (!num) {
                                 var tr = function (num, i) {
-                                    tx.executeSql('SELECT * FROM thing WHERE layer IS NULL AND furniture_id = ?', [x], function (tx, res) {
+                                    tx.executeSql('SELECT * FROM thing WHERE (layer IS NULL OR layer="") AND furniture_id = ?', [x], function (tx, res) {
                                         $(".box-wrap").append(`<p onclick='shrink("shrink` + x + i + `")'><span>尚未編輯完成<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         $("#thingpdf").append(`<p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
                                                                 style="padding: 5px;background-color: #f4c82ae7;">尚未編輯完成</span></p>`)
@@ -623,6 +623,7 @@
                                             $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
                                             $("#thingpdf").append('<div id ="notedit" style="margin-left:50px"></div>')
                                             for (var j = 0; j < len; j++) {
+                                                
                                                 if (res.rows.item(j)['out'] == 1) {
                                                     warn = "<i class='icon ion-md-information-circle iwarn'></i>";
                                                 } else {

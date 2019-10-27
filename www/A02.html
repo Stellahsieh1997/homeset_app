@@ -195,7 +195,7 @@
                 window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
             });
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, backup text)');
             });
 
             db.transaction(function (tx) {
@@ -249,6 +249,7 @@
                                             var post = `<div style="position: relative">
                                                     <i class="icon collection ion-md-heart" id="post`+ res[i].id + `" onclick="collection('` + res[i].id + `')"></i>
                                                     <h6 class="nicknamestyle">`+ res[i].nickname + `</h6>
+                                                    <p class="likes" id="likes`+ res[i].id + `">` + res[i].likes + `人收藏 </p>
                                                     <a href="A03.html?post=`+ res[i].id + `">
                                                         <div class="row card1 border rounded">
                                                             <div class="col left rounded-left ">
@@ -285,9 +286,23 @@
                     "Authorization": "Token " + user_token + ""
                 },
                 type: "POST",
+                async: false,
                 url: "http://140.131.114.157/posts/" + id + "/like",
                 error: function (err) {
                     alert(JSON.stringify(err))
+                }
+            })
+
+            $.ajax({
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                type: "GET",
+                async: false,
+                url: "http://140.131.114.157/posts/" + id + "",
+                success: function (res) {
+                    $("#likes" + id + "").html(res.likes + "人收藏 ");
+                    // alert(JSON.stringify(res))
                 }
             })
 

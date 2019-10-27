@@ -214,3 +214,11 @@ a, a:link, a:active, a:visited, a:hover
     border-radius: 10px;
     padding: 8px;
 }
+.likes {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    z-index: 1;
+}

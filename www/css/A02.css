@@ -115,3 +115,11 @@ a, a:link, a:active, a:visited, a:hover
 .selectcolor{
     color: rgb(255, 0, 0);
 }
+.likes {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    z-index: 1;
+}

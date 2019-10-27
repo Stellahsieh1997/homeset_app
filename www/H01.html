@@ -504,7 +504,7 @@
             });
 
             db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, backup text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
@@ -521,7 +521,7 @@
                             user_email = res.rows.item(0)['email']
                             user_token = res.rows.item(0)['token']
                             user_id = res.rows.item(0)['id']
-
+                            $("#backup").html(res.rows.item(0)['backup'])
 
                             $(".mm-navbar__title").html("Hi~" + " " + res.rows.item(0)['nickname']);
                             $(".mm-navbar__title").css({ "background-color": "#254F6E", "color": "white" });
@@ -1351,8 +1351,14 @@
                                     success: function (res) {
                                         // alert(JSON.stringify(res));
                                         var Today = new Date();
+                                        
                                         $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
                                         uploadspace(pid)
+                                        db.transaction(function (tx) {
+                                            var Today = new Date();
+                                            var now = "上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ";
+                                            tx.executeSql("UPDATE user SET backup = ? WHERE id = ?", [now, user_id]);
+                                        });
                                     }
                                 })
                             }

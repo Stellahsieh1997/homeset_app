@@ -132,9 +132,9 @@
     margin-bottom:1vw;
     float: left;
 }
-/* .shrink{
-    margin-bottom: 1px;
-} */
+.shrink{
+    margin-bottom: 40px;
+}
 .box-wrap>p {
     color:black;
     display:flex;
@@ -142,7 +142,7 @@
     /* align-items: center;
     justify-content: center; */
     /* background-color: #f4c82ae7; */
-    margin: 3px 0px 0px 1vw;
+    margin: 10px 0px 0px 1vw;
 
     /* padding: 5px */
 
@@ -153,7 +153,7 @@
 }
 .box-wrap>hr{
     border-top: 1px solid #f4c82ae7;
-    margin: 0px 15px 10px 1vw;
+    margin: 0px 15px 5px 1vw;
     
 }
 .box-wrap>p>span>i {

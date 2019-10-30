@@ -189,6 +189,19 @@
     </div>
 
     <script>
+        $("#title").change(function () {
+            $("#addtitlewarn").html("");
+        });
+        $("#content").change(function () {
+            $("#addcontentwarn").html("");
+        });
+        $("#edittitle").change(function () {
+            $("#edittitlewarn").html("");
+        });
+        $("#editcontent").change(function () {
+            $("#editcontentwarn").html("");
+        });
+
         var user_email;
         var user_token;
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -376,8 +389,8 @@
                 async: false,
                 url: "http://140.131.114.157/posts/" + id + "",
                 success: function (res) {
-                    
-                    $("#likes" + id + "").html(res.likes+"人收藏 ");
+
+                    $("#likes" + id + "").html(res.likes + "人收藏 ");
                     // alert(JSON.stringify(res))
                 }
             })

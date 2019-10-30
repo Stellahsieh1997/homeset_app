@@ -226,6 +226,10 @@
     </div>
 
     <script>
+        $("#insertfname").change(function () {
+            $("#fnwarn").html("");
+        });
+
         var user_email;
         var user_token;
         var user_id;
@@ -606,7 +610,7 @@
                     if (res.rows.length >= 1) {
                         for (var i = 0; i < len; i++) {
                             var num = res.rows.item(i)['layer'];
-                            // alert(num)
+                            //alert(num)
                             if (!num) {
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE (layer IS NULL OR layer="") AND furniture_id = ?', [x], function (tx, res) {
@@ -655,6 +659,8 @@
                                         if (res.rows.length >= 1) {
                                             var warn
                                             $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
+                                            $(".box-wrap").append('<p style="width: 100vw;height: 7px;"></p>')
+
                                             for (var j = 0; j < len; j++) {
                                                 if (res.rows.item(j)['out'] == 1) {
                                                     warn = "<i class='icon ion-md-information-circle iwarn'></i>";
@@ -683,6 +689,7 @@
                             } else {
                                 var tr = function (num, i) {
                                     tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
+                                        $(".box-wrap").prepend('<p style="width: 100vw;height: 7px;"></p>')
                                         $(".box-wrap").prepend('<div class="shrink" id ="shrink' + x + i + '"></div>')
                                         $(".box-wrap").prepend(`<p onclick='shrink("shrink` + x + i + `")'><span>第` + num + `層<i class='icon ion-md-arrow-dropdown'></i></span></p><hr/>`)
                                         $("#thingpdf").prepend('<div id ="thingpdf' + x + i + '"></div>')

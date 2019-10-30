@@ -71,7 +71,6 @@
         <div class="title container-fluid">
             <div class="row p-1 " style="background-color:#254F6E;">
                 <div class="col-4">
-                    <!-- 待修onclick="reload()"-->
                     <a href="javascript:history.back()" class="icon ion-ios-arrow-back icon2"></a>
                 </div>
                 <div class="col-4 title">
@@ -337,6 +336,10 @@
     </div>
 
     <script>
+        $("#exampleFormControlInput1").change(function () {
+            $("#tndwarn").html("");
+        });
+
         function clearnumber() {
             $("#number").html(1);
         }
@@ -992,7 +995,7 @@
                 "firstDay": 1
             },
             // "alwaysShowCalendars": true,
-            // "startDate": "2019/07/22",
+            "startDate": moment().subtract(-1, "days"),
             // "endDate": "2019/07/13",
             "drops": "up"
         }, function (start, end, label) {

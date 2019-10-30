@@ -365,7 +365,7 @@
         </div>
     </div>
 
-    <!-- 刪除格局 -->
+    <!-- 復原完成 -->
     <div class="modal fade" tabindex="-1" role="dialog" id="recoverymodal" aria-labelledby="recoverymodal"
         aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
@@ -386,12 +386,12 @@
     <!-- 物品類別設定的彈跳視窗 -->
 
     <div class="modal fade bd-example-modal-sm" id="resetcategorymodal" tabindex="-1" role="dialog"
-        aria-labelledby="resetcategorymodal" aria-hidden="true">
+        aria-labelledby="resetcategorymodal" aria-hidden="true" data-backdrop="static"> 
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" style="font-size: 18px;">物品類別設定</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -415,7 +415,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="location.reload()" >完成</button>
+                    <button type="button" class="btn btn-primary" onclick="location.reload()">完成</button>
                 </div>
             </div>
 
@@ -456,12 +456,12 @@
     <!-- 物品所屬人設定的彈跳視窗 -->
 
     <div class="modal fade bd-example-modal-sm" id="resetownermodal" tabindex="-1" role="dialog"
-        aria-labelledby="resetownermodal" aria-hidden="true">
+        aria-labelledby="resetownermodal" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" style="font-size: 18px;">物品所屬人設定</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -814,7 +814,7 @@
         //delPlanargraph  為編刪除平面圖的確認鍵
         //insertspace 新增格局
         function pnidclick(id) {
-            window.history.pushState({}, 0, "H01.html?planargraph=" + id +"")
+            window.history.pushState({}, 0, "H01.html?planargraph=" + id + "")
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM planargraph WHERE id = ?', [id],
                     function (tx, res) {
@@ -1808,6 +1808,71 @@
             });
         }
 
+        function uploadowner() {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM owner WHERE user_id=?', [user_id],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var oid = res.rows.item(i)['id'];
+                                var oname = res.rows.item(i)['name'];
+                                $.ajax({
+                                    type: "POST",
+                                    headers: {
+                                        "Authorization": "Token " + user_token + ""
+                                    },
+                                    async: false,
+                                    url: "http://140.131.114.157/owners",
+                                    data: {
+                                        "id": oid,
+                                        "name": oname,
+                                        "user_id": user_id
+                                    },
+                                    error: function (err) {
+                                        alert(JSON.stringify(err));
+                                    }
+                                })
+
+                            }
+                        }
+
+                    });
+            });
+        }
+
+        function uploadcategory() {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM category WHERE user_id=?', [user_id],
+                    function (tx, res) {
+                        var len = res.rows.length;
+                        if (res.rows.length >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                var cid = res.rows.item(i)['id'];
+                                var cname = res.rows.item(i)['name'];
+                                $.ajax({
+                                    type: "POST",
+                                    headers: {
+                                        "Authorization": "Token " + user_token + ""
+                                    },
+                                    async: false,
+                                    url: "http://140.131.114.157/categorys",
+                                    data: {
+                                        "id": cid,
+                                        "name": cname,
+                                        "user_id": user_id
+                                    },
+                                    error: function (err) {
+                                        alert(JSON.stringify(err));
+                                    }
+                                })
+
+                            }
+                        }
+
+                    });
+            });
+        }
 
         function backup() {
             $("#backup").html(` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
@@ -1826,7 +1891,37 @@
                 success: function (res) {
                     // alert(JSON.stringify(res));
                 }
-            })
+            });
+            $.ajax({
+                type: "DELETE",
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                async: false,
+                url: "http://140.131.114.157/owners/my",
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                },
+                success: function (res) {
+                    // alert(JSON.stringify(res));
+                }
+            });
+            $.ajax({
+                type: "DELETE",
+                headers: {
+                    "Authorization": "Token " + user_token + ""
+                },
+                async: false,
+                url: "http://140.131.114.157/categorys/my",
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                },
+                success: function (res) {
+                    // alert(JSON.stringify(res));
+                }
+            });
+            uploadowner();
+            uploadcategory();
             db.transaction(function (tx) {
                 tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [user_id],
                     function (tx, res) {
@@ -1987,10 +2082,59 @@
                 tx.executeSql('DROP TABLE IF EXISTS space');
                 tx.executeSql('DROP TABLE IF EXISTS furniture');
                 tx.executeSql('DROP TABLE IF EXISTS thing');
+                tx.executeSql('DROP TABLE IF EXISTS owner');
+                tx.executeSql('DROP TABLE IF EXISTS category');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
+
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/owners/own",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        // alert(JSON.stringify(res));
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                tx.executeSql('INSERT INTO owner (id, name, user_id) VALUES (?,?,?)', [res[i].id, res[i].name, res[i].user_id]);
+                            }
+                        }
+                    }
+                })
+
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Token " + user_token + ""
+                    },
+                    async: false,
+                    url: "http://140.131.114.157/categorys/own",
+                    error: function (err) {
+                        alert(JSON.stringify(err));
+                    },
+                    success: function (res) {
+                        // alert(JSON.stringify(res));
+                        var len = res.length
+                        if (len >= 1) {
+                            for (var i = 0; i < len; i++) {
+                                tx.executeSql('INSERT INTO category (id, name, user_id) VALUES (?,?,?)', [res[i].id, res[i].name, res[i].user_id]);
+                            }
+                        }
+                    }
+                })
+
+
+
 
                 $.ajax({
                     type: "GET",

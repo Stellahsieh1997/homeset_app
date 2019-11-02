@@ -83,11 +83,38 @@
     </div>
 
     <!-- 因mmenu的關係代替margin-top:30px; -->
-    <div style="height: 30px;"></div>
+    <div style="height: 60px;"></div>
     <!-- 顯示格局的地方 -->
-    <div class="box-wrap">
+    <!-- <div class="box-wrap"> -->
+    <!-- <div class="box">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);"></span></a>
+        </div> -->
+    <ul id="items-list" class="moveable">
+        <!-- <li id="s0" class="12345">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">1</span></a>
+        </li>
+        <li id="s1" class="12345">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">2</span></a>
+        </li>
+        <li id="s2" class="12345">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">3</span></a>
+        </li>
+        <li id="s3" class="12345">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">4</span></a>
+        </li>
+        <li id="s4" class="12345">
+            <i id="spacemore" class='icon ion-md-more imore'></i>
+            <a><span style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">5</span></a>
+        </li> -->
 
-    </div>
+
+    </ul>
+    <!-- </div> -->
     <!-- QRcode掃描 -->
     <div id="showscan" style="display: none;">
         <i class="icon ion-md-qr-scanner"></i>
@@ -374,7 +401,7 @@
                     <p style="font-size: 16px">復原完成</p>
                     <div class="row" style="text-align: center">
                         <div class="col">
-                            <button type="button"  onclick="javascript:location.href='H01.html'"
+                            <button type="button" onclick="javascript:location.href='H01.html'"
                                 class="btn btn-outline-secondary">確認</button>
                         </div>
                     </div>
@@ -386,12 +413,13 @@
     <!-- 物品類別設定的彈跳視窗 -->
 
     <div class="modal fade bd-example-modal-sm" id="resetcategorymodal" tabindex="-1" role="dialog"
-        aria-labelledby="resetcategorymodal" aria-hidden="true" data-backdrop="static"> 
+        aria-labelledby="resetcategorymodal" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" style="font-size: 18px;">物品類別設定</h5>
-                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -405,11 +433,20 @@
                         <button onclick="insertcategory()" type="button" class="btn btn-primary"
                             style="display: inline-block;margin-left: 5px;">確認</button>
                     </form>
-                    <p style="color: black;padding: 16px 0px;">可編輯類別</p>
-                    <div id="opencategory">
-                        <button onclick="editcategory(id)" type="button"
-                            class="btn btn-outline-warning categorybutton">確認</button>
 
+                    <p style="color: black;padding: 16px 0px 6px 0px;">預設類別</p>
+                    <p class="existing">包包</p>
+                    <p class="existing">鞋子</p>
+                    <p class="existing">衣服</p>
+                    <p class="existing">文具</p>
+                    <p class="existing">工具</p>
+                    <p class="existing">玩具</p>
+                    <p class="existing">杯子</p>
+                    <p class="existing">飾品</p>
+                    <p class="existing">化妝品</p>
+                    <p class="existing">眼鏡</p>
+                    <p style="color: black;padding: 16px 0px 10px 0px;">可編輯類別</p>
+                    <div id="opencategory">
 
                     </div>
 
@@ -461,7 +498,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" style="font-size: 18px;">物品所屬人設定</h5>
-                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -475,11 +513,20 @@
                         <button onclick="insertowner()" type="button" class="btn btn-primary"
                             style="display: inline-block;margin-left: 5px;">確認</button>
                     </form>
-                    <p style="color: black;padding: 16px 0px;">可編輯所屬人</p>
+                    <p style="color: black;padding: 16px 0px 6px 0px;">預設所屬人</p>
+                    <p class="existing">自己</p>
+                    <p class="existing">爸爸</p>
+                    <p class="existing">媽媽</p>
+                    <p class="existing">哥哥</p>
+                    <p class="existing">弟弟</p>
+                    <p class="existing">姊姊</p>
+                    <p class="existing">妹妹</p>
+                    <p class="existing">爺爺</p>
+                    <p class="existing">奶奶</p>
+                    <p class="existing">朋友</p>
+                    <p class="existing">同事</p>
+                    <p style="color: black;padding: 16px 0px 10px 0px;">可編輯所屬人</p>
                     <div id="openowner">
-                        <button onclick="editowner(id)" type="button"
-                            class="btn btn-outline-warning categorybutton">確認</button>
-
 
                     </div>
 
@@ -677,7 +724,7 @@
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, backup text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, number integer, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
@@ -830,17 +877,33 @@
 
             //呈現格局
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [id],
+                tx.executeSql('SELECT * FROM space WHERE planargraph_id = ? ORDER BY number DESC', [id],
                     function (tx, res) {
-                        $(".box-wrap").html("")
+                        $(".moveable").html("")
                         var len = res.rows.length;
                         if (res.rows.length >= 1) {
                             for (var i = 0; i < len; i++) {
-                                $(".box-wrap").append(`<div style="background-color:` + res.rows.item(i)['space_color'] + `;" class="box">
+                                if (!res.rows.item(i)['number']) {
+                                    $(".moveable").append(`<li id="s` + i + `" style="background-color:` + res.rows.item(i)['space_color'] + `;" class="` + res.rows.item(i)['id'] + `">
                                                         <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['id'] + `")' class='icon ion-md-more imore'></i>
                                                         <a href="F01.html?space=`+ res.rows.item(i)['id'] + `"><span id="sname` + res.rows.item(i)['id'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
-                                                        </div>`)
+                                                        </li>`)
+                                } else {
+                                    $(".moveable").prepend(`<li id="s` + i + `" style="background-color:` + res.rows.item(i)['space_color'] + `;" class="` + res.rows.item(i)['id'] + `">
+                                                        <i id="spacemore" onclick='spacemore("`+ res.rows.item(i)['id'] + `")' class='icon ion-md-more imore'></i>
+                                                        <a href="F01.html?space=`+ res.rows.item(i)['id'] + `"><span id="sname` + res.rows.item(i)['id'] + `" style="color: white;text-shadow: 0 0 0.2em rgba(32, 31, 31, 0.568);">` + res.rows.item(i)['name'] + `</span></a>
+                                                        </li>`)
+                                }
                             }
+                            // 拖曳
+                            let items = document.querySelectorAll('#items-list > li')
+                            items.forEach(item => {
+                                $(item).prop('draggable', true)
+                                item.addEventListener('dragstart', dragStart)
+                                item.addEventListener('drop', dropped)
+                                item.addEventListener('dragenter', cancelDefault)
+                                item.addEventListener('dragover', cancelDefault)
+                            })
 
                             // 格局
                             tx.executeSql("SELECT * FROM page", [],
@@ -1533,7 +1596,7 @@
 
             QRScanner.scan(callback);
             QRScanner.show(function (status) {
-                $(".box-wrap").css('display', 'none');
+                $(".moveable").css('display', 'none');
                 $("#saddbutton").css('display', 'none');
                 $("#showscan").css('display', 'block');
 
@@ -1776,6 +1839,10 @@
                                 var sid = res.rows.item(i)['id'];
                                 var sname = res.rows.item(i)['name'];
                                 var scolor = res.rows.item(i)['space_color'];
+                                var snumber = res.rows.item(i)['number'];
+                                if (!snumber) {
+                                    snumber = ""
+                                }
                                 $.ajax({
                                     type: "POST",
                                     headers: {
@@ -1787,6 +1854,7 @@
                                         "id": sid,
                                         "name": sname,
                                         "space_color": scolor,
+                                        "number":snumber,
                                         "planargraph_id": planargraph_id
                                     },
                                     error: function (err) {
@@ -2064,7 +2132,7 @@
                         if (len >= 1) {
                             for (var i = 0; i < len; i++) {
                                 downloadfurniture(res[i].id);
-                                tx.executeSql('INSERT INTO space (id, name, space_color, planargraph_id) VALUES (?,?,?,?)', [res[i].id, res[i].name, res[i].space_color, res[i].planargraph_id]);
+                                tx.executeSql('INSERT INTO space (id, name, space_color, number, planargraph_id) VALUES (?,?,?,?,?)', [res[i].id, res[i].name, res[i].space_color, res[i].number, res[i].planargraph_id]);
                             }
                         }
                     }
@@ -2085,7 +2153,7 @@
                 tx.executeSql('DROP TABLE IF EXISTS owner');
                 tx.executeSql('DROP TABLE IF EXISTS category');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS planargraph (id text primary key, name text, user_id integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, space_color text, planargraph_id text)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS space (id text primary key, name text, number integer, space_color text, planargraph_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS furniture (id text primary key, name text, image text, layer text, space_id text)');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
@@ -2204,6 +2272,59 @@
             }
 
         }
+
+        // let items = document.querySelectorAll('#items-list > li')
+        // items.forEach(item => {
+        //     $(item).prop('draggable', true)
+        //     item.addEventListener('dragstart', dragStart)
+        //     item.addEventListener('drop', dropped)
+        //     item.addEventListener('dragenter', cancelDefault)
+        //     item.addEventListener('dragover', cancelDefault)
+        // })
+        function dragStart(e) {
+            var index = $(e.target).index()
+            e.dataTransfer.setData('text/plain', index)
+        }
+        function dropped(e) {
+            cancelDefault(e)
+
+            // get new and old index
+            let oldIndex = e.dataTransfer.getData('text/plain')
+            let target = $(e.target)
+            let newIndex = target.index()
+            if (newIndex != oldIndex) {
+                // remove dropped items at old place
+                let dropped = $(this).parent().children().eq(oldIndex).remove()
+
+                // insert the dropped items at new place
+                if (newIndex < oldIndex) {
+                    target.before(dropped)
+                } else {
+                    target.after(dropped)
+                }
+                //-9 是因為在space 之前已經用了10個li
+                var lilist = $("li").slice(-1);
+                var len = $("li").index(lilist) - 9;
+                for (var i = 0; i < len; i++) {
+                    var listItem = $("#s" + i + "");
+                    var number = listItem.index("li") - 9
+                    var id = $("#s" + i + "").prop("class")
+                    var tran = function (i, number, id) {
+                        db.transaction(function (tx) {
+                            tx.executeSql("UPDATE space SET number = ? WHERE id = ?", [number, id]);
+                        });
+                    }(i, number, id);
+                }
+            }
+        }
+
+        function cancelDefault(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            return false
+        }
+
+
     </script>
 
 </body>

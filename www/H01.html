@@ -675,10 +675,10 @@
             $("#leadcaption").removeClass("caption2")
             $("#leadcaption").addClass("caption")
             $(".caption").css("left", "40px");
-            $("#leadcaption").html("點擊進入功能選單:<br>觀看儲存的文章、物品提醒、<br>同步、重設密碼、登出。")
+            $("#leadcaption").html("點擊進入功能選單:<br>觀看儲存的文章、物品提醒、<br>備份、復原、重設密碼、<br>物品類別設定、物品所屬人設定、<br>登出。")
             $("#leadknow").removeClass("know2")
             $("#leadknow").addClass("know")
-            $(".know").css("left", "120px");
+            $(".know").css({ "left": "100px", "top": "220px" });
         }
         function lead4() {
             $('.lead').attr('onclick', 'lead5()');
@@ -914,10 +914,10 @@
                                         if (home == 1) {
                                             $('.lead').attr('onclick', 'lead4()');
                                             $(".lead").css('display', 'block');
-                                            $(".arrow").css({ "left": "115px", "top": "160px" });
-                                            $(".caption").css({ "left": "60px", "top": "250px" });
-                                            $("#leadcaption").html("點擊可以<br>編輯、刪除、更改顏色<br>以及生成格局內儲物櫃QR Code")
-                                            $(".know").css({ "left": "200px", "top": "340px" });
+                                            $(".arrow").css({ "left": "120px", "top": "160px" });
+                                            $(".caption").css({ "left": "50px", "top": "250px" });
+                                            $("#leadcaption").html("點擊可以<br>編輯、刪除、更改顏色<br>以及生成格局內儲物櫃QR Code<br>長按可以拖曳變換位置")
+                                            $(".know").css({ "left": "200px", "top": "360px" });
                                             tx.executeSql("UPDATE page SET home = ? WHERE id = ?", [2, 1]);
                                         }
                                     }

@@ -6,76 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- 匯入ionicons 字型圖標 -->
-    <link type="text/css" rel="stylesheet" href="../www/css/mmenu.css" />
+    <link type="text/css" rel="stylesheet" href="css/mmenu.css" />
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <link rel=stylesheet type="text/css" href="../www/css/H04.css">
+    <link rel=stylesheet type="text/css" href="css/H04.css">
 
     <!-- mmenu scripts -->
-    <script src="../www/js/mmenu.js"></script>
-    <script src="../www/js/mmenu.debugger.js"></script>
+    <script src="js/mmenu.js"></script>
+    <script src="js/mmenu.debugger.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <title>H04</title>
 </head>
-<style>
-    .footer {
-        position: fixed;
-        bottom: 0;
-        background: #fff;
-        box-shadow: 2px -0.2px 0.5px 0.5px rgba(0, 0, 0, 0.2);
-
-    }
-
-    .row1 {
-        width: 100%;
-        height: 40px;
-        margin: 0px;
-    }
-
-    .icon {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        padding-top: 2px;
-    }
-
-    .icon1:hover {
-        color: #254F6E;
-    }
-
-    .icon1 {
-        color: black;
-        font-size: 30px;
-    }
-
-    ion-icon {
-        width: 30px;
-        height: 25px;
-    }
-
-    .down,
-    .down:link,
-    .down:active,
-    .down:visited,
-    .down:hover {
-        color: inherit;
-        text-decoration: none;
-        font-size: 18px
-    }
-
-    a,
-    a:link,
-    a:active,
-    a:visited,
-    a:hover {
-        color: inherit;
-        text-decoration: none;
-
-    }
-</style>
 
 <body>
 
@@ -122,48 +66,7 @@
 
     </div>
 
-    <script>
-        //資料庫
-        document.addEventListener("deviceready", onDeviceReady, false);
-        var db;
-        var categorypicker
-        var ownerpicker
-        function onDeviceReady() {
-            db = window.sqlitePlugin.openDatabase({
-                name: 'my.db',
-                location: 'default',
-            });
-            //提醒跳轉
-            cordova.plugins.notification.local.on("click", function (notification) {
-                window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
-            });
-
-            db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS category (id text primary key, name text, user_id integer)');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS owner (id text primary key, name text, user_id integer)');
-            });
-
-
-            //呈現提醒
-            db.transaction(function (tx) {
-                $(".list-group-flush").html("")
-                tx.executeSql('SELECT * FROM thing ', [], function (tx, res) {
-                    if (res.rows.length >= 1) {
-                        for (var j = 0; j < res.rows.length; j++) {
-                            if (res.rows.item(j)['remind'] == 1) {
-                                $(".list-group-flush").append(`<li class="list-group-item">
-                                                  <a href="T01_edit.html?thing=`+ res.rows.item(j)['id'] + `"><div class="rect"><img src="` + res.rows.item(j)['image'] + `" ><p>` + res.rows.item(j)['name'] + `</p><p>提醒日:` + res.rows.item(j)['time'] + `</p><p>提醒內容:` + res.rows.item(j)['content'] + `</p></div></a></li>`)
-
-                            }
-                        }
-
-                    }
-                });
-            });
-        }
-
-    </script>
+    <script src="js/H04.js"></script>
 </body>
 
 </html>

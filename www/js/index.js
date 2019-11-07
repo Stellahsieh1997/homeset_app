@@ -22,14 +22,14 @@ function onDeviceReady() {
     });
 
     db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS planargraph');
-        tx.executeSql('DROP TABLE IF EXISTS space');
-        tx.executeSql('DROP TABLE IF EXISTS furniture');
-        tx.executeSql('DROP TABLE IF EXISTS thing');
-        tx.executeSql('DROP TABLE IF EXISTS category');
-        tx.executeSql('DROP TABLE IF EXISTS owner');
-        tx.executeSql('DROP TABLE IF EXISTS user');
-        tx.executeSql('DROP TABLE IF EXISTS page');
+        // tx.executeSql('DROP TABLE IF EXISTS planargraph');
+        // tx.executeSql('DROP TABLE IF EXISTS space');
+        // tx.executeSql('DROP TABLE IF EXISTS furniture');
+        // tx.executeSql('DROP TABLE IF EXISTS thing');
+        // tx.executeSql('DROP TABLE IF EXISTS category');
+        // tx.executeSql('DROP TABLE IF EXISTS owner');
+        // tx.executeSql('DROP TABLE IF EXISTS user');
+        // tx.executeSql('DROP TABLE IF EXISTS page');
         tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, backup text)');
         tx.executeSql('CREATE TABLE IF NOT EXISTS page (id integer primary key, home integer, furniture_page integer, search_page integer, post_page integer)');
 

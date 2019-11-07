@@ -22,7 +22,8 @@
             <application android:usesCleartextTraffic="true" />
         </edit-config>
         <allow-intent href="market:*" />
-        <icon src="res/android/logo.jpg" density="mdpi" />
+        <icon src="res/android/logo-2.jpg" density="mdpi" />
+        <icon src="res/android/logo.jpg" density="hdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

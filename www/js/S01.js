@@ -45,6 +45,7 @@ function onDeviceReady() {
     window.location.href = 'T01_edit.html?thing=' + notification.thingId + ''
   });
 
+  $("#searchinput").val("");
   db.transaction(function (tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS user (id integer primary key, email text, token text, nickname text, backup text)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS thing (id text primary key, name text, description text, image text, category text, owner text, furniture_id text, number integer, layer text, out integer, remind integer, time date, content text)');

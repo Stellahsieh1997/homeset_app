@@ -122,8 +122,6 @@ function onDeviceReady() {
 
                             });
 
-                        }, function (error) {
-                            alert('Something went Wrong');
                         });
 
 
@@ -157,8 +155,6 @@ function onDeviceReady() {
                                     $('#ownerwarn').text("");
                                 }
                             });
-                        }, function (error) {
-                            alert('Something went Wrong');
                         });
 
                     //可選擇位置滾輪資料庫
@@ -173,7 +169,6 @@ function onDeviceReady() {
                                     tx.executeSql('SELECT * FROM space WHERE planargraph_id = ?', [res.rows.item(y)['id']],
                                         function (tx, res) {
                                             var len = res.rows.length;
-                                            // alert(len)
                                             if (res.rows.length >= 1) {
                                                 for (var i = 0; i < len; i++) {
                                                     var spaceId = res.rows.item(i)['id'];
@@ -181,14 +176,12 @@ function onDeviceReady() {
                                                     var tr = function (spaceId, spacename) {
                                                         tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId], function (tx, res) {
                                                             var len = res.rows.length;
-                                                            // alert(len);
                                                             if (res.rows.length >= 1) {
                                                                 for (var j = 0; j < len; j++) {
                                                                     fstorage.push({ id: res.rows.item(j)['id'], value: res.rows.item(j)['name'] });
                                                                 }
                                                                 storage.push({ id: spaceId, value: spacename, childs: fstorage });
 
-                                                                // alert(JSON.stringify(storage));
                                                                 fstorage = []
                                                                 placeselect.updateWheels(storage);
                                                             }
@@ -196,8 +189,6 @@ function onDeviceReady() {
                                                     }(spaceId, spacename)
                                                 }
                                             }
-                                        }, function (error) {
-                                            alert('Something went Wrong');
                                         });
                                 }(y, planargraphname)
                             }
@@ -206,8 +197,6 @@ function onDeviceReady() {
 
 
                 }
-            }, function (error) {
-                alert('Something went Wrong');
             });
     });
 
@@ -257,8 +246,6 @@ function layertest() {
                     }
                 }
 
-            }, function (error) {
-                alert('Something went Wrong');
             });
     });
 }
@@ -323,10 +310,8 @@ function savevalue() {
         remindertextValue = null
     }
 
-    // alert(img + name + description + categoryValue + ownerValue + numberValue + layerValue + out + remind + reminder + remindertextValue)
     db.transaction(function (tx) {
         var timestamp = (new Date()).valueOf();
-        // alert("timestamp"+timestamp);
         var email = user_email.replace(/@/g, "").split(".").join("");
         var thingId = email + timestamp;
         tx.executeSql('SELECT * FROM furniture WHERE id = ?', [furnitureIdedit],
@@ -398,7 +383,7 @@ function takephoto() {
         document.getElementById('myImage').src = imgURI;
         $('#exampleModal4').modal('hide')
     }, function cameraError(error) {
-        alert("Unable to obtain picture: " + error, "app");
+        alert("取得失敗");
     }, opts);
 }
 
@@ -440,7 +425,6 @@ function addcategory() {
 
     db.transaction(function (tx) {
         var timestamp = (new Date()).valueOf();
-        // alert("timestamp"+timestamp);
         var email = user_email.replace(/@/g, "").split(".").join("");
         var categoryId = email + timestamp;
 
@@ -476,7 +460,6 @@ function addcategory() {
                                     }
                                 }
                                 var categoryselect3 = categoryselect.concat(categoryselect2)
-                                // alert(typeof categoryselect3)
                                 categorypicker.updateWheel(0, categoryselect3);
                                 categorypicker.locatePosition(0, 0);
                                 $('#addcategory').val("");
@@ -504,7 +487,6 @@ function addowner() {
 
     db.transaction(function (tx) {
         var timestamp = (new Date()).valueOf();
-        // alert("timestamp"+timestamp);
         var email = user_email.replace(/@/g, "").split(".").join("");
         var ownerId = email + timestamp;
 

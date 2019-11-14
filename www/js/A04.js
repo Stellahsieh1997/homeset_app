@@ -150,11 +150,10 @@ $('#insertpost').click(function () {
     processData: false,
     contentType: false,
     success: function (data) {
-      alert(JSON.stringify(data))
       location.href = "A04.html";
     },
     error: function (err) {
-      alert(JSON.stringify(err))
+      location.href = "A04.html";
     }
   })
 })
@@ -186,7 +185,7 @@ function collection(id) {
     async: false,
     url: "http://140.131.114.157/posts/" + id + "/like",
     error: function (err) {
-      alert(JSON.stringify(err))
+      alert("請開啟網路連線")
     }
   })
 
@@ -215,7 +214,7 @@ function postmore(id) {
     type: "GET",
     url: "http://140.131.114.157/posts/" + id + "",
     error: function (err) {
-      alert(JSON.stringify(err))
+      alert("請開啟網路連線")
     },
     success: function (res) {
       $("#edittitle").val(res.title);

@@ -173,7 +173,7 @@ function createpdf() {
   var spacepdf = $("#spacepdf").html()
   pdf.fromData(spacepdf, options)
     .then((base64) => furnitureshare(base64))
-    .catch((err) => alert(err))
+    .catch((err) => alert("請在試一次"))
 }
 
 //分享
@@ -472,7 +472,6 @@ function delPlanargraph(id) {
 function insertplanargraph() {
   db.transaction(function (tx) {
     var timestamp = (new Date()).valueOf();
-    // alert("timestamp"+timestamp);
     var email = user_email.replace(/@/g, "").split(".").join("");
     var planargraphId = email + timestamp;
     var name = $("#insertpname").val();
@@ -503,12 +502,7 @@ function insertplanargraph() {
             $('#exampleModalCenter3').modal('hide')
             $("#insertpname").val("");
             location.href = "H01.html?planargraph=" + planargraphId + "";
-          }, function (error) {
-            alert('Something went Wrong');
           });
-      }, function (error) {
-        alert('Something went Wrong');
-        alert(JSON.stringify(error));
       });
 
 
@@ -532,8 +526,6 @@ function addpwarnYes() {
         $('#exampleModalCenter3').modal('hide')
         $("#insertpname").val("");
         location.href = "H01.html?planargraph=" + planargraphId + "";
-      }, function (error) {
-        alert('Something went Wrong');
       });
   });
 
@@ -544,7 +536,6 @@ function addpwarnYes() {
 function insertspace(planargraphId) {
   db.transaction(function (tx) {
     var timestamp = (new Date()).valueOf();
-    // alert("timestamp"+timestamp);
     var email = user_email.replace(/@/g, "").split(".").join("")
     var spaceId = email + timestamp;
     var name = $("#insertsname").val();
@@ -559,8 +550,6 @@ function insertspace(planargraphId) {
         $('#exampleModalCenter2').modal('hide')
         $("#insertsname").val("");
         location.href = "H01.html?planargraph=" + planargraphId + "";
-      }, function (error) {
-        alert('Something went Wrong');
       });
   });
 }
@@ -600,7 +589,6 @@ function insertcategory() {
 
   db.transaction(function (tx) {
     var timestamp = (new Date()).valueOf();
-    // alert("timestamp"+timestamp);
     var email = user_email.replace(/@/g, "").split(".").join("");
     var categoryId = email + timestamp;
 
@@ -764,7 +752,6 @@ function insertowner() {
 
   db.transaction(function (tx) {
     var timestamp = (new Date()).valueOf();
-    // alert("timestamp"+timestamp);
     var email = user_email.replace(/@/g, "").split(".").join("");
     var ownerId = email + timestamp;
 
@@ -905,7 +892,7 @@ function reset() {
       "email": user_email
     },
     error: function (err) {
-      alert(err)
+      alert("請開啟網路連線")
     },
     success: function (res) {
       $("#resettext").html(`<p style="font-size:18px;"><b>變更密碼確認信已送出</b></p>
@@ -929,7 +916,7 @@ function createscan() {
 
   var callback = function (err, contents) {
     if (err) {
-      alert.error(err._message);
+      alert("取得失敗");
     }
     window.open(contents, '_system')
 
@@ -1002,7 +989,6 @@ function uploadthing(furniture_id) {
             }
 
             var judge = timage.split(":")[0]
-            // alert(judge)
             if (judge == "http") {
               $.ajax({
                 type: "POST",
@@ -1027,10 +1013,9 @@ function uploadthing(furniture_id) {
                   "url": timage
                 },
                 error: function (err) {
-                  alert(JSON.stringify(err));
+                  alert("請開啟網路連線");
                 },
                 success: function (res) {
-                  // alert(JSON.stringify(res));
                   var Today = new Date();
                   $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
 
@@ -1066,13 +1051,12 @@ function uploadthing(furniture_id) {
               let ft = new FileTransfer();
               ft.upload(timage, encodeURI("http://140.131.114.157/things"), onSuccess, onError, options);
               function onSuccess(r) {
-                // alert("upload onSuccess " + JSON.stringify(r));
                 var Today = new Date();
                 $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
               }
 
               function onError(error) {
-                alert("upload error target " + JSON.stringify(error));
+                alert("請開啟網路連線");
               }
             }
           }
@@ -1100,7 +1084,6 @@ function uploadfurniture(space_id) {
             var flayer = res.rows.item(i)['layer'];
             var fimage = res.rows.item(i)['image'];
             var judge = fimage.split(":")[0]
-            // alert(judge)
             if (judge == "http") {
               $.ajax({
                 type: "POST",
@@ -1117,13 +1100,11 @@ function uploadfurniture(space_id) {
                   "url": fimage
                 },
                 error: function (err) {
-                  alert(JSON.stringify(err));
+                  alert("請開啟網路連線");
                 },
                 success: function (res) {
-                  // alert(JSON.stringify(res));
                   var Today = new Date();
                   $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
-                  // alert(fid)
                   uploadthing(fid)
                 }
               })
@@ -1147,7 +1128,6 @@ function uploadfurniture(space_id) {
               let ft = new FileTransfer();
               ft.upload(fimage, encodeURI("http://140.131.114.157/furnitures"), onSuccess, onError, options);
               function onSuccess(r) {
-                // alert("upload onSuccess " + JSON.stringify(r));
                 var obj = JSON.parse(r.response)
                 uploadthing(obj.id);
                 var Today = new Date();
@@ -1155,7 +1135,7 @@ function uploadfurniture(space_id) {
               }
 
               function onError(error) {
-                alert("upload error target " + JSON.stringify(error));
+                alert("請開啟網路連線");
               }
             }
           }
@@ -1199,10 +1179,9 @@ function uploadspace(planargraph_id) {
                 "planargraph_id": planargraph_id
               },
               error: function (err) {
-                alert(JSON.stringify(err));
+                alert("請開啟網路連線");
               },
               success: function (res) {
-                // alert(JSON.stringify(res));
                 var Today = new Date();
                 $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
                 uploadfurniture(sid)
@@ -1239,7 +1218,7 @@ function uploadowner() {
                 "user_id": user_id
               },
               error: function (err) {
-                alert(JSON.stringify(err));
+                alert("請開啟網路連線");
               }
             })
 
@@ -1272,7 +1251,7 @@ function uploadcategory() {
                 "user_id": user_id
               },
               error: function (err) {
-                alert(JSON.stringify(err));
+                alert("請開啟網路連線");
               }
             })
 
@@ -1295,7 +1274,7 @@ function backup() {
     async: false,
     url: "http://140.131.114.157/planargraphs/my",
     error: function (err) {
-      alert(JSON.stringify(err));
+      alert("請開啟網路連線");
     },
     success: function (res) {
       // alert(JSON.stringify(res));
@@ -1309,7 +1288,7 @@ function backup() {
     async: false,
     url: "http://140.131.114.157/owners/my",
     error: function (err) {
-      alert(JSON.stringify(err));
+      alert("請開啟網路連線");
     },
     success: function (res) {
       // alert(JSON.stringify(res));
@@ -1323,7 +1302,7 @@ function backup() {
     async: false,
     url: "http://140.131.114.157/categorys/my",
     error: function (err) {
-      alert(JSON.stringify(err));
+      alert("請開啟網路連線");
     },
     success: function (res) {
       // alert(JSON.stringify(res));
@@ -1352,10 +1331,9 @@ function backup() {
                 "user_id": user_id
               },
               error: function (err) {
-                alert(JSON.stringify(err));
+                alert("請開啟網路連線");
               },
               success: function (res) {
-                // alert(JSON.stringify(res));
                 var Today = new Date();
 
                 $("#backup").html("上次備份 : " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 ");
@@ -1389,18 +1367,16 @@ function downloadthing(furniture_id) {
       async: false,
       url: "http://140.131.114.157/things/own/" + furniture_id + "",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
-        // alert(res.length);
-        // alert(res[0].id);
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {
 
             if (!res[i].url) {
-              // alert("image")
+
               if (res[i].layer == "null" || res[i].layer == "") {
                 tx.executeSql('INSERT INTO thing (id, image, furniture_id) VALUES (?,?,?)', [res[i].id, res[i].image, res[i].furniture_id]);
               } else {
@@ -1430,12 +1406,10 @@ function downloadfurniture(space_id) {
       async: false,
       url: "http://140.131.114.157/furnitures/own/" + space_id + "",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
-        // alert(res.length);
-        // alert(res[0].id);
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {
@@ -1463,12 +1437,10 @@ function downloadspace(planargraph_id) {
       async: false,
       url: "http://140.131.114.157/spaces/own/" + planargraph_id + "",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
-        // alert(res.length);
-        // alert(res[0].id);
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {
@@ -1508,10 +1480,10 @@ function recovery() {
       async: false,
       url: "http://140.131.114.157/owners/own",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {
@@ -1529,10 +1501,10 @@ function recovery() {
       async: false,
       url: "http://140.131.114.157/categorys/own",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {
@@ -1553,10 +1525,10 @@ function recovery() {
       async: false,
       url: "http://140.131.114.157/planargraphs/own",
       error: function (err) {
-        alert(JSON.stringify(err));
+        alert("請開啟網路連線");
       },
       success: function (res) {
-        // alert(JSON.stringify(res));
+
         var len = res.length
         if (len >= 1) {
           for (var i = 0; i < len; i++) {

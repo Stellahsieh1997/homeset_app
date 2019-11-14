@@ -53,8 +53,6 @@ function onDeviceReady() {
                     }
 
                 }
-            }, function (error) {
-                alert('Something went Wrong');
             });
 
         tx.executeSql('SELECT * FROM space WHERE id = ?', [spaceId],
@@ -63,14 +61,11 @@ function onDeviceReady() {
                 if (res.rows.length >= 1) {
                     $("#stitle").html(res.rows.item(0)['name'])
                 }
-            }, function (error) {
-                alert('Something went Wrong');
             });
 
 
         tx.executeSql('SELECT * FROM furniture WHERE space_id = ?', [spaceId], function (tx, res) {
             var len = res.rows.length;
-            // alert(len);
             if (res.rows.length >= 1) {
                 for (var i = 0; i < len; i++) {
                     $(".flex").append(`<div id='fpress` + res.rows.item(i)['id'] + `' onclick='fidclick("` + res.rows.item(i)['id'] + `")'><img src='` + res.rows.item(i)['image'] + `' height='90' width='90' class='square' id='` + res.rows.item(i)['id'] + `' onclick='fclick("` + res.rows.item(i)['id'] + `")'><div class='content' id='fname` + res.rows.item(i)['id'] + `'>` + res.rows.item(i)['name'] + `</div></div>`)
@@ -188,7 +183,6 @@ function onDeviceReady() {
 
 
                 let urlParams = new URLSearchParams(window.location.search);
-                // alert(urlParams)
                 var furnitureId = urlParams.get('furniture');
                 if (!furnitureId) {
                     fidclick(res.rows.item(0)['id'])
@@ -236,7 +230,7 @@ function createpdf() {
     var furniturepdf = $("#furniturepdf").html()
     pdf.fromData(furniturepdf, options)
         .then((base64) => furnitureshare(base64))
-        .catch((err) => alert(err))
+        .catch((err) => alert("請開啟網路連線"))
 }
 
 //分享
@@ -256,7 +250,7 @@ function furnitureshare(name) {
     };
 
     var onError = function (msg) {
-        alert("Sharing failed with message: " + msg);
+        alert("請開啟網路連線");
     };
 
     window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
@@ -265,22 +259,15 @@ function furnitureshare(name) {
 // 點選儲物櫃後跳出來的物品，夾層依照櫃子定義的層數跑回圈where去抓裡面有的東西
 
 function shrink(x) {
-
     $("#" + x + "").slideToggle();
-    // alert(x);
 }
 
-// alert(location.href)
+
 
 function fidclick(x) {
-    // 新增物品
-    // alert(x)
-
     let urlParams = new URLSearchParams(window.location.search);
     var spaceId = urlParams.get('space');
     window.history.pushState({}, 0, "F01.html?space=" + spaceId + "&furniture=" + x + "")
-    // location.href = "F01.html?space=" + spaceId + "&furniture=" + x + "";
-    // alert(location.href)
     var spaceId1 = spaceId.slice(-13)
     var furnitureId1 = x.slice(-13)
 
@@ -374,11 +361,11 @@ function fidclick(x) {
         $("#thingpdf").html("");
         tx.executeSql('SELECT DISTINCT layer FROM thing WHERE furniture_id = ? ORDER BY layer DESC', [x], function (tx, res) {
             var len = res.rows.length;
-            // alert(len)
+
             if (res.rows.length >= 1) {
                 for (var i = 0; i < len; i++) {
                     var num = res.rows.item(i)['layer'];
-                    //alert(num)
+
                     if (!num) {
                         var tr = function (num, i) {
                             tx.executeSql('SELECT * FROM thing WHERE (layer IS NULL OR layer="") AND furniture_id = ?', [x], function (tx, res) {
@@ -386,10 +373,6 @@ function fidclick(x) {
                                 $("#thingpdf").append(`<p style="color:black;display:flex;width: 100%;border-bottom:solid 1px #f4c82ae7;"><span
                                                         style="padding: 5px;background-color: #f4c82ae7;">尚未編輯完成</span></p>`)
                                 var len = res.rows.length;
-                                // alert("num:" + num)
-                                // alert("WHERE layer Null len:" + len);
-                                // alert("res.rows.item(0)['image']:" + res.rows.item(0)["image"]);
-                                // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
                                 if (res.rows.length >= 1) {
                                     var warn
                                     $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
@@ -420,10 +403,6 @@ function fidclick(x) {
                         var tr = function (num, i) {
                             tx.executeSql('SELECT * FROM thing WHERE layer = ? AND furniture_id = ?', [num, x], function (tx, res) {
                                 var len = res.rows.length;
-                                // alert("num:" + num)
-                                // alert("WHERE layer len:" + len);
-                                // alert("res.rows.item(0)['thingId']:" + res.rows.item(0)["thingId"]);
-                                // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
                                 if (res.rows.length >= 1) {
                                     var warn
                                     $(".box-wrap").append('<div class="shrink" id ="shrink' + x + i + '"></div>')
@@ -465,10 +444,7 @@ function fidclick(x) {
                                                         style="padding: 5px;background-color: #f4c82ae7;">第` + num + `層</span></p>`)
 
                                 var len = res.rows.length;
-                                // alert("num:" + num)
-                                // alert("WHERE layer len:" + len);
-                                // alert("res.rows.item(0)['thingId']:" + res.rows.item(0)["thingId"]);
-                                // alert("res.rows.item(0)['layer']" + res.rows.item(0)["layer"]);
+
                                 if (res.rows.length >= 1) {
                                     var warn
 
@@ -498,12 +474,8 @@ function fidclick(x) {
                             });
                         }(num, i)
                     }
-                    // alert("ok")
+
                 }
-            } else {
-                // $(".box-wrap").append(`<div class="objcenter" style="height: 50vh;width: 100vw;">
-                //                     <p style="color:gray; font-size:18px;">請點選下方的加鍵，以新增物品。</p>
-                //                         </div>`)
             }
         });
     });
@@ -709,7 +681,7 @@ function insertfurniture() {
 
     let urlParams = new URLSearchParams(window.location.search);
     var spaceId = urlParams.get('space');
-    // alert(spaceId);
+
 
     db.transaction(function (tx) {
         tx.executeSql('SELECT * FROM user', [],
@@ -724,11 +696,11 @@ function insertfurniture() {
                         function (tx, res) {
                             location.href = "F01.html?space=" + spaceId + "&furniture=" + furnitureId + "";
                         }, function (error) {
-                            alert('Something went Wrong');
+                            alert("請開啟網路連線");
                         });
                 }
             }, function (error) {
-                alert('Something went Wrong');
+                alert("請開啟網路連線");
             });
     });
 }
@@ -758,15 +730,15 @@ function takephoto() {
         cameraDirection: Camera.Direction.BACK
     };
     navigator.camera.getPicture(function cameraSuccess(imgURI) {
-        // alert("data:" + imgURI);
+
         myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
         $("#fimg").css('display', 'block');
         $("#fimg").text("");
         $("#fimg").append(myimg);
-        // $('#exampleModal').modal('show')
+
 
     }, function cameraError(error) {
-        alert("Unable to obtain picture: " + error, "app");
+        // alert("無法取得");
     }, opts);
 }
 
@@ -776,7 +748,7 @@ function imgget() {
         window.imagePicker.getPictures(
             function (results) {
                 var imgURI = results[0]
-                // alert(imgURI);
+
                 if (!imgURI) {
                 } else {
                     var myimg = `<img src="` + imgURI + `" class="fphotothumb" id="insertfphoto">`;
@@ -831,7 +803,7 @@ function takecamera(id) {
         $("#feimg" + id + "").html(myimg);
         $("#openphoto").modal("hide");
     }, function cameraError(error) {
-        alert("Unable to obtain picture: " + error, "app");
+        // alert("Unable to obtain picture: " + error, "app");
     }, opts);
 }
 

@@ -32,7 +32,7 @@ function onDeviceReady() {
             type: "GET",
             url: "http://140.131.114.157/posts/" + postid + "",
             error: function (err) {
-              alert(JSON.stringify(err))
+              alert("請開啟網路連線")
             },
             success: function (res) {
               if (nickname == res.nickname) {
@@ -79,7 +79,7 @@ function collection() {
     type: "POST",
     url: "http://140.131.114.157/posts/" + id + "/like",
     error: function (err) {
-      alert(JSON.stringify(err))
+      alert("請開啟網路連線")
     }
   })
 }

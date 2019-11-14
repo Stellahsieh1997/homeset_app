@@ -43,7 +43,7 @@ function onDeviceReady() {
             type: "GET",
             url: "http://140.131.114.157/posts/likes",
             error: function (err) {
-              alert(JSON.stringify(err))
+              alert("請開啟網路連線")
             },
             success: function (res) {
               if (res.length >= 1) {
@@ -124,7 +124,7 @@ function collection(id) {
     type: "POST",
     url: "http://140.131.114.157/posts/" + id + "/like",
     error: function (err) {
-      alert(JSON.stringify(err))
+      alert("請開啟網路連線")
     }
   })
   $.ajax({

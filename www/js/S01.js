@@ -107,8 +107,6 @@ function onDeviceReady() {
 
               });
 
-            }, function (error) {
-              alert('Something went Wrong');
             });
 
 
@@ -141,8 +139,6 @@ function onDeviceReady() {
                   searchown();
                 }
               });
-            }, function (error) {
-              alert('Something went Wrong');
             });
 
 
@@ -153,6 +149,8 @@ function onDeviceReady() {
 }
 
 function searchcate() {
+  $(".upcon2").css('color', '#fff');
+  $("#searchinput").val("");
   var ownerValue = $("#ownersearch").text();
   var cateValue = $("#categorysearch").text();
 
@@ -231,6 +229,8 @@ function searchcate() {
 
 
 function searchown() {
+  $("#searchinput").val("");
+  $(".upcon2").css('color', '#fff');
   var ownerValue = $("#ownersearch").text();
   var cateValue = $("#categorysearch").text();
 
@@ -306,6 +306,11 @@ function searchown() {
 }
 
 function outgood() {
+  
+  $(".upcon2").css('color', '#ffee00');
+  $("#searchinput").val("");
+  $("#categorysearch").text("類別");
+  $("#ownersearch").text("所屬人");
   db.transaction(function (tx) {
     $(".box-wrap").html("")
     tx.executeSql('SELECT * FROM planargraph WHERE user_id = ?', [user_id], function (tx, res) {
@@ -358,6 +363,9 @@ function outgood() {
 }
 
 function filtersearch() {
+  $("#categorysearch").text("類別");
+  $("#ownersearch").text("所屬人");
+  $(".upcon2").css('color', '#fff');
   var inputValue = $("#searchinput").val();
   var inputevalue2 = String(inputValue)
   if (inputValue == "") {

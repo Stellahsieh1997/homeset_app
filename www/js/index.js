@@ -46,8 +46,6 @@ function start() {
                 } else {
                     $(".first").css('display', 'none');
                 }
-            }, function (error) {
-                alert(JSON.stringify(error))
             });
     });
 
@@ -70,9 +68,6 @@ function adduser(id, email, token, nickname) {
                             location.href = 'H01.html'
                         }
                     });
-            }, function (error) {
-                alert(JSON.stringify(error))
-                // location.href = 'H01.html'
             });
     });
 
@@ -125,7 +120,6 @@ function register() {
             $("#registervd").modal('show');
             $("#emailkeep").text(emailvalue);
             $("#loading").html("確定")
-            // alert(JSON.stringify(res))
 
         }
     })
@@ -163,11 +157,8 @@ function login() {
             $("#loginEmail").val("")
             $("#loginPassword").val("")
 
-            // alert(JSON.stringify(err))
         },
         success: function (res) {
-            // alert(JSON.stringify(res))
-            // alert(res.token)
             $("#loading2").html("確定")
             adduser(res.user.id, res.user.email, res.token, res.user.nickname)
         }

@@ -393,7 +393,7 @@ function filtersearch() {
                               var furnitureId = res.rows.item(x)['id'];
                               var trans = function (furnitureId) {
                                 $(".box-wrap").html("")
-                                tx.executeSql('SELECT * FROM thing WHERE name LIKE? or description LIKE? and furniture_id = ? ', ['%' + inputevalue2 + '%', '%' + inputevalue2 + '%', furnitureId], function (tx, res) {
+                                tx.executeSql('SELECT * FROM thing WHERE (name LIKE? or description LIKE?) and furniture_id = ? ', ['%' + inputevalue2 + '%', '%' + inputevalue2 + '%', furnitureId], function (tx, res) {
                                   if (res.rows.length >= 1) {
                                     for (var j = 0; j < res.rows.length; j++) {
                                       $(".box-wrap").append(`<div class="box">
